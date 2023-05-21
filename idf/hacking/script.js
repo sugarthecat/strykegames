@@ -142,6 +142,13 @@ function enterCommand(cmd) {
         for (let i = 0; i < sysarr.length && i < 10; i++) {
             currentCMDprompt += sysarr[i] + "<br/>"
         }
+    }else if (formattedCommand == "previewall") {
+        if (sysarr.length == 0) {
+            currentCMDprompt += "No entries in sysarr</br>"
+        }
+        for (let i = 0; i < sysarr.length; i++) {
+            currentCMDprompt += sysarr[i] + "<br/>"
+        }
     } else if (formattedCommand == "count") {
         if (sysarr.length == 0) {
             currentCMDprompt += "No entries in sysarr</br>"
