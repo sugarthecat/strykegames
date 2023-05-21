@@ -15,14 +15,14 @@ document.onkeydown = function (e) {
     else {
         currentMessage += e.key
     }
-
+    render()
 }
 let currentMessage = ""
 
 let awaitedMessage = "";
 
-const startingPrompt = "IDF MOSSAD CONSOLE - LOADING . . . 1ESTABLISHING SECURE CONNECTION . . .1VERIFYING CREDENTIALS . . .1PREPARING CONSOLE . . .1ENTER COMMAND: "
-const alphabet = "abcdefghijklmnopqrstuvwxyz"
+const startingPrompt = "IDF MILITARY INTELLIGENCE CONSOLE - LOADING . . . 1ESTABLISHING SECURE CONNECTION . . .1VERIFYING CREDENTIALS . . .1PREPARING CONSOLE . . .1ENTER COMMAND: "
+const alphabet = "abcdefghijklmnopqrstuvwxyz1234567890"
 const finalprompt = startingPrompt.replaceAll(1, "<br/>")
 let currentCMDprompt = "";
 let chars = 0
@@ -32,6 +32,8 @@ function render() {
     if (currentCMDprompt.length < finalprompt.length) {
         currentCMDprompt = startingPrompt.substring(0, chars).replaceAll(1, "<br/>")
         chars++;
+        clearInterval(interval);
+        setTimeout(render, 100)
     } else {
         document.getElementById("prompt").innerText = currentMessage + "|"
     }
@@ -43,19 +45,19 @@ function enterCommand(cmd) {
     if (formattedCommand == "help") {
         currentCMDprompt += "<br/>"
         currentCMDprompt += "HELP: print command list <br/>"
-        currentCMDprompt += "CAESAR <phrase>: Bruteforce caesar cyper crack a given phrase <br/>"
+        currentCMDprompt += "CAESAR &#8249;phrase&#8250;: Bruteforce caesar cypher crack a given phrase <br/>"
         currentCMDprompt += "<br/>"
     } else if (formattedCommand == "caesar") {
-        if(args.length < 2){
+        if (args.length < 2) {
             currentCMDprompt += "<span>Error: Missing arg \"Phrase\"</span><br/>"
-        }else{
-            for(let i =0; i<alphabet.length; i++){
+        } else {
+            for (let i = 0; i < alphabet.length; i++) {
                 let word = "";
-                for(let j = 0; j<args[1].length; j++){
+                for (let j = 0; j < args[1].length; j++) {
                     let char = args[1].charAt(j).toLowerCase()
-                    if(alphabet.includes(char)){
-                        word += alphabet[(alphabet.indexOf(char) + i ) % alphabet.length]
-                    }else{
+                    if (alphabet.includes(char)) {
+                        word += alphabet[(alphabet.indexOf(char) + i) % alphabet.length]
+                    } else {
                         word += char
                     }
                 }
@@ -65,6 +67,8 @@ function enterCommand(cmd) {
     } else {
         currentCMDprompt += "<span>UNRECOGNIZED COMMAND</span><br/>"
     }
+    currentMessage = "";
     currentCMDprompt += "ENTER COMMAND: "
+    render();
 }
-let interval = setInterval(render,50)
+let interval = setInterval(render,100)
