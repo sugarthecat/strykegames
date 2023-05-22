@@ -22,14 +22,16 @@ let currentMessage = ""
 let sysarr = [];
 let awaitedMessage = "";
 
-const startingPrompt = "IDF MILITARY INTELLIGENCE CONSOLE - LOADING . . . 1ESTABLISHING SECURE CONNECTION . . .1VERIFYING CREDENTIALS . . .1PREPARING CONSOLE . . .1<h2>Israeli Defense Forces</h2>ENTER COMMAND: "
+const vowels = "aeiouy"
+const numbers = "1234567890"
 
+const startingPrompt = "IDF MILITARY INTELLIGENCE CONSOLE - LOADING . . . 1ESTABLISHING SECURE CONNECTION . . .1VERIFYING CREDENTIALS . . .1PREPARING CONSOLE . . .1<h2>Israeli Defense Forces</h2>ENTER COMMAND: "
 const finalprompt = startingPrompt.replaceAll(1, "<br/>")
 let currentCMDprompt = "";
 let chars = 0
 
 let wordbank = [];
-async function loadWordBank(){
+async function loadWordBank() {
     let text = fetch("words.txt").then(x => x.text())
     wordbank = (await text).split("\r\n");
     console.log(wordbank)
@@ -66,7 +68,8 @@ function enterCommand(cmd) {
     if (formattedCommand == "help") {
         currentCMDprompt += "<br/>"
         currentCMDprompt += "General Commands<br/>"
-        currentCMDprompt += "HELP: print command list <br/>"
+        currentCMDprompt += "HELP: Print command list <br/>"
+        currentCMDprompt += "CLEARCONSOLE: Reset console to start <br/>"
         currentCMDprompt += "<br/>"
         currentCMDprompt += "Caesar Cypher Commands<br/>"
         currentCMDprompt += "ECAESAR &#8249;phrase&#8250; &#8249;key1&#8250; &#8249;key2&#8250; &#8249;keyN&#8250;: Caesar cypher encode a given phrase with keys <br/>"
@@ -75,10 +78,12 @@ function enterCommand(cmd) {
         currentCMDprompt += "<br/>"
         currentCMDprompt += "Sysarr Commands<br/>"
         currentCMDprompt += "PREVIEW: previews 10 entries remaining in sysarr<br/>";
-        currentCMDprompt += "PREVIEWALL: previews all entries remaining in sysarr<br/>";
+        currentCMDprompt += "PREVIEWALL: previews all entries (up to 2000) remaining in sysarr<br/>";
         currentCMDprompt += "COUNT: counts entries remaining in sysarr<br/>";
         currentCMDprompt += "FILTER <phrase>: removes all entries with the given phrase<br/>";
         currentCMDprompt += "FREQUENCY <phrase> <count>: removes all entries with the given phrase more than count times<br/>";
+        currentCMDprompt += "MINVOWELS <count>: removes all entries with fewer than the given amount of vowels<br/>";
+        currentCMDprompt += "MAXVOWELS <count>: removes all entries with more than the given amount of vowels<br/>";
         currentCMDprompt += "<br/>"
     } else if (formattedCommand == "ecaesar") {
         if (args.length < 3) {
@@ -104,8 +109,49 @@ function enterCommand(cmd) {
                 currentCMDprompt += word + "<br/>"
             } catch {
                 currentCMDprompt += "<span>Error: Cannot parse key numbers.</span><br/>"
-
             }
+        }
+    } else if (formattedCommand == "minvowels") {
+        if (args.length < 2) {
+            currentCMDprompt += "<span>Error: Missing args: Required 1</span><br/>"
+        } else {
+                let removed = 0;
+                let mincount = Number(args[1])
+                for (let i = 0; i < sysarr.length; i++) {
+                    let vowelCount = 0
+                    for (let j = 0; j < sysarr[i].length; j++) {
+                        if (vowels.includes(sysarr[i].charAt(j))) {
+                            vowelCount++;
+                        }
+                    }
+                    if(vowelCount < mincount){
+                        sysarr.splice(i,1)
+                        removed++;
+                        i--;
+                    }
+                }
+                currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+        }
+    } else if (formattedCommand == "maxvowels") {
+        if (args.length < 2) {
+            currentCMDprompt += "<span>Error: Missing args: Required 1</span><br/>"
+        } else {
+                let removed = 0;
+                let maxcount = Number(args[1])
+                for (let i = 0; i < sysarr.length; i++) {
+                    let vowelCount = 0
+                    for (let j = 0; j < sysarr[i].length; j++) {
+                        if (vowels.includes(sysarr[i].charAt(j))) {
+                            vowelCount++;
+                        }
+                    }
+                    if(vowelCount > maxcount){
+                        sysarr.splice(i,1)
+                        removed++;
+                        i--;
+                    }
+                }
+                currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
         }
     } else if (formattedCommand == "preview") {
         if (sysarr.length == 0) {
@@ -118,9 +164,14 @@ function enterCommand(cmd) {
         if (sysarr.length == 0) {
             currentCMDprompt += "No entries in sysarr</br>"
         }
-        for (let i = 0; i < sysarr.length; i++) {
+        for (let i = 0; i < sysarr.length && i < 2000; i++) {
             currentCMDprompt += sysarr[i] + "<br/>"
         }
+    } else if (formattedCommand == "clearconsole") {
+        currentMessage = "";
+        currentCMDprompt = startingPrompt.replaceAll(1, "<br/>")
+        render()
+        return;
     } else if (formattedCommand == "count") {
         if (sysarr.length == 0) {
             currentCMDprompt += "No entries in sysarr</br>"
@@ -140,20 +191,30 @@ function enterCommand(cmd) {
                 }
             }
         }
-
         currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
-    } else if (formattedCommand == "filterword") {
+    }/* else if (formattedCommand == "filterword") {
         let removed = 0;
-        for (let i = 0; i < sysarr.length; i++) {
-            if (sysarr[i].includes(args[1])) {
-                sysarr.splice(i, 1);
-                removed++;
-                i--;
+        if(sysarr.length * wordbank.length > 10000000){
+            currentCMDprompt += "<span>Error: Cannot run filter, too many entries.</span>";
+        }else{
+            for (let i = 0; i < sysarr.length; i++) {
+                let valid = false;
+                for(let j = 0; j<wordbank.length; j++){
+                    if(sysarr[i].includes(wordbank[i])){
+                        valid = true;
+                        break;
+                    }
+                }
+                if(!valid){
+                    sysarr.slice(i,1)
+                    removed++;
+                    i--;
+                }
             }
-        }
+            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
 
-        currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
-    } else if (formattedCommand == "frequency") {
+        }
+    } */else if (formattedCommand == "frequency") {
         let removed = 0;
         if (args.length < 3) {
             currentCMDprompt += "<span>Error: Missing args: Required 2</span><br/>"
@@ -174,7 +235,6 @@ function enterCommand(cmd) {
                 }
             }
         }
-
         currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
     } else if (formattedCommand == "bfcaesar") {
         if (args.length < 3) {
@@ -202,7 +262,6 @@ function enterCommand(cmd) {
                     }
                 }
                 sysarr.push(word)
-
             }
         }
         currentCMDprompt += "Loaded.<br/>"
@@ -211,6 +270,9 @@ function enterCommand(cmd) {
     }
     currentMessage = "";
     currentCMDprompt += "ENTER COMMAND: "
+    if (currentCMDprompt.length > 10000000) {
+        currentCMDprompt = currentCMDprompt.substring(currentCMDprompt.length - 10000000, currentCMDprompt.length)
+    }
     render();
 }
 let interval = setInterval(render, 100)
