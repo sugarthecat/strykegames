@@ -75,6 +75,7 @@ function enterCommand(cmd) {
         currentCMDprompt += "<br/>"
         currentCMDprompt += "Sysarr Commands<br/>"
         currentCMDprompt += "PREVIEW: previews 10 entries remaining in sysarr<br/>";
+        currentCMDprompt += "PREVIEWALL: previews all entries remaining in sysarr<br/>";
         currentCMDprompt += "COUNT: counts entries remaining in sysarr<br/>";
         currentCMDprompt += "FILTER <phrase>: removes all entries with the given phrase<br/>";
         currentCMDprompt += "FREQUENCY <phrase> <count>: removes all entries with the given phrase more than count times<br/>";
