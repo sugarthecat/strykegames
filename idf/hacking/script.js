@@ -80,10 +80,13 @@ function enterCommand(cmd) {
         currentCMDprompt += "PREVIEW: previews 10 entries remaining in sysarr<br/>";
         currentCMDprompt += "PREVIEWALL: previews all entries (up to 2000) remaining in sysarr<br/>";
         currentCMDprompt += "COUNT: counts entries remaining in sysarr<br/>";
-        currentCMDprompt += "FILTER <phrase>: removes all entries with the given phrase<br/>";
-        currentCMDprompt += "FREQUENCY <phrase> <count>: removes all entries with the given phrase more than count times<br/>";
-        currentCMDprompt += "MINVOWELS <count>: removes all entries with fewer than the given amount of vowels<br/>";
-        currentCMDprompt += "MAXVOWELS <count>: removes all entries with more than the given amount of vowels<br/>";
+
+        currentCMDprompt += "<br/>"
+        currentCMDprompt += "Sysarr Filtering Commands<br/>"
+        currentCMDprompt += "FILTER &#8249;phrase&#8250;: removes all entries with the given phrase<br/>";
+        currentCMDprompt += "FREQUENCY &#8249;phrase&#8250; &#8249;count&#8250;: removes all entries with the given phrase more than count times<br/>";
+        currentCMDprompt += "MINVOWELS &#8249;count&#8250;: removes all entries with fewer than the given amount of vowels<br/>";
+        currentCMDprompt += "MAXVOWELS &#8249;count&#8250;: removes all entries with more than the given amount of vowels<br/>";
         currentCMDprompt += "<br/>"
     } else if (formattedCommand == "ecaesar") {
         if (args.length < 3) {
@@ -190,8 +193,8 @@ function enterCommand(cmd) {
                     i--;
                 }
             }
+            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
         }
-        currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
     }/* else if (formattedCommand == "filterword") {
         let removed = 0;
         if(sysarr.length * wordbank.length > 10000000){
@@ -234,8 +237,8 @@ function enterCommand(cmd) {
                     i--;
                 }
             }
+            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
         }
-        currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
     } else if (formattedCommand == "bfcaesar") {
         if (args.length < 3) {
             currentCMDprompt += "<span>Error: Missing args: Required 2</span><br/>"
@@ -263,8 +266,8 @@ function enterCommand(cmd) {
                 }
                 sysarr.push(word)
             }
+            currentCMDprompt += "Loaded.<br/>"
         }
-        currentCMDprompt += "Loaded.<br/>"
     } else {
         currentCMDprompt += "<span>UNRECOGNIZED COMMAND</span><br/>"
     }
