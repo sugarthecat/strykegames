@@ -1,0 +1,679 @@
+<!DOCTYPE HTML>
+
+<head>
+  <title>Super Chicken</title>
+  <canvas id="Platformer" width="600" height="400" style="border:1px solid #c3c3c3;">
+    This Game is not compatible with your browser.
+  </canvas>
+
+<body>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      border: 0;
+      overflow: hidden;
+      /*  Disable scrollbars */
+      display: block;
+      /* No floating content on sides */
+    }
+  </style>
+  <script>
+    var enemies = [1, 1, 1]
+    let scalex;
+    let scaley;
+    var grounded = 0;
+    var time = 0;
+
+    var timeincrease = 0.016;
+    var level = 1;
+    var jumpable = 1;
+    var chary = 220;
+    var spawnposy = 220;
+    var spawnposx = 10;
+    var rightmove = 0;
+    var leftmove = 0;
+    var charx = 10;
+    var momentum = 0;
+    var momentumx = 10;
+    function DrawCharacter(x, y) {
+      var canvas = document.getElementById("Platformer");
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(x * scalex, y * scaley + 5 * scaley, 25 * scalex, 20 * scaley);
+      ctx.fillStyle = "#dbdbdb";
+      ctx.fillRect(x * scalex, y * scaley + 5 * scaley, 25 * scalex, 7 * scaley);
+      ctx.fillStyle = "#ffffff";
+
+      if (rightmove == 1) {
+
+        ctx.fillRect(x * scalex + 15 * scalex, y * scaley, 10 * scalex, 15 * scaley);
+        ctx.fillStyle = "#d14141";
+        ctx.fillRect(x * scalex + 18 * scalex, y * scaley + 8 * scaley, 3 * scalex, 5 * scaley);
+        ctx.fillRect(x * scalex + 18 * scalex, y * scaley - 3 * scaley, 3 * scalex, 3 * scaley);
+      }
+
+      if (rightmove == 0) {
+        if (leftmove == 1) {
+
+          ctx.fillRect(x * scalex, y * scaley, 10 * scalex, 15 * scaley);
+          ctx.fillStyle = "#d14141";
+          ctx.fillRect(x * scalex + 3 * scalex, y * scaley + 8 * scaley, 3 * scalex, 5 * scaley);
+          ctx.fillRect(x * scalex + 3 * scalex, y * scaley - 3 * scaley, 3 * scalex, 3 * scaley);
+        }
+
+        if (leftmove == 0) {
+
+          ctx.fillRect(x * scalex + 7.5 * scalex, y * scaley, 10 * scalex, 15 * scaley);
+          ctx.fillStyle = "#d14141";
+          ctx.fillRect(x * scalex + 10.5 * scalex, y * scaley + 8 * scaley, 3 * scalex, 5 * scaley);
+          ctx.fillRect(x * scalex + 10 * scalex, y * scaley - 3 * scaley, 3 * scalex, 3 * scaley);
+        }
+      }
+    }
+
+    function Drawmomentumrect(rectxmom, rectymom, momrectwidth, momrectheight, plusmomx, plusmomy) {
+      var canvas = document.getElementById("Platformer");
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#99badd";
+      ctx.fillRect(rectxmom * scalex, rectymom * scaley, momrectwidth * scalex, momrectheight * scaley);
+
+      if (rectxmom < charx + 25) {
+        if (rectymom < chary + 25) {
+          if (chary < rectymom + momrectheight) {
+            if (charx < momrectwidth + rectxmom) {
+              momentum = plusmomy;
+              momentumx = plusmomx;
+            }
+          }
+        }
+      }
+    }
+    function Drawwinrect(rectxwin, rectywin, winrectwidth, winrectheight) {
+      var canvas = document.getElementById("Platformer");
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#75b855";
+      ctx.fillRect(rectxwin * scalex, rectywin * scaley, winrectwidth * scalex, winrectheight * scaley);
+
+      if (rectxwin < charx + 25) {
+        if (rectywin < chary + 25) {
+          if (chary < rectywin + winrectheight) {
+            if (charx < winrectwidth + rectxwin) {
+              level += 1;
+              spawnpointy = 220;
+              spawnpointx = 10;
+              charx = spawnpointx;
+              chary = spawnpointy;
+
+            }
+          }
+        }
+      }
+    }
+    function Drawpainrect(rectxpain, rectypain, painrectwidth, painrectheight) {
+      var canvas = document.getElementById("Platformer");
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#db6161";
+      ctx.fillRect(rectxpain * scalex, rectypain * scaley, painrectwidth * scalex, painrectheight * scaley);
+
+      if (rectxpain < charx + 25) {
+        if (rectypain < chary + 25) {
+          if (chary < rectypain + painrectheight) {
+            if (charx < painrectwidth + rectxpain) {
+              charx = spawnposx;
+              chary = spawnposy;
+            }
+          }
+        }
+      }
+    }
+    function DrawCollisRect(rectx, recty, collisrectwidth, collisrectheight) {
+      var canvas = document.getElementById("Platformer");
+      var ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#d8d7e0";
+      ctx.fillRect(rectx * scalex, recty * scaley, collisrectwidth * scalex, collisrectheight * scaley);
+
+
+      var collisionside;
+      if (rectx < charx + 25) {
+        if (recty < chary + 25) {
+          if (chary < recty + collisrectheight) {
+            if (charx < collisrectwidth + rectx) {
+              chary -= 6;
+              grounded = 1;
+              collisionside = 1;
+            }
+          }
+        }
+      }
+      if (rectx < charx + 25) {
+        if (recty < chary + 25) {
+          if (chary < recty + collisrectheight) {
+            if (charx < collisrectwidth + rectx) {
+              chary += 6;
+              charx -= 3;
+              grounded = 0;
+              collisionside = 2;
+            }
+          }
+        }
+      }
+      if (rectx < charx + 25) {
+        if (recty < chary + 25) {
+          if (chary < recty + collisrectheight) {
+            if (charx < collisrectwidth + rectx) {
+              collisionside = 3;
+              charx += 6;
+            }
+          }
+        }
+      }
+      if (rectx < charx + 25) {
+        if (recty < chary + 25) {
+          if (chary < recty + collisrectheight) {
+            if (charx < collisrectwidth + rectx) {
+              charx -= 3;
+              collisionside = 0;
+              chary += momentum;
+            }
+          }
+        }
+      }
+      if (collisionside == 2) {
+        momentumx = 0;
+        charx = rectx - 25;
+      }
+      if (collisionside == 3) {
+        momentumx = 0;
+        charx = rectx + collisrectwidth;
+      }
+      if (collisionside == 0) {
+        momentum = 0;
+        chary = recty + collisrectheight;
+      }
+      if (collisionside == 1) {
+        chary = recty - 25
+      }
+    }
+    document.addEventListener('keydown', function (evt) {
+      switch (evt.code) {
+        case 'ArrowUp':
+          if (momentum == 0) {
+            if (jumpable == 1) {
+              momentum = 20;
+              y += 4
+              jumpable = 0;
+            }
+          }
+
+          break;
+        case 'ArrowLeft':
+          leftmove = 1;
+          break;
+        case 'ArrowRight':
+          rightmove = 1;
+          break;
+      }
+      console.log(evt);
+    })
+    document.addEventListener('keyup', function (evt) {
+      switch (evt.code) {
+        case 'ArrowUp':
+          jumpable = 1;
+
+          break;
+
+        case 'ArrowRight':
+          rightmove = 0;
+          break;
+        case 'ArrowLeft':
+          leftmove = 0;
+          break;
+      }
+      console.log(evt);
+    })
+    function RLevel(levell) {
+      if (levell == 1) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawwinrect(550, 200, 50, 100);
+      }
+      if (levell == 2) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawwinrect(550, 200, 50, 100);
+        DrawCollisRect(250, 250, 20, 50);
+      }
+      if (levell == 4) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawwinrect(550, 200, 50, 100);
+        DrawCollisRect(250, 100, 20, 200);
+      }
+      if (levell == 3) {
+        DrawCollisRect(0, 300, 200, 30);
+        Drawwinrect(550, 200, 50, 100);
+        DrawCollisRect(300, 300, 300, 30);
+      }
+      if (levell == 5) {
+        DrawCollisRect(0, 300, 200, 30);
+        Drawwinrect(550, 200, 50, 100);
+
+      }
+      if (levell == 8) {
+        DrawCollisRect(0, 300, 50, 100);
+        DrawCollisRect(100, 300, 40, 100);
+        DrawCollisRect(210, 300, 40, 100);
+        DrawCollisRect(320, 200, 40, 200);
+        DrawCollisRect(410, 200, 40, 200);
+        DrawCollisRect(500, 300, 100, 100);
+        Drawwinrect(575, 250, 25, 50);
+
+      }
+      if (levell == 7) {
+        DrawCollisRect(0, 300, 150, 100);
+        DrawCollisRect(250, 200, 150, 200);
+        DrawCollisRect(300, 60, 100, 20);
+
+        DrawCollisRect(450, 250, 50, 50);
+        DrawCollisRect(550, 250, 50, 50);
+        Drawwinrect(575, 200, 25, 50);
+      }
+      if (levell == 6) {
+        DrawCollisRect(0, 250, 300, 150);
+        DrawCollisRect(0, 250, 300, 150);
+        DrawCollisRect(0, 250, 300, 150);
+
+        Drawwinrect(575, 0, 25, 50);
+      }
+      if (levell == 10) {
+        DrawCollisRect(0, 250, 25, 150);
+        DrawCollisRect(100, 0, 25, 100);
+        DrawCollisRect(100, 200, 25, 200);
+
+        DrawCollisRect(200, 0, 25, 50);
+        DrawCollisRect(200, 100, 25, 300);
+
+        DrawCollisRect(300, 0, 25, 250);
+        DrawCollisRect(300, 300, 25, 100);
+
+        DrawCollisRect(400, 0, 25, 0);
+        DrawCollisRect(400, 50, 25, 350);
+
+        DrawCollisRect(500, 0, 25, 187);
+        DrawCollisRect(500, 212, 25, 188);
+
+
+        Drawwinrect(575, 0, 25, 400);
+      }
+      if (levell == 9) {
+        DrawCollisRect(0, 40, 560, 10);
+
+        DrawCollisRect(40, 140, 560, 10);
+
+        DrawCollisRect(0, 240, 560, 10);
+
+        DrawCollisRect(0, 390, 600, 10);
+
+
+        Drawwinrect(0, 0, 600, 10);
+      }
+      if (levell == 11) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawmomentumrect(200, 250, 20, 50, 20, 0);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 12) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawmomentumrect(200, 225, 20, 75, 20, 10);
+        Drawmomentumrect(200, 0, 20, 160, 20, 0);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 13) {
+        DrawCollisRect(0, 300, 50, 30);
+        DrawCollisRect(550, 300, 50, 30);
+        Drawmomentumrect(50, 300, 500, 30, 10, 10);
+        Drawmomentumrect(0, 100, 600, 30, 10, -10);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 14) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawmomentumrect(50, 100, 500, 230, 10, 20);
+        Drawwinrect(550, 200, 50, 100);
+      }
+      if (levell == 15) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawmomentumrect(200, 175, 10, 125, 7, 0);
+        Drawmomentumrect(200, 0, 10, 75, 7, 0);
+
+        Drawmomentumrect(300, 175, 10, 125, 7, 0);
+        Drawmomentumrect(300, 0, 10, 75, 7, 0);
+
+        Drawmomentumrect(400, 175, 10, 125, 7, 0);
+        Drawmomentumrect(400, 0, 10, 75, 7, 0);
+
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 16) {
+        DrawCollisRect(75, 40, 495, 10);
+        DrawCollisRect(0, 300, 50, 10);
+        Drawmomentumrect(75, 50, 495, 10, -10, 0);
+        DrawCollisRect(50, 40, 20, 270);
+
+
+        Drawmomentumrect(120, 250, 560, 10, 0, 50);
+
+
+
+
+
+        Drawwinrect(0, 390, 600, 10);
+      }
+      if (levell == 17) {
+        DrawCollisRect(75, 0, 10, 300);
+        DrawCollisRect(0, 390, 600, 10);
+        DrawCollisRect(0, 0, 75, 20);
+
+        DrawCollisRect(75, 290, 231, 10);
+        DrawCollisRect(335, 290, 280, 10);
+
+        DrawCollisRect(75, 90, 131, 10);
+        DrawCollisRect(235, 90, 380, 10);
+
+        Drawwinrect(0, 0, 600, 10);
+
+      }
+      if (levell == 18) {
+        DrawCollisRect(75, 0, 10, 300);
+        DrawCollisRect(0, 390, 600, 10);
+        DrawCollisRect(0, 0, 75, 20);
+
+        Drawmomentumrect(335, 300, 280, 90, 10, 0);
+
+        DrawCollisRect(75, 290, 231, 10);
+        DrawCollisRect(335, 290, 280, 10);
+
+        Drawmomentumrect(85, 100, 121, 190, -10, 0);
+
+
+        DrawCollisRect(75, 90, 131, 10);
+        DrawCollisRect(235, 90, 380, 10);
+
+        Drawwinrect(0, 0, 600, 10);
+      }
+      if (levell == 19) {
+        DrawCollisRect(0, 250, 30, 150);
+        Drawmomentumrect(100, 0, 10, 100, 10, 0);
+        DrawCollisRect(100, 90, 10, 10);
+        Drawmomentumrect(100, 210, 10, 200, 10, 0);
+        DrawCollisRect(100, 200, 10, 10);
+
+        Drawmomentumrect(200, 0, 10, 90, 10, 0);
+        DrawCollisRect(200, 90, 10, 10);
+
+
+        Drawmomentumrect(200, 210, 10, 200, 10, 0);
+        DrawCollisRect(200, 200, 10, 10);
+
+        Drawmomentumrect(300, 0, 10, 40, 10, 0);
+        DrawCollisRect(300, 40, 10, 10);
+        Drawmomentumrect(300, 160, 10, 250, 10, 0);
+        DrawCollisRect(300, 150, 10, 10);
+
+
+        Drawmomentumrect(400, 110, 10, 345, 10, 0);
+        DrawCollisRect(400, 100, 10, 10);
+
+
+        Drawmomentumrect(500, 0, 10, 190, 10, 0);
+        DrawCollisRect(500, 190, 10, 10);
+        Drawmomentumrect(500, 310, 10, 188, 10, 0);
+        DrawCollisRect(500, 300, 10, 10);
+
+
+        Drawwinrect(575, 0, 25, 400);
+      }
+      if (levell == 20) {
+        DrawCollisRect(0, 250, 30, 150);
+        Drawmomentumrect(100, 0, 10, 100, 10, 0);
+        Drawmomentumrect(100, 200, 10, 200, 10, 0);
+
+        Drawmomentumrect(200, 0, 10, 100, 10, 0);
+        Drawmomentumrect(200, 200, 10, 200, 10, 0);
+
+        Drawmomentumrect(300, 0, 10, 50, 10, 0);
+        Drawmomentumrect(300, 150, 10, 250, 10, 0);
+
+        Drawmomentumrect(400, 0, 10, 0, 10, 0);
+        Drawmomentumrect(400, 100, 10, 350, 10, 0);
+
+        Drawmomentumrect(500, 0, 10, 200, 10, 0);
+        Drawmomentumrect(500, 300, 10, 188, 10, 0);
+
+
+        Drawwinrect(575, 0, 25, 400);
+      }
+      if (levell == 21) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawpainrect(200, 250, 20, 50);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 22) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawpainrect(200, 225, 20, 75);
+        Drawpainrect(200, 0, 20, 160);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 23) {
+        DrawCollisRect(0, 300, 50, 30);
+        DrawCollisRect(550, 300, 50, 30);
+        Drawpainrect(50, 300, 500, 30);
+        Drawpainrect(0, 100, 600, 30);
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 24) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawpainrect(50, 100, 500, 230);
+        Drawwinrect(550, 200, 50, 100);
+      }
+      if (levell == 25) {
+        DrawCollisRect(0, 300, 600, 30);
+        Drawpainrect(200, 175, 10, 125);
+        Drawpainrect(200, 0, 10, 75);
+
+        Drawpainrect(300, 175, 10, 125);
+        Drawpainrect(300, 0, 10, 75);
+
+        Drawpainrect(400, 175, 10, 125);
+        Drawpainrect(400, 0, 10, 75);
+
+        Drawwinrect(580, 200, 20, 100);
+      }
+      if (levell == 26) {
+        DrawCollisRect(75, 40, 495, 10);
+        DrawCollisRect(0, 300, 50, 10);
+        Drawpainrect(75, 50, 495, 10);
+        DrawCollisRect(50, 40, 20, 270);
+        Drawpainrect(120, 250, 560, 10);
+        Drawwinrect(0, 390, 600, 10);
+      }
+      if (levell == 27) {
+        DrawCollisRect(75, 0, 10, 300);
+        DrawCollisRect(0, 390, 600, 10);
+        DrawCollisRect(0, 0, 75, 20);
+
+        Drawpainrect(75, 300, 231, 5);
+        Drawpainrect(335, 300, 280, 5);
+
+        DrawCollisRect(75, 290, 231, 10);
+        DrawCollisRect(335, 290, 280, 10);
+
+        Drawpainrect(75, 100, 131, 5);
+        Drawpainrect(235, 100, 380, 5);
+
+        DrawCollisRect(75, 90, 131, 10);
+        DrawCollisRect(235, 90, 380, 10);
+
+        Drawwinrect(0, 0, 600, 10);
+
+      }
+      if (levell == 28) {
+        DrawCollisRect(75, 0, 10, 300);
+        DrawCollisRect(0, 390, 600, 10);
+        DrawCollisRect(0, 0, 75, 20);
+
+        Drawpainrect(75, 300, 231, 5);
+        Drawpainrect(335, 300, 280, 90);
+
+        DrawCollisRect(75, 290, 231, 10);
+        DrawCollisRect(335, 290, 280, 10);
+
+        Drawpainrect(85, 100, 121, 190);
+        Drawpainrect(235, 100, 380, 5);
+
+        DrawCollisRect(75, 90, 131, 10);
+        DrawCollisRect(235, 90, 380, 10);
+
+        Drawwinrect(0, 0, 600, 10);
+      }
+      if (levell == 29) {
+        DrawCollisRect(0, 250, 30, 150);
+        Drawpainrect(100, 0, 10, 100);
+        DrawCollisRect(100, 90, 10, 10);
+        Drawpainrect(100, 210, 10, 200);
+        DrawCollisRect(100, 200, 10, 10);
+
+        Drawpainrect(200, 0, 10, 90);
+        DrawCollisRect(200, 90, 10, 10);
+
+
+        Drawpainrect(200, 210, 10, 200);
+        DrawCollisRect(200, 200, 10, 10);
+
+        Drawpainrect(300, 0, 10, 40);
+        DrawCollisRect(300, 40, 10, 10);
+        Drawpainrect(300, 160, 10, 250);
+        DrawCollisRect(300, 150, 10, 10);
+
+
+        Drawpainrect(400, 110, 10, 345);
+        DrawCollisRect(400, 100, 10, 10);
+
+
+        Drawpainrect(500, 0, 10, 190);
+        DrawCollisRect(500, 190, 10, 10);
+        Drawpainrect(500, 310, 10, 188);
+        DrawCollisRect(500, 300, 10, 10);
+
+
+        Drawwinrect(575, 0, 25, 400);
+      }
+      if (levell == 30) {
+        DrawCollisRect(0, 250, 30, 150);
+        Drawpainrect(100, 0, 10, 100);
+        Drawpainrect(100, 200, 10, 200);
+
+        Drawpainrect(200, 0, 10, 100);
+        Drawpainrect(200, 200, 10, 200);
+
+        Drawpainrect(300, 0, 10, 50);
+        Drawpainrect(300, 150, 10, 250);
+
+        Drawpainrect(400, 0, 10, 0);
+        Drawpainrect(400, 100, 10, 350);
+
+        Drawpainrect(500, 0, 10, 200);
+        Drawpainrect(500, 300, 10, 188);
+
+
+        Drawwinrect(575, 0, 25, 400);
+      }
+      if (levell == 31) {
+        DrawCollisRect(0, 0, 600, 10);
+        DrawCollisRect(0, 390, 600, 10);
+        DrawCollisRect(590, 0, 10, 400);
+        DrawCollisRect(0, 0, 10, 400);
+
+        timeincrease = 0;
+
+      }
+    }
+    function Render() {
+
+      var canvas = document.getElementById("Platformer");
+      canvas.style.width = window.innerWidth;
+      canvas.style.height = window.innerHeight;
+      scalex = window.innerWidth / 600;
+      scaley = window.innerHeight / 400;
+      time += timeincrease;
+      time = Math.floor(time * 1000) / 1000
+      var ctx = canvas.getContext("2d");
+      ctx.canvas.width = window.innerWidth;
+      ctx.canvas.height = window.innerHeight;
+
+
+      ctx.fillStyle = "#4d5361";
+      ctx.fillRect(0, 0, 600000, 400000);
+      DrawCharacter(charx, chary);
+      chary += 6;
+
+
+      chary -= momentum;
+      charx -= momentumx;
+
+      if (chary < 0) {
+        momentum = 0;
+        chary = 0;
+      }
+      if (momentumx > 0) {
+        momentumx--;
+      }
+      if (momentumx < 0) {
+        momentumx++;
+      }
+      if (charx < 0) {
+        charx = 0;
+      }
+      if (charx > 575) {
+        charx = 575;
+      }
+      if (chary > 375) {
+        charx = spawnposx;
+        chary = spawnposy;
+      }
+      if (rightmove == 1) {
+        charx += 3;
+      }
+      if (leftmove == 1) {
+        charx -= 3;
+      }
+      if (momentum < 0) {
+        momentum++;
+      }
+      if (momentum > 0) {
+        momentum--;
+      }
+
+      RLevel(level);
+      ctx.fillStyle = "#3b94ed";
+      var minutes = Math.floor(time / 60);
+      var seconds = Math.floor(time) % 60
+      var remainder = Math.floor((time % 1) * 100) / 1;
+      var levelgroup = Math.floor(level / 10 - 1) + 1;
+      var levelspecific = level % 10;
+      if (levelspecific == 0) {
+        levelspecific = 10;
+      }
+      ctx.font = 15 * scalex + "px Arial";
+      ctx.fillText(minutes + ":" + seconds + ":" + remainder, 5 * scalex, 25 * scaley);
+      ctx.fillText(levelgroup + "-" + levelspecific, 500 * scalex, 25 * scaley);
+      if (level == 31) {
+        ctx.font = 60 * scalex + "px Arial";
+        ctx.fillText("You Win!", 200 * scalex, 250 * scaley);
+      }
+    }
+    var interval = setInterval(Render, 16);
+  </script>
+  <style>
+
+  </style>
+</body>
