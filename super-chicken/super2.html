@@ -1,0 +1,1217 @@
+<!DOCTYPE HTML>
+
+  <head> 
+    <title id="title">Super Chicken 2</title>
+    <canvas id="Platformer" width="600" height="400"
+style="border:1px solid #c3c3c3;">
+This Game is not compatible with your browser.
+</canvas>
+  <body> 
+    <style>
+    html, body {
+      width: 100%; 
+      height: 100%;
+      margin: 0px;
+      border: 0;
+      overflow: hidden;
+      display: block;  
+    }
+    </style>
+    <script> 
+      let scalex;
+      let scaley;
+      var n =  new Date();
+var m = n.getMonth() + 1;
+var d = n.getDate();
+var haloween = false;
+if(m == 10){
+  if(d == 31){
+    haloween = true;
+    document.getElementById("title") = "Spooker Chicken Two";
+  }
+}
+      var grounded = 0;
+      var time = 0;
+        let canjump = 1;
+      var timeincrease = 0.016;
+            var level = 1;
+           
+      var chary = 220;
+            var spawnposy = 220;
+            var spawnposx = 10;
+      var rightmove = 0;
+      var leftmove = 0;
+      var charx = 10;
+      var momentum = 0;
+      var momentumx = 10;
+      function DrawCharacter(x,y){ 
+       var canvas = document.getElementById("Platformer");
+var ctx = canvas.getContext("2d");
+if(!haloween){
+ctx.fillStyle = "#ffffff";
+ctx.fillRect(275*scalex,y*scaley+5*scaley,25*scalex,20*scaley);
+ctx.fillStyle = "#dbdbdb";
+ctx.fillRect(275*scalex,y*scaley+5*scaley,25*scalex,7*scaley);
+ctx.fillStyle = "#ffffff";
+
+if(rightmove == 1){
+
+ctx.fillRect(275*scalex+15*scalex,y*scaley,10*scalex,15*scaley);
+ctx.fillStyle = "#d14141";
+ctx.fillRect(275*scalex+18*scalex,y*scaley+8*scaley,3*scalex,5*scaley);
+ctx.fillRect(275*scalex+18*scalex,y*scaley-3*scaley,3*scalex,3*scaley);
+}
+
+if(rightmove == 0){
+  if(leftmove == 1){
+  
+ctx.fillRect(275*scalex,y*scaley,10*scalex,15*scaley);
+ctx.fillStyle = "#d14141";
+ctx.fillRect(275*scalex+3*scalex,y*scaley+8*scaley,3*scalex,5*scaley);
+ctx.fillRect(275*scalex+3*scalex,y*scaley-3*scaley,3*scalex,3*scaley);
+}
+
+if(leftmove == 0){
+
+ctx.fillRect(275*scalex+7.5*scalex,y*scaley,10*scalex,15*scaley);
+ctx.fillStyle = "#d14141";
+ctx.fillRect(275*scalex+10.5*scalex,y*scaley+8*scaley,3*scalex,5*scaley);
+ctx.fillRect(275*scalex+10*scalex,y*scaley-3*scaley,3*scalex,3*scaley);}
+}}
+if(haloween){
+  ctx.fillStyle = "#636362";
+ctx.fillRect(275*scalex,y*scaley+10*scaley,25*scalex,15*scaley);
+ctx.fillStyle = "#404040";
+ctx.fillRect(275*scalex,y*scaley+7*scaley,25*scalex,5*scaley);
+ctx.fillStyle = "#d16900";
+
+if(rightmove == 1){
+
+ctx.fillRect(275*scalex+15*scalex,y*scaley,10*scalex,11*scaley);
+ctx.fillStyle = "#000000";
+ctx.fillRect(275*scalex+17*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+21*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+17*scalex,y*scaley+5*scaley,7*scalex,3*scaley);
+}
+
+if(rightmove == 0){
+  if(leftmove == 1){
+  
+ctx.fillRect(275*scalex,y*scaley,10*scalex,11*scaley);
+ctx.fillStyle = "#000000";
+ctx.fillRect(275*scalex+1*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+5*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+1*scalex,y*scaley+5*scaley,7*scalex,3*scaley);
+}
+
+if(leftmove == 0){
+
+ctx.fillRect(275*scalex+7.5*scalex,y*scaley,10*scalex,11*scaley);
+ctx.fillStyle = "#000000";
+ctx.fillRect(275*scalex+9*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+13*scalex,y*scaley+1*scaley,3*scalex,3*scaley);
+ctx.fillRect(275*scalex+9*scalex,y*scaley+5*scaley,7*scalex,3*scaley);}}
+}}
+      function Drawmomentumrect(rectxmom,rectymom,momrectwidth,momrectheight,plusmomx,plusmomy){
+        var canvas = document.getElementById("Platformer");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle =   "#99badd";
+        if(haloween){
+          ctx.fillStyle = "#85E21F";
+        }
+        ctx.fillRect(-1*charx*scalex+275*scalex+rectxmom*scalex,rectymom*scaley,momrectwidth*scalex,momrectheight*scaley);
+           
+        if(rectxmom < charx+25){
+          if(rectymom < chary+25){
+            if(chary < rectymom+momrectheight){
+              if(charx < momrectwidth+rectxmom){
+                                momentum = plusmomy;
+                                momentumx  = plusmomx;
+                            }}}}
+      }
+            function Drawwinrect(rectxwin, rectywin, winrectwidth, winrectheight){
+            var canvas = document.getElementById("Platformer");
+        var ctx = canvas.getContext("2d");
+        
+        ctx.fillStyle = "#75b855";
+        if(haloween){
+          ctx.fillStyle = "#FF9A00";
+        }
+        ctx.fillRect(-1*charx*scalex+275*scalex+rectxwin*scalex,rectywin*scaley,winrectwidth*scalex,winrectheight*scaley);
+       
+                
+        if(rectxwin < charx+25){
+          if(rectywin < chary+25){
+            if(chary < rectywin+winrectheight){
+              if(charx < winrectwidth+rectxwin){
+                level+= 1;
+                                spawnpointy = 220;
+                                spawnpointx = 0;
+                                charx = spawnpointx;
+                                chary = spawnpointy;
+
+                            }}}}}
+            function Drawpainrect(rectxpain, rectypain, painrectwidth, painrectheight){
+            var canvas = document.getElementById("Platformer");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle =   "#db6161";
+        if(haloween){
+          ctx.fillStyle =   "#881EE4";
+        }
+        ctx.fillRect(-1*charx*scalex+275*scalex+rectxpain*scalex,rectypain*scaley,painrectwidth*scalex,painrectheight*scaley);
+                
+        if(rectxpain < charx+25){
+          if(rectypain < chary+25){
+            if(chary < rectypain+painrectheight){
+              if(charx < painrectwidth+rectxpain){
+                                charx = spawnposx;
+                                chary = spawnposy;
+                            }}}}}
+function DrawCollisRect(rectx,recty,collisrectwidth,collisrectheight){
+        var canvas = document.getElementById("Platformer");
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#d8d7e0";
+        if(haloween){
+
+        ctx.fillStyle = "#191919";}
+        ctx.fillRect(-1*charx*scalex+275*scalex+rectx*scalex,recty*scaley,collisrectwidth*scalex,collisrectheight*scaley);
+        }
+        function CollisRect(rectx,recty,collisrectwidth,collisrectheight){
+        
+        var collisionside;
+        if(rectx < charx+25){
+          if(recty < chary+25){
+            if(chary < recty+collisrectheight){
+              if(charx < collisrectwidth+rectx){
+                chary-=6;
+                grounded = 1;
+                collisionside = 1;
+              }}}}
+        if(rectx < charx+25){
+          if(recty < chary+25){
+            if(chary < recty+collisrectheight){
+              if(charx < collisrectwidth+rectx){
+                chary+=6;
+                charx-=3;
+                grounded = 0;
+                collisionside = 2;
+              }
+            }
+          }
+        }
+        if(rectx < charx+25){
+          if(recty < chary+25){
+            if(chary < recty+collisrectheight){
+              if(charx < collisrectwidth+rectx){
+                collisionside = 3;
+                charx+=6;
+              }
+            }
+          }
+        }
+        if(rectx < charx+25){
+          if(recty < chary+25){
+            if(chary < recty+collisrectheight){
+              if(charx < collisrectwidth+rectx){
+                charx-=3;
+                collisionside = 0;
+                chary+=momentum;
+              }
+            }
+          }
+        }
+       if(rectx < charx+25){
+          if(recty < chary+25){
+            if(chary < recty+collisrectheight){
+              if(charx < collisrectwidth+rectx){
+                                charx = spawnposx;
+                                chary = spawnposy;
+                                collisionside
+                            }}}}
+         if(collisionside == 2){
+          momentumx = 0;
+          charx = rectx-25;
+        }
+        if(collisionside == 3){
+          momentumx = 0;
+          charx = rectx+collisrectwidth;
+        }
+        if(collisionside == 0){
+          momentum = 0;
+          chary = recty+collisrectheight;
+        }
+        if(collisionside == 1){
+          chary = recty-25
+        }
+        
+}
+document.addEventListener('keydown', function(evt) {
+    switch (evt.code) {
+      case 'ArrowUp':
+        if(momentum == 0){
+          if(canjump == 1){
+            momentum = 20;
+            canjump = 0;}}
+        break;
+      case 'ArrowLeft':
+        leftmove = 1;
+        break;
+      case 'ArrowRight':
+        rightmove = 1;
+        break;
+    }
+    console.log(evt);
+  })
+document.addEventListener('keyup', function(evt) {
+    switch (evt.code) {
+      case 'ArrowUp':
+          canjump = 1;
+          
+        break;
+      case 'ArrowRight':
+          rightmove = 0;
+        break;
+      case 'ArrowLeft':
+          leftmove = 0;
+        break;
+    }
+    console.log(evt);
+  })
+function RLevel(levell){
+if(levell == 1){
+CollisRect(0,300,600,30);
+CollisRect(400,251,30,50);
+CollisRect(700,300,400,30);
+CollisRect(850,101,30,200);
+CollisRect(300,100,100,25);
+CollisRect(400,150,100,25);
+    DrawCollisRect(300,100,100,25);
+    DrawCollisRect(400,150,100,25);
+    DrawCollisRect(0,300,600,30);
+DrawCollisRect(400,251,30,50);
+DrawCollisRect(700,300,400,30);
+DrawCollisRect(850,101,30,200);
+    Drawwinrect(1450,0,100,600);
+}
+if(levell == 2){
+  CollisRect(0,300,400,30);
+  CollisRect(500,0,30,200);
+  CollisRect(600,0,30,50);
+  CollisRect(600,100,30,600);
+  CollisRect(700,0,30,150);
+  CollisRect(700,200,30,600);
+  CollisRect(800,0,30,10);
+  CollisRect(800,60,30,600);
+  CollisRect(900,0,30,50);
+  CollisRect(900,100,30,600);
+  CollisRect(1000,0,30,100);
+  CollisRect(1000,150,30,600);
+  CollisRect(1100,0,30,200);
+  CollisRect(1100,250,30,600);
+  CollisRect(1200,0,30,150);
+  CollisRect(1200,200,30,600);
+  CollisRect(1300,0,30,50);
+  CollisRect(1300,100,30,600);
+  
+  DrawCollisRect(0,300,400,30);
+  DrawCollisRect(500,0,30,200);
+  DrawCollisRect(600,0,30,50);
+  DrawCollisRect(600,100,30,600);
+  DrawCollisRect(700,0,30,150);
+  DrawCollisRect(700,200,30,600);
+  DrawCollisRect(800,0,30,10);
+  DrawCollisRect(800,60,30,600);
+  DrawCollisRect(900,0,30,50);
+  DrawCollisRect(900,100,30,600);
+  DrawCollisRect(1000,0,30,100);
+  DrawCollisRect(1000,150,30,600);
+  DrawCollisRect(1100,0,30,200);
+  DrawCollisRect(1100,250,30,600);
+  DrawCollisRect(1200,0,30,150);
+  DrawCollisRect(1200,200,30,600);
+  DrawCollisRect(1300,0,30,50);
+  DrawCollisRect(1300,100,30,600);
+  Drawwinrect(1450,0,100,600);
+
+}
+  if(levell == 3){
+    CollisRect(0,375,950,25);
+    CollisRect(50,0,25,50);
+    CollisRect(50,75,25,150);
+    CollisRect(50,250,25,100);
+    CollisRect(100,0,25,25);
+    CollisRect(100,50,25,50);
+    CollisRect(75,175,150,25);
+    CollisRect(100,125,75,25);
+    CollisRect(150,0,25,125);
+    CollisRect(150,0,50,25);
+    CollisRect(225,0,150,25);
+    CollisRect(200,75,25,100);
+    CollisRect(225,50,150,25);
+    CollisRect(100,200,25,25);
+    CollisRect(100,250,25,50);
+    CollisRect(75,275,25,25);
+    CollisRect(100,350,25,50);
+    CollisRect(350,75,25,50);
+    CollisRect(325,100,50,25);
+    CollisRect(250,100,25,100);
+    CollisRect(250,175,200,25);
+    CollisRect(175,200,25,25);
+    CollisRect(200,225,25,25);
+    CollisRect(150,225,25,100);
+    CollisRect(200,275,25,75);
+    CollisRect(300,150,50,25);
+    CollisRect(250,250,125,25);
+    CollisRect(350,200,25,50);
+    CollisRect(225,275,25,25);
+    CollisRect(250,325,225,25);
+    CollisRect(450,325,25,25);
+    CollisRect(400,225,25,100);
+    CollisRect(450,175,25,125);
+    CollisRect(400,0,25,100);
+    CollisRect(375,125,100,25);
+    CollisRect(450,0,25,125);
+    CollisRect(450,225,275,25);
+    CollisRect(550,250,25,50);
+    CollisRect(500,275,25,75);
+    CollisRect(550,325,25,50);
+    CollisRect(500,0,25,25);
+    CollisRect(500,50,25,50);
+    CollisRect(575,50,25,50);
+    CollisRect(600,0,100,25);
+    CollisRect(525,75,225,25);
+    CollisRect(550,125,50,25);
+    CollisRect(500,125,25,75);
+    CollisRect(500,175,100,25);
+    CollisRect(625,100,25,25);
+    CollisRect(625,150,25,50);
+    CollisRect(625,175,50,25);
+    CollisRect(725,50,25,100);
+    CollisRect(700,175,250,25);
+    CollisRect(700,200,25,25);
+    CollisRect(775,200,25,25);
+    CollisRect(775,250,25,100);
+    CollisRect(825,200,125,75);
+    CollisRect(925,150,25,250);
+    CollisRect(800,325,100,25);
+    CollisRect(925,0,25,125);
+    CollisRect(600,250,75,25);
+    CollisRect(600,300,75,25);
+    CollisRect(600,350,75,25);
+    CollisRect(675,250,25,50);
+    CollisRect(725,250,25,25);
+    CollisRect(725,300,25,75);
+    CollisRect(775,0,75,25);
+    CollisRect(775,50,75,25);
+    CollisRect(775,75,25,25);
+    CollisRect(775,100,125,25);
+    CollisRect(875,0,25,100);
+
+    DrawCollisRect(0,375,950,25);
+    DrawCollisRect(50,0,25,50);
+    DrawCollisRect(50,75,25,150);
+    DrawCollisRect(50,250,25,100);
+    DrawCollisRect(100,0,25,25);
+    DrawCollisRect(100,50,25,50);
+    DrawCollisRect(75,175,150,25);
+    DrawCollisRect(100,125,75,25);
+    DrawCollisRect(150,0,25,125);
+    DrawCollisRect(150,0,50,25);
+    DrawCollisRect(225,0,150,25);
+    DrawCollisRect(200,75,25,100);
+    DrawCollisRect(225,50,150,25);
+    DrawCollisRect(100,200,25,25);
+    DrawCollisRect(100,250,25,50);
+    DrawCollisRect(75,275,25,25);
+    DrawCollisRect(100,350,25,50);
+    DrawCollisRect(350,75,25,50);
+    DrawCollisRect(325,100,50,25);
+    DrawCollisRect(250,100,25,100);
+    DrawCollisRect(250,175,200,25);
+    DrawCollisRect(175,200,25,25);
+    DrawCollisRect(200,225,25,25);
+    DrawCollisRect(150,225,25,100);
+    DrawCollisRect(200,275,25,75);
+    DrawCollisRect(300,150,50,25);
+    DrawCollisRect(250,250,125,25);
+    DrawCollisRect(350,200,25,50);
+    DrawCollisRect(225,275,25,25);
+    DrawCollisRect(250,325,225,25);
+    DrawCollisRect(450,325,25,25);
+    DrawCollisRect(400,225,25,100);
+    DrawCollisRect(450,175,25,125);
+    DrawCollisRect(400,0,25,100);
+    DrawCollisRect(375,125,100,25);
+    DrawCollisRect(450,0,25,125);
+    DrawCollisRect(450,225,275,25);
+    DrawCollisRect(550,250,25,50);
+    DrawCollisRect(500,275,25,75);
+    DrawCollisRect(550,325,25,50);
+    DrawCollisRect(500,0,25,25);
+    DrawCollisRect(500,50,25,50);
+    DrawCollisRect(575,50,25,50);
+    DrawCollisRect(600,0,100,25);
+    DrawCollisRect(525,75,225,25);
+    DrawCollisRect(550,125,50,25);
+    DrawCollisRect(500,125,25,75);
+    DrawCollisRect(500,175,100,25);
+    DrawCollisRect(625,100,25,25);
+    DrawCollisRect(625,150,25,50);
+    DrawCollisRect(625,175,50,25);
+    DrawCollisRect(725,50,25,100);
+    DrawCollisRect(700,175,250,25);
+    DrawCollisRect(700,200,25,25);
+    DrawCollisRect(775,200,25,25);
+    DrawCollisRect(775,250,25,100);
+    DrawCollisRect(825,200,125,75);
+    DrawCollisRect(925,150,25,250);
+    DrawCollisRect(800,325,100,25);
+    DrawCollisRect(925,0,25,125);
+    DrawCollisRect(600,250,75,25);
+    DrawCollisRect(600,300,75,25);
+    DrawCollisRect(600,350,75,25);
+    DrawCollisRect(675,250,25,50);
+    DrawCollisRect(725,250,25,25);
+    DrawCollisRect(725,300,25,75);
+    DrawCollisRect(775,0,75,25);
+    DrawCollisRect(775,50,75,25);
+    DrawCollisRect(775,75,25,25);
+    DrawCollisRect(775,100,125,25);
+    DrawCollisRect(875,0,25,100);
+    Drawwinrect(950,0,200,600);
+
+  }
+    if(levell == 4){
+    CollisRect(0,300,75,10);
+        CollisRect(300,0,100,100);
+        CollisRect(400,0,100,120);
+        CollisRect(500,0,100,140);
+        CollisRect(600,0,100,160);
+        CollisRect(700,0,100,180);
+        CollisRect(800,0,100,200);
+        CollisRect(900,0,100,220);
+        CollisRect(1000,0,100,240);
+        CollisRect(1100,0,100,260);
+        CollisRect(1200,0,150,280);
+        CollisRect(1300,0,100,300);
+        CollisRect(1400,0,100,250);
+        CollisRect(1500,0,100,280);
+        CollisRect(1600,0,100,260);
+        CollisRect(1700,0,100,240);
+        CollisRect(1800,0,100,280);
+        CollisRect(1900,0,100,320);
+        CollisRect(2000,0,100,300);
+        CollisRect(2100,0,100,100);
+        CollisRect(2200,0,100,200);
+        CollisRect(2300,0,100,300);
+        CollisRect(2400,0,100,250);
+        CollisRect(2500,0,100,200);
+        CollisRect(2600,0,100,300);
+        CollisRect(2700,0,100,320);
+        CollisRect(2800,0,100,310);
+        CollisRect(2900,0,100,120);
+        Drawwinrect(3000,0,200,600);
+        DrawCollisRect(0,300,75,10);
+        DrawCollisRect(300,0,100,100);
+        DrawCollisRect(400,0,100,120);
+        DrawCollisRect(500,0,100,140);
+        DrawCollisRect(600,0,100,160);
+        DrawCollisRect(700,0,100,180);
+        DrawCollisRect(800,0,100,200);
+        DrawCollisRect(900,0,100,220);
+        DrawCollisRect(1000,0,100,240);
+        DrawCollisRect(1100,0,100,260);
+        DrawCollisRect(1200,0,150,280);
+        DrawCollisRect(1300,0,100,300);
+        DrawCollisRect(1400,0,100,250);
+        DrawCollisRect(1500,0,100,280);
+        DrawCollisRect(1600,0,100,260);
+        DrawCollisRect(1700,0,100,240);
+        DrawCollisRect(1800,0,100,280);
+        DrawCollisRect(1900,0,100,320);
+        DrawCollisRect(2000,0,100,300);
+        DrawCollisRect(2100,0,100,100);
+        DrawCollisRect(2200,0,100,200);
+        DrawCollisRect(2300,0,100,300);
+        DrawCollisRect(2400,0,100,250);
+        DrawCollisRect(2500,0,100,200);
+        DrawCollisRect(2600,0,100,300);
+        DrawCollisRect(2700,0,100,320);
+        DrawCollisRect(2800,0,100,310);
+        DrawCollisRect(2900,0,100,120);
+
+    }
+    if(levell == 5){
+        CollisRect(0,300,1000,20);
+        CollisRect(1200,300,500,20);
+        CollisRect(0,30,100,10);
+        
+        Drawmomentumrect(200,250,20,50,10,10);
+        Drawmomentumrect(0,0,40,30,-35,9);
+        Drawmomentumrect(400,100,300,200,2,1);
+        Drawmomentumrect(1000,300,200,20,-2,-5);
+        Drawmomentumrect(1200,280,200,20,-2,5);
+        Drawmomentumrect(1200,280,200,20,-2,5);
+        Drawmomentumrect(1400,260,200,20,-2,5);
+        Drawmomentumrect(1600,240,200,20,-2,5);
+    DrawCollisRect(0,300,1000,20);
+        DrawCollisRect(1200,300,500,20);
+        DrawCollisRect(0,30,100,10);
+        Drawwinrect(2000,0,200,600);
+
+        
+        
+    }
+    if(levell == 7){ 
+      CollisRect(0,300,100,20);
+      DrawCollisRect(0,300,100,20);
+      Drawmomentumrect(200,0,10,100,10,20);
+      Drawmomentumrect(200,175,10,600,10,20);
+      Drawmomentumrect(300,0,10,225,10,20);
+Drawmomentumrect(300,300,10,600,10,20);
+      Drawmomentumrect(400,0,10,125,10,20);
+Drawmomentumrect(400,200,10,600,10,20);
+      Drawmomentumrect(500,0,10,250,10,20);
+Drawmomentumrect(500,325,10,600,10,20);
+      Drawmomentumrect(600,0,10,100,10,20);
+Drawmomentumrect(600,175,10,600,10,20);
+      Drawmomentumrect(700,0,10,125,10,20);
+Drawmomentumrect(700,200,10,600,10,20);
+      Drawmomentumrect(800,0,10,50,10,20);
+Drawmomentumrect(800,125,10,600,10,20);
+      Drawmomentumrect(900,0,10,200,10,20);
+Drawmomentumrect(900,275,10,600,10,20);
+      Drawmomentumrect(1000,0,10,150,10,20);
+Drawmomentumrect(1000,225,10,600,10,20);
+      Drawmomentumrect(1100,0,10,250,10,20);
+Drawmomentumrect(1100,325,10,600,10,20);
+      Drawmomentumrect(1200,0,10,50,10,20);
+Drawmomentumrect(1200,125,10,600,10,20);
+      Drawmomentumrect(1300,0,10,100,10,20);
+Drawmomentumrect(1300,175,10,600,10,20);
+      Drawmomentumrect(1400,0,10,200,10,20);
+Drawmomentumrect(1400,275,10,600,10,20);
+      Drawmomentumrect(1500,0,10,120,10,20);
+Drawmomentumrect(1500,195,10,600,10,20);
+      Drawmomentumrect(1600,0,10,80,10,20);
+Drawmomentumrect(1600,155,10,600,10,20);
+      Drawmomentumrect(1700,0,10,250,10,20);
+Drawmomentumrect(1700,325,10,600,10,20);
+      Drawmomentumrect(1800,0,10,10,10,20);
+Drawmomentumrect(1800,85,10,600,10,20);
+      Drawmomentumrect(1900,0,10,200,10,20);
+Drawmomentumrect(1900,275,10,300,10,20);
+      Drawwinrect(2000,0,200,400);
+    }
+if(levell == 6){
+  CollisRect(0,380,2000,20);
+  CollisRect(100,0,300,20);
+  CollisRect(100,120,300,20);
+  CollisRect(100,260,300,20);
+  CollisRect(500,0,300,20);
+  CollisRect(500,120,300,20);
+  CollisRect(500,260,300,20);
+  CollisRect(900,0,300,20);
+  CollisRect(900,120,300,20);
+  CollisRect(900,260,300,20);
+  CollisRect(1300,0,300,20);
+  CollisRect(1300,120,300,20);
+  CollisRect(1300,260,300,20);
+  CollisRect(1700,0,300,20);
+  CollisRect(1700,120,300,20);
+  CollisRect(1700,260,300,20);
+Drawmomentumrect(250,20,20,100,10,0);
+Drawmomentumrect(250,140,20,120,0,0);
+Drawmomentumrect(250,280,20,100,10,0);
+Drawmomentumrect(650,20,20,100,0,0);
+Drawmomentumrect(650,140,20,120,10,0);
+Drawmomentumrect(650,280,20,100,10,0);
+Drawmomentumrect(1050,20,20,100,10,0);
+Drawmomentumrect(1050,140,20,120,10,0);
+Drawmomentumrect(1050,280,20,100,0,0);
+Drawmomentumrect(1450,20,20,100,10,0);
+Drawmomentumrect(1450,140,20,120,10,0);
+Drawmomentumrect(1450,280,20,100,0,0);
+Drawmomentumrect(1850,20,20,100,0,0);
+Drawmomentumrect(1850,140,20,120,10,0);
+Drawmomentumrect(1850,280,20,100,10,0);
+  DrawCollisRect(0,380,2000,20);
+  DrawCollisRect(100,0,300,20);
+  DrawCollisRect(100,120,300,20);
+  DrawCollisRect(100,260,300,20);
+  DrawCollisRect(500,0,300,20);
+  DrawCollisRect(500,120,300,20);
+  DrawCollisRect(500,260,300,20);
+  DrawCollisRect(900,0,300,20);
+  DrawCollisRect(900,120,300,20);
+  DrawCollisRect(900,260,300,20);
+  DrawCollisRect(1300,0,300,20);
+  DrawCollisRect(1300,120,300,20);
+  DrawCollisRect(1300,260,300,20);
+  DrawCollisRect(1700,0,300,20);
+  DrawCollisRect(1700,120,300,20);
+  DrawCollisRect(1700,260,300,20);
+  Drawwinrect(2000,0,200,600);
+}
+if(levell == 8){
+  CollisRect(0,300,300,100);
+  CollisRect(1300,300,300,100);
+  Drawmomentumrect(300,0,1000,20,20,0);
+  Drawmomentumrect(400,20,800,20,20,0);
+  Drawmomentumrect(500,40,600,20,20,0);
+  Drawmomentumrect(600,60,400,20,20,0);
+  Drawmomentumrect(300,300,1000,20,20,10);
+  Drawmomentumrect(400,280,800,20,20,10);
+  Drawmomentumrect(500,260,600,20,20,10);
+  Drawmomentumrect(600,240,400,20,20,10);
+  Drawmomentumrect(1600,0,1600,20,20,0);
+  Drawmomentumrect(1600,300,1600,20,20,10);
+  Drawmomentumrect(1700,280,1400,20,20,10);
+  Drawmomentumrect(1800,260,1200,20,20,10);
+  Drawmomentumrect(1900,240,1000,20,20,10);
+  Drawmomentumrect(2000,220,800,20,20,10);
+  Drawmomentumrect(2100,200,600,20,20,10);
+  Drawmomentumrect(2200,180,400,20,20,10);
+  Drawmomentumrect(2300,160,200,20,20,10);
+  Drawwinrect(3200,0,200,600)
+  DrawCollisRect(1300,300,300,100);
+  DrawCollisRect(0,300,300,100);}
+    if(levell == 9){
+      CollisRect(0,300,1000,20);
+      CollisRect(0,180,100,20);
+      CollisRect(130,180,20,20);
+      Drawpainrect(0,200,100,20);
+      Drawpainrect(130,200,20,100);
+      Drawpainrect(300,0,20,100);
+      Drawpainrect(300,200,20,100);
+       Drawpainrect(400,0,20,100);
+     Drawpainrect(400,200,20,100);
+      Drawpainrect(500,0,20,100);
+      Drawpainrect(500,200,20,100);
+      Drawpainrect(600,280,100,20);
+     Drawpainrect(600,0,100,100)
+      Drawwinrect(1200,0,200,600)
+     DrawCollisRect(0,300,1000,20);
+      DrawCollisRect(0,180,100,20);
+      DrawCollisRect(130,180,20,20);
+    }
+    if(levell == 10){
+      CollisRect(0,300,150,20);
+      Drawpainrect(300,0,20,100);
+      Drawpainrect(300,200,20,400);
+      Drawpainrect(400,0,20,200);
+      Drawpainrect(400,300,20,400);
+      Drawpainrect(500,0,20,50);
+      Drawpainrect(500,150,20,400);
+      Drawpainrect(600,0,20,150);
+      Drawpainrect(600,250,20,400);
+      Drawpainrect(700,0,20,210);
+      Drawpainrect(700,310,20,400);
+      Drawpainrect(800,0,20,160);
+      Drawpainrect(800,260,20,400);
+      Drawpainrect(900,0,20,10);
+      Drawpainrect(900,110,20,400);
+      Drawpainrect(1000,0,20,100);
+      Drawpainrect(1000,200,20,400);
+      Drawwinrect(1100,0,200,400)
+      DrawCollisRect(0,300,150,20);
+    }
+    if(levell == 12){
+      CollisRect(0,300,300,100);
+      Drawpainrect(300,0,2000,20);
+      Drawpainrect(300,300,2000,20);
+      Drawpainrect(400,260,400,40);
+      Drawpainrect(500,220,300,40);
+      Drawpainrect(600,180,200,40);
+      Drawpainrect(1000,20,10,100);
+      Drawpainrect(1000,200,10,100);
+      Drawpainrect(1100,20,10,100);
+      Drawpainrect(1100,200,10,100);
+      Drawpainrect(1200,20,10,100);
+      Drawpainrect(1200,200,10,100);
+      Drawpainrect(1400,20,300,120);
+      Drawpainrect(1800,190,300,120);
+      Drawwinrect(2300,0,200,400);
+      DrawCollisRect(0,300,300,100);
+    }
+    if(levell == 11){
+      CollisRect(0,300,1000,20);
+      CollisRect(0,180,100,20);
+      CollisRect(130,180,20,20);
+      CollisRect(200,300,1000,20);
+      CollisRect(200,180,100,20);
+      CollisRect(330,180,20,20);
+      CollisRect(400,300,1000,20);
+      CollisRect(400,180,100,20);
+      CollisRect(530,180,20,20);
+      CollisRect(600,300,1000,20);
+      CollisRect(600,180,100,20);
+      CollisRect(730,180,20,20);
+      CollisRect(800,300,1000,20);
+      CollisRect(800,180,100,20);
+      CollisRect(930,180,20,20);
+      Drawpainrect(0,200,100,20);
+      Drawpainrect(130,200,20,100);
+      Drawpainrect(200,0,20,180);
+      Drawpainrect(200,200,100,20);
+      Drawpainrect(330,200,20,100);
+Drawpainrect(400,0,20,180);
+      Drawpainrect(400,200,100,20);
+      Drawpainrect(530,200,20,100);
+Drawpainrect(600,0,20,180);
+      Drawpainrect(600,200,100,20);
+      Drawpainrect(730,200,20,100);
+      Drawpainrect(800,0,20,180);
+      Drawpainrect(800,200,100,20);
+      Drawpainrect(930,200,20,100);
+       DrawCollisRect(0,300,1000,20);
+      DrawCollisRect(0,180,100,20);
+      DrawCollisRect(130,180,20,20);
+
+       DrawCollisRect(200,300,1000,20);
+      DrawCollisRect(200,180,100,20);
+      DrawCollisRect(330,180,20,20);
+
+       DrawCollisRect(400,300,1000,20);
+      DrawCollisRect(400,180,100,20);
+      DrawCollisRect(530,180,20,20);
+
+       DrawCollisRect(600,300,1000,20);
+      DrawCollisRect(600,180,100,20);
+      DrawCollisRect(730,180,20,20);
+
+       DrawCollisRect(800,300,1000,20);
+      DrawCollisRect(800,180,100,20);
+      DrawCollisRect(930,180,20,20);
+      Drawwinrect(1000,0,200,400);
+    }
+    if(levell == 13){
+      CollisRect(0,300,1000,100);
+      CollisRect(200,100,400,200);
+      CollisRect(900,0,10,110);
+      CollisRect(1000,0,10,50);
+      CollisRect(1100,0,10,200);
+      CollisRect(900,210,10,600);
+      CollisRect(1000,150,10,600);
+      DrawCollisRect(0,300,1000,100);
+      DrawCollisRect(200,100,400,200);
+      DrawCollisRect(900,0,10,110);
+      DrawCollisRect(1000,0,10,50);
+      DrawCollisRect(1100,0,10,200);
+      DrawCollisRect(900,210,10,600);
+      DrawCollisRect(1000,150,10,600);
+      Drawwinrect(1500,0,200,400);
+      if(time %1 >0.5){
+        Drawpainrect(400,0,10,100);
+        Drawpainrect(600,0,10,100);
+        Drawpainrect(200,0,10,100);
+        CollisRect(600,100,200,20);
+        CollisRect(800,0,20,100);
+        DrawCollisRect(600,100,200,20);
+        DrawCollisRect(800,0,20,100);
+        Drawpainrect(900,0,10,600);
+        Drawpainrect(1000,0,10,600);
+
+      }
+      if(time %1 <0.5){
+        Drawpainrect(300,0,10,100);
+        Drawpainrect(500,0,10,100);
+      }}
+    
+    if(levell == 14){
+      CollisRect(0,300,300,100);
+
+  CollisRect(400,0,5,150);
+  CollisRect(400,250,5,600);
+  CollisRect(500,0,5,50);
+  CollisRect(500,150,5,600);
+  CollisRect(600,0,5,100);
+  CollisRect(600,200,5,600);
+  CollisRect(700,0,5,20);
+  CollisRect(700,120,5,600);
+  CollisRect(800,0,5,120);
+  CollisRect(800,220,5,600);
+  CollisRect(900,0,5,140);
+  CollisRect(900,240,5,600);
+  CollisRect(1000,0,5,30);
+  CollisRect(1000,130,5,600);
+  CollisRect(1100,0,5,80);
+  CollisRect(1100,180,5,600);
+  CollisRect(1200,0,5,130);
+  CollisRect(1200,230,5,600);
+  CollisRect(1300,0,5,40);
+  CollisRect(1300,140,5,600);
+  CollisRect(1400,0,5,40);
+  CollisRect(1400,140,5,600);
+  CollisRect(1500,0,5,120);
+  CollisRect(1500,220,5,600);
+  CollisRect(1600,0,5,140);
+  CollisRect(1600,240,5,600);
+  CollisRect(1700,0,5,150);
+  CollisRect(1700,250,5,600);
+
+
+      DrawCollisRect(400,0,5,150);
+      DrawCollisRect(400,250,5,600);
+
+      DrawCollisRect(500,0,5,50);
+      DrawCollisRect(500,150,5,600);
+      
+      DrawCollisRect(600,0,5,100);
+      DrawCollisRect(600,200,5,600);
+      
+      DrawCollisRect(700,0,5,20);
+      DrawCollisRect(700,120,5,600);
+      
+      DrawCollisRect(800,0,5,120);
+      DrawCollisRect(800,220,5,600);
+      
+      DrawCollisRect(900,0,5,140);
+      DrawCollisRect(900,240,5,600);
+      
+      DrawCollisRect(1000,0,5,30);
+      DrawCollisRect(1000,130,5,600);
+      
+      DrawCollisRect(1100,0,5,80);
+      DrawCollisRect(1100,180,5,600);
+      
+      DrawCollisRect(1200,0,5,130);
+      DrawCollisRect(1200,230,5,600);
+      
+      DrawCollisRect(1300,0,5,40);
+      DrawCollisRect(1300,140,5,600);
+      
+      DrawCollisRect(1400,0,5,40);
+      DrawCollisRect(1400,140,5,600);
+      
+      DrawCollisRect(1500,0,5,120);
+      DrawCollisRect(1500,220,5,600);
+      
+      DrawCollisRect(1600,0,5,140);
+      DrawCollisRect(1600,240,5,600);
+      
+      DrawCollisRect(1700,0,5,150);
+      DrawCollisRect(1700,250,5,600);
+      
+      Drawwinrect(1800,0,200,400);
+      if(time % 3 < 2){
+        Drawpainrect(400,0,10,400);
+        Drawpainrect(500,0,10,400);
+        Drawpainrect(600,0,10,400);
+        Drawpainrect(700,0,10,400);
+        Drawpainrect(800,0,10,400);
+        Drawpainrect(900,0,10,400);
+        Drawpainrect(1000,0,10,400);
+        Drawpainrect(1100,0,10,400);
+        Drawpainrect(1200,0,10,400);
+        Drawpainrect(1300,0,10,400);
+        Drawpainrect(1400,0,10,400);
+        Drawpainrect(1500,0,10,400);
+        Drawpainrect(1600,0,10,400);
+        Drawpainrect(1700,0,10,400);
+      }
+      DrawCollisRect(0,300,300,100);
+    }
+    if(levell == 15){
+  CollisRect(0,300,300,100);
+Drawpainrect(0,0,2000,10);
+        Drawpainrect(300,300,1700,10);
+        Drawpainrect(500,250,100,50);
+        Drawpainrect(1500,250,100,50);
+        Drawpainrect(1000,250,100,50);
+        Drawpainrect(750,250,50,50);
+        Drawpainrect(1250,250,50,50);
+        Drawpainrect(1750,250,50,50);
+  Drawwinrect(2000,0,200,600);
+  DrawCollisRect(0,300,300,100);
+    if(time % 2 > 1){
+         Drawpainrect(500,0,10,400);
+             Drawpainrect(700,0,10,400);
+             Drawpainrect(900,0,10,400);
+             Drawpainrect(1100,0,10,400);
+             Drawpainrect(1300,0,10,400);
+             Drawpainrect(1500,0,10,400);
+             Drawpainrect(1700,0,10,400);
+             Drawpainrect(1900,0,10,400);
+         }
+         if(time % 2 < 1){
+         Drawpainrect(400,0,10,400);
+             Drawpainrect(600,0,10,400);
+             Drawpainrect(800,0,10,400);
+             Drawpainrect(1000,0,10,400);
+             Drawpainrect(1200,0,10,400);
+             Drawpainrect(1400,0,10,400);
+             Drawpainrect(1600,0,10,400);
+             Drawpainrect(1800,0,10,400);
+         }
+    }
+     if(levell == 17){
+        CollisRect(0,300,200,20);
+        CollisRect(500,300,200,20);
+        CollisRect(1000,300,700,300);
+        CollisRect(190+time*60%110,300,200,20);
+        Drawpainrect(100,250,600,10);
+        Drawpainrect(100,0,10,250);
+        Drawpainrect(700,0,10,250);
+        DrawCollisRect(0,300,200,20);
+        DrawCollisRect(190+time*60%110,300,200,20);
+        DrawCollisRect(500,300,200,20);
+        Drawmomentumrect(900,time*20%100-100,10,100,10,0);
+        Drawmomentumrect(900,time*20%100+100,10,400,10,0);
+        DrawCollisRect(1000,300,700,300);
+        Drawpainrect(1000,0,700,200);
+        Drawpainrect(1700,time*70%400,100,20);
+        Drawpainrect(1600,time*70%400+20,100,20);
+        Drawpainrect(1500,time*70%400+40,100,20);
+        Drawpainrect(1400,time*70%400+60,100,20);
+        Drawpainrect(1300,time*70%400+80,100,20);
+        Drawpainrect(1200,time*70%400+100,100,20);
+        Drawpainrect(1100,time*70%400+120,100,20);
+        Drawwinrect(2000,0,200,400);
+         
+    }
+    
+    
+    if(levell == 18){
+        CollisRect(0,300,400,30);
+  CollisRect(500,0,30,200);
+  CollisRect(600,0,30,50);
+  CollisRect(600,100,30,600);
+  CollisRect(700,0,30,150);
+  CollisRect(700,200,30,600);
+  CollisRect(800,0,30,10);
+  CollisRect(800,60,30,600);
+  CollisRect(900,0,30,50);
+  CollisRect(900,100,30,600);
+  CollisRect(1000,0,30,100);
+  CollisRect(1000,150,30,600);
+  CollisRect(1100,0,30,200);
+  CollisRect(1100,250,30,600);
+  CollisRect(1200,0,30,150);
+  CollisRect(1200,200,30,600);
+  CollisRect(1300,0,30,50);
+  CollisRect(1300,100,30,600);
+ 
+  DrawCollisRect(0,300,400,30);
+  DrawCollisRect(500,0,30,200);
+  DrawCollisRect(600,0,30,50);
+  DrawCollisRect(600,100,30,600);
+  DrawCollisRect(700,0,30,150);
+  DrawCollisRect(700,200,30,600);
+  DrawCollisRect(800,0,30,10);
+  DrawCollisRect(800,60,30,600);
+  DrawCollisRect(900,0,30,50);
+  DrawCollisRect(900,100,30,600);
+  DrawCollisRect(1000,0,30,100);
+  DrawCollisRect(1000,150,30,600);
+  DrawCollisRect(1100,0,30,200);
+  DrawCollisRect(1100,250,30,600);
+  DrawCollisRect(1200,0,30,150);
+  DrawCollisRect(1200,200,30,600);
+  DrawCollisRect(1300,0,30,50);
+  DrawCollisRect(1300,100,30,600);
+  Drawwinrect(1450,0,100,600);
+    Drawpainrect(time*180%1450,0,10,400);
+        Drawpainrect(((time*180)+70*150)%1450,0,10,400);
+        Drawpainrect(((time*180)+140*150)%1450,0,10,400);
+        Drawpainrect(((time*180)+210*150)%1450,0,10,400);
+    }
+    if(levell == 19){
+      CollisRect(0,300,200,200);
+      DrawCollisRect(0,300,200,200);
+Drawpainrect(400,0,500,(time*20%100)+20);
+Drawpainrect(400,(time*20%100)+240,500,600);
+Drawpainrect(400,0,1600,10);
+Drawpainrect(400,390,1600,10);
+
+if(time % 1 < .5){
+Drawpainrect(1100,0,10,400);  
+Drawpainrect(1500,0,10,400);  
+Drawpainrect(1900,0,10,400);  
+}
+if(time % 1 > .5){
+  Drawpainrect(1300,0,10,400);  
+  Drawpainrect(1700,0,10,400);  
+}
+Drawwinrect(2000,0,200,400);
+    }
+    if(levell == 20){
+      DrawCollisRect(0,300,400,30);
+CollisRect(0,300,400,30);
+  Drawpainrect(600,0,30,50);
+  Drawpainrect(600,200,30,600);
+
+  Drawpainrect(1400,0,30,150);
+  Drawpainrect(1400,300,30,600);
+
+  Drawpainrect(800,0,30,10);
+  Drawpainrect(800,160,30,600);
+
+  Drawpainrect(1600,0,30,50);
+  Drawpainrect(1600,200,30,600);
+
+  Drawpainrect(1000,0,30,100);
+  Drawpainrect(1000,250,30,600);
+
+  Drawpainrect(1800,0,30,200);
+  Drawpainrect(1800,350,30,600);
+
+  Drawpainrect(1200,0,30,150);
+  Drawpainrect(1200,300,30,600);
+
+  Drawpainrect(2000,0,30,50);
+  Drawpainrect(2000,200,30,600);
+if(time%10 >8){
+  Drawpainrect(600,0,30,600);
+  Drawpainrect(1400,0,30,600);
+  Drawpainrect(800,0,30,600);
+  Drawpainrect(1600,0,30,600);
+  Drawpainrect(1000,0,30,600);
+  Drawpainrect(1800,0,30,600);
+  Drawpainrect(1200,0,30,600);
+  Drawpainrect(2000,0,30,600);
+}
+
+  Drawwinrect(2200,0,100,600);
+    Drawpainrect(time*100%2200,0,10,400);
+        Drawpainrect(((time*100)+550)%2200,0,10,400);
+        Drawpainrect(((time*100)+1100)%2200,0,10,400);
+        Drawpainrect(((time*100)+1650)%2200,0,10,400);
+    }
+        if(levell == 16){
+      DrawCollisRect(0,300,400,30);
+CollisRect(0,300,400,30);
+  Drawpainrect(600,0,30,50);
+  Drawpainrect(600,200,30,600);
+
+  Drawpainrect(1400,0,30,150);
+  Drawpainrect(1400,300,30,600);
+
+  Drawpainrect(800,0,30,10);
+  Drawpainrect(800,160,30,600);
+
+  Drawpainrect(1600,0,30,50);
+  Drawpainrect(1600,200,30,600);
+
+  Drawpainrect(1000,0,30,100);
+  Drawpainrect(1000,250,30,600);
+
+  Drawpainrect(1800,0,30,200);
+  Drawpainrect(1800,350,30,600);
+
+  Drawpainrect(1200,0,30,150);
+  Drawpainrect(1200,300,30,600);
+
+  Drawpainrect(2000,0,30,50);
+  Drawpainrect(2000,200,30,600);
+if(time%10 >4){
+  Drawpainrect(600,0,30,600);
+  Drawpainrect(1400,0,30,600);
+  Drawpainrect(800,0,30,600);
+  Drawpainrect(1600,0,30,600);
+  Drawpainrect(1000,0,30,600);
+  Drawpainrect(1800,0,30,600);
+  Drawpainrect(1200,0,30,600);
+  Drawpainrect(2000,0,30,600);
+}
+
+  Drawwinrect(2200,0,100,600);
+
+    }
+  if(levell == 21){
+    CollisRect(0,0,600,10);
+    CollisRect(0,390,600,10);
+    CollisRect(590,0,10,400);
+    CollisRect(0,0,10,400);
+
+    DrawCollisRect(0,0,600,10);
+    DrawCollisRect(0,390,600,10);
+    DrawCollisRect(590,0,10,400);
+    DrawCollisRect(0,0,10,400);
+   
+    timeincrease = 0;
+
+  }
+}
+      function Render(){
+
+var canvas = document.getElementById("Platformer");
+canvas.style.width = window.innerWidth;
+canvas.style.height = window.innerHeight;
+scalex = window.innerWidth/600;
+scaley = window.innerHeight/400;
+time += timeincrease;
+time = Math.floor(time*1000)/1000
+var ctx = canvas.getContext("2d");
+ctx.canvas.width  = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+
+
+ctx.fillStyle = "#4d5361";
+if(haloween){
+  ctx.fillStyle = "#000000";
+}
+ctx.fillRect(0,0,600000,400000);
+chary+=6;
+
+
+chary-=momentum;
+charx-=momentumx;
+if(rightmove == 1){
+  charx+=3;
+}
+if(leftmove == 1){
+  charx-=3;
+}
+if(momentum < 0){
+  momentum++;
+}
+if(momentum > 0){
+  momentum--;
+}
+
+if(chary < 0){
+  momentum = 0;
+  chary = 0;
+}
+if(momentumx>0){
+  momentumx--;
+}
+if(momentumx<0){
+  momentumx++;
+}
+                if(charx < 0){
+                charx = 0;
+                }
+              
+                if(chary > 375){
+                charx = spawnposx;
+                chary = spawnposy;
+                }
+
+          
+    RLevel(level);
+          
+DrawCharacter(charx, chary);
+    ctx.fillStyle = "#3a68de";
+    if(haloween){
+      ctx.fillStyle = "#ad3d2b"
+    }
+    var minutes = Math.floor(time/60);
+    var seconds = Math.floor(time)%60
+    var remainder = Math.floor((time%1)*100)/1;
+
+    ctx.font = 15*scalex +"px Arial";
+ctx.fillText( minutes+":"+ seconds + ":" + remainder, 5*scalex, 25*scaley);
+ctx.fillText( level, 500*scalex, 25*scaley);
+if(level == 21){
+  ctx.font = 60*scalex +"px Arial";
+  ctx.fillText( "You Won!", 100*scalex, 250*scaley);
+}
+            }
+var interval = setInterval(Render, 16);
+    </script>
+    <style> 
+
+    </style>
+  </body>

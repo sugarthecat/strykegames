@@ -1,7 +1,33 @@
 *{
     font-family: Georgia, 'Times New Roman', Times, serif;
-    background-color: antiquewhite;
+    
+}
+body{
+    background-color: lightsteelblue;
 }
 h1{
     text-align: center;
+}
+header{
+    text-align: center;
+}
+header img{
+    width:  500px;
+}
+div#gamecontent{
+    display: grid;
+    background-color: black;
+    grid-template-columns: auto auto auto;
+}
+div#superchicken{
+    background-color: white;
+    grid-row-start: 1;
+    grid-row-end:4;
+    text-align: center;
+}
+div#superchicken h3{
+    margin: top 5px;
+}
+div#superchicken a{
+    color: red;
 }
