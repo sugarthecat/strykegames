@@ -1,5 +1,5 @@
 *{
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: Arial, Helvetica, sans-serif;
     
 }
 body{
@@ -15,9 +15,14 @@ header img{
     width:  500px;
 }
 div#gamecontent{
+    padding: 15px;
+    row-gap: 5px;
+    column-gap: 10px;
+    margin: auto;
     display: grid;
+    width:1500px;
     background-color: black;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
 }
 div#superchicken{
     background-color: white;
@@ -25,9 +30,64 @@ div#superchicken{
     grid-row-end:4;
     text-align: center;
 }
+div#arena{
+    font-weight: bolder;
+    color: white;
+    background-color: darkred;
+    grid-row-end:4;
+    text-align: center;
+}
+div#arena a{
+    font-weight: bolder;
+    color: white;
+}
+div#discord{
+    background-color: lightskyblue;
+    grid-row-start: 1;
+    grid-row-end:2;
+    text-align: center;
+}
+div#discord a{
+    color:black
+}
 div#superchicken h3{
     margin: top 5px;
 }
 div#superchicken a{
     color: red;
+}
+@media only screen and (max-width: 1600px) {
+    div#gamecontent{
+        width: 1200px;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    div#gamecontent{
+        width: 800px;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    div#gamecontent{
+        width: 700px;
+    }
+}
+@media only screen and (max-width: 800px) {
+    div#gamecontent{
+        width: 600px;
+    }
+}
+@media only screen and (max-width: 700px) {
+    div#gamecontent{
+        width: 500px;
+    }
+}
+@media only screen and (max-width: 550px) {
+    div#gamecontent{
+        width: 450px;
+    }
+}
+@media only screen and (max-width: 475px) {
+    div#gamecontent{
+        width: 400px;
+    }
 }
