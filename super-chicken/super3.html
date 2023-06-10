@@ -274,6 +274,7 @@ let summonabble = {up:true,down:true,left:true,right:true}
 document.addEventListener('keydown', function(evt) {
     switch (evt.code) {
       case 'KeyW':
+      case 'Space':
         if(momentum <= 0){
           if(canjump == 1 && jumpsleft > 0){
             momentum = 15;
@@ -315,6 +316,7 @@ document.addEventListener('keydown', function(evt) {
 document.addEventListener('keyup', function(evt) {
     switch (evt.code) {
       case 'KeyW':
+      case 'Space':
           canjump = 1;
         break;
       case 'KeyD':
