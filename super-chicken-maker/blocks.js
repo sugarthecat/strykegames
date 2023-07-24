@@ -6,9 +6,9 @@ class Block {
         this.w = w;
         this.h = h;
     }
-    draw(ctx) {
+    draw(ctx, scalex, scaley) {
         ctx.fillStyle = this.color;
-        ctx.fillRect(x, y, w, h)
+        ctx.fillRect(x * scalex, y * scaley, w * scalex, h * scaley)
     }
 }
 class CollisionBlock extends Block {
