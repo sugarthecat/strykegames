@@ -6,13 +6,19 @@ class Block {
         this.w = w;
         this.h = h;
     }
-    draw(ctx, scalex, scaley) {
+    draw(ctx, scalex, scaley, xoff) {
+        if(xoff + this.x > 600){
+            return;
+        }
         ctx.fillStyle = this.color;
-        ctx.fillRect(x * scalex, y * scaley, w * scalex, h * scaley)
+        ctx.fillRect((xoff+this.x) * scalex, this.y * scaley, Math.ceil(this.w * scalex), Math.ceil(this.h * scaley))
     }
     drawEditor(ctx, scalex, scaley, xoff){
+        if(this.x-xoff*10 > 600){
+            return;
+        }
         ctx.fillStyle = this.color;
-        ctx.fillRect(Math.round((this.x-xoff*10) * scalex), Math.round(this.y * scaley), Math.round(this.w * scalex), Math.round(this.h * scaley))
+        ctx.fillRect(Math.round((this.x-xoff*10) * scalex), Math.round(this.y * scaley), Math.ceil(this.w * scalex), Math.ceil(this.h * scaley))
     }
 }
 export class CollisionBlock extends Block {
