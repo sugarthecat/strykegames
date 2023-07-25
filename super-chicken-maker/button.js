@@ -9,11 +9,8 @@ export default class Button {
         this.action = action;
     }
     click(mouseX, mouseY) {
-        console.log(this)
-        console.log(mouseX, mouseY)
         if (mouseX >= this.x && mouseY >= this.y && mouseX <= this.x + this.w && mouseY <= this.y + this.h) {
             this.action();
-            console.log(this)
         }
     }
     draw(ctx, scalex, scaley) {
@@ -22,6 +19,6 @@ export default class Button {
         ctx.fillStyle = "#000000"
         ctx.font = (this.w/this.text.length*Math.min(scalex,scaley)*1.5)+"px Comic Sans MS"
         ctx.textAlign = "center";
-        ctx.fillText(this.text,(this.x+this.w/2)*scalex,(this.y+this.h/2)*scaley)
+        ctx.fillText(this.text,(this.x+this.w/2)*scalex,(this.y+this.h*3/4)*scaley)
     }
 }
