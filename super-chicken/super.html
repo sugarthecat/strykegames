@@ -200,19 +200,18 @@
     document.addEventListener('keydown', function (evt) {
       switch (evt.code) {
         case 'ArrowUp':
-          if (momentum == 0) {
-            if (jumpable == 1) {
+        case 'KeyW':
+          if (momentum == 0 && jumpable == 1) {
               momentum = 20;
-              y += 4
               jumpable = 0;
-            }
           }
-
           break;
         case 'ArrowLeft':
+        case 'KeyA':
           leftmove = 1;
           break;
         case 'ArrowRight':
+        case 'KeyD':
           rightmove = 1;
           break;
       }
@@ -221,14 +220,17 @@
     document.addEventListener('keyup', function (evt) {
       switch (evt.code) {
         case 'ArrowUp':
+        case 'KeyW':
           jumpable = 1;
 
           break;
 
         case 'ArrowRight':
+        case 'KeyD':
           rightmove = 0;
           break;
         case 'ArrowLeft':
+        case 'KeyA':
           leftmove = 0;
           break;
       }
@@ -410,7 +412,6 @@
         Drawmomentumrect(200, 0, 10, 90, 10, 0);
         DrawCollisRect(200, 90, 10, 10);
 
-
         Drawmomentumrect(200, 210, 10, 200, 10, 0);
         DrawCollisRect(200, 200, 10, 10);
 
@@ -419,10 +420,8 @@
         Drawmomentumrect(300, 160, 10, 250, 10, 0);
         DrawCollisRect(300, 150, 10, 10);
 
-
         Drawmomentumrect(400, 110, 10, 345, 10, 0);
         DrawCollisRect(400, 100, 10, 10);
-
 
         Drawmomentumrect(500, 0, 10, 190, 10, 0);
         DrawCollisRect(500, 190, 10, 10);
