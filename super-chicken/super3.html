@@ -176,7 +176,6 @@
           thing = false
         }
       }
-
       if (rectx < charx + 25) {
         if (recty < chary + 25) {
           if (chary < recty + collisrectheight) {
@@ -1053,7 +1052,7 @@
           }
         }
       } else if (titleScreen) {
-        
+
       } else if (bosshp <= 0) {
         ctx.fillStyle = "#0064ab";
         ctx.fillRect(-10, -10, 600000, 400000);
@@ -1152,7 +1151,7 @@
           }
           if (moveAgain) {
             let moveChoice = moveCount % 3
-            if(moveChount % 2 == 0){
+            if (moveChount % 2 == 0) {
               moveChoice = 3;
             }
             moveCount++

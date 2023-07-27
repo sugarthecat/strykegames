@@ -8,25 +8,35 @@ let buttons = [
     new Button(505, 5, 30, 30, "#d8d7e0", "", function () { brush = 1; }), // collision block
     new Button(535, 5, 30, 30, "#75b855", " ", function () { brush = 2; }), // red block 
     new Button(565, 5, 30, 30, "#db6161", " ", function () { brush = 3; }), // green block
-    new Button(505, 35, 30, 30, "#db5ece", " ", function () { brush = 4; }), //4shooter
-    new Button(535, 35, 30, 30, "#bd2bae", " ", function () { brush = 5; }), //8shooter
-    new Button(565, 35, 30, 30, "#750169", " ", function () { brush = 6; }), // 360shooter
-    new Button(505, 65, 30, 30, "#000000", " ", function () { brush = 0; }), //eraser
-
+    new Button(505, 35, 90, 30, "#000000", " ", function () { brush = 0; }), //eraser
     new Button(505, 250, 20, 30, "#fff", "<", function () {
         levelOn--;
         if (levelOn < 0) { levelOn = 0; }
         blocks = levels[levelOn];
-        buttons[9].text = levelOn;
-    }), //eraser
-    new Button(530, 250, 40, 30, "#fff", 0, function () { }), //eraser
+        xoff = 0
+        buttons[6].text = levelOn;
+    }), //previous level
+    new Button(530, 250, 40, 30, "#fff", 0, function () { }), //text area for current level
     new Button(575, 250, 20, 30, "#fff", ">", function () {
         levelOn++;
         if (levelOn >= levels.length) { levels.push(generateNewLevel()) }
         blocks = levels[levelOn];
-        buttons[9].text = levelOn;
-    }), //eraser
+        xoff = 0;
+        buttons[6].text = levelOn;
+    }), //next level
+    //new Button(505, 35, 30, 30, "#db5ece", " ", function () { brush = 4; }), //4shooter
+    //new Button(535, 35, 30, 30, "#bd2bae", " ", function () { brush = 5; }), //8shooter
+    //new Button(565, 35, 30, 30, "#750169", " ", function () { brush = 6; }), // 360shooter
 ];
+function advanceLevel() {
+    levelOn++;
+    if (levels.length <= levelOn) {
+        alert("You win!")
+        switchMode("editor")
+    } else {
+        blocks = levels[levelOn];
+    }
+}
 let brush = 1;
 let exitGameButton = new Button(0, 0, 100, 20, "#ffffff", "Return to Editor", function () { switchMode("editor"); })
 let mouseX;
@@ -88,7 +98,7 @@ function mouseMove(event) {
         let adjy = mouseY * 4 / 3
         let xInd = Math.floor(adjx / 10) + xoff;
         let yInd = Math.floor(adjy / 10);
-        if (!player.collides(getBlock(xInd * 10, yInd * 10))) {
+        if (brush == 0 || !player.collides(getBlock(xInd * 10, yInd * 10))) {
             blocks[xInd][yInd] = getBlock(xInd * 10, yInd * 10);
         }
     }
@@ -103,6 +113,15 @@ function mouseClick() {
     if (mode == "editor") {
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].click(mouseX, mouseY)
+        }
+        if (mouseX < 500 && mouseY < 300 && mouseDown) {
+            let adjx = mouseX * 6 / 5
+            let adjy = mouseY * 4 / 3
+            let xInd = Math.floor(adjx / 10) + xoff;
+            let yInd = Math.floor(adjy / 10);
+            if (brush == 0 || !player.collides(getBlock(xInd * 10, yInd * 10))) {
+                blocks[xInd][yInd] = getBlock(xInd * 10, yInd * 10);
+            }
         }
     } else {
         exitGameButton.click(mouseX, mouseY);
@@ -184,6 +203,42 @@ function Render() {
     if (mode == "level") {
         ctx.fillStyle = "#4d5361";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        player.updatePhysics()
+        if (player.x + 25 > blocks.length * 10) {
+            player.x = blocks.length * 10 - 25
+        }
+        if (player.x < 0) {
+            player.x = 0
+        }
+        if (player.y > 375) {
+            player = new Chicken();
+        }
+        if(player.x < 300){
+            xoff = 0;
+        }else if(player.x + 300 > blocks.length*10){
+            xoff = blocks.length*10-600
+        }else{
+            xoff = player.x-300
+        }
+        for (let i = Math.floor(player.x / 10); i < Math.ceil((player.x + player.w) / 10); i++) {
+            for (let j = Math.floor(player.y / 10); j < Math.ceil((player.y + player.h) / 10); j++) {
+                if (blocks[i][j] instanceof PainBlock) {
+                    player = new Chicken();
+                    j = blocks[i].length
+                    break;
+                }
+                if (blocks[i][j] instanceof WinBlock) {
+                    player = new Chicken();
+                    j = blocks[i].length
+                    advanceLevel()
+                    break;
+                }
+                if (blocks[i][j] instanceof CollisionBlock) {
+                    blocks[i][j].collide(player)
+                    break;
+                }
+            }
+        }
         for (let i = 0; i < blocks.length; i++) {
             for (let j = 0; j < blocks[i].length; j++) {
                 if (blocks[i][j] !== null) {
@@ -191,10 +246,7 @@ function Render() {
                 }
             }
         }
-        player.draw(ctx, scalex, scaley);
-        if (player.y > 375) {
-            player = new Chicken();
-        }
+        player.draw(ctx, scalex, scaley, xoff);
         exitGameButton.draw(ctx, scalex, scaley)
     } else if (mode == "editor") {
         ctx.fillStyle = "#333";
@@ -214,7 +266,7 @@ function Render() {
                 }
             }
         }
-        player.drawEditor(ctx, scalex, scaley);
+        player.drawEditor(ctx, scalex, scaley, xoff);
     }
 
 }

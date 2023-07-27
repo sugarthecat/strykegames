@@ -7,14 +7,14 @@ class Block {
         this.h = h;
     }
     draw(ctx, scalex, scaley, xoff) {
-        if(xoff + this.x > 600){
+        if(this.x-xoff >= 600){
             return;
         }
         ctx.fillStyle = this.color;
-        ctx.fillRect((xoff+this.x) * scalex, this.y * scaley, Math.ceil(this.w * scalex), Math.ceil(this.h * scaley))
+        ctx.fillRect((this.x-xoff) * scalex, this.y * scaley, Math.ceil(this.w * scalex), Math.ceil(this.h * scaley))
     }
     drawEditor(ctx, scalex, scaley, xoff){
-        if(this.x-xoff*10 > 600){
+        if(this.x-xoff*10 >= 600){
             return;
         }
         ctx.fillStyle = this.color;
@@ -24,6 +24,102 @@ class Block {
 export class CollisionBlock extends Block {
     constructor(x, y, w, h) {
         super("#d8d7e0", x, y, w, h)
+    }
+    collide(player) {
+      var collisionside;
+      let thing = true;
+      let numon = 0;
+      let momentum = player.momentum;
+      //x,y,coll,gr
+      let colliscoms = [[0, -3, 1, 1], [-1.5, 3, 2, 0], [3, 0, 3, 0], [-1.5, 1.5, 0, 0], [0, -7.5, 1, 1], [-3, 6, 2, 0], [6, 0, 3, 0], [-3, 0, 0, 0]]
+      while (thing && (this.y < player.y + 25 && this.x < player.x + 25 && player.y < this.y + this.h && player.x < this.w + this.x)) {
+        player.x += colliscoms[numon][0]
+        player.y += colliscoms[numon][1]
+        collisionside = colliscoms[numon][2]
+        numon++
+        if (numon >= colliscoms.length) {
+          thing = false
+        }
+      }
+      if (this.x < player.x + 25) {
+        if (this.y < player.y + 25) {
+          if (player.y < this.y + this.h) {
+            if (player.x < this.w + this.x) {
+              player.y -= 25 / 2;
+              collisionside = 1;
+              //Up
+            }
+          }
+        }
+      }
+      if (this.x < player.x + 25) {
+        if (this.y < player.y + 25) {
+          if (player.y < this.y + this.h) {
+            if (player.x < this.w + this.x) {
+              player.y += 25 / 2;
+              player.x -= 25 / 2;
+              collisionside = 2;
+              //left
+            }
+          }
+        }
+      }
+      if (this.x < player.x + 25) {
+        if (this.y < player.y + 25) {
+          if (player.y < this.y + this.h) {
+            if (player.x < this.w + this.x) {
+              collisionside = 3;
+              player.x += 25;
+              //right
+    
+            }
+          }
+        }
+      }
+      if (this.x < player.x + 25) {
+        if (this.y < player.y + 25) {
+          if (player.y < this.y + this.h) {
+            if (player.x < this.w + this.x) {
+              player.x -= 25 / 2;
+              collisionside = 0;
+            }
+          }
+        }
+      } if (this.x < player.x + 25) {
+        if (this.y < player.y + 25) {
+          if (player.y < this.y + this.h) {
+            if (player.x < this.w + this.x) {
+              collisionside = 10;
+            }
+          }
+        }
+      }
+      if (collisionside == 10) {
+        if (momentum > 0) {
+          momentum = 0;
+          player.y = this.y + this.h;
+        }
+        if (momentum < 0) {
+          momentum = 0;
+          player.y = this.y - 25;
+        }
+      }
+      if (collisionside == 2) {
+        player.x = this.x - 25;
+      }
+      if (collisionside == 3) {
+        player.x = this.x + this.w;
+      }
+      if (collisionside == 0) {
+        momentum = 0;
+        player.y = this.y + this.h;
+      }
+      if (collisionside == 1) {
+        player.y = this.y - 25;
+      }
+      player.x = player.x;
+      player.y = player.y;
+      player.momentum = momentum;
     }
 }
 export class WinBlock extends Block {
