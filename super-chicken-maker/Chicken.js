@@ -49,10 +49,10 @@ export default class Chicken {
             this.y = 0;
         }
         if (this.rightmove) {
-            this.x += 3;
+            this.x += 2;
         }
         if (this.leftmove) {
-            this.x -= 3;
+            this.x -= 2;
         }
         this.y -= this.momentum / 2;
 
