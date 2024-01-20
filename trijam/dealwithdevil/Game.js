@@ -43,7 +43,7 @@ class Game {
                 i--;
             }
         }
-        if (timeSinceLastEnemy > 600 / sqrt(levelOn) && enemiesRemaining > 0) {
+        if (timeSinceLastEnemy > 600 / levelOn && enemiesRemaining > 0) {
             timeSinceLastEnemy = 0;
             enemiesRemaining--;
             enemies.push(new Enemy());
@@ -82,7 +82,7 @@ class Game {
     static fireGun() {
 
         if (player.reloadTime <= 0) {
-            if (random() < 0.8) {
+            if (random() < 0.8 || !debuffs.includes("gun jams")) {
                 playerBullets.push(new Bullet())
                 if (buffs.includes("multishot rounds")) {
                     playerBullets.push(new Bullet())

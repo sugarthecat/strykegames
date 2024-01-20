@@ -7,7 +7,7 @@ class DevilScreen {
             "blind spots",
             "color blindness",
             "illiteracy",
-            "non-refusable contracts",
+            "unrefusable contracts",
             "gun jams",
         ];
         this.buffs = [
@@ -81,7 +81,7 @@ class DevilScreen {
         fill(150, 0, 0)
         text("Accept", 120, 350)
 
-        if (!debuffs.includes("non-refusable contracts")) {
+        if (!debuffs.includes("unrefusable contracts")) {
             textSize(40)
             stroke(200, 0, 0)
             if (mouseInRange(420, 310, 120, 50)) {
@@ -104,7 +104,7 @@ class DevilScreen {
             Game.NewLevel();
             Assets.keyboard.stop();
         }
-        if (mouseInRange(420, 310, 120, 50) && !debuffs.includes("non-refusable contracts")) {
+        if (mouseInRange(420, 310, 120, 50) && !debuffs.includes("unrefusable contracts")) {
             screenOn = "game"
             Game.NewLevel();
             Assets.keyboard.stop();
