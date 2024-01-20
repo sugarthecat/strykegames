@@ -41,6 +41,16 @@ div#arena a{
     font-weight: bolder;
     color: white;
 }
+div#trijam{
+    font-weight: bolder;
+    color: white;
+    background-color: darkgreen;
+    text-align: center;
+}
+div#trijam a{
+    font-weight: bolder;
+    color: white;
+}
 div#discord{
     background-color: lightskyblue;
     grid-row-start: 1;
