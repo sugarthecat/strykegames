@@ -1,6 +1,7 @@
 const SCREEN_DIMENSIONS = { x: 600, y: 400 }
 let screenOn = "title"
 let scaleFactor = 1;
+let volume = 1;
 let buffs = [];
 let debuffs = [];
 function preload() {
@@ -8,8 +9,13 @@ function preload() {
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    Assets.music.setVolume(0.5)
     Assets.music.loop();
+    if(isLocalStorageAvailable()){
+        if(localStorage.volume !== undefined){
+            volume = float(localStorage.volume);
+            Assets.setVolume(volume);
+        }
+    }
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
@@ -40,6 +46,9 @@ function draw() {
         case "death":
             DeathScreen.Draw()
             break;
+        case "settings":
+            SettingsScreen.Draw()
+            break;
     }
     fill(0)
     noStroke()
@@ -68,6 +77,9 @@ function mouseClicked() {
         case "death":
             DeathScreen.HandleClick()
             break;
+        case "settings":
+            SettingsScreen.HandleClick()
+            break;
     }
 }
 function getMousePosition() {
@@ -89,11 +101,11 @@ function mouseInRange(x, y, w, h) {
     mousePosition = getMousePosition();
     return (mousePosition.x >= x && mousePosition.y >= y && mousePosition.x <= x + w && mousePosition.y <= y + h)
 }
-function shuffleString(toShuffle){
+function shuffleString(toShuffle) {
     let newString = toShuffle;
-    for(let i = 0; i<toShuffle.length * 2; i++){
-        let index = floor(random(toShuffle.length-1))
-        newString = newString.substring(0,i) + newString.substring(i+1,newString.length)
+    for (let i = 0; i < toShuffle.length * 2; i++) {
+        let index = floor(random(toShuffle.length - 1))
+        newString = newString.substring(0, index) + newString.substring(index + 1, newString.length) + newString.charAt(index)
     }
     return newString;
 }

@@ -2,14 +2,16 @@
 class DevilScreen {
     static NewGame() {
         this.debuffs = [
-            "bad vision",
             "shaky hands",
             "blind spots",
-            "color blindness",
             "illiteracy",
             "unrefusable contracts",
             "gun jams",
         ];
+        if(!badComputer){
+            this.debuffs.push("bad vision")
+            this.debuffs.push("color blindness")
+        }
         this.buffs = [
             "an automatic gun",
             "healing abilities",
@@ -48,7 +50,7 @@ class DevilScreen {
         stroke(200, 0, 0)
         fill(150, 0, 0)
         textSize(60)
-        this.character += 0.2;
+        this.character += 0.3;
         let dealertext = this.dealertext;
         let bufftext = this.bufftext;
         let debufftext = this.debufftext
@@ -95,19 +97,21 @@ class DevilScreen {
         }
     }
     static HandleClick() {
-        if (mouseInRange(60, 310, 120, 50)) {
-            //accepted
-            Game.ApplyStats();
-            this.debuffs.splice(this.debuffs.indexOf(this.debuff), 1)
-            this.buffs.splice(this.buffs.indexOf(this.buff), 1)
-            screenOn = "game"
-            Game.NewLevel();
-            Assets.keyboard.stop();
-        }
-        if (mouseInRange(420, 310, 120, 50) && !debuffs.includes("unrefusable contracts")) {
-            screenOn = "game"
-            Game.NewLevel();
-            Assets.keyboard.stop();
+        if (this.debufftext.length + this.bufftext.length + this.dealertext.length < this.character) {
+            if (mouseInRange(60, 310, 120, 50)) {
+                //accepted
+                Game.ApplyStats();
+                this.debuffs.splice(this.debuffs.indexOf(this.debuff), 1)
+                this.buffs.splice(this.buffs.indexOf(this.buff), 1)
+                screenOn = "game"
+                Game.NewLevel();
+                Assets.keyboard.stop();
+            }
+            if (mouseInRange(420, 310, 120, 50) && !debuffs.includes("unrefusable contracts")) {
+                screenOn = "game"
+                Game.NewLevel();
+                Assets.keyboard.stop();
+            }
         }
     }
 }

@@ -13,4 +13,13 @@ class Assets{
         this.music = loadSound("assets/music.mp3")
         this.gunjam = loadSound("assets/gunjam.mp3")
     }
+    static setVolume(volume){
+        this.gunshot.setVolume(volume)
+        this.keyboard.setVolume(volume)
+        this.ouch.setVolume(volume)
+        this.newLevel.setVolume(volume)
+        this.stab.setVolume(volume)
+        this.music.setVolume(volume/2)
+        this.gunjam.setVolume(volume)
+    }
 }

@@ -13,7 +13,7 @@ class DeathScreen {
 
         textSize(30)
         text("Terminal crashed on level-" + levelOn + ".purg", 300, 300)
-        textSize(50)
+        textSize(40)
         stroke(200, 0, 0)
         if (mouseInRange(240, 310, 120, 50)) {
             fill(10, 0, 0)

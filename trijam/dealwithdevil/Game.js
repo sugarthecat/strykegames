@@ -118,7 +118,7 @@ class Game {
                 player.damage++;
                 break;
             case "a faster gun":
-                player.reload *= 2 / 3
+                player.reload *= 4 / 5
                 break;
             default:
 
@@ -237,7 +237,6 @@ class Player extends Entity {
             //d
         }
         if (delta.y == 0 || delta.x == 0) {
-
             this.y += delta.y * this.speed;
             this.x += delta.x * this.speed;
         } else {
@@ -259,7 +258,7 @@ class Player extends Entity {
         pop();
 
         if (buffs.includes("healing abilities") && this.health < this.maxHealth) {
-            this.health += 0.01
+            this.health += 0.001
         }
     }
 }
@@ -295,7 +294,7 @@ class Enemy extends Entity {
                 this.attack -= 1;
             } else {
                 this.attack = this.attackCooldown;
-                player.health -= 2;
+                player.health -= sqrt (enemyHealth);
                 Assets.stab.play();
             }
         } else {
