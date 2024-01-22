@@ -75,7 +75,7 @@ class Game {
         }
         if (player.health <= 0) {
             screenOn = "death"
-        } else if (enemies.length == 0 && enemiesRemaining == 0) {
+        } else if (enemies.length == 0 && enemiesRemaining >= 0) {
             screenOn = "devil"
             DevilScreen.NewDeal();
             Assets.keyboard.play();
