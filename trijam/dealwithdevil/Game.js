@@ -122,7 +122,7 @@ class Game {
         enemyBullets = [];
         playerBullets = [];
         levelOn++;
-        enemiesRemaining = sqrt (Math.pow(levelOn, 1.5));
+        enemiesRemaining = floor (Math.pow(levelOn, 1.5));
         timeSinceLastEnemy = 10000;
         Assets.newLevel.play();
     }
