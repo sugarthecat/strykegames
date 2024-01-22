@@ -10,10 +10,13 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     Assets.music.loop();
-    if(isLocalStorageAvailable()){
-        if(localStorage.volume !== undefined){
-            volume = float(localStorage.volume);
+    if (isLocalStorageAvailable()) {
+        if (localStorage.unholyvolume !== undefined) {
+            volume = float(localStorage.unholyvolume);
             Assets.setVolume(volume);
+        }
+        if (localStorage.unholybadpc !== undefined) {
+            badComputer = boolean(localStorage.unholybadpc);
         }
     }
 }
@@ -56,14 +59,14 @@ function draw() {
     rect(600, 0, xTranslation, 400)
     rect(0, -yTranslation, 600, yTranslation)
     rect(0, 400, 600, yTranslation)
-    if (debuffs.includes("bad vision") && screenOn == "game") {
-        filter(BLUR, 8);
-    }
-    if (debuffs.includes("color blindness") && (screenOn == "game" || screenOn == "devil")) {
-        filter(GRAY);
+    if(screenOn == "game"){
+        Debuffs.DrawFilterDebuffs();
     }
 }
 function mouseClicked() {
+    if (!Assets.music.isPlaying()) {
+        Assets.music.loop();
+    }
     switch (screenOn) {
         case "title":
             TitleScreen.HandleClick()
@@ -94,6 +97,15 @@ function getMousePosition() {
     if (screenOn == "game" && debuffs.includes("shaky hands")) {
         mousePosition.x += cos(frameCount * 0.03) * 50
         mousePosition.y += sin(frameCount * 0.03) * 50
+    }
+    if (screenOn == "game" && debuffs.includes("vertigo")) {
+        mousePosition.x -= 300;
+        mousePosition.y -= 200;
+        let angle = atan2(mousePosition.y,mousePosition.x);
+        let radius = dist(mousePosition.x,mousePosition.y,0,0)
+        angle -= frameCount/300
+        mousePosition.x = 300 + cos(angle) * radius;
+        mousePosition.y = 200 + sin(angle) * radius;
     }
     return mousePosition
 }

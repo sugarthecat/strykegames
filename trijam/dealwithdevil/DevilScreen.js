@@ -7,6 +7,10 @@ class DevilScreen {
             "illiteracy",
             "unrefusable contracts",
             "gun jams",
+            "vasospasms",
+            "vertigo",
+            "frailness",
+            "hallucinations",
         ];
         if(!badComputer){
             this.debuffs.push("bad vision")
@@ -16,6 +20,8 @@ class DevilScreen {
             "an automatic gun",
             "healing abilities",
             "multishot rounds",
+            "enemy counts",
+            "greater stamina",
         ]
     }
     static NewDeal() {
