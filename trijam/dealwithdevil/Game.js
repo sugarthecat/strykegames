@@ -10,6 +10,8 @@ let enemiesRemaining = 0;
 
 let enemyHealth = 5;
 let enemySpeed = 1;
+let shotTwice = false;
+
 class Game {
     static Draw() {
         fill(50)
@@ -23,36 +25,56 @@ class Game {
         image(Assets.bricks, -400, -400, 800, 800)
         translate(-300, -200)
 
-
-        for (let i = 0; i < playerBullets.length; i++) {
-            playerBullets[i].Draw();
-            for (let j = 0; j < enemies.length; j++) {
-                if (dist(playerBullets[i].x, playerBullets[i].y, enemies[j].x, enemies[j].y) < 20) {
-                    enemies[j].health -= player.damage;
-                    Assets.ouch.play();
-                    playerBullets[i].x = -1000000;
+            for (let i = 0; i < playerBullets.length; i++) {
+                if (!debuffs.includes("invisible bullets")) {
+                    playerBullets[i].Draw();
+                }
+                playerBullets[i].Update();
+                for (let j = 0; j < enemies.length; j++) {
+                    if (dist(playerBullets[i].x, playerBullets[i].y, enemies[j].x, enemies[j].y) < 20 && !playerBullets[i].hit[j]) {
+                        enemies[j].health -= player.damage;
+                        Assets.ouch.play();
+                        if (buffs.includes("sharper bullets")) {
+                            if (playerBullets[i].hit.length > 0) {
+                                playerBullets[i].x = -1000000;
+                            }
+                            else {
+                                playerBullets[i].hit[j] = true;
+                            }
+                        }
+                        else {
+                            playerBullets[i].x = -1000000;
+                        }
+                    }
+                }
+                if (playerBullets[i].OutOfBounds()) {
+                    playerBullets.splice(i, 1);
+                    i--;
                 }
             }
-            if (playerBullets[i].OutOfBounds()) {
-                playerBullets.splice(i, 1);
-                i--;
+            for (let i = 0; i < enemyBullets.length; i++) {
+                if (!debuffs.includes("invisible bullets")) {
+                    enemyBullets[i].Draw();
+                }
+                enemyBullets[i].Update();
+                if (dist(player.x, player.y, enemyBullets[i].x, enemyBullets[i].y) < 20) {
+                    player.health -= 3;
+                    Assets.ouch.play();
+                    enemyBullets[i].x = -1000000;
+                }
+                if (enemyBullets[i].OutOfBounds()) {
+                    enemyBullets.splice(i, 1);
+                    i--;
+                }
             }
-        }
-        for (let i = 0; i < enemyBullets.length; i++) {
-            enemyBullets[i].Draw();
-            if (dist(player.x, player.y, enemyBullets[i].x, enemyBullets[i].y) < 20) {
-                player.health -= 3;
-                Assets.ouch.play();
-                enemyBullets[i].x = -1000000;
-            }
-            if (enemyBullets[i].OutOfBounds()) {
-                enemyBullets.splice(i, 1);
-                i--;
-            }
-        }
         for (let i = 0; i < enemies.length; i++) {
             enemies[i].Draw();
             if (enemies[i].Dead()) {
+                if (buffs.includes("sharper bullets")) {
+                    for (let i = 0; i < playerBullets.length; i++) {
+                        playerBullets[i].hit = [];
+                    }
+                }
                 enemies.splice(i, 1);
                 i--;
             }
@@ -63,6 +85,9 @@ class Game {
 
         //autofire
         if (buffs.includes("an automatic gun") && mouseIsPressed) {
+            this.fireGun();
+        }
+        else if (player.reloadTime > 0) {
             this.fireGun();
         }
         pop();
@@ -100,7 +125,16 @@ class Game {
     }
     static fireGun() {
 
-        if (player.reloadTime <= 0) {
+        if (player.reloadTime <= 0 || (buffs.includes("a double barrel") && player.reloadTime <= player.reload/2 && !shotTwice)) {
+            if (buffs.includes("a double barrel")) {
+                if ((player.reloadTime <= player.reload/2 && !shotTwice))
+                {
+                    shotTwice = true;
+                }
+                else {
+                    shotTwice = false;
+                }
+            }
             if (random() < 0.8 || !debuffs.includes("gun jams")) {
                 playerBullets.push(new Bullet(player, getMousePosition()))
                 if (buffs.includes("multishot rounds")) {

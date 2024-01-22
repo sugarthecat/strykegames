@@ -10,6 +10,7 @@ class Bullet {
         let deltaSpeed = sqrt(this.dx * this.dx + this.dy * this.dy)
         this.dx *= this.speed / deltaSpeed
         this.dy *= this.speed / deltaSpeed
+        this.hit = [];
         if (buffs.includes("multishot rounds")) {
             this.dx += random(-2, 2)
             this.dy += random(-2, 2)
@@ -25,6 +26,12 @@ class Bullet {
         strokeWeight(4)
         line(this.x, this.y, this.x + this.dx, this.y + this.dy)
         pop()
+    }
+    Update(){
+        if (debuffs.includes("swaying bullets")) {
+            this.dx += random(-0.5, 0.5)
+            this.dy += random(-0.5, 0.5)
+        }
         this.x += this.dx;
         this.y += this.dy;
     }

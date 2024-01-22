@@ -11,6 +11,8 @@ class DevilScreen {
             "vertigo",
             "frailness",
             "hallucinations",
+            "invisible bullets",
+            "swaying bullets"
         ];
         if(!badComputer){
             this.debuffs.push("bad vision")
@@ -22,6 +24,8 @@ class DevilScreen {
             "multishot rounds",
             "enemy counts",
             "greater stamina",
+            "a double barrel",
+            "sharper bullets"
         ]
     }
     static NewDeal() {
