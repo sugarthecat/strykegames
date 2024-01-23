@@ -1,0 +1,9 @@
+[12-Jan-2023 17:16:34 UTC] PHP Notice:  Undefined index: user in /home/ktprog/public_html/sci_smash/addScore.php on line 14
+[12-Jan-2023 17:16:40 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
+[12-Jan-2023 17:16:41 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
+[12-Jan-2023 17:16:42 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
+[12-Jan-2023 17:16:42 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
+[12-Jan-2023 17:16:42 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
+[12-Jan-2023 17:17:17 UTC] PHP Notice:  Undefined variable: sql in /home/ktprog/public_html/sci_smash/addScore.php on line 21
+[12-Jan-2023 17:19:46 UTC] PHP Notice:  Undefined variable: sql in /home/ktprog/public_html/sci_smash/addScore.php on line 21
+[12-Jan-2023 17:20:11 UTC] PHP Notice:  Trying to get property 'num_rows' of non-object in /home/ktprog/public_html/sci_smash/getScore.php on line 17
