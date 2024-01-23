@@ -1,20 +1,19 @@
 
 class DevilScreen {
     static NewGame() {
-        this.debuffs = [/*
+        this.debuffs = [
             "shaky hands",
             "blind spots",
             "illiteracy",
             "unrefusable contracts",
             "gun jams",
-            "vasospasms",*/
+            "vasospasms",
             "vertigo",
-            "vertigo",/*
             "frailness",
             "hallucinations",
             "invisible bullets",
             "swaying bullets",
-            "time constriction",*/
+            "time constriction",
         ];
         if(!badComputer){
             this.debuffs.push("bad vision")
