@@ -9,7 +9,7 @@ class GameScreen extends GUI {
     Draw(x, y) {
         fill(200)
         image(Assets.govtpaper, 0, 0, 600, 400)
-        image(Assets.logo, 5, 5, 150, 50)
+        image(Assets.logo, 5, 5-this.scrollOffset, 150, 50)
         //calculate final num
         this.finalNum = 0;
         for (let i = 0; i < this.clauses.length; i++) {
@@ -53,6 +53,7 @@ class GameScreen extends GUI {
         if(this.accessibleDocuments.length > 0){
             this.elements.push(new Button(350, 10, 200, 30, "Documents", function () { screenOn = "documents" }))
         }
+        this.elements.push(new GUIText(140, -10, 150, 50, "SpeedTax"))
         let payment = 0;
         while(payment == 0){
 

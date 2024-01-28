@@ -13,10 +13,6 @@ const numberOperators = [
 ];
 function GetGlobalInformation(){
     return [
-        new EnumInformation("the day of the week", weekday[(new Date()).getDay()], weekday),
-        new EnumInformation("the current month", month[(new Date()).getMonth()], month),
-        new NumberInformation("the day of the month", (new Date()).getDate()),
-        new NumberInformation("the current year", (new Date()).getFullYear()),
     ]
 }
 class EnumInformation {
