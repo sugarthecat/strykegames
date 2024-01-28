@@ -1,13 +1,12 @@
 class LoseScreen extends GUI {
     constructor() {
         super();
-        this.elements = [new Button(250, 300, 100, 50, "Return", function () { screenOn = "title" }),
-        new GUIText(200, -30, 200, 100, "Jail :(")]
+        this.elements = [new Button(250, 300, 100, 50, "Return", function () { screenOn = "title" })]
     }
-    Draw() {
+    Draw(x,y) {
         image(Assets.jail, 0, 0, 600, 400)
         fill(255)
-        rect(180, 0, 240, 100,20)
-        super.Draw();
+        image(Assets.fraud,200,200,200,100)
+        super.Draw(x,y);
     }
 }

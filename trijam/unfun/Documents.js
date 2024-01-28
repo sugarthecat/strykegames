@@ -102,7 +102,7 @@ class Paycheck extends GameDocument {
 }
 
 const universityTypes = ["University", "College", "Institute", "Community College"]
-const universityTitles = ["Southern", "New England", "Brooklyn", "California", "Mid-Atlantic","Midwestern"];
+const universityTitles = ["Southern", "New England", "Brooklyn", "California", "Mid-Atlantic", "Midwestern"];
 const degreeTitles = ["Bachelor's Degree", "Master's Degree", "High School Diploma", "Doctorate Degree", "Associate's Degree"]
 const degreeTypes = ["Computer Science", 'Finance', "Mathematics", "Biology", "Mechanical Engineering", "English", "History", "Sports Management"]
 class Diploma extends GameDocument {
@@ -123,6 +123,45 @@ class Diploma extends GameDocument {
     }
     Draw() {
         image(Assets.govtpaper, 0, 0, 600, 400)
+        super.Draw()
+    }
+}
+
+const firstNames = ["Alex", "Payton", "Sal", "Sam", "Charlie"]
+const hairColors = ["black", "blond", "gray"];
+class DriversLicense extends GameDocument {
+    constructor() {
+        super("Driver's License", "license")
+
+        let firstName = random(firstNames);
+        let lastName = random(lastNames)
+        let birthYear = floor(random(1987, 2003))
+        let hairColor = random(hairColors)
+        this.elements.push(new GUIText(150, 50, 350, 100, firstName + " " + lastName))
+        this.elements.push(new GUIText(150, 180, 300, 50, "Born " + floor(random(1, 12)) + "/" + floor(random(1, 29)) + "/" + birthYear))
+        this.information = [
+            new EnumInformation("your first name", firstName, firstNames),
+            new EnumInformation("your last name", lastName, lastNames),
+            new EnumInformation("your hair color", hairColor, hairColors),
+            new NumberInformation("your birth year", birthYear),
+        ]
+        this.hairColor = hairColor;
+    }
+    Draw() {
+        image(Assets.govtpaper, 0, 0, 600, 400)
+        switch (this.hairColor) {
+            case "blond":
+
+                image(Assets.blond, 20, 160, 120, 160)
+                break;
+            case "black":
+
+                image(Assets.black, 20, 160, 120, 160)
+                break;
+            case "gray":
+                image(Assets.gray, 20, 160, 120, 160)
+                break;
+        }
         super.Draw()
     }
 }

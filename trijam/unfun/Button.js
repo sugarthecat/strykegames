@@ -10,6 +10,7 @@ class Button {
     HandleClick(x, y) {
         if (x >= this.x && y > this.y && y <= this.y + this.h && x <= this.x + this.w) {
             this.action();
+            Assets.buttonclick.play();
         }
     }
     //mouseX and Y

@@ -9,6 +9,11 @@ class Checkbox {
     HandleClick(x, y) {
         if (x >= this.x && y > this.y && y <= this.y + this.h && x <= this.x + this.w) {
             this.enabled = !this.enabled;
+            if(this.enabled){
+                Assets.check.play()
+            }else{
+                Assets.erase.play();
+            }
         }
     }
     //mouseX and Y

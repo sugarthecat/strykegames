@@ -18,6 +18,7 @@ function preload() {
     Assets.loadAssets()
 }
 function setup() {
+    Assets.setVolume(0.8)
     createCanvas(windowWidth, windowHeight);
 }
 function draw() {
@@ -46,7 +47,7 @@ function draw() {
 function mouseWheel(event) {
     //print(event.delta);
     if (screenOn == "game") {
-        screens.game.Scroll(event.delta / 10)
+        screens.game.Scroll(event.delta / 5)
     }
 }
 function mouseClicked() {

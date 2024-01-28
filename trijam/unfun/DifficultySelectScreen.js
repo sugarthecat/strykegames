@@ -17,14 +17,15 @@ class DifficultySelectScreen extends GUI {
         new Button(50, 300, 200, 40, "Financier", function () {
             screenOn = "game"; difficulty = 4; screens["game"].NewLevel();
         }),
-        new Button(350, 300, 200, 40, "Cheif Financier", function () {
+        new Button(350, 300, 200, 40, "C.F.O.", function () {
             screenOn = "game"; difficulty = 5; screens["game"].NewLevel();
-        })]
+        }),
+        new GUIText(200, 5, 300, 60, "Select Difficulty"),
+    ]
     }
     Draw(x, y) {
-        fill(100)
+        fill(200)
         rect(0, 0, 600, 400)
         super.Draw(x, y);
-
     }
 }

@@ -27,8 +27,9 @@ class GameScreen extends GUI {
         this.scrollOffset = max(0, min(this.scrollOffset + scrollAmount, this.height - 400))
     }
     NewLevel() {
+        Assets.music.loop();
         this.elements = []
-        let possDocuments = [new LoveLetter(), new Paycheck(), new Diploma()]
+        let possDocuments = [new LoveLetter(), new Paycheck(), new Diploma(), new DriversLicense()]
         this.accessibleDocuments = []
         while (this.accessibleDocuments.length < difficulty / 2 + 0.5 && possDocuments.length > 0) {
             let newDoc = possDocuments.splice(floor(random(possDocuments.length)), 1)
@@ -48,16 +49,21 @@ class GameScreen extends GUI {
         let finalHeight = clauseCount * 60 + 125;
         this.elements.push(new GUIText(25, finalHeight, 400, 50, "0"))
         this.elements.push(new Button(500, finalHeight, 100, 60, "Pay", function () { ref.EvaluateWin() }))
-        this.elements.push(new Button(350, 10, 200, 30, "Documents", function () { screenOn = "documents" }))
-        this.clauses = []
+        if(this.accessibleDocuments.length > 0){
+            this.elements.push(new Button(350, 10, 200, 30, "Documents", function () { screenOn = "documents" }))
+        }
         let payment = 0;
-        for (let i = 0; i < clauseCount; i++) {
-            let newClause = new Clause(random(information), payment);
-            this.clauses.push(newClause)
-            payment = newClause.applyGen(payment);
-            this.elements.push(new GUIText(50, 50 + i * 60, 440, 50, newClause.text))
-            newClause.checkbox = new Checkbox(0, 55 + i * 60, 50, 50)
-            this.elements.push(newClause.checkbox);
+        while(payment == 0){
+
+            this.clauses = []
+            for (let i = 0; i < clauseCount; i++) {
+                let newClause = new Clause(random(information), payment);
+                this.clauses.push(newClause)
+                payment = newClause.applyGen(payment);
+                this.elements.push(new GUIText(50, 50 + i * 60, 440, 50, newClause.text))
+                newClause.checkbox = new Checkbox(0, 55 + i * 60, 50, 50)
+                this.elements.push(newClause.checkbox);
+            }
         }
         this.height = max(finalHeight + 75, 400)
         this.scrollOffset = 0;
@@ -84,10 +90,13 @@ class GameScreen extends GUI {
         this.finalNum = 0;
     }
     EvaluateWin() {
+        Assets.music.stop();
         if (this.finalNum == this.correctPayment) {
             screenOn = "win";
+            Assets.winsound.play();
         } else {
             screenOn = "lose";
+            Assets.jailsound.play();
         }
     }
 }
