@@ -42,6 +42,9 @@ function draw() {
             break;
         case "game":
             Game.Draw()
+            if(debuffs.includes("time constriction")){
+                Game.Draw();
+            }
             break;
         case "devil":
             DevilScreen.Draw()

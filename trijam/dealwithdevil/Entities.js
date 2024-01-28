@@ -1,6 +1,6 @@
 
 class Bullet {
-    constructor(origin,target) {
+    constructor(origin, target) {
         this.x = origin.x;
         this.y = origin.y;
         this.dx = target.x - origin.x;
@@ -10,6 +10,7 @@ class Bullet {
         let deltaSpeed = sqrt(this.dx * this.dx + this.dy * this.dy)
         this.dx *= this.speed / deltaSpeed
         this.dy *= this.speed / deltaSpeed
+        this.hit = [];
         if (buffs.includes("multishot rounds")) {
             this.dx += random(-2, 2)
             this.dy += random(-2, 2)
@@ -25,6 +26,12 @@ class Bullet {
         strokeWeight(4)
         line(this.x, this.y, this.x + this.dx, this.y + this.dy)
         pop()
+    }
+    Update() {
+        if (debuffs.includes("swaying bullets")) {
+            this.dx += random(-0.5, 0.5)
+            this.dy += random(-0.5, 0.5)
+        }
         this.x += this.dx;
         this.y += this.dy;
     }
@@ -85,6 +92,13 @@ class Player extends Entity {
             delta.x++;
             //d
         }
+        //make vertigo less sucky
+        if (debuffs.includes("vertigo") && (delta.x != 0 || delta.y != 0)) {
+            let theta = atan2(delta.y, delta.x) - frameCount / 300;
+            delta.y = sin(theta) 
+            delta.x = cos(theta) 
+        }
+
         if (delta.y == 0 || delta.x == 0) {
             this.y += delta.y * this.speed;
             this.x += delta.x * this.speed;
@@ -123,7 +137,7 @@ class MeleeEnemy extends Entity {
         }
         this.health = enemyHealth;
         this.maxHealth = enemyHealth;
-        this.damage = sqrt (this.health)
+        this.damage = sqrt(this.health)
         this.speed = enemySpeed;
         this.attackCooldown = 60 / this.speed;
         this.attack = 0;
@@ -172,7 +186,7 @@ class RangedEnemy extends Entity {
         }
         this.health = enemyHealth;
         this.maxHealth = enemyHealth;
-        this.speed = enemySpeed*2/3;
+        this.speed = enemySpeed * 2 / 3;
         this.attackCooldown = 60 / this.speed;
         this.attack = 0;
     }
@@ -195,8 +209,8 @@ class RangedEnemy extends Entity {
         } else {
             if (this.attack > 0) {
                 this.attack--;
-            }else{
-                enemyBullets.push( new Bullet(this,player))
+            } else {
+                enemyBullets.push(new Bullet(this, player))
                 this.attack = this.attackCooldown
                 Assets.enemyshot.play();
             }
