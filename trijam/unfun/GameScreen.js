@@ -9,6 +9,7 @@ class GameScreen extends GUI {
     Draw(x, y) {
         fill(200)
         image(Assets.govtpaper, 0, 0, 600, 400)
+        image(Assets.logo, 5, 5, 150, 50)
         //calculate final num
         this.finalNum = 0;
         for (let i = 0; i < this.clauses.length; i++) {
