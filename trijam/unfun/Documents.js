@@ -115,7 +115,7 @@ class Diploma extends GameDocument {
         this.elements.push(new GUIText(50, 50, 500, 100, "The " + uniTitle + " " + universityType + " Hereby grants"))
         this.elements.push(new GUIText(50, 180, 400, 50, "A " + degreeTitle + " in " + degreeType))
         this.information = [
-            new EnumInformation("your highest level of education", degreeTitle, depositMethods),
+            new EnumInformation("your highest level of education", degreeTitle, degreeTypes),
             new EnumInformation("your highest educational institution attended", universityType, universityTypes),
             new EnumInformation("the location of your highest education", uniTitle, universityTitles),
             new EnumInformation("your academic field", degreeType, degreeTypes),
