@@ -95,8 +95,8 @@ class Player extends Entity {
         //make vertigo less sucky
         if (debuffs.includes("vertigo") && (delta.x != 0 || delta.y != 0)) {
             let theta = atan2(delta.y, delta.x) - frameCount / 300;
-            delta.y = sin(theta) 
-            delta.x = cos(theta) 
+            delta.y = sin(theta)
+            delta.x = cos(theta)
         }
 
         if (delta.y == 0 || delta.x == 0) {
@@ -106,17 +106,30 @@ class Player extends Entity {
             this.y += delta.y / sqrt(2) * this.speed;
             this.x += delta.x / sqrt(2) * this.speed;
         }
-        if (this.x < 15) {
-            this.x = 15;
-        }
-        if (this.y < 15) {
-            this.y = 15
-        }
-        if (this.x > 585) {
-            this.x = 585
-        }
-        if (this.y > 385) {
-            this.y = 385;
+        if (debuffs.includes("vertigo")) {
+            let maxdist = dist(0, 0, 300, 200) + 10;
+            let currdist = dist(this.x - 300, this.y - 200, 0, 0)
+            if (maxdist < currdist) {
+                this.x -= 300;
+                this.y -= 200;
+                this.x *= currdist / maxdist;
+                this.y *= currdist / maxdist;
+                this.x += 300;
+                this.y += 200;
+            }
+        } else {
+            if (this.x < 15) {
+                this.x = 15;
+            }
+            if (this.y < 15) {
+                this.y = 15
+            }
+            if (this.x > 585) {
+                this.x = 585
+            }
+            if (this.y > 385) {
+                this.y = 385;
+            }
         }
         pop();
 

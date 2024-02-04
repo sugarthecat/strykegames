@@ -7,9 +7,9 @@ class Debuffs {
                     for (let i = 0; i < this.blindspots.length; i++) {
                         for (let j = 0; j < 10; j++) {
                             let tempColor = color(150)
-                            tempColor.setAlpha(j * 25)
+                            tempColor.setAlpha(100)
                             fill(tempColor)
-                            circle(this.blindspots[i].x, this.blindspots[i].y, 20 * j + 20)
+                            circle(this.blindspots[i].x, this.blindspots[i].y, 10 * j + 100)
                         }
                     }
                     break;
