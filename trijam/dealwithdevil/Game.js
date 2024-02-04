@@ -153,6 +153,9 @@ class Game {
         enemyBullets = [];
         playerBullets = [];
         levelOn++;
+        if(buffs.includes("healing abilities")){
+            player.health = player.maxHealth
+        }
         enemiesRemaining = floor(Math.pow(levelOn, 1.5));
         timeSinceLastEnemy = 10000;
         Assets.newLevel.play();
