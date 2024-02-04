@@ -19,6 +19,9 @@ function setup() {
             badComputer = boolean(localStorage.unholybadpc);
         }
     }
+    for (let element of document.getElementsByClassName("p5Canvas")) {
+      element.addEventListener("contextmenu", (e) => e.preventDefault());
+    }
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
