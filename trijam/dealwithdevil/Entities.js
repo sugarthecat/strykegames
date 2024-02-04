@@ -108,14 +108,14 @@ class Player extends Entity {
         }
         if (debuffs.includes("vertigo")) {
             let maxdist = dist(0, 0, 300, 200) + 10;
-            let currdist = dist(this.x - 300, this.y - 200, 0, 0)
+            let currdist = dist(this.x,this.y,300,200)
             if (maxdist < currdist) {
-                this.x -= 300;
-                this.y -= 200;
-                this.x *= currdist / maxdist;
-                this.y *= currdist / maxdist;
                 this.x += 300;
                 this.y += 200;
+                this.x *= currdist / maxdist;
+                this.y *= currdist / maxdist;
+                this.x -= 300;
+                this.y -= 200;
             }
         } else {
             if (this.x < 15) {
