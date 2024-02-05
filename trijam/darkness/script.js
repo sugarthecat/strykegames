@@ -15,6 +15,7 @@ function preload() {
         "game": new Game(),
         "death": new DeathScreen(),
         "levelup": new LevelUpGUI(),
+        "win": new WinScreen(),
     }
     game = screens.game
     Assets.loadAssets()

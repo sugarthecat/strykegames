@@ -19,6 +19,7 @@ class Sin {
                     screens.death.SetText("I shouldn't haven given in.")
                     break;
             }
+            game.levelOn--;
         }
     }
     Draw() {

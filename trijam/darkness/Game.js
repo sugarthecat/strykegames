@@ -113,5 +113,36 @@ class Game extends GUI {
             }
             this.goal = new Goal(15, 0)
         }
+        if (this.levelOn == 5) {
+            for (let i = -2; i <= 2; i++) {
+                this.obstacles.push(new Fence(-4, i))
+                this.obstacles.push(new Fence(21, i))
+            }
+            for (let i = -3; i <= 20; i++) {
+                this.obstacles.push(new Fence(i, -2))
+                this.obstacles.push(new Fence(i, 2))
+            }
+            for (let i = 2; i < 18; i += 1) {
+                this.temptations.push(new Sin(i, -1.2))
+                this.temptations.push(new Sin(i, 1.2))
+            }
+            this.goal = new Goal(20, 0)
+        }
+        if (this.levelOn == 6) {
+            for (let i = -4; i <= 4; i++) {
+                this.obstacles.push(new Fence(-4, i))
+                this.obstacles.push(new Fence(11, i))
+            }
+            for (let i = -3; i <= 10; i++) {
+                this.obstacles.push(new Fence(i, -4))
+                this.obstacles.push(new Fence(i, 4))
+            }
+            for (let i = -2; i < 4; i += 1) {
+                this.temptations.push(new Sin(2, i))
+                this.temptations.push(new Sin(5, -i))
+                this.temptations.push(new Sin(8, i))
+            }
+            this.goal = new Goal(9.5, 3)
+        }
     }
 }

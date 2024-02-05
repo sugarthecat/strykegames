@@ -21,6 +21,9 @@ class Goal {
         //console.log(dist(entity.x, 0, this.x, 0),dist(entity.y, 0, this.y, 0) )
         if (dist(entity.x, entity.y, this.x, this.y) < 40) {
             screenOn = "levelup"
+            if(game.levelOn >= 6){
+                screenOn = "win";
+            }
         }
     }
 }
