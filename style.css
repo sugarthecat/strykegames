@@ -26,15 +26,12 @@ div#gamecontent{
 }
 div#superchicken{
     background-color: white;
-    grid-row-start: 1;
-    grid-row-end:4;
     text-align: center;
 }
 div#arena{
     font-weight: bolder;
     color: white;
     background-color: darkred;
-    grid-row-end:4;
     text-align: center;
 }
 div#arena a{
@@ -53,8 +50,6 @@ div#trijam a{
 }
 div#discord{
     background-color: lightskyblue;
-    grid-row-start: 1;
-    grid-row-end:2;
     text-align: center;
 }
 div#discord a{

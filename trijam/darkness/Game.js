@@ -11,31 +11,44 @@ class Game extends GUI {
         super.Draw(x, y);
         fill(255)
         rect(0, 0, 600, 400)
-        push()
-        translate(300 - camera.x, 200 - camera.y);
-        fill(0)
-        for (let i = floor(camera.x / 100) - 8; i < floor(camera.x / 100) + 8; i++) {
-            for (let j = floor(camera.y / 100) - 400; j < floor(camera.y / 100) + 4; j++) {
-                image(Assets.cloudtile, i * 100, j * 100, 101, 101)
+        if (this.introScreen) {
+            textFont(Assets.font)
+            let clr = color(0);
+            let messages = ["Heaven is a nice place.", "I'm a good person.", "I just...", "I let loose sometimes.", "I need to control the darkness inside."]
+            let msgProgress = [max(0,this.introProgress),max(0,this.introProgress-5),max(this.introProgress-10),max(this.introProgress-15),max(this.introProgress-20)]
+            textAlign(LEFT)
+            textSize(30)
+            fill(0)
+            for(let i = 0; i<messages.length; i++){
+                text ( messages[i], 50, i * 50+50)
             }
-        }
-        for (let i = 0; i < this.obstacles.length; i++) {
-            this.obstacles[i].Draw();
-        }
-        for (let i = 0; i < this.temptations.length; i++) {
-            this.temptations[i].Draw();
-            this.temptations[i].Collide(player);
-        }
-        this.goal.Draw()
-        this.goal.Collide(player)
-        player.Draw();
-        pop()
-        fill(255, 0, 0)
-        noStroke()
-        rect(0, 0, 200 * player.supressionLeft, 20)
+        } else {
+            push()
+            translate(300 - camera.x, 200 - camera.y);
+            fill(0)
+            for (let i = floor(camera.x / 100) - 8; i < floor(camera.x / 100) + 8; i++) {
+                for (let j = floor(camera.y / 100) - 400; j < floor(camera.y / 100) + 4; j++) {
+                    image(Assets.cloudtile, i * 100, j * 100, 101, 101)
+                }
+            }
+            for (let i = 0; i < this.obstacles.length; i++) {
+                this.obstacles[i].Draw();
+            }
+            for (let i = 0; i < this.temptations.length; i++) {
+                this.temptations[i].Draw();
+                this.temptations[i].Collide(player);
+            }
+            this.goal.Draw()
+            this.goal.Collide(player)
+            player.Draw();
+            pop()
+            fill(255, 0, 0)
+            noStroke()
+            rect(0, 0, 200 * player.supressionLeft, 20)
 
-        camera.x = camera.x * (1 - deltaTime / 1000) + player.x * (deltaTime / 1000)
-        camera.y = camera.y * (1 - deltaTime / 1000) + player.y * (deltaTime / 1000)
+            camera.x = camera.x * (1 - deltaTime / 1000) + player.x * (deltaTime / 1000)
+            camera.y = camera.y * (1 - deltaTime / 1000) + player.y * (deltaTime / 1000)
+        }
     }
     Collides(entity) {
         for (let i = 0; i < this.obstacles.length; i++) {
@@ -51,8 +64,14 @@ class Game extends GUI {
         this.levelOn = 0;
         player = new Player();
         this.NewLevel();
+        this.introProgress = 0;
+        this.introScreen = true;
     }
     NewLevel() {
+        for (let i = 0; i < Assets.levelstart.length; i++) {
+            Assets.levelstart[i].stop()
+        }
+        (random(Assets.levelstart)).play()
         this.levelOn++;
         camera = { x: 0, y: 0 }
         player.supressionLeft = 3;
