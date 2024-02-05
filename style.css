@@ -12,7 +12,7 @@ header{
     text-align: center;
 }
 header img{
-    width:  500px;
+    width:  1000px;
 }
 div#gamecontent{
     padding: 15px;
@@ -48,6 +48,16 @@ div#trijam a{
     font-weight: bolder;
     color: white;
 }
+div#worldbuilding{
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 43, 122);
+    text-align: center;
+}
+div#worldbuilding a{
+    font-weight: bolder;
+    color: #ffffff;
+}
 div#discord{
     background-color: lightskyblue;
     text-align: center;
@@ -70,25 +80,39 @@ div#superchicken a{
     div#gamecontent{
         width: 800px;
     }
+    
 }
 @media only screen and (max-width: 1000px) {
     div#gamecontent{
         width: 700px;
+    }
+    header img{
+        width:  800px;
     }
 }
 @media only screen and (max-width: 800px) {
     div#gamecontent{
         width: 600px;
     }
+    
+header img{
+    width:  600px;
+}
 }
 @media only screen and (max-width: 700px) {
     div#gamecontent{
         width: 500px;
     }
+    header img{
+        width:  500px;
+    }
 }
 @media only screen and (max-width: 550px) {
     div#gamecontent{
         width: 450px;
+    }
+    header img{
+        width:  300px;
     }
 }
 @media only screen and (max-width: 475px) {
