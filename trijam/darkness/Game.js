@@ -5,23 +5,31 @@ class Game extends GUI {
         super();
         this.obstacles = []
         this.temptations = []
+        this.elements = [new Button(20, 320, 200, 50, "Redeem.", function () {
+            game.introScreen = false;
+            this.NewLevel();
+        })]
     }
     Draw(x, y) {
 
-        super.Draw(x, y);
         fill(255)
         rect(0, 0, 600, 400)
         if (this.introScreen) {
             textFont(Assets.font)
-            let clr = color(0);
             let messages = ["Heaven is a nice place.", "I'm a good person.", "I just...", "I let loose sometimes.", "I need to control the darkness inside."]
-            let msgProgress = [max(0,this.introProgress),max(0,this.introProgress-5),max(this.introProgress-10),max(this.introProgress-15),max(this.introProgress-20)]
+            let msgProgress = [max(0, this.introProgress), max(0, this.introProgress - 5), max(this.introProgress - 10), max(this.introProgress - 15), max(this.introProgress - 20)]
             textAlign(LEFT)
             textSize(30)
-            fill(0)
-            for(let i = 0; i<messages.length; i++){
-                text ( messages[i], 50, i * 50+50)
+            let clr = color(0);
+            for (let i = 0; i < messages.length; i++) {
+                clr.setAlpha(msgProgress[i]*100)
+                fill(clr)
+                text(messages[i], 50, i * 50 + 50)
             }
+            if (this.introProgress > 23) {
+                super.Draw(x, y);
+            }
+            this.introProgress += deltaTime/1000;
         } else {
             push()
             translate(300 - camera.x, 200 - camera.y);
@@ -63,7 +71,6 @@ class Game extends GUI {
 
         this.levelOn = 0;
         player = new Player();
-        this.NewLevel();
         this.introProgress = 0;
         this.introScreen = true;
     }
