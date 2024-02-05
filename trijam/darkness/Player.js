@@ -42,8 +42,8 @@ class Player {
         } else {
             Assets.playDemon();
             image(Assets.demon, this.x - 25, this.y - 25, 50, 50)
-            this.supressionLeft = min(2.5, this.supressionLeft + deltaTime / 1000)
-            if (this.supressionLeft == 2.5) {
+            this.supressionLeft = min(3, this.supressionLeft + deltaTime / 1000)
+            if (this.supressionLeft == 3) {
                 this.demonActive = false;
             }
             if (game.levelOn > 5) {
