@@ -22,6 +22,9 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     Assets.setVolume(volume);
+    for (let element of document.getElementsByClassName("p5Canvas")) {
+      element.addEventListener("contextmenu", (e) => e.preventDefault());
+    }
 }
 function keyPressed() {
     if (keyCode === 27 && screenOn == "game") {

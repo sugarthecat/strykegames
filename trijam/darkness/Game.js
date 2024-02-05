@@ -69,8 +69,49 @@ class Game extends GUI {
                 this.obstacles.push(new Fence(i, -2))
                 this.obstacles.push(new Fence(i, 2))
             }
-            this.temptations.push(new Sin(5,0))
-            this.goal = new Goal(10,0)
+            this.goal = new Goal(10, 0)
+        }
+        if (this.levelOn == 2) {
+            for (let i = -2; i < 3; i++) {
+                this.obstacles.push(new Fence(-2, i))
+                this.obstacles.push(new Fence(11, i))
+            }
+            for (let i = -1; i < 11; i++) {
+                this.obstacles.push(new Fence(i, -2))
+                this.obstacles.push(new Fence(i, 2))
+            }
+            this.temptations.push(new Sin(5, 0))
+            this.goal = new Goal(10, 0)
+        }
+        if (this.levelOn == 3) {
+            for (let i = -2; i < 3; i++) {
+                this.obstacles.push(new Fence(-2, i))
+                this.obstacles.push(new Fence(11, i))
+            }
+            for (let i = -1; i < 11; i++) {
+                this.obstacles.push(new Fence(i, -2))
+                this.obstacles.push(new Fence(i, 2))
+            }
+            this.temptations.push(new Sin(5, 0))
+            this.temptations.push(new Sin(7, -1))
+            this.temptations.push(new Sin(7, 1))
+            this.goal = new Goal(10, 0)
+        }
+        if (this.levelOn == 4) {
+            for (let i = -3; i < 4; i++) {
+                this.obstacles.push(new Fence(-4, i))
+                this.obstacles.push(new Fence(16, i))
+            }
+            for (let i = -3; i < 16; i++) {
+                this.obstacles.push(new Fence(i, -3))
+                this.obstacles.push(new Fence(i, 3))
+            }
+            for (let i = 2; i < 14; i += 2) {
+                this.temptations.push(new Sin(i, -2))
+                this.temptations.push(new Sin(i, 0))
+                this.temptations.push(new Sin(i, 2))
+            }
+            this.goal = new Goal(15, 0)
         }
     }
 }
