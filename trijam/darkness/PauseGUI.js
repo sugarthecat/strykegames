@@ -8,6 +8,15 @@ class PauseGUI extends GUI {
         //Assets.playHeaven();
         fill(255)
         rect(0, 0, 600, 400)
+        fill(0, 0, 0)
+        rect(200, 198, 200, 4)
+        fill(0, 0, 0)
+        rect(200 + 200 * volume, 185, 3, 30)
+        if (mouseInRange(200, 180, 200, 40) && mouseIsPressed) {
+            let mousepos = getMousePosition();
+            volume = (mousepos.x - 200) / 200
+            Assets.setVolume(volume)
+        }
         super.Draw(x, y);
     }
 }

@@ -7,7 +7,7 @@ class Game extends GUI {
         this.temptations = []
         this.elements = [new Button(20, 320, 200, 50, "Redeem.", function () {
             game.introScreen = false;
-            this.NewLevel();
+            game.NewLevel();
         })]
     }
     Draw(x, y) {
@@ -26,11 +26,17 @@ class Game extends GUI {
                 fill(clr)
                 text(messages[i], 50, i * 50 + 50)
             }
-            if (this.introProgress > 23) {
+            if (this.introProgress > 0) {
                 super.Draw(x, y);
             }
             this.introProgress += deltaTime/1000;
         } else {
+            if(this.levelOn == 1){
+                fill(255)
+                rect(0,350,100,50)
+                fill(0)
+                text("Shift to regain control.", 0,350,100,50)
+            }
             push()
             translate(300 - camera.x, 200 - camera.y);
             fill(0)
@@ -75,10 +81,6 @@ class Game extends GUI {
         this.introScreen = true;
     }
     NewLevel() {
-        for (let i = 0; i < Assets.levelstart.length; i++) {
-            Assets.levelstart[i].stop()
-        }
-        (random(Assets.levelstart)).play()
         this.levelOn++;
         camera = { x: 0, y: 0 }
         player.supressionLeft = 3;
