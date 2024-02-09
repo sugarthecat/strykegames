@@ -1,12 +1,12 @@
 let tiles = []
 const NOISE_SCALE = 0.01;
 const TEMP_NOISE_SCALE = 0.008;
-const LAND_CUTOFF = 0.45;
-const TILE_HEIGHT = 100;
-const TILE_WIDTH = 150;
-const MAP_WIDTH = 1200;
-const MAP_HEIGHT = 800;
-
+const LAND_CUTOFF = 0.5;
+const TILE_SIZE = 3
+const TILE_HEIGHT = 200;
+const TILE_WIDTH = 300;
+const MAP_WIDTH = TILE_SIZE*TILE_WIDTH;
+const MAP_HEIGHT = TILE_SIZE*TILE_HEIGHT;
 class Point {
     constructor(x, y) {
         this.x = x;
@@ -49,7 +49,13 @@ function setup() {
                     newTile.points.push(landArea[i])
                 }
                 newTile.Setup()
-                if (newTile.points.length > 5) {
+                if (newTile.points.length > 100){
+                    let newTiles = newTile.Split();
+                    for(let i = 0; i<newTiles.length; i++){
+                        tiles.push(newTiles[i])
+                    }
+                }else if(newTile.points.length > 5){
+                    
                     tiles.push(newTile)
                 }
             }
