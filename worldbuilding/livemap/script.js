@@ -49,7 +49,9 @@ function setup() {
                     newTile.points.push(landArea[i])
                 }
                 newTile.Setup()
-                tiles.push(newTile)
+                if (newTile.points.length > 5) {
+                    tiles.push(newTile)
+                }
             }
         }
     }

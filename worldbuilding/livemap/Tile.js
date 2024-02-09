@@ -14,15 +14,14 @@ class Tile {
         fill(0)
         noStroke();
         for (let i = 0; i < this.points2.length; i++) {
-            circle(this.points2[i].x / TILE_WIDTH * MAP_WIDTH, this.points2[i].y / TILE_HEIGHT * MAP_HEIGHT, 8)
+            //circle(this.points2[i].x / TILE_WIDTH * MAP_WIDTH, this.points2[i].y / TILE_HEIGHT * MAP_HEIGHT, 8)
         }
         if (this.firstPoint !== undefined) {
-            circle(this.firstPoint.x / TILE_WIDTH * MAP_WIDTH, this.firstPoint.y / TILE_HEIGHT * MAP_HEIGHT, 12)
+            //circle(this.firstPoint.x / TILE_WIDTH * MAP_WIDTH, this.firstPoint.y / TILE_HEIGHT * MAP_HEIGHT, 12)
         }
         fill(this.color)
         beginShape();
         for (let i = 0; i < this.vertexes.length; i++) {
-
             vertex(this.vertexes[i].x / TILE_WIDTH * MAP_WIDTH, this.vertexes[i].y / TILE_HEIGHT * MAP_HEIGHT)
         }
         endShape(CLOSE);
@@ -50,7 +49,7 @@ class Tile {
                                 )
                             ) {
                                 if (mapped[newx][newy]) {
-                                    nearbyTiles.push({x:newx,y:newy})
+                                    nearbyTiles.push({ x: newx, y: newy })
                                 }
                                 else {
                                     nearbyOcean++;
@@ -130,32 +129,34 @@ class Tile {
         }
         let searchPoint = firstPoint;
         let going = searchPoint !== null;
+        let dir = 0;
+        let dirs = [[1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1], [1, 1]]
         while (going) {
             going = false;
             //this.vertexes.push({x: searchPoint.x + random(-0.4,0.4), y: searchPoint.y + random(-0.4,0.4)});
             this.vertexes.push({ x: searchPoint.x, y: searchPoint.y });
             //console.log(points[0])
-            for (let round = 1; round < 3; round++) {
-                for (let i = -1; i <= 1; i++) {
-                    for (let j = -1; j <= 1; j++) {
-                        let newx = i + searchPoint.x
-                        let newy = j + searchPoint.y
-                        if (
-                            newx >= 0
-                            && newy >= 0
-                            && (i == 0 || j == 0 || round >= 2)
-                            && newx < isLandArr.length
-                            && newy < isLandArr[newx].length
-                            && mapped[newx][newy]
-                            && !going
-                        ) {
-                            //console.log(mapped[newx][newy])
-                            searchPoint = ({ x: newx, y: newy })
-                            going = true;
-                        }
-                    }
+            let finalNewDir = dir;
+            for (let dirChange = -2; dirChange < dirs.length; dirChange++) {
+                let newDirIndex = ((dir + dirChange + dirs.length) % dirs.length)
+                let newdir = dirs[newDirIndex]
+                let newx = newdir[0] + searchPoint.x
+                let newy = newdir[1] + searchPoint.y
+                if (
+                    newx >= 0
+                    && newy >= 0
+                    && newx < isLandArr.length
+                    && newy < isLandArr[newx].length
+                    && mapped[newx][newy]
+                    && !going
+                ) {
+                    //console.log(mapped[newx][newy])
+                    searchPoint = ({ x: newx, y: newy })
+                    going = true;
+                    finalNewDir = newDirIndex
                 }
             }
+            dir = finalNewDir
             //console.log(consolestr)
             mapped[searchPoint.x][searchPoint.y] = false;
         }
