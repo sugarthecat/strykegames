@@ -4,17 +4,28 @@ class Tile {
     constructor() {
         this.points = []
         this.vertexes = []
-        this.color = color(random(100, 255), random(100, 255), random(10, 100))
+        this.connections = []
+        this.geocolor = color(random(100, 255), random(100, 255), random(10, 100))
+        this.politicalColor = color(random(0, 255))
     }
     Draw() {
-        fill(this.color)
+        switch (MAP_MODE) {
+            case 0:
+                fill(this.geocolor)
+                break;
+            case 1:
+                fill(this.politicalColor)
+                break;
+            default:
+                fill(this.geocolor)
+                break
+        }
         beginShape();
         noStroke();
         for (let i = 0; i < this.vertexes.length; i++) {
-            vertex(this.vertexes[i].x * TILE_SIZE, this.vertexes[i].y * TILE_SIZE)
+            vertex(floor(this.vertexes[i].x * TILE_SIZE * scaleFactor), floor(this.vertexes[i].y * TILE_SIZE * scaleFactor))
         }
         endShape(CLOSE);
-        fill(0)
     }
     SetupVariables() {
         let avgYValue = 0;
@@ -26,9 +37,24 @@ class Tile {
         avgYValue /= this.points.length
         avgXValue /= this.points.length
         //add some temp offset
-        let tempOffset = noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
-        let temp = tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT
-        this.color = color(temp * 255)
+        let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
+        let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
+        if (temp < 0.3) {
+            //snow
+            this.geocolor = color(255 - temp * 350)
+        } else if (temp < 0.55) {
+            this.geocolor = color(50, 30 + temp * 200, 20)
+        } else if (temp < 0.8) {
+            this.geocolor = color(temp * 300 - 30, 220 - temp * 50, 0)
+        } else {
+            this.geocolor = color(250, 50 + temp * 150, 20)
+        }
+    }
+    Connect(other) {
+        if (!this.connections.includes(other)) {
+            this.connections.push(other)
+            other.Connect(this);
+        }
     }
     Split() {
         let spawnerPoints = []
@@ -80,6 +106,7 @@ class Tile {
                     && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y]
                 ) {
                     closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y])
+                    closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y])
                 }
 
                 if (closestTiles[point.x][point.y]
@@ -88,6 +115,7 @@ class Tile {
                     && closestTiles[point.x][point.y] != closestTiles[point.x][point.y - 1]
                 ) {
                     closestTiles[point.x][point.y].points.push(points[point.x][point.y - 1])
+                    closestTiles[point.x][point.y].Connect(closestTiles[point.x][point.y - 1])
                 }
 
                 if (closestTiles[point.x][point.y]
@@ -97,6 +125,8 @@ class Tile {
                     && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y - 1]
                 ) {
                     closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y - 1])
+                    closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y - 1])
+
                 }
             }
             for (let i = 0; i < tiles.length; i++) {
@@ -200,7 +230,7 @@ class Tile {
                 }
             }
         }
-        this.CleanupExtremedies(mapped);
+        //this.CleanupExtremedies(mapped);
         let proximityToStart = [];
         while (proximityToStart.length < mapped.length) {
             proximityToStart.push([])
@@ -253,6 +283,32 @@ class Tile {
             //console.log(consolestr)
             mapped[searchPoint.x][searchPoint.y] = false;
             this.SetupVariables();
+            this.OptimizeVertexes();
         }
+    }
+    OptimizeVertexes() {
+        for (let i = 0; i + 2 < this.vertexes.length; i++) {
+            if (
+                (this.vertexes[i].x - this.vertexes[i + 1].x == this.vertexes[i + 1].x - this.vertexes[i + 2].x)
+                &&
+                (this.vertexes[i].y - this.vertexes[i + 1].y == this.vertexes[i + 1].y - this.vertexes[i + 2].y)
+            ) {
+                this.vertexes.splice(i + 1, 1)
+                i--;
+            }
+        }
+    }
+}
+function DrawSelectedTile() {
+    if (selectedTile) {
+        let vertexes = selectedTile.vertexes
+        stroke(0)
+        strokeWeight(scaleFactor * 5)
+        beginShape();
+        noFill();
+        for (let i = 0; i < vertexes.length; i++) {
+            vertex(floor(vertexes[i].x * TILE_SIZE * scaleFactor), floor(vertexes[i].y * TILE_SIZE * scaleFactor))
+        }
+        endShape(CLOSE);
     }
 }

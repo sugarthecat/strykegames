@@ -1,0 +1,5 @@
+class Nation{
+    constructor(){
+        
+    }
+}
