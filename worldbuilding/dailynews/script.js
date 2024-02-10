@@ -16,6 +16,7 @@ function setup() {
 let rendered = false;
 function draw() {
     if(!rendered && dataMax == dataLoaded){
+        FormatData();
         rendered = true;
         for (let i = 0; i < storyCount; i++) {
             AddStory()
