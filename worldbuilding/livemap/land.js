@@ -1,4 +1,6 @@
-function setup_land(){
+const STARTING_NATION_COUNT = 15;
+let nations = []
+function setup_land() {
     //generate land array
     for (let i = 0; i < TILE_WIDTH; i++) {
         isLandArr.push([])
@@ -44,6 +46,51 @@ function setup_land(){
                 occupyingTile.push([])
             }
             occupyingTile[point.x][point.y] = tiles[i]
+        }
+    }
+    //spawn nations
+    let usedTiles = []
+    nations = []
+    for (let i = 0; i < STARTING_NATION_COUNT; i++) {
+        nations.push(new Nation())
+        let newTile = tiles[floor(i * tiles.length / STARTING_NATION_COUNT)]
+        usedTiles.push(newTile);
+        nations[i].AnnexTile(newTile);
+    }
+    let going = true;
+    while (going) {
+        usedTiles = []
+        going = false;
+        for (let i = 0; i < tiles.length; i++) {
+            if (!usedTiles.includes(tiles[i]) && tiles[i].nation) {
+                for (let j = 0; j < tiles[i].connections.length; j++) {
+                    if (!tiles[i].connections[j].nation) {
+                        tiles[i].connections[j].nation = tiles[i].nation
+                        usedTiles.push(tiles[i].connections[j])
+                        going = true;
+                    }
+                }
+            }
+        }
+    }
+    //claim unclaimed islands
+
+    usedTiles = []
+    for (let i = 0; i < tiles.length; i++) {
+        if (!tiles[i].nation) {
+            let closestTile = false;
+            for (let j = 0; j < tiles.length; j++) {
+                //console.log(tiles[j])
+                if (!usedTiles.includes(tiles[j]) && tiles[j].nation && i != j &&
+                    (closestTile === false ||
+                        dist2(tiles[i].position.x, tiles[i].position.y, closestTile.position.x, closestTile.position.y)
+                        > dist2(tiles[i].position.x, tiles[i].position.y, tiles[j].position.x, tiles[j].position.y)
+                    )) {
+                    closestTile = tiles[j]
+                }
+            }
+            tiles[i].nation = closestTile.nation;
+            usedTiles.push(tiles[i]);
         }
     }
 }

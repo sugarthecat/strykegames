@@ -2,11 +2,13 @@ const TARGET_TILE_SIZE = 30;
 const TILE_MIN_SIZE = 20;
 class Tile {
     constructor() {
+        this.nation = false;
+        this.population = 0
         this.points = []
         this.vertexes = []
         this.connections = []
-        this.geocolor = color(random(100, 255), random(100, 255), random(10, 100))
-        this.politicalColor = color(random(0, 255))
+        this.geocolor = color(0)
+        this.politicalColor = color(255, 0, 0)
     }
     Draw() {
         switch (MAP_MODE) {
@@ -14,7 +16,11 @@ class Tile {
                 fill(this.geocolor)
                 break;
             case 1:
-                fill(this.politicalColor)
+                if (this.nation) {
+                    fill(this.nation.color)
+                } else {
+                    fill(50)
+                }
                 break;
             default:
                 fill(this.geocolor)
@@ -26,6 +32,23 @@ class Tile {
             vertex(floor(this.vertexes[i].x * TILE_SIZE * scaleFactor), floor(this.vertexes[i].y * TILE_SIZE * scaleFactor))
         }
         endShape(CLOSE);
+
+    }
+    DrawCity() {
+
+        if (this.isMajorCity) {
+            fill(50)
+            circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 4)
+            fill(255)
+            circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 3)
+            fill(50)
+            circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 2)
+        } else if (this.isCity) {
+            fill(50)
+            circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 2)
+            fill(255)
+            circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 1)
+        }
     }
     SetupVariables() {
         let avgYValue = 0;
@@ -34,11 +57,24 @@ class Tile {
             avgYValue += this.points[i].y
             avgXValue += this.points[i].x
         }
+
         avgYValue /= this.points.length
         avgXValue /= this.points.length
+
+        this.position = { x: avgXValue, y: avgYValue }
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
+        this.population = max(noise(avgXValue * NOISE_SCALE + 100, avgYValue * NOISE_SCALE + 100),0.5) - min(Math.abs(0.5 - temp), 0.2)
+
+        this.population = floor(Math.pow(this.population, 7) * 1000000)
+        //console.log(this.population)
+        if (noise(avgXValue, avgYValue + 100) > 0.7) {
+            this.isMajorCity = true;
+        }
+        if (noise(avgXValue, avgYValue + 100) > 0.65) {
+            this.isCity = true;
+        }
         if (temp < 0.3) {
             //snow
             this.geocolor = color(255 - temp * 350)
@@ -49,6 +85,7 @@ class Tile {
         } else {
             this.geocolor = color(250, 50 + temp * 150, 20)
         }
+
     }
     Connect(other) {
         if (!this.connections.includes(other)) {
@@ -59,11 +96,9 @@ class Tile {
     Split() {
         let spawnerPoints = []
         let tiles = []
+
         for (let i = 0; i < this.points.length / TARGET_TILE_SIZE; i++) {
-            let newPoint = random(this.points)
-            //while (this.points.includes(newPoint)) {
-            //newPoint = random(this.points)
-            //}
+            let newPoint = this.points[floor(i * TARGET_TILE_SIZE)]
             spawnerPoints.push(newPoint)
             tiles.push(new Tile())
         }
@@ -88,9 +123,9 @@ class Tile {
 
                 for (let j = 0; j < tiles.length; j++) {
                     if (
-                        dist(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y)
+                        dist2(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y)
                         >
-                        dist(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y)
+                        dist2(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y)
                     ) {
                         closestTileIndex = j;
                     }
@@ -254,7 +289,6 @@ class Tile {
 
         while (going) {
             going = false;
-            //this.vertexes.push({x: searchPoint.x + random(-0.4,0.4), y: searchPoint.y + random(-0.4,0.4)});
             this.vertexes.push({ x: searchPoint.x, y: searchPoint.y });
             let proximity = proximityToStart[searchPoint.x][searchPoint.y]
             //console.log(points[0])
@@ -277,14 +311,18 @@ class Tile {
                     going = true;
                     finalNewDir = newDirIndex
                     proximityToStart[newx][newy] = proximity + 1
+                    if (searchPoint.x == firstPoint.x && searchPoint.y == firstPoint.y) {
+                        going = false;
+                        break;
+                    }
                 }
             }
             dir = finalNewDir
             //console.log(consolestr)
-            mapped[searchPoint.x][searchPoint.y] = false;
-            this.SetupVariables();
-            this.OptimizeVertexes();
+            //mapped[searchPoint.x][searchPoint.y] = false;
         }
+        this.SetupVariables();
+        this.OptimizeVertexes();
     }
     OptimizeVertexes() {
         for (let i = 0; i + 2 < this.vertexes.length; i++) {
@@ -311,4 +349,9 @@ function DrawSelectedTile() {
         }
         endShape(CLOSE);
     }
+}
+function dist2(x1, y1, x2, y2) {
+    let xdist = x1 - x2;
+    let ydist = y1 - y2;
+    return Math.floor(xdist * xdist + ydist * ydist)
 }

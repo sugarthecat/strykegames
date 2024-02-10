@@ -26,8 +26,8 @@ function setup() {
     createCanvas(1, 1)
     setup_land();
     buttons = [
-        new Button(0, 0, 200, 100, "Geography", function () { MAP_MODE = 0 }),
-        new Button(0, 100, 200, 100, "Political", function () { MAP_MODE = 1 }),
+        new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
+        new Button(0,50, 200, 50, "Political", function () { MAP_MODE = 1 }),
     ]
 }
 let camerax = 0;
@@ -41,6 +41,9 @@ function draw() {
     scaleFactor = max(width / MAP_WIDTH, height / MAP_HEIGHT)
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].Draw();
+    }
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].DrawCity();
     }
     let speed = 2;
     if (keyIsDown(UP_ARROW)) {
@@ -72,13 +75,13 @@ function mouseClicked() {
     mousey /= scaleFactor
     mousex = floor(mousex)
     mousey = floor(mousey)
+    selectedTile = false;
     if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
         selectedTile = occupyingTile[mousex][mousey];
     }
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].HandleClick(mouseX, mouseY)
     }
-
 }
 function Tick() {
 
