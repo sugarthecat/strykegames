@@ -32,13 +32,8 @@ function setup() {
             let isLand = noise(x * NOISE_SCALE, y * NOISE_SCALE) > LAND_CUTOFF;
             isLandArr[i].push(isLand)
             coveredLand[i].push(false);
-            if (isLand) {
-
-                //tiles.push(new Tile(x, y,));
-            }
         }
     }
-    //clear islands with < 15 area;
     for (let i = 0; i < isLandArr.length; i++) {
         for (let j = 0; j < isLandArr[i].length; j++) {
             if (isLandArr[i][j] && !coveredLand[i][j]) {
@@ -50,17 +45,21 @@ function setup() {
                 }
                 newTile.Setup()
                 if (newTile.points.length > 100){
+                    //break continents with > 100 area
                     let newTiles = newTile.Split();
                     for(let i = 0; i<newTiles.length; i++){
                         tiles.push(newTiles[i])
                     }
-                }else if(newTile.points.length > 5){
+                }else if(newTile.points.length > 15){
                     
+                    //clear islands with < 15 area;
                     tiles.push(newTile)
                 }
             }
         }
     }
+    isLandArr = []
+    coveredLand = []
 }
 function getLandmass(x1, y1) {
     //let landArea = 1;

@@ -1,20 +1,34 @@
 const TARGET_TILE_SIZE = 30;
+const TILE_MIN_SIZE = 20;
 class Tile {
     constructor() {
         this.points = []
-        this.points2 = []
         this.vertexes = []
         this.color = color(random(100, 255), random(100, 255), random(10, 100))
     }
     Draw() {
         fill(this.color)
         beginShape();
+        noStroke();
         for (let i = 0; i < this.vertexes.length; i++) {
-            vertex(this.vertexes[i].x / TILE_WIDTH * MAP_WIDTH, this.vertexes[i].y / TILE_HEIGHT * MAP_HEIGHT)
+            vertex(this.vertexes[i].x * TILE_SIZE, this.vertexes[i].y * TILE_SIZE)
         }
         endShape(CLOSE);
         fill(0)
-        noStroke();
+    }
+    SetupVariables() {
+        let avgYValue = 0;
+        let avgXValue = 0
+        for (let i = 0; i < this.points.length; i++) {
+            avgYValue += this.points[i].y
+            avgXValue += this.points[i].x
+        }
+        avgYValue /= this.points.length
+        avgXValue /= this.points.length
+        //add some temp offset
+        let tempOffset = noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
+        let temp = tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT
+        this.color = color(temp * 255)
     }
     Split() {
         let spawnerPoints = []
@@ -27,26 +41,70 @@ class Tile {
             spawnerPoints.push(newPoint)
             tiles.push(new Tile())
         }
+        let going = true;
+
+        let closestTiles = []
+        let points = []
+        while (closestTiles.length < isLandArr.length) {
+            closestTiles.push([])
+            points.push([])
+        }
         for (let i = 0; i < this.points.length; i++) {
-            let closestTileIndex = 0
-            for (let j = 0; j < tiles.length; j++) {
-                if (
-                    dist(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y)
-                    >
-                    dist(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y)
+            points[this.points[i].x][this.points[i].y] = this.points[i]
+        }
+        while (going) {
+            for (let i = 0; i < tiles.length; i++) {
+                tiles[i].points = []
+            }
+            going = false
+            for (let i = 0; i < this.points.length; i++) {
+                let closestTileIndex = 0
+
+                for (let j = 0; j < tiles.length; j++) {
+                    if (
+                        dist(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y)
+                        >
+                        dist(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y)
+                    ) {
+                        closestTileIndex = j;
+                    }
+                }
+                tiles[closestTileIndex].points.push(this.points[i])
+                closestTiles[this.points[i].x][this.points[i].y] = tiles[closestTileIndex]
+            }
+            for (let i = 0; i < this.points.length; i++) {
+                let point = this.points[i]
+                if (closestTiles[point.x][point.y]
+                    && point.x > 0
+                    && closestTiles[point.x - 1][point.y]
+                    && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y]
                 ) {
-                    closestTileIndex = j;
+                    closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y])
+                }
+
+                if (closestTiles[point.x][point.y]
+                    && point.y > 0
+                    && closestTiles[point.x][point.y - 1]
+                    && closestTiles[point.x][point.y] != closestTiles[point.x][point.y - 1]
+                ) {
+                    closestTiles[point.x][point.y].points.push(points[point.x][point.y - 1])
+                }
+
+                if (closestTiles[point.x][point.y]
+                    && point.y > 0
+                    && point.x > 0
+                    && closestTiles[point.x - 1][point.y - 1]
+                    && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y - 1]
+                ) {
+                    closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y - 1])
                 }
             }
-            tiles[closestTileIndex].points.push(this.points[i])
-            for (let j = 0; j < tiles.length; j++) {
-                if (
-                    dist(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y) 
-                    >
-                    dist(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y) 
-                    && j !== closestTileIndex
-                ) {
-                    tiles[j].points.push(this.points[i])
+            for (let i = 0; i < tiles.length; i++) {
+                if (tiles[i].points.length < TILE_MIN_SIZE) {
+                    tiles.splice(i, 1)
+                    spawnerPoints.splice(i, 1)
+                    going = true;
+                    i--;
                 }
             }
         }
@@ -143,7 +201,6 @@ class Tile {
             }
         }
         this.CleanupExtremedies(mapped);
-        this.points2 = []
         let proximityToStart = [];
         while (proximityToStart.length < mapped.length) {
             proximityToStart.push([])
@@ -157,7 +214,6 @@ class Tile {
                         this.firstPoint = firstPoint;
                         proximityToStart[firstPoint.x][firstPoint.y] = 0;
                     }
-                    this.points2.push(new Point(i, j))
                 }
             }
         }
@@ -196,6 +252,7 @@ class Tile {
             dir = finalNewDir
             //console.log(consolestr)
             mapped[searchPoint.x][searchPoint.y] = false;
+            this.SetupVariables();
         }
     }
 }
