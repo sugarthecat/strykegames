@@ -7,30 +7,79 @@ class Tile {
         this.nation = false;
         this.takenThisTurn = false;
         this.population = 0
+        this.maxpop = 0
         this.points = []
         this.vertexes = []
         this.connections = []
         this.geocolor = color(0)
         this.politicalColor = color(255, 0, 0)
+        this.troops = 0;
+        this.arrivingTroops = 0;
+        this.frontlineDistance = -1;
     }
     UpdateInternal() {
         this.takenThisTurn = false;
-    }
-    AttackNeighbors() {
-        if (!this.takenThisTurn) {
-            for (let i = 0; i < this.connections.length; i++) {
-                if (this.connections[i].nation != this.nation && !this.connections[i].takenThisTurn) {
-                    let attack = random(1)
-                    if (attack < 0.2) {
-                        this.nation.AnnexTile(this.connections[i])
-                        this.connections[i].takenThisTurn = true;
-                    } else if (attack > 0.9) {
-                        this.connections[i].nation.AnnexTile(this)
-                        this.takenThisTurn = true;
-                    }
-
+        let mobilizedTroops = floor(this.population * 0.001)
+        //this.population -= mobilizedTroops;
+        this.troops = floor(this.troops + mobilizedTroops + this.arrivingTroops)
+        this.arrivingTroops = 0;
+        this.frontlineDistance = -1;
+        this.isEncircled = true;
+        for (let i = 0; i < this.connections.length; i++) {
+            if (this.connections[i].nation != this.nation) {
+                this.frontlineDistance = 0;
+            } else {
+                this.isEncircled = false;
+                if (this.connections[i].frontlineDistance >= 0 && (this.frontlineDistance > this.connections[i].frontlineDistance || this.frontlineDistance == -1)) {
+                    this.frontlineDistance = this.connections[i].frontlineDistance + 1
                 }
             }
+        }
+    }
+    SeizeTile(oppTile) {
+        this.troops -= oppTile.troops
+        this.nation.AnnexTile(oppTile)
+        oppTile.troops = this.troops * 1 / 2
+        this.troops /= 2
+        this.takenThisTurn = true;
+        oppTile.takenThisTurn = true
+    }
+    AttackNeighbors() {
+        if (this.frontlineDistance == 0 && !this.takenThisTurn) {
+            let tilesToAttack = []
+            for (let i = 0; i < this.connections.length; i++) {
+                let oppTile = this.connections[i]
+                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && this.troops > oppTile.troops && (this.troops > 10 * oppTile.troops || !this.isEncircled)) {
+                    tilesToAttack.push(oppTile)
+                }
+            }
+            if (tilesToAttack.length > 0) {
+                let oppTile = random(tilesToAttack)
+                let atk = this.troops;
+                this.troops = max(0, floor(this.troops - oppTile.troops * random(0.1, 0.2)))
+                oppTile.troops = max(0, floor(oppTile.troops - atk * random(0.1, 0.2)))
+                if (this.troops > oppTile.troops * 200) {
+                    this.SeizeTile(oppTile)
+                }
+                if (this.troops * 200 < oppTile.troops) {
+                    oppTile.SeizeTile(this)
+                }
+            }
+        } else if (this.frontlineDistance > 0) {
+            //send troops nearby
+            let toSendTo = []
+            for (let i = 0; i < this.connections.length; i++) {
+                if (this.connections[i].frontlineDistance < this.frontlineDistance && this.connections[i].nation == this.nation) {
+                    toSendTo.push(this.connections[i])
+                    break;
+                }
+            }
+            let savedTroops = floor(this.troops / (this.frontlineDistance * 2))
+            this.troops -= savedTroops;
+            for (let i = 0; i < toSendTo; i++) {
+                toSendTo[i].arrivingTroops = floor(toSendTo[i].arrivingTroops + this.troops / toSendTo.length)
+            }
+            this.troops = savedTroops
         }
     }
     Draw() {
@@ -44,6 +93,10 @@ class Tile {
                 } else {
                     fill(50)
                 }
+                break;
+            case 2:
+                let scalar = 1 - Math.log(this.troops) / Math.log(mostTroops)
+                fill(this.nation.color._getRed() * scalar, this.nation.color._getGreen() * scalar, this.nation.color._getBlue() * scalar)
                 break;
             default:
                 fill(this.geocolor)
@@ -90,6 +143,7 @@ class Tile {
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
         this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.4)
         this.population = floor(Math.pow(this.importance + 1, 23) * this.points.length * Math.pow(max(1 - Math.abs(0.5 - temp), 0.01), 2))
+        this.maxpop = this.population;
         //console.log(this.population)
         this.terrain = ""
         if (temp < 0.3) {
@@ -211,45 +265,6 @@ class Tile {
         }
         return tiles
     }
-    CleanupExtremedies(mapped) {
-        let cleaning = true;
-        while (cleaning) {
-            cleaning = false
-            for (let i = 0; i < mapped.length; i++) {
-                for (let j = 0; j < mapped[i].length; j++) {
-                    let nearbyOcean = 0;
-                    let nearbyTiles = []
-                    for (let i2 = -1; i2 <= 1; i2++) {
-                        for (let j2 = -1; j2 <= 1; j2++) {
-                            let newx = i + i2;
-                            let newy = j + j2;
-                            if (
-                                mapped[i][j] &&
-                                (
-                                    newx >= 0
-                                    && newy >= 0
-                                    && newx < isLandArr.length
-                                    && newy < isLandArr[newx].length
-                                    && !mapped[newx][newy]
-                                )
-                            ) {
-                                if (mapped[newx][newy]) {
-                                    nearbyTiles.push({ x: newx, y: newy })
-                                }
-                                else {
-                                    nearbyOcean++;
-                                }
-                            }
-                        }
-                    }
-                    if (nearbyOcean >= 7) {
-                        mapped[i][j] = false;
-                        cleaning = true
-                    }
-                }
-            }
-        }
-    }
     Setup() {
         //remap selected continent
         let world = [];
@@ -289,7 +304,6 @@ class Tile {
                                 )
                             )
                             &&
-                            //false ||
                             world[i][j]
                         ) {
                             mapped[i][j] = true;
@@ -298,7 +312,6 @@ class Tile {
                 }
             }
         }
-        //this.CleanupExtremedies(mapped);
         let proximityToStart = [];
         while (proximityToStart.length < mapped.length) {
             proximityToStart.push([])

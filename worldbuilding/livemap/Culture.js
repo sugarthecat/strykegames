@@ -65,7 +65,7 @@ class Culture {
         return capitalizeFirstLetter(name);
     }
     generateNameBase() {
-        let length = random(4, 6)
+        let length = random(3, 5)
         let base = ""
         for (let i = floor(random(1.25)); i < length; i++) {
             if (i % 2 == 1) {

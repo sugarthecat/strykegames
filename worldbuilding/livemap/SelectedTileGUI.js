@@ -7,7 +7,9 @@ class SelectedTileGUI extends GUI {
             new GUIButton(0, 0, 25, 25, "X", function () { selectedTile = false; }),
             new GUIText(40, 0, 120, 30, "Tile Name"),
             new GUIText(20, 35, 160, 20, "Climate"),
-            new GUIText(20, 55, 160, 20, "Population")
+            new GUIText(20, 55, 160, 20, "Population"),
+            new GUIText(20, 75, 160, 20, "Population"),
+            new GUIText(20, 95, 160, 20, "Population")
         ]
     }
     Draw(x, y) {
@@ -16,12 +18,14 @@ class SelectedTileGUI extends GUI {
         this.elements[1].text = selectedTile.name
         this.elements[2].text = selectedTile.terrain
         this.elements[3].text = "Population: " + selectedTile.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.elements[4].text = "Troops: " + floor(selectedTile.troops + selectedTile.arrivingTroops).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        this.elements[5].text = "Precedent: " + floor(selectedTile.frontlineDistance);
         push()
         translate(xOffset, yOffset)
         fill(255)
         noStroke()
         rect(0,0, this.w, this.h)
-        super.Draw(x+xOffset, y+yOffset)
+        super.Draw(x-xOffset, y-yOffset)
         pop()
     }
     HandleClick(x, y) {

@@ -18,7 +18,7 @@ let buttons;
 let isLandArr = []
 let coveredLand = []
 let occupyingTile = []
-let MAP_MODE = 0;
+let MAP_MODE = 1;
 let selectedTileGUI;
 function setup() {
     selectedTileGUI = new SelectedTileGUI();
@@ -30,17 +30,25 @@ function setup() {
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
         new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
+        new Button(0, 100, 200, 50, "Troops", function () { MAP_MODE = 2 }),
     ]
 }
 let camerax = 0;
 let cameray = 0;
 let scaleFactor = 1
 let ticksRan = 0
+let mostTroops = 0;
 function draw() {
+    mostTroops = 1;
+    for (let i = 0; i < tiles.length; i++) {
+        if(tiles[i].troops > mostTroops){
+            mostTroops = tiles[i].troops
+        }
+    }
     currDate = new Date();
     let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
-    //while(ticksRan < (currDate.getDate()-1) * 24 + currDate.getHours()){
-    if (frameCount % 10 == 0) {
+    //if(ticksRan < (currDate.getDate()-1) * 24 + currDate.getHours()){
+    if (frameCount % 1 == 0) {
         Tick();
         ticksRan++;
     }
@@ -70,7 +78,7 @@ function draw() {
         tiles[i].DrawCity();
     }
     if (selectedTile) {
-        selectedTileGUI.Draw(mouseX,mouseY)
+        selectedTileGUI.Draw(mouseX+camerax,mouseY+cameray)
     }
     pop()
     for (let i = 0; i < buttons.length; i++) {
@@ -85,7 +93,7 @@ function mouseClicked() {
             return;
         }
     }
-    if (selectedTile && selectedTileGUI.HandleClick(mouseX,mouseY)) {
+    if (selectedTile && selectedTileGUI.HandleClick(mouseX+camerax,mouseY+cameray)) {
         return;
     }
     let mousex = floor(mousepos.x)
@@ -103,10 +111,7 @@ function Tick() {
         nations[i].Update()
     }
     for (let i = 0; i < tiles.length; i++) {
-        //tiles[i].AttackNeighbors();
-    }
-    if(selectedTile){
-        selectedTileGUI.Update();
+        tiles[i].AttackNeighbors();
     }
 }
 function getProjectedMousePosition() {

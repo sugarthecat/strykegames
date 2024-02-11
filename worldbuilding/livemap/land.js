@@ -132,3 +132,6 @@ function getLandmass(x1, y1) {
     }
     return land;
 }
+function dist1(x1,x2){
+    return Math.abs(x1 - x2);
+}
