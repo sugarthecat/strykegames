@@ -65,7 +65,7 @@ function setup_land() {
             if (!usedTiles.includes(tiles[i]) && tiles[i].nation) {
                 for (let j = 0; j < tiles[i].connections.length; j++) {
                     if (!tiles[i].connections[j].nation) {
-                        tiles[i].connections[j].nation = tiles[i].nation
+                        tiles[i].nation.AnnexTile(tiles[i].connections[j])
                         usedTiles.push(tiles[i].connections[j])
                         going = true;
                     }
@@ -89,9 +89,13 @@ function setup_land() {
                     closestTile = tiles[j]
                 }
             }
-            tiles[i].nation = closestTile.nation;
+            closestTile.nation.AnnexTile(tiles[i])
             usedTiles.push(tiles[i]);
         }
+    }
+    //name tiles
+    for(let i = 0; i<nations.length; i++){
+        nations[i].NameTiles();
     }
 }
 

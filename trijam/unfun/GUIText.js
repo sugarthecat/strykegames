@@ -14,7 +14,7 @@ class GUIText {
         noStroke()
         textAlign(LEFT)
         textSize(this.h - 20)
-        textSize(min(textSize(),textSize()*(this.w-20)/textWidth(this.text)))
+        textSize(min(textSize(),textSize()*(this.w-10)/textWidth(this.text)))
         fill(0)
         text(this.text, this.x, this.y + this.h - 5)
     }

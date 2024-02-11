@@ -1,5 +1,7 @@
 const TARGET_TILE_SIZE = 30;
 const TILE_MIN_SIZE = 20;
+
+const URBANIZATION_NOISE_SCALE = 0.3
 class Tile {
     constructor() {
         this.nation = false;
@@ -20,10 +22,10 @@ class Tile {
                 if (this.connections[i].nation != this.nation && !this.connections[i].takenThisTurn) {
                     let attack = random(1)
                     if (attack < 0.2) {
-                        this.connections[i].nation = this.nation;
+                        this.nation.AnnexTile(this.connections[i])
                         this.connections[i].takenThisTurn = true;
                     } else if (attack > 0.9) {
-                        this.nation = this.connections[i].nation;
+                        this.connections[i].nation.AnnexTile(this)
                         this.takenThisTurn = true;
                     }
 
@@ -86,25 +88,30 @@ class Tile {
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
-        this.population = max(noise(avgXValue * NOISE_SCALE + 100, avgYValue * NOISE_SCALE + 100), 0.5) - min(Math.abs(0.5 - temp), 0.2)
-
-        this.population = floor(Math.pow(this.population, 7) * 1000000)
+        this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.4)
+        this.population = floor(Math.pow(this.importance + 1, 23) * this.points.length * Math.pow(max(1 - Math.abs(0.5 - temp), 0.01), 2))
         //console.log(this.population)
-        if (noise(avgXValue, avgYValue + 100) > 0.7) {
-            this.isMajorCity = true;
-        }
-        if (noise(avgXValue, avgYValue + 100) > 0.65) {
-            this.isCity = true;
-        }
+        this.terrain = ""
         if (temp < 0.3) {
             //snow
+            this.terrain = "Tundra"
             this.geocolor = color(255 - temp * 350)
         } else if (temp < 0.55) {
+            this.terrain = "Forest"
             this.geocolor = color(50, 30 + temp * 200, 20)
         } else if (temp < 0.8) {
+            this.terrain = "Grasslands"
             this.geocolor = color(temp * 300 - 30, 220 - temp * 50, 0)
         } else {
+            this.terrain = "Desert"
             this.geocolor = color(250, 50 + temp * 150, 20)
+        }
+        if (this.importance > 0.7) {
+            this.isMajorCity = true;
+            this.terrain = "Urban Area"
+        }
+        if (this.importance > 0.65) {
+            this.isCity = true;
         }
 
     }
@@ -191,6 +198,11 @@ class Tile {
                     spawnerPoints.splice(i, 1)
                     going = true;
                     i--;
+                }
+            }
+            if (going) {
+                for (let i = 0; i < tiles.length; i++) {
+                    tiles[i].connections = []
                 }
             }
         }

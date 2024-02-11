@@ -19,7 +19,9 @@ let isLandArr = []
 let coveredLand = []
 let occupyingTile = []
 let MAP_MODE = 0;
+let selectedTileGUI;
 function setup() {
+    selectedTileGUI = new SelectedTileGUI();
     noStroke();
     randomSeed(currDate.getMonth() + currDate.getFullYear() * 200)
     noiseSeed(currDate.getMonth() + currDate.getFullYear() * 200)
@@ -36,7 +38,9 @@ let scaleFactor = 1
 let ticksRan = 0
 function draw() {
     currDate = new Date();
-    while(ticksRan < currDate.getDate() * 24 + currDate.getHours()){
+    let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
+    //while(ticksRan < (currDate.getDate()-1) * 24 + currDate.getHours()){
+    if (frameCount % 10 == 0) {
         Tick();
         ticksRan++;
     }
@@ -65,6 +69,9 @@ function draw() {
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].DrawCity();
     }
+    if (selectedTile) {
+        selectedTileGUI.Draw(mouseX,mouseY)
+    }
     pop()
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].Draw(mouseX, mouseY);
@@ -72,6 +79,38 @@ function draw() {
 }
 let selectedTile = false;
 function mouseClicked() {
+    let mousepos = getProjectedMousePosition()
+    for (let i = 0; i < buttons.length; i++) {
+        if (buttons[i].HandleClick(mouseX, mouseY)) {
+            return;
+        }
+    }
+    if (selectedTile && selectedTileGUI.HandleClick(mouseX,mouseY)) {
+        return;
+    }
+    let mousex = floor(mousepos.x)
+    let mousey = floor(mousepos.y)
+    selectedTile = false;
+    if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
+        selectedTile = occupyingTile[mousex][mousey];
+    }
+}
+function Tick() {
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].UpdateInternal();
+    }
+    for (let i = 0; i < nations.length; i++) {
+        nations[i].Update()
+    }
+    for (let i = 0; i < tiles.length; i++) {
+        //tiles[i].AttackNeighbors();
+    }
+    if(selectedTile){
+        selectedTileGUI.Update();
+    }
+}
+function getProjectedMousePosition() {
+
     //get occupying tile
     let mousex = mouseX + camerax
     let mousey = mouseY + cameray
@@ -79,24 +118,5 @@ function mouseClicked() {
     mousey *= TILE_HEIGHT / MAP_HEIGHT
     mousex /= scaleFactor
     mousey /= scaleFactor
-    mousex = floor(mousex)
-    mousey = floor(mousey)
-    selectedTile = false;
-    if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
-        selectedTile = occupyingTile[mousex][mousey];
-    }
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].HandleClick(mouseX, mouseY)
-    }
-}
-function Tick() {
-    for(let i =0; i<nations.length; i++){
-        nations[i].Update()
-    }
-    for(let i = 0; i<tiles.length; i++){
-        tiles[i].UpdateInternal();
-    }
-    for(let i = 0; i<tiles.length; i++){
-        tiles[i].AttackNeighbors();
-    }
+    return { x: mousex, y: mousey }
 }
