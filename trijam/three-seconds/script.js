@@ -5,8 +5,8 @@ let screenOn = "title"
 let scaleFactor = 1;
 let volume = 1;
 let screens;
-let level = 222;
-let highestLevel = 222;
+let level = undefined;
+let highestLevel = 0;
 function preload() {
     screens = {
         "title": new TitleScreen(),
