@@ -27,13 +27,19 @@ function setup() {
     setup_land();
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
-        new Button(0,50, 200, 50, "Political", function () { MAP_MODE = 1 }),
+        new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
     ]
 }
 let camerax = 0;
 let cameray = 0;
 let scaleFactor = 1
+let ticksRan = 0
 function draw() {
+    currDate = new Date();
+    while(ticksRan < currDate.getDate() * 24 + currDate.getHours()){
+        Tick();
+        ticksRan++;
+    }
     resizeCanvas(windowWidth, windowHeight);
     push()
     translate(-camerax, -cameray)
@@ -41,9 +47,6 @@ function draw() {
     scaleFactor = max(width / MAP_WIDTH, height / MAP_HEIGHT)
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].Draw();
-    }
-    for (let i = 0; i < tiles.length; i++) {
-        tiles[i].DrawCity();
     }
     let speed = 2;
     if (keyIsDown(UP_ARROW)) {
@@ -59,6 +62,9 @@ function draw() {
         camerax += speed;
     }
     DrawSelectedTile();
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].DrawCity();
+    }
     pop()
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].Draw(mouseX, mouseY);
@@ -84,5 +90,13 @@ function mouseClicked() {
     }
 }
 function Tick() {
-
+    for(let i =0; i<nations.length; i++){
+        nations[i].Update()
+    }
+    for(let i = 0; i<tiles.length; i++){
+        tiles[i].UpdateInternal();
+    }
+    for(let i = 0; i<tiles.length; i++){
+        tiles[i].AttackNeighbors();
+    }
 }

@@ -3,12 +3,33 @@ const TILE_MIN_SIZE = 20;
 class Tile {
     constructor() {
         this.nation = false;
+        this.takenThisTurn = false;
         this.population = 0
         this.points = []
         this.vertexes = []
         this.connections = []
         this.geocolor = color(0)
         this.politicalColor = color(255, 0, 0)
+    }
+    UpdateInternal() {
+        this.takenThisTurn = false;
+    }
+    AttackNeighbors() {
+        if (!this.takenThisTurn) {
+            for (let i = 0; i < this.connections.length; i++) {
+                if (this.connections[i].nation != this.nation && !this.connections[i].takenThisTurn) {
+                    let attack = random(1)
+                    if (attack < 0.2) {
+                        this.connections[i].nation = this.nation;
+                        this.connections[i].takenThisTurn = true;
+                    } else if (attack > 0.9) {
+                        this.nation = this.connections[i].nation;
+                        this.takenThisTurn = true;
+                    }
+
+                }
+            }
+        }
     }
     Draw() {
         switch (MAP_MODE) {
@@ -65,7 +86,7 @@ class Tile {
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
-        this.population = max(noise(avgXValue * NOISE_SCALE + 100, avgYValue * NOISE_SCALE + 100),0.5) - min(Math.abs(0.5 - temp), 0.2)
+        this.population = max(noise(avgXValue * NOISE_SCALE + 100, avgYValue * NOISE_SCALE + 100), 0.5) - min(Math.abs(0.5 - temp), 0.2)
 
         this.population = floor(Math.pow(this.population, 7) * 1000000)
         //console.log(this.population)
@@ -348,6 +369,7 @@ function DrawSelectedTile() {
             vertex(floor(vertexes[i].x * TILE_SIZE * scaleFactor), floor(vertexes[i].y * TILE_SIZE * scaleFactor))
         }
         endShape(CLOSE);
+        noStroke()
     }
 }
 function dist2(x1, y1, x2, y2) {

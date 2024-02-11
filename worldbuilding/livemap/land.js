@@ -1,4 +1,4 @@
-const STARTING_NATION_COUNT = 15;
+const STARTING_NATION_COUNT = 25;
 let nations = []
 function setup_land() {
     //generate land array
