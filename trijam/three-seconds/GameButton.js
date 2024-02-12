@@ -15,6 +15,9 @@ class GameButton {
     }
     //mouseX and Y
     Draw(x, y) {
+        if(this.hidden){
+            return;
+        }
         push()
         if (dist ( x,y, this.x + this.w/2 , this.y + this.h/2) < this.w/2) {
             tint(200)

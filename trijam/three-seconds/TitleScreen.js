@@ -2,8 +2,10 @@ class TitleScreen extends GUI {
     constructor() {
         super();
         this.elements = [
-            new GUIText(50, 50, 500, 100, "Three Seconds to Launch"),
-            new Button(200, 300, 200, 50, "Defuse", function () { screenOn = "levelSelect"})]
+            new GUIText(50, 50, 500, 100, "Three Seconds to Doom"),
+            new Button(200, 275, 200, 50, "Defuse", function () { screenOn = "levelSelect"}),
+            new Button(225, 325, 150, 40, "Settings", function () { screenOn = "settings"})
+        ]
         this.backgroundColor = color(200, 150, 0)
     }
     DrawBackground() {

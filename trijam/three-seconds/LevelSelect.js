@@ -5,7 +5,12 @@ class LevelSelectScreen extends GUI {
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
                 let levelTo = i * 4 + j
-                this.elements.push(new Button(110 + j * 100, 50 + i * 80, 80, 50, levelTo + 1, function () { screenOn = "game"; level = levelTo; screens.game.NewLevel()}))
+                this.elements.push(new Button(110 + j * 100, 50 + i * 80, 80, 50, levelTo + 1, function () { 
+                    screenOn = "game"; 
+                    level = levelTo; 
+                    screens.game.NewLevel()
+                    Assets.alarm.play();
+                }))
             }
         }
         this.backgroundColor = color(200, 150, 0)

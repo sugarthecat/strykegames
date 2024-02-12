@@ -3,16 +3,17 @@
 const SCREEN_DIMENSIONS = { x: 600, y: 400 }
 let screenOn = "title"
 let scaleFactor = 1;
-let volume = 1;
+let volume = 0.5;
 let screens;
 let level = undefined;
-let highestLevel = 0;
+let highestLevel = 20;
 function preload() {
     screens = {
         "title": new TitleScreen(),
         "levelSelect": new LevelSelectScreen(),
         "game": new GameScreen(),
-        "fail": new FailScreen()
+        "fail": new FailScreen(),
+        "settings": new Settings()
     }
     Assets.loadAssets()
 }
@@ -20,6 +21,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
 }
 function draw() {
+    Assets.setVolume(volume)
     resizeCanvas(windowWidth, windowHeight);
 
     if (windowWidth / SCREEN_DIMENSIONS.x < windowHeight / SCREEN_DIMENSIONS.y) {
@@ -45,6 +47,9 @@ function draw() {
 function mousePressed() {
     let mousePosition = getMousePosition()
     screens[screenOn].HandleClick(mousePosition.x, mousePosition.y);
+    if(!Assets.music.isPlaying()){
+        Assets.music.loop()
+    }
 }
 function getMousePosition() {
     let mousePosition = { x: mouseX, y: mouseY }
