@@ -17,10 +17,10 @@ function draw() {
     for (let i = 0; i < objects.length; i++) {
         objects[i].draw();
     }
-    let tgtFlameSize = min(height / 2, width / 2)
+    let tgtFlameSize = height *0.8
     for (let i = -100; i < width+100; i += 25) {
         let flameSize = tgtFlameSize * noise((i+frameCount) * NOISE_SCALE)
-        image(flame, i, height - flameSize/2, flameSize,flameSize)
+        image(flame, i, height - flameSize*3/4, flameSize,flameSize)
     }
 }
 function windowResized() {
