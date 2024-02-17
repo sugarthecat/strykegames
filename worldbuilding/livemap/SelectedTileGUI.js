@@ -1,3 +1,4 @@
+let nationpos;
 class SelectedTileGUI extends GUI {
     constructor() {
         super()
@@ -9,7 +10,8 @@ class SelectedTileGUI extends GUI {
             new GUIText(20, 35, 160, 20, "Climate"),
             new GUIText(20, 55, 160, 20, "Population"),
             new GUIText(20, 75, 160, 20, "Population"),
-            new GUIText(20, 95, 160, 20, "Population")
+            new GUIText(20, 95, 160, 20, "Population"),
+            new GUIButton(50, 120, 100, 30, "X", function () { selectedNation = selectedTile.nation; nationpos = selectedTile.position;selectedTile = false; }),
         ]
     }
     Draw(x, y) {
@@ -19,13 +21,14 @@ class SelectedTileGUI extends GUI {
         this.elements[2].text = selectedTile.terrain
         this.elements[3].text = "Population: " + selectedTile.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         this.elements[4].text = "Troops: " + floor(selectedTile.troops + selectedTile.arrivingTroops).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        this.elements[5].text = "Precedent: " + floor(selectedTile.frontlineDistance);
+        this.elements[5].text = "Frontline: " + (selectedTile.isFrontline);
+        this.elements[6].text = "View Nation";
         push()
         translate(xOffset, yOffset)
         fill(255)
         noStroke()
-        rect(0,0, this.w, this.h)
-        super.Draw(x-xOffset, y-yOffset)
+        rect(0, 0, this.w, this.h)
+        super.Draw(x - xOffset, y - yOffset)
         pop()
     }
     HandleClick(x, y) {

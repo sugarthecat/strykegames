@@ -15,26 +15,37 @@ class Tile {
         this.politicalColor = color(255, 0, 0)
         this.troops = 0;
         this.arrivingTroops = 0;
-        this.frontlineDistance = -1;
+        this.isFrontline = false;
+        this.entrenchment = 0;
+        this.security = 1000;
     }
     UpdateInternal() {
         this.takenThisTurn = false;
-        let mobilizedTroops = floor(this.population * 0.001)
+        this.recruits = floor(this.population * 0.0001 * log(this.security + 1))
         //this.population -= mobilizedTroops;
-        this.troops = floor(this.troops + mobilizedTroops + this.arrivingTroops)
-        this.arrivingTroops = 0;
-        this.frontlineDistance = -1;
+        this.isFrontline = false;
         this.isEncircled = true;
         for (let i = 0; i < this.connections.length; i++) {
-            if (this.connections[i].nation != this.nation) {
-                this.frontlineDistance = 0;
+            if (this.connections[i].nation != (this.nation)) {
+                this.isFrontline = true;
             } else {
                 this.isEncircled = false;
-                if (this.connections[i].frontlineDistance >= 0 && (this.frontlineDistance > this.connections[i].frontlineDistance || this.frontlineDistance == -1)) {
-                    this.frontlineDistance = this.connections[i].frontlineDistance + 1
-                }
             }
         }
+        if (this.isFrontline) {
+            this.entrenchment++;
+            this.security = 0
+        } else {
+            this.security++;
+            this.entrenchment = 0;
+        }
+    }
+    GetDefenseModifier() {
+        let str = 1;
+        if (this.isEncircled) {
+            str /= 4
+        }
+        return log(this.entrenchment) * str
     }
     SeizeTile(oppTile) {
         this.troops -= oppTile.troops
@@ -43,9 +54,11 @@ class Tile {
         this.troops /= 2
         this.takenThisTurn = true;
         oppTile.takenThisTurn = true
+        oppTile.entrenchment = 0;
+        oppTile.security = 0;
     }
     AttackNeighbors() {
-        if (this.frontlineDistance == 0 && !this.takenThisTurn) {
+        if (this.isFrontline && !this.takenThisTurn) {
             let tilesToAttack = []
             for (let i = 0; i < this.connections.length; i++) {
                 let oppTile = this.connections[i]
@@ -56,30 +69,21 @@ class Tile {
             if (tilesToAttack.length > 0) {
                 let oppTile = random(tilesToAttack)
                 let atk = this.troops;
-                this.troops = max(0, floor(this.troops - oppTile.troops * random(0.1, 0.2)))
-                oppTile.troops = max(0, floor(oppTile.troops - atk * random(0.1, 0.2)))
-                if (this.troops > oppTile.troops * 200) {
+                if (this.troops > oppTile.troops ) {
+                    this.troops = max(0, floor(this.troops - oppTile.troops * random(0.01, 0.05)))
+                    oppTile.troops = max(0, floor(oppTile.troops - atk * random(0.01, 0.05) / oppTile.GetDefenseModifier()))
+                    oppTile.security /= 2
+                }
+                if (this.troops > oppTile.troops * 10) {
                     this.SeizeTile(oppTile)
                 }
-                if (this.troops * 200 < oppTile.troops) {
+                if (this.troops * 10 < oppTile.troops) {
                     oppTile.SeizeTile(this)
                 }
             }
-        } else if (this.frontlineDistance > 0) {
-            //send troops nearby
-            let toSendTo = []
-            for (let i = 0; i < this.connections.length; i++) {
-                if (this.connections[i].frontlineDistance < this.frontlineDistance && this.connections[i].nation == this.nation) {
-                    toSendTo.push(this.connections[i])
-                    break;
-                }
-            }
-            let savedTroops = floor(this.troops / (this.frontlineDistance * 2))
-            this.troops -= savedTroops;
-            for (let i = 0; i < toSendTo; i++) {
-                toSendTo[i].arrivingTroops = floor(toSendTo[i].arrivingTroops + this.troops / toSendTo.length)
-            }
-            this.troops = savedTroops
+        } else if (!this.takenThisTurn) {
+            //this.recruits += this.troops;
+            //this.troops = 0;
         }
     }
     Draw() {
@@ -95,7 +99,7 @@ class Tile {
                 }
                 break;
             case 2:
-                let scalar = 1 - Math.log(this.troops) / Math.log(mostTroops)
+                let scalar = min(sqrt(this.troops) / sqrt(100000), 1)
                 fill(this.nation.color._getRed() * scalar, this.nation.color._getGreen() * scalar, this.nation.color._getBlue() * scalar)
                 break;
             default:
@@ -111,7 +115,6 @@ class Tile {
 
     }
     DrawCity() {
-
         if (this.isMajorCity) {
             fill(50)
             circle(this.position.x * TILE_SIZE * scaleFactor, this.position.y * TILE_SIZE * scaleFactor, TILE_SIZE * scaleFactor * 4)

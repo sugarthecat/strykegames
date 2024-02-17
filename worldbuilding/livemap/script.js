@@ -20,8 +20,11 @@ let coveredLand = []
 let occupyingTile = []
 let MAP_MODE = 1;
 let selectedTileGUI;
+let selectedNationGUI;
+let selectedNation = null;
 function setup() {
     selectedTileGUI = new SelectedTileGUI();
+    selectedNationGUI = new SelectedNationGUI();
     noStroke();
     randomSeed(currDate.getMonth() + currDate.getFullYear() * 200)
     noiseSeed(currDate.getMonth() + currDate.getFullYear() * 200)
@@ -80,6 +83,9 @@ function draw() {
     if (selectedTile) {
         selectedTileGUI.Draw(mouseX+camerax,mouseY+cameray)
     }
+    if(selectedNation){
+        selectedNationGUI.Draw(mouseX+camerax,mouseY+cameray)
+    }
     pop()
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].Draw(mouseX, mouseY);
@@ -96,11 +102,15 @@ function mouseClicked() {
     if (selectedTile && selectedTileGUI.HandleClick(mouseX+camerax,mouseY+cameray)) {
         return;
     }
+    if (selectedNation && selectedNationGUI.HandleClick(mouseX+camerax,mouseY+cameray)) {
+        return;
+    }
     let mousex = floor(mousepos.x)
     let mousey = floor(mousepos.y)
     selectedTile = false;
     if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
         selectedTile = occupyingTile[mousex][mousey];
+        selectedNation = false;
     }
 }
 function Tick() {

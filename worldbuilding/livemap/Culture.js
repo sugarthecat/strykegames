@@ -56,7 +56,7 @@ class Culture {
                 name = this.generateNameBase() + random(GERMAN_SUFFIXES)
                 break;
             case "Russian":
-                name = this.generateNameBase() + random(GERMAN_SUFFIXES)
+                name = this.generateNameBase() + random(RUSSIAN_SUFFIXES)
                 break;
             default:
 

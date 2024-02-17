@@ -5,7 +5,7 @@ class Nation {
         this.culture = new Culture();
         this.tiles = []
         let colors = [random(255), random(255), random(255)]
-        while(dist1(colors[0], 20) + dist1(colors[1], 50) + dist1(colors[2], 200)/2 < 100){
+        while (dist1(colors[0], 20) + dist1(colors[1], 50) + dist1(colors[2], 200) / 2 < 100) {
             colors = [random(255), random(255), random(255)]
         }
         this.color = color(...colors)
@@ -20,8 +20,22 @@ class Nation {
     }
     Update() {
         this.population = 0;
+        this.troops = 0;
+        let mobilizedTroops = 0;
+        let frontlineTiles = [];
+        this.frontlineTiles = 0
         for (let i = 0; i < this.tiles.length; i++) {
             this.population += this.tiles[i].population
+            this.troops += this.tiles[i].troops
+            mobilizedTroops += this.tiles[i].recruits
+            if (this.tiles[i].isFrontline) {
+                frontlineTiles.push(this.tiles[i]);
+                this.frontlineTiles++;
+            }
+        }
+        this.recruits = mobilizedTroops;
+        for (let i = 0; i < frontlineTiles.length; i++) {
+            frontlineTiles[i].troops += floor(mobilizedTroops/frontlineTiles.length)
         }
     }
     LoseTile(tile) {
