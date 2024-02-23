@@ -21,7 +21,10 @@ class Tile {
     }
     UpdateInternal() {
         this.takenThisTurn = false;
-        this.recruits = floor(this.population * 0.0001 * log(this.security + 1))
+        this.recruits = this.population * 0.0001 * log(this.security + 1)
+        if (this.nation != this.originalNation) {
+            this.recruits /= 5
+        }
         //this.population -= mobilizedTroops;
         this.isFrontline = false;
         this.isEncircled = true;
@@ -38,10 +41,15 @@ class Tile {
         } else {
             this.security++;
             this.entrenchment = 0;
+            this.recruits += this.troops;
+            this.troops = 0;
         }
     }
     GetDefenseModifier() {
-        let str = 1;
+        let str = 0.6 + this.importance;
+        if (this.nation == this.originalNation) {
+            str = pow(str, 3)
+        }
         if (this.isEncircled) {
             str /= 4
         }
@@ -57,6 +65,17 @@ class Tile {
         oppTile.entrenchment = 0;
         oppTile.security = 0;
     }
+    GetDefenders() {
+        let defenders = this.troops
+        return defenders;
+    }
+    TakeCasualties(casualties) {
+        this.troops -= max(casualties, 0);
+        if (this.troops < 0) {
+            this.troops = 0;
+        }
+        this.troops = floor(this.troops)
+    }
     AttackNeighbors() {
         if (this.isFrontline && !this.takenThisTurn) {
             let tilesToAttack = []
@@ -69,16 +88,14 @@ class Tile {
             if (tilesToAttack.length > 0) {
                 let oppTile = random(tilesToAttack)
                 let atk = this.troops;
-                if (this.troops > oppTile.troops ) {
-                    this.troops = max(0, floor(this.troops - oppTile.troops * random(0.01, 0.05)))
-                    oppTile.troops = max(0, floor(oppTile.troops - atk * random(0.01, 0.05) / oppTile.GetDefenseModifier()))
-                    oppTile.security /= 2
+                let oppTroops = oppTile.GetDefenders();
+                if (this.troops > oppTroops) {
+                    this.TakeCasualties(oppTroops * random(0.01, 0.05))
+                    oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier())
+                    oppTile.security *= 0.9
                 }
-                if (this.troops > oppTile.troops * 10) {
+                if (this.troops > oppTroops * 10) {
                     this.SeizeTile(oppTile)
-                }
-                if (this.troops * 10 < oppTile.troops) {
-                    oppTile.SeizeTile(this)
                 }
             }
         } else if (!this.takenThisTurn) {
@@ -144,8 +161,8 @@ class Tile {
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
-        this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.4)
-        this.population = floor(Math.pow(this.importance + 1, 23) * this.points.length * Math.pow(max(1 - Math.abs(0.5 - temp), 0.01), 2))
+        this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.5)
+        this.population = floor(Math.pow(this.importance + 1, 23) * this.points.length * Math.pow(max(1 - dist1(0.5, temp), 0.01), 2))
         this.maxpop = this.population;
         //console.log(this.population)
         this.terrain = ""

@@ -2,6 +2,7 @@
 class Nation {
     static takenTileNames = [];
     constructor() {
+        this.name = getCountry()
         this.culture = new Culture();
         this.tiles = []
         let colors = [random(255), random(255), random(255)]
@@ -33,9 +34,9 @@ class Nation {
                 this.frontlineTiles++;
             }
         }
-        this.recruits = mobilizedTroops;
+        this.recruits = floor(mobilizedTroops);
         for (let i = 0; i < frontlineTiles.length; i++) {
-            frontlineTiles[i].troops += floor(mobilizedTroops/frontlineTiles.length)
+            frontlineTiles[i].troops += floor(mobilizedTroops / frontlineTiles.length)
         }
     }
     LoseTile(tile) {
@@ -47,4 +48,22 @@ class Nation {
             this.tiles[i].originalNation = this;
         }
     }
+}
+
+const vowelSyllables = ["a","ea","e","a","e","o","u","i"]
+const consonantSyllables = ["b","c","d","f","h","j","k","l","m","n","p","r","s","t","g","v","z","x","g","gr","m","n","t","t","s","sp","th","sh","wr","b","b","b","c","c","c","c","n","n","n","n","n","n","m","m","m","m","m","t","t","q","d","d","d","t"]
+function getCountry() {
+    let countryName = ""
+    for (let i = 0; i < 5; i++) {
+        if (i % 2 == 0) {
+            countryName += random(vowelSyllables)
+        } else {
+            countryName += random(consonantSyllables)
+        }
+    }
+    if(countryName.length < 6){
+        countryName += "land"
+    }
+    countryName = countryName[0].toUpperCase() + countryName.slice(1);
+    return { name: countryName }
 }

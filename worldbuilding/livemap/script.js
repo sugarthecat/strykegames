@@ -26,10 +26,7 @@ function setup() {
     selectedTileGUI = new SelectedTileGUI();
     selectedNationGUI = new SelectedNationGUI();
     noStroke();
-    randomSeed(currDate.getMonth() + currDate.getFullYear() * 200)
-    noiseSeed(currDate.getMonth() + currDate.getFullYear() * 200)
-    createCanvas(1, 1)
-    setup_land();
+    SetupWorld();
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
         new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
@@ -50,8 +47,8 @@ function draw() {
     }
     currDate = new Date();
     let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
-    //if(ticksRan < (currDate.getDate()-1) * 24 + currDate.getHours()){
-    if (frameCount % 1 == 0) {
+    while(ticksRan < currentTick){
+    //if (frameCount % 1 == 0) {
         Tick();
         ticksRan++;
     }
@@ -59,7 +56,7 @@ function draw() {
     push()
     translate(-camerax, -cameray)
     background(20, 50, 200)
-    scaleFactor = max(width / MAP_WIDTH, height / MAP_HEIGHT)
+    scaleFactor = min(width / MAP_WIDTH, height / MAP_HEIGHT)
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].Draw();
     }
@@ -111,17 +108,6 @@ function mouseClicked() {
     if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
         selectedTile = occupyingTile[mousex][mousey];
         selectedNation = false;
-    }
-}
-function Tick() {
-    for (let i = 0; i < tiles.length; i++) {
-        tiles[i].UpdateInternal();
-    }
-    for (let i = 0; i < nations.length; i++) {
-        nations[i].Update()
-    }
-    for (let i = 0; i < tiles.length; i++) {
-        tiles[i].AttackNeighbors();
     }
 }
 function getProjectedMousePosition() {

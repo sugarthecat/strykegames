@@ -47,13 +47,13 @@ function setInnerHTML(id, value) {
 function updateDate() {
     let dateEnd = "th"
     let currDate = date.getDate()
-    if (currDate % 10 == 3 && getDate != 13) {
+    if (currDate % 10 == 3 && currDate != 13) {
         dateEnd = "rd"
     }
-    if (currDate % 10 == 2 && getDate != 12) {
+    if (currDate % 10 == 2 && currDate != 12) {
         dateEnd = "nd"
     }
-    if (currDate % 10 == 1 && getDate != 11) {
+    if (currDate % 10 == 1 && currDate != 11) {
         dateEnd = "st"
     }
     setInnerHTML("date", `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}${dateEnd}, ${date.getFullYear()}`)

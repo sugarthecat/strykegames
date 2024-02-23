@@ -13,6 +13,7 @@ function setup_land() {
             coveredLand[i].push(false);
         }
     }
+    let landMasses = []
     for (let i = 0; i < isLandArr.length; i++) {
         for (let j = 0; j < isLandArr[i].length; j++) {
             if (isLandArr[i][j] && !coveredLand[i][j]) {
@@ -25,18 +26,45 @@ function setup_land() {
                 newTile.Setup()
                 if (newTile.points.length > 100) {
                     //break continents with > 100 area
-                    let newTiles = newTile.Split();
-                    for (let i = 0; i < newTiles.length; i++) {
-                        tiles.push(newTiles[i])
-                    }
+                    landMasses.push(newTile.Split());
                 } else if (newTile.points.length > 15) {
 
                     //clear islands with < 15 area;
-                    tiles.push(newTile)
+                    landMasses.push([newTile]);
                 }
             }
         }
     }
+    while (landMasses.length > 1) {
+        //find closest pair, connect landmasses
+        let closestPair1 = 0;
+        let closestPair2 = 1;
+        let closestPair1Tile = landMasses[0][0];
+        let closestPair2Tile = landMasses[1][0];
+
+        for (let i = 0; i < landMasses.length; i++) {
+            for (let j = 0; j < landMasses[i].length; j++) {
+                for (let i2 = i + 1; i2 < landMasses.length; i2++) {
+                    for (let j2 = 0; j2 < landMasses[i2].length; j2++) {
+                        if (dist2pos(landMasses[i][j].position,landMasses[i2][j2].position)
+                            < dist2pos(closestPair1Tile.position, closestPair2Tile.position)
+                        ) {
+                            closestPair1Tile = landMasses[i][j]
+                            closestPair2Tile = landMasses[i2][j2]
+                            closestPair1 = i;
+                            closestPair2 = i2;
+                        }
+                    }
+                }
+            }
+        }
+        closestPair1Tile.Connect(closestPair2Tile)
+        for(let i = 0; i<landMasses[closestPair2].length; i++){
+            landMasses[closestPair1].push(landMasses[closestPair2][i])
+        }
+        landMasses.splice(closestPair2,1)
+    }
+    tiles = landMasses[0]
     isLandArr = []
     coveredLand = []
     for (let i = 0; i < tiles.length; i++) {
@@ -73,28 +101,8 @@ function setup_land() {
             }
         }
     }
-    //claim unclaimed islands
-
-    usedTiles = []
-    for (let i = 0; i < tiles.length; i++) {
-        if (!tiles[i].nation) {
-            let closestTile = false;
-            for (let j = 0; j < tiles.length; j++) {
-                //console.log(tiles[j])
-                if (!usedTiles.includes(tiles[j]) && tiles[j].nation && i != j &&
-                    (closestTile === false ||
-                        dist2(tiles[i].position.x, tiles[i].position.y, closestTile.position.x, closestTile.position.y)
-                        > dist2(tiles[i].position.x, tiles[i].position.y, tiles[j].position.x, tiles[j].position.y)
-                    )) {
-                    closestTile = tiles[j]
-                }
-            }
-            closestTile.nation.AnnexTile(tiles[i])
-            usedTiles.push(tiles[i]);
-        }
-    }
     //name tiles
-    for(let i = 0; i<nations.length; i++){
+    for (let i = 0; i < nations.length; i++) {
         nations[i].NameTiles();
     }
 }
@@ -132,6 +140,9 @@ function getLandmass(x1, y1) {
     }
     return land;
 }
-function dist1(x1,x2){
+function dist1(x1, x2) {
     return Math.abs(x1 - x2);
+}
+function dist2pos(a,b) {
+    return dist2(a.x,a.y,b.x,b.y);
 }

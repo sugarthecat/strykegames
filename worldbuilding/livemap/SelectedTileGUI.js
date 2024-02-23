@@ -10,7 +10,6 @@ class SelectedTileGUI extends GUI {
             new GUIText(20, 35, 160, 20, "Climate"),
             new GUIText(20, 55, 160, 20, "Population"),
             new GUIText(20, 75, 160, 20, "Population"),
-            new GUIText(20, 95, 160, 20, "Population"),
             new GUIButton(50, 120, 100, 30, "X", function () { selectedNation = selectedTile.nation; nationpos = selectedTile.position;selectedTile = false; }),
         ]
     }
@@ -21,8 +20,7 @@ class SelectedTileGUI extends GUI {
         this.elements[2].text = selectedTile.terrain
         this.elements[3].text = "Population: " + selectedTile.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         this.elements[4].text = "Troops: " + floor(selectedTile.troops + selectedTile.arrivingTroops).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        this.elements[5].text = "Frontline: " + (selectedTile.isFrontline);
-        this.elements[6].text = "View Nation";
+        this.elements[5].text = "View Nation";
         push()
         translate(xOffset, yOffset)
         fill(255)
