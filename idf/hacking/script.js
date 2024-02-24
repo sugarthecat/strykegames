@@ -48,16 +48,33 @@ async function pasteContent() {
     }
 }
 
+let currentProcess = false
 function render() {
-    let content = document.getElementById("content")
-    content.innerHTML = currentCMDprompt + "<span id=\"prompt\"></span>"
-    if (currentCMDprompt.length < finalprompt.length) {
+
+    if (currentProcess) {
+        let startMs = Date.now()
+        while (Date.now() < startMs + 500) {
+            currentProcess.Work();
+            if (currentProcess.finished) {
+                currentCMDprompt += `Filter ran. ${currentProcess.removed} entries removed.<br/>`
+                currentProcess = false;
+                currentCMDprompt += "ENTER COMMAND: "
+            }
+        }
+        updatePage();
+    } else if (currentCMDprompt.length < finalprompt.length) {
         currentCMDprompt = startingPrompt.substring(0, chars).replaceAll(1, "<br/>")
         chars++;
-        clearInterval(interval);
-        setTimeout(render, 50)
+        updatePage();
     } else {
         document.getElementById("prompt").innerText = currentMessage + "|"
+    }
+}
+function updatePage() {
+    let content = document.getElementById("content")
+    content.innerHTML = currentCMDprompt + "<span id=\"prompt\"></span>"
+    if (currentProcess) {
+        content.innerHTML = currentCMDprompt + `<div style = "color:red">PROCESS ACTIVE - ${Math.floor(10000 * currentProcess.progress / sysarr.length) / 100}%, Pass ${currentProcess.progress} / Fail ${currentProcess.removed}</div>`
     }
     window.scrollTo(0, document.body.scrollHeight);
 }
@@ -70,6 +87,7 @@ function enterCommand(cmd) {
         currentCMDprompt += "General Commands<br/>"
         currentCMDprompt += "HELP: Print command list <br/>"
         currentCMDprompt += "CLEARCONSOLE: Reset console to start <br/>"
+        currentCMDprompt += "PATCHLOG: view new features <br/>"
         currentCMDprompt += "<br/>"
         currentCMDprompt += "Caesar Cypher Commands<br/>"
         currentCMDprompt += "ECAESAR &#8249;phrase&#8250; &#8249;key1&#8250; &#8249;key2&#8250; &#8249;keyN&#8250;: Caesar cypher encode a given phrase with keys <br/>"
@@ -87,6 +105,17 @@ function enterCommand(cmd) {
         currentCMDprompt += "FREQUENCY &#8249;phrase&#8250; &#8249;count&#8250;: removes all entries with the given phrase more than count times<br/>";
         currentCMDprompt += "MINVOWELS &#8249;count&#8250;: removes all entries with fewer than the given amount of vowels<br/>";
         currentCMDprompt += "MAXVOWELS &#8249;count&#8250;: removes all entries with more than the given amount of vowels<br/>";
+        currentCMDprompt += "FILTERWORD &#8249;count&#8250;: removes all entries which do not contain any of a few common words<br/>";
+        currentCMDprompt += "<br/>"
+    } else if (formattedCommand == "patchlog") {
+        currentCMDprompt += "<br/>"
+        currentCMDprompt += "<h2>IDF Cryptography Console Ver 1.1 </h2>"
+        currentCMDprompt += "<p>Developed by Agent [u2uimmgyx-r8-llcewux] [KeyCount:4] </p>"
+        currentCMDprompt += "<h1>New Features</h1>"
+        currentCMDprompt += "<ul>"
+        currentCMDprompt += "<li>Added word filtering. Command \"filterword\" described in help menu.</li>"
+        currentCMDprompt += "<li>Added process waiting. Processes will now take multiple runs in order to prevent a program freeze.</li>"
+        currentCMDprompt += "</ul>"
         currentCMDprompt += "<br/>"
     } else if (formattedCommand == "ecaesar") {
         if (args.length < 3) {
@@ -118,43 +147,35 @@ function enterCommand(cmd) {
         if (args.length < 2) {
             currentCMDprompt += "<span>Error: Missing args: Required 1</span><br/>"
         } else {
-                let removed = 0;
-                let mincount = Number(args[1])
-                for (let i = 0; i < sysarr.length; i++) {
+            let mincount = Number(args[1])
+            currentProcess = new FilterProcess(
+                function (item) {
                     let vowelCount = 0
-                    for (let j = 0; j < sysarr[i].length; j++) {
-                        if (vowels.includes(sysarr[i].charAt(j))) {
+                    for (let j = 0; j < item.length; j++) {
+                        if (vowels.includes(item.charAt(j))) {
                             vowelCount++;
                         }
                     }
-                    if(vowelCount < mincount){
-                        sysarr.splice(i,1)
-                        removed++;
-                        i--;
-                    }
+                    return (vowelCount >= mincount)
                 }
-                currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+            )
         }
     } else if (formattedCommand == "maxvowels") {
         if (args.length < 2) {
             currentCMDprompt += "<span>Error: Missing args: Required 1</span><br/>"
         } else {
-                let removed = 0;
-                let maxcount = Number(args[1])
-                for (let i = 0; i < sysarr.length; i++) {
+            let maxcount = Number(args[1])
+            currentProcess = new FilterProcess(
+                function (item) {
                     let vowelCount = 0
-                    for (let j = 0; j < sysarr[i].length; j++) {
-                        if (vowels.includes(sysarr[i].charAt(j))) {
+                    for (let j = 0; j < item.length; j++) {
+                        if (vowels.includes(item.charAt(j))) {
                             vowelCount++;
                         }
                     }
-                    if(vowelCount > maxcount){
-                        sysarr.splice(i,1)
-                        removed++;
-                        i--;
-                    }
+                    return (vowelCount <= maxcount)
                 }
-                currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+            )
         }
     } else if (formattedCommand == "preview") {
         if (sysarr.length == 0) {
@@ -195,29 +216,25 @@ function enterCommand(cmd) {
             }
             currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
         }
-    }/* else if (formattedCommand == "filterword") {
+    } else if (formattedCommand == "filterword") {
         let removed = 0;
-        if(sysarr.length * wordbank.length > 10000000){
-            currentCMDprompt += "<span>Error: Cannot run filter, too many entries.</span>";
-        }else{
-            for (let i = 0; i < sysarr.length; i++) {
-                let valid = false;
-                for(let j = 0; j<wordbank.length; j++){
-                    if(sysarr[i].includes(wordbank[i])){
-                        valid = true;
-                        break;
-                    }
-                }
-                if(!valid){
-                    sysarr.slice(i,1)
-                    removed++;
-                    i--;
+        for (let i = 0; i < sysarr.length; i++) {
+            let valid = false;
+            for (let j = 0; j < wordbank.length; j++) {
+                if (sysarr[i].includes(wordbank[j])) {
+                    valid = true;
+                    break;
                 }
             }
-            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
-
+            if (!valid) {
+                sysarr.splice(i, 1)
+                removed++;
+                i--;
+            }
         }
-    } */else if (formattedCommand == "frequency") {
+        currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+
+    } else if (formattedCommand == "frequency") {
         let removed = 0;
         if (args.length < 3) {
             currentCMDprompt += "<span>Error: Missing args: Required 2</span><br/>"
@@ -272,10 +289,33 @@ function enterCommand(cmd) {
         currentCMDprompt += "<span>UNRECOGNIZED COMMAND</span><br/>"
     }
     currentMessage = "";
-    currentCMDprompt += "ENTER COMMAND: "
+    if (!currentProcess) {
+        currentCMDprompt += "ENTER COMMAND: "
+    }
     if (currentCMDprompt.length > 10000000) {
         currentCMDprompt = currentCMDprompt.substring(currentCMDprompt.length - 10000000, currentCMDprompt.length)
     }
-    render();
+    updatePage();
 }
-let interval = setInterval(render, 100)
+let interval = setInterval(render, 30)
+
+class FilterProcess {
+    constructor(evalFunc) {
+        this.progress = 0;
+        this.eval = evalFunc;
+        this.removed = 0;
+    }
+    Work() {
+        if (this.progress >= sysarr.length) {
+            this.finished = true;
+            return;
+        }
+        if (!this.eval(sysarr[this.progress])) {
+            sysarr.splice(this.progress, 1);
+            this.removed++;
+            this.progress--;
+        }
+        this.progress++;
+    }
+
+}
