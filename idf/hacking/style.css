@@ -1,0 +1,26 @@
+*{
+    background-color: black;
+    color: #00ff00;
+    font-size: 30px;
+    font-family: math;
+}
+body{
+    margin: 5px;
+    line-height: 1.5;
+    word-wrap: break-word
+}
+span{
+    color: #ff0000;
+}
+p{
+    white-space: pre;
+}
+html{
+    padding: 5px;
+}
+#content{
+    width: 100%;
+}
+h2{
+    font-size: 50px;
+}
