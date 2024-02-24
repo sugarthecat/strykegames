@@ -11,7 +11,6 @@ function Tick() {
     }
 }
 function SetupWorld(){
-    
     randomSeed(currDate.getMonth() + currDate.getFullYear() * 200)
     noiseSeed(currDate.getMonth() + currDate.getFullYear() * 200)
     createCanvas(1, 1)

@@ -47,8 +47,8 @@ function draw() {
     }
     currDate = new Date();
     let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
-    while(ticksRan < currentTick){
-    //if (frameCount % 1 == 0) {
+    //while(ticksRan < currentTick){
+    if (frameCount % 1 == 0) {
         Tick();
         ticksRan++;
     }
