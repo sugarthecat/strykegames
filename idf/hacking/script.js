@@ -53,12 +53,16 @@ function render() {
 
     if (currentProcess) {
         let startMs = Date.now()
-        while (Date.now() < startMs + 500) {
-            currentProcess.Work();
-            if (currentProcess.finished) {
-                currentCMDprompt += `Filter ran. ${currentProcess.removed} entries removed.<br/>`
-                currentProcess = false;
-                currentCMDprompt += "ENTER COMMAND: "
+        while (Date.now() < startMs + 500 && currentProcess) {
+            for (let i = 0; i < 50; i++) {
+                currentProcess.Work();
+                if (currentProcess.finished) {
+                    currentCMDprompt += `Filter ran. ${currentProcess.removed} entries removed.<br/>`
+                    currentProcess = false;
+                    sysarr = newSysArr
+                    currentCMDprompt += "ENTER COMMAND: "
+                    break;
+                }
             }
         }
         updatePage();
@@ -194,7 +198,7 @@ function enterCommand(cmd) {
     } else if (formattedCommand == "clearconsole") {
         currentMessage = "";
         currentCMDprompt = startingPrompt.replaceAll(1, "<br/>")
-        render()
+        updatePage();
         return;
     } else if (formattedCommand == "count") {
         if (sysarr.length == 0) {
@@ -203,18 +207,20 @@ function enterCommand(cmd) {
             currentCMDprompt += sysarr.length + " entries in sysarr</br>"
         }
     } else if (formattedCommand == "filter") {
-        let removed = 0;
         if (args.length < 2) {
             currentCMDprompt += "<span>Error: Missing args: Required 1</span><br/>"
         } else {
-            for (let i = 0; i < sysarr.length; i++) {
-                if (sysarr[i].includes(args[1])) {
-                    sysarr.splice(i, 1);
-                    removed++;
-                    i--;
+            let filteritem = args[1]
+            currentProcess = new FilterProcess(
+                function (item) {
+                    for (let j = 0; j < item.length; j++) {
+                        if (item.includes(filteritem)) {
+                            return false
+                        }
+                    }
+                    return true
                 }
-            }
-            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+            )
         }
     } else if (formattedCommand == "filterword") {
         let removed = 0;
@@ -298,24 +304,22 @@ function enterCommand(cmd) {
     updatePage();
 }
 let interval = setInterval(render, 30)
-
+let newSysArr = []
 class FilterProcess {
     constructor(evalFunc) {
         this.progress = 0;
         this.eval = evalFunc;
         this.removed = 0;
+        newSysArr = []
     }
     Work() {
         if (this.progress >= sysarr.length) {
             this.finished = true;
             return;
         }
-        if (!this.eval(sysarr[this.progress])) {
-            sysarr.splice(this.progress, 1);
-            this.removed++;
-            this.progress--;
+        if (this.eval(sysarr[this.progress])) {
+            newSysArr.push(sysarr[this.progress])
         }
         this.progress++;
     }
-
 }
