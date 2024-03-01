@@ -21,6 +21,7 @@ class Tile {
         this.entrenchment = 0;
         this.security = 1000;
         this.milRecruitment = 0;
+        this.attackBonus = 1;
     }
     UpdateInternal() {
         this.takenThisTurn = false;
@@ -34,16 +35,16 @@ class Tile {
                 this.isEncircled = false;
             }
         }
-        if (this.isFrontline && this.nation == this.originalNation) {
+        if (this.isFrontline) {
+            this.attackBonus += 0.01;
             this.entrenchment++;
             this.security = 0
-            if (this.nation == this.originalNation) {
-                let newMilitia = floor(this.potentialMilitia * 0.001);
-                this.militia += newMilitia;
-                this.potentialMilitia -= newMilitia;
-            }
-            this.recruits = 0
+            let newMilitia = floor(this.potentialMilitia * (this.nation == this.originalNation ? 0.001 : 0.00001));
+            this.militia += newMilitia;
+            this.potentialMilitia -= newMilitia;
+            this.recruits = 0;
         } else {
+            this.attackBonus = 0.2
             this.recruits = this.population * 0.0001
             this.recruits *= log(this.security + 1)
             if (this.nation != this.originalNation) {
@@ -54,9 +55,6 @@ class Tile {
 
             this.potentialMilitia += this.militia;
             this.militia = 0;
-
-        }
-        if (!this.isFrontline) {
             this.recruits += this.troops;
             this.troops = 0;
         }
@@ -96,7 +94,7 @@ class Tile {
             let tilesToAttack = []
             for (let i = 0; i < this.connections.length; i++) {
                 let oppTile = this.connections[i]
-                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && (this.troops  > oppTile.GetDefenders() * oppTile.GetDefenseModifier() || oppTile.isEncircled)) {
+                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && (this.nation.recruits > this.nation.troops / 2 || this.troops * this.attackBonus > oppTile.GetDefenders() * oppTile.GetDefenseModifier() || oppTile.isEncircled)) {
                     tilesToAttack.push(oppTile)
                 }
             }
@@ -104,14 +102,13 @@ class Tile {
                 let oppTile = random(tilesToAttack)
                 let atk = this.troops;
                 let oppTroops = oppTile.GetDefenders();
-                if (this.troops > oppTroops) {
-                    this.TakeCasualties(oppTroops * random(0.01, 0.05))
-                    oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier())
-                    oppTile.security *= 0.9
-                    if (oppTile.GetDefenders() * 10 < this.troops) {
-                        this.SeizeTile(oppTile)
-                    }
+                this.TakeCasualties(oppTroops * random(0.01, 0.05))
+                oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier() * this.attackBonus)
+                oppTile.security *= 0.9
+                if (oppTile.GetDefenders() * 10 < this.troops) {
+                    this.SeizeTile(oppTile)
                 }
+
             }
         } else if (!this.takenThisTurn) {
             //this.recruits += this.troops;
