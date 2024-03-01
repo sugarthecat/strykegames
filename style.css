@@ -24,7 +24,7 @@ div#gamecontent{
     background-color: black;
     grid-template-columns: auto auto;
 }
-div#superchicken{
+#gamecontent div{
     background-color: white;
     text-align: center;
 }
@@ -42,9 +42,15 @@ div#trijam{
     font-weight: bolder;
     color: white;
     background-color: darkgreen;
-    text-align: center;
 }
 div#trijam a{
+    font-weight: bolder;
+    color: white;
+}
+div#requests{
+    background-color: rgb(100, 0, 100);
+}
+div#requests a, div#requests h3{
     font-weight: bolder;
     color: white;
 }
