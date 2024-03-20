@@ -106,10 +106,11 @@ function enterCommand(cmd) {
         currentCMDprompt += "<br/>"
         currentCMDprompt += "Sysarr Filtering Commands<br/>"
         currentCMDprompt += "FILTER &#8249;phrase&#8250;: removes all entries with the given phrase<br/>";
+        currentCMDprompt += "REQPHRASE &#8249;phrase&#8250;: removes all entries which do not contain a given phrase<br/>";
         currentCMDprompt += "FREQUENCY &#8249;phrase&#8250; &#8249;count&#8250;: removes all entries with the given phrase more than count times<br/>";
         currentCMDprompt += "MINVOWELS &#8249;count&#8250;: removes all entries with fewer than the given amount of vowels<br/>";
         currentCMDprompt += "MAXVOWELS &#8249;count&#8250;: removes all entries with more than the given amount of vowels<br/>";
-        currentCMDprompt += "FILTERWORD &#8249;count&#8250;: removes all entries which do not contain any of a few common words<br/>";
+        currentCMDprompt += "FILTERWORD: removes all entries which do not contain any of a few common words<br/>";
         currentCMDprompt += "<br/>"
     } else if (formattedCommand == "patchlog") {
         currentCMDprompt += "<br/>"
@@ -213,54 +214,50 @@ function enterCommand(cmd) {
             let filteritem = args[1]
             currentProcess = new FilterProcess(
                 function (item) {
-                    for (let j = 0; j < item.length; j++) {
-                        if (item.includes(filteritem)) {
-                            return false
-                        }
-                    }
-                    return true
+                    return !item.includes(filteritem)
                 }
             )
         }
     } else if (formattedCommand == "filterword") {
-        let removed = 0;
-        for (let i = 0; i < sysarr.length; i++) {
-            let valid = false;
-            for (let j = 0; j < wordbank.length; j++) {
-                if (sysarr[i].includes(wordbank[j])) {
-                    valid = true;
-                    break;
+        currentProcess = new FilterProcess(
+            function (item) {
+                for (let j = 0; j < wordbank.length; j++) {
+                    if (item.includes(wordbank[j])) {
+                        return true
+                    }
                 }
+                return false
             }
-            if (!valid) {
-                sysarr.splice(i, 1)
-                removed++;
-                i--;
-            }
-        }
-        currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+        )
 
     } else if (formattedCommand == "frequency") {
-        let removed = 0;
         if (args.length < 3) {
             currentCMDprompt += "<span>Error: Missing args: Required 2</span><br/>"
         } else {
             let maxcount = Number(args[2])
-            for (let i = 0; i < sysarr.length; i++) {
-
-                let matchcount = 0;
-                for (let j = 0; j < sysarr[i].length - args[1].length + 1; j++) {
-                    if (sysarr[i].substring(j, j + args[1].length) == args[1]) {
-                        matchcount++;
+            let tag = args[1]
+            currentProcess = new FilterProcess(
+                function (item) {
+                    let matchcount = 0;
+                    for (let j = 0; j < item.length - tag.length + 1; j++) {
+                        if (item.substring(j, j + tag.length) == tag) {
+                            matchcount++;
+                        }
                     }
+                    return (matchcount <= maxcount)
                 }
-                if (matchcount > maxcount) {
-                    sysarr.splice(i, 1);
-                    removed++;
-                    i--;
+            )
+        }
+    } else if (formattedCommand == "reqphrase") {
+        if (args.length < 2) {
+            currentCMDprompt += "<span>Error: Missing args: Required 2</span><br/>"
+        } else {
+            let tag = args[1]
+            currentProcess = new FilterProcess(
+                function (item) {
+                    return item.includes(tag)
                 }
-            }
-            currentCMDprompt += "Filter ran. " + removed + " entries removed.<br/>"
+            )
         }
     } else if (formattedCommand == "bfcaesar") {
         if (args.length < 3) {
@@ -319,6 +316,8 @@ class FilterProcess {
         }
         if (this.eval(sysarr[this.progress])) {
             newSysArr.push(sysarr[this.progress])
+        }else{
+            this.removed++;
         }
         this.progress++;
     }
