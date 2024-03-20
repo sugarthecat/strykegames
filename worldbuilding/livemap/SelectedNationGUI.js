@@ -16,8 +16,8 @@ class SelectedNationGUI extends GUI {
     Draw(x, y) {
         let xOffset = (nationpos.x + 5) * TILE_SIZE * scaleFactor;
         let yOffset = (nationpos.y + 5) * TILE_SIZE * scaleFactor;
-        this.elements[1].text = selectedNation.recruits + " Recruits";
-        this.elements[2].text = selectedNation.frontlineTiles + " Frontlines";
+        this.elements[1].text = selectedNation.name.name;
+        this.elements[2].text = selectedNation.recruits + " Recruits";
         this.elements[3].text = "Population: " + selectedNation.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         this.elements[4].text = "Troops: " + floor(selectedNation.troops).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         push()

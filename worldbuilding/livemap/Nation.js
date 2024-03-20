@@ -10,6 +10,7 @@ class Nation {
             colors = [random(255), random(255), random(255)]
         }
         this.color = color(...colors)
+        this.recruits=0
     }
     AnnexTile(tile) {
         if (tile.nation) {
@@ -20,24 +21,52 @@ class Nation {
         tile.takenThisTurn = true;
     }
     Update() {
+        if (this.tiles.length == 0) {
+            return
+        }
         this.population = 0;
         this.troops = 0;
-        let mobilizedTroops = 0;
         let frontlineTiles = [];
-        this.frontlineTiles = 0
+        let largestCity = this.tiles[0]
         for (let i = 0; i < this.tiles.length; i++) {
             this.population += this.tiles[i].population
             this.troops += this.tiles[i].troops
-            mobilizedTroops += this.tiles[i].recruits
-            if (this.tiles[i].isFrontline) {
-                frontlineTiles.push(this.tiles[i]);
-                this.frontlineTiles++;
+            this.recruits += this.tiles[i].recruits
+            if (this.tiles[i].population > largestCity.population) {
+                largestCity = this.tiles[i]
             }
         }
-        this.recruits = floor(mobilizedTroops);
-        for (let i = 0; i < frontlineTiles.length; i++) {
-            frontlineTiles[i].troops += floor(mobilizedTroops / frontlineTiles.length)
+
+
+        let tilesToSearch = [largestCity]
+        let searchedTiles = [largestCity]
+
+        while (tilesToSearch.length > 0) {
+            let currTile = tilesToSearch[0]
+            for (let i = 0; i < currTile.connections.length; i++) {
+                let newTile = currTile.connections[i]
+                if (newTile.nation == this && !searchedTiles.includes(newTile)) {
+                    searchedTiles.push(newTile)
+                    tilesToSearch.push(newTile)
+                }
+            }
+            if (currTile.isFrontline) {
+                frontlineTiles.push(currTile)
+            }
+            tilesToSearch.shift()
         }
+
+        let mobilizedTroops = this.recruits;
+        for (let i = 0; i < frontlineTiles.length; i++) {
+            console.log(mobilizedTroops)
+            frontlineTiles[i].troops += floor(mobilizedTroops / frontlineTiles.length)
+            this.recruits -= floor(mobilizedTroops / frontlineTiles.length)
+            if (frontlineTiles[i].troops > 1000000) {
+                this.recruits += frontlineTiles[i].troops - 1000000
+                frontlineTiles[i].troops = 1000000
+            }
+        }
+        this.recruits = floor ( this.recruits)
     }
     LoseTile(tile) {
         this.tiles.splice(this.tiles.indexOf(tile), 1)
@@ -50,8 +79,8 @@ class Nation {
     }
 }
 
-const vowelSyllables = ["a","ea","e","a","e","o","u","i"]
-const consonantSyllables = ["b","c","d","f","h","j","k","l","m","n","p","r","s","t","g","v","z","x","g","gr","m","n","t","t","s","sp","th","sh","wr","b","b","b","c","c","c","c","n","n","n","n","n","n","m","m","m","m","m","t","t","q","d","d","d","t"]
+const vowelSyllables = ["a", "ea", "e", "a", "e", "o", "u", "i"]
+const consonantSyllables = ["b", "c", "d", "f", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "g", "v", "z", "x", "g", "gr", "m", "n", "t", "t", "s", "sp", "th", "sh", "wr", "b", "b", "b", "c", "c", "c", "c", "n", "n", "n", "n", "n", "n", "m", "m", "m", "m", "m", "t", "t", "q", "d", "d", "d", "t"]
 function getCountry() {
     let countryName = ""
     for (let i = 0; i < 5; i++) {
@@ -61,7 +90,7 @@ function getCountry() {
             countryName += random(consonantSyllables)
         }
     }
-    if(countryName.length < 6){
+    if (countryName.length < 6) {
         countryName += "land"
     }
     countryName = countryName[0].toUpperCase() + countryName.slice(1);

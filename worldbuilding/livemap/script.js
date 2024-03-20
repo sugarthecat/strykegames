@@ -13,7 +13,6 @@ class Point {
         this.y = y;
     }
 }
-let currDate = new Date();
 let buttons;
 let isLandArr = []
 let coveredLand = []

@@ -10,9 +10,8 @@ function Tick() {
         tiles[i].AttackNeighbors();
     }
 }
+let currDate = new Date();
 function SetupWorld(){
-    randomSeed(currDate.getMonth() + currDate.getFullYear() * 200)
-    noiseSeed(currDate.getMonth() + currDate.getFullYear() * 200)
     createCanvas(1, 1)
     setup_land();
 }

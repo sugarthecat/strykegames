@@ -13,18 +13,18 @@ class Tile {
         this.connections = []
         this.geocolor = color(0)
         this.politicalColor = color(255, 0, 0)
+        this.militia = 0;
+        this.potentialMilitia = 0;
         this.troops = 0;
         this.arrivingTroops = 0;
         this.isFrontline = false;
         this.entrenchment = 0;
         this.security = 1000;
+        this.milRecruitment = 0;
+        this.attackBonus = 1;
     }
     UpdateInternal() {
         this.takenThisTurn = false;
-        this.recruits = this.population * 0.0001 * log(this.security + 1)
-        if (this.nation != this.originalNation) {
-            this.recruits /= 5
-        }
         //this.population -= mobilizedTroops;
         this.isFrontline = false;
         this.isEncircled = true;
@@ -36,27 +36,40 @@ class Tile {
             }
         }
         if (this.isFrontline) {
+            this.attackBonus += 0.01;
             this.entrenchment++;
             this.security = 0
+            let newMilitia = floor(this.potentialMilitia * (this.nation == this.originalNation ? 0.001 : 0.00001));
+            this.militia += newMilitia;
+            this.potentialMilitia -= newMilitia;
+            this.recruits = 0;
         } else {
+            this.attackBonus = 0.2
+            this.recruits = this.population * 0.0001
+            this.recruits *= log(this.security + 1)
+            if (this.nation != this.originalNation) {
+                this.recruits /= 5
+            }
             this.security++;
             this.entrenchment = 0;
+
+            this.potentialMilitia += this.militia;
+            this.militia = 0;
             this.recruits += this.troops;
             this.troops = 0;
         }
+        this.recruits = floor(this.recruits)
+        //this.population -= this.recruits;
     }
     GetDefenseModifier() {
-        let str = 0.6 + this.importance;
+        let str = 0.6 + this.importance + dist1(0.5, this.temp);
         if (this.nation == this.originalNation) {
-            str = pow(str, 3)
+            str *= 1.5
         }
-        if (this.isEncircled) {
-            str /= 4
-        }
-        return log(this.entrenchment) * str
+        return log(this.entrenchment + 1) * str
     }
     SeizeTile(oppTile) {
-        this.troops -= oppTile.troops
+        this.troops -= oppTile.GetDefenders()
         this.nation.AnnexTile(oppTile)
         oppTile.troops = this.troops * 1 / 2
         this.troops /= 2
@@ -64,24 +77,24 @@ class Tile {
         oppTile.takenThisTurn = true
         oppTile.entrenchment = 0;
         oppTile.security = 0;
+        oppTile.militia = 0
     }
     GetDefenders() {
-        let defenders = this.troops
+        let defenders = max(0, this.troops + this.militia / 2);
         return defenders;
     }
     TakeCasualties(casualties) {
-        this.troops -= max(casualties, 0);
-        if (this.troops < 0) {
-            this.troops = 0;
+        this.militia = max(this.militia - casualties * 2, 0);
+        if (this.militia <= 0) {
+            this.troops = max(this.troops * 2 + this.militia - casualties * 2, 0) / 2
         }
-        this.troops = floor(this.troops)
     }
     AttackNeighbors() {
-        if (this.isFrontline && !this.takenThisTurn) {
+        if (this.isFrontline && !this.takenThisTurn && !this.isEncircled) {
             let tilesToAttack = []
             for (let i = 0; i < this.connections.length; i++) {
                 let oppTile = this.connections[i]
-                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && this.troops > oppTile.troops && (this.troops > 10 * oppTile.troops || !this.isEncircled)) {
+                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && (this.nation.recruits > this.nation.troops / 2 || this.troops * this.attackBonus > oppTile.GetDefenders() * oppTile.GetDefenseModifier() || oppTile.isEncircled)) {
                     tilesToAttack.push(oppTile)
                 }
             }
@@ -89,14 +102,13 @@ class Tile {
                 let oppTile = random(tilesToAttack)
                 let atk = this.troops;
                 let oppTroops = oppTile.GetDefenders();
-                if (this.troops > oppTroops) {
-                    this.TakeCasualties(oppTroops * random(0.01, 0.05))
-                    oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier())
-                    oppTile.security *= 0.9
-                }
-                if (this.troops > oppTroops * 10) {
+                this.TakeCasualties(oppTroops * random(0.01, 0.05))
+                oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier() * this.attackBonus)
+                oppTile.security *= 0.9
+                if (oppTile.GetDefenders() * 10 < this.troops) {
                     this.SeizeTile(oppTile)
                 }
+
             }
         } else if (!this.takenThisTurn) {
             //this.recruits += this.troops;
@@ -161,6 +173,7 @@ class Tile {
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
+        this.temp = temp
         this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.5)
         this.population = floor(Math.pow(this.importance + 1, 23) * this.points.length * Math.pow(max(1 - dist1(0.5, temp), 0.01), 2))
         this.maxpop = this.population;
@@ -187,7 +200,7 @@ class Tile {
         if (this.importance > 0.65) {
             this.isCity = true;
         }
-
+        this.potentialMilitia = this.population * 0.2;
     }
     Connect(other) {
         if (!this.connections.includes(other)) {
