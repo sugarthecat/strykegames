@@ -87,6 +87,9 @@ function update() {
   while (distances[cityOnWalk].distance > 5000 * seconds / 60 / 60 && cityOnWalk > 0) {
     cityOnWalk--;
   }
+  while (distances[cityOnWalk+1].distance < 5000 * seconds / 60 / 60 && cityOnWalk+1 < distances.length) {
+    cityOnWalk++;
+  }
   setText('bikecity', distances[cityOnBike].name)
   setText('walkcity', distances[cityOnWalk].name)
   let beforeWords = document.getElementsByClassName("before")
