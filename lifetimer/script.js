@@ -67,19 +67,28 @@ function update() {
     setFormattedText("seconds", Math.floor(seconds))
     setFormattedText("minutes", Math.floor(seconds / 60))
     setFormattedText("hours", Math.floor(seconds / 60 / 60))
-    setFormattedText("hotdogs", Math.floor(seconds / 60 * (72 / 10)))
+    let hotdogs = Math.floor(seconds / 60 * (72 / 10))
+    setFormattedText("hotdogs", hotdogs)
+    let costcoCost = getFormattedText(hotdogs * 1.5)
+    if(hotdogs % 2 == 0){
+        costcoCost += ".0"
+    }
+    setText('costco', "$" + costcoCost + "0")
+    let lbsbeef = Math.floor(hotdogs * 2)/10
+    setText("lbsbeef",lbsbeef)
+    //assuming a processed cow yields 500lbs beef
+    let cows = Math.ceil(lbsbeef/500)
+    setText("cows",cows)
     setFormattedText("shrek", Math.floor(seconds / 60 * 250 / 9574));
     setText("bezos", "$" + getFormattedText(Math.floor((168000000000 / seconds))));
     //cell count = 2^h
     // rotation = 360 / days
     setText("rotation", getFormattedText(Math.floor(seconds / 60 / 60 / 24 * 360)) + "." + setNumberLength(Math.floor(seconds / 60 / 60 / 24 * 360 * 1000) % 1000, 3) + "°");
-    let money = Math.floor(15 * seconds / 60 / 60 * 100) / 100
-    setText("minwage", "$" + money);
     while (distances[cityOnWalk].distance > 5000 * seconds / 60 / 60 && cityOnWalk > 0) {
         cityOnWalk--;
     }
-    while (distances[cityOnWalk+1].distance < 5000 * seconds / 60 / 60 && cityOnWalk+1 < distances.length) {
-      cityOnWalk++;
+    while (distances[cityOnWalk + 1].distance < 5000 * seconds / 60 / 60 && cityOnWalk + 1 < distances.length) {
+        cityOnWalk++;
     }
     setText('walkcity', distances[cityOnWalk].name)
     let beforeWords = document.getElementsByClassName("before")
