@@ -3,14 +3,17 @@
 const SCREEN_DIMENSIONS = { x: 600, y: 600 }
 let scaleFactor = 1;
 let volume = 1;
+let items = []
 function preload() {
     Assets.loadAssets()
 }
 //ham
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    items = [new SurgeryItem(280, 200, Assets.heart, 20)]
 }
-let circlepos = { x: -100, y: 0 }
+let selectedObject = false;
+let onEndScreen = false;
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
 
@@ -28,10 +31,19 @@ function draw() {
     let mousePosition = getMousePosition()
     fill(255)
     rect(0, 0, 600, 600)
-    fill(0, 255, 0)
-    circle(mousePosition.x,mousePosition.y, 100)
-    fill(255, 0, 0)
-    circle(circlepos.x, circlepos.y, 100)
+    if (selectedObject) {
+        image(Assets.bronco, 100, 0, 400, 600)
+        selectedObject.draw()
+    } else {
+        image(Assets.bronco, 100, 0, 400, 600)
+        push()
+        tint(255, 200)
+        for (let i = 0; i < items.length; i++) {
+            items[i].draw();
+        }
+        pop()
+    }
+
     noStroke()
     fill(0)
     rect(-xTranslation, 0, xTranslation, SCREEN_DIMENSIONS.y)
@@ -41,12 +53,21 @@ function draw() {
 }
 function touchStarted() {
     let mousepos = getMousePosition()
-    circlepos.x = mousepos.x;
-    circlepos.y = mousepos.y
+    if (onEndScreen) {
+
+    } else {
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].containsPoint(mousepos)) {
+                selectedObject = items[i]
+            }
+        }
+    }
 }
-function touchEnded(){
-    circlepos.x = -200
-    circlepos.y = -200
+function touchEnded() {
+    if (onEndScreen) {
+    } else {
+        selectedObject = false
+    }
 }
 function getMousePosition() {
     let mousePosition = { x: mouseX, y: mouseY }
