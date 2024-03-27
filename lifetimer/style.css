@@ -1,0 +1,18 @@
+html {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .count {
+    font-weight: bolder;
+    margin: 5px;
+    background-color: lightcoral;
+    line-height: 200%;
+    padding: 5px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+  .hidden {
+    display: none;
+  }
