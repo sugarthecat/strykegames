@@ -42,7 +42,13 @@ div.character div{
     text-align: center;
 }
 div.character div h3{
+    color:white;
     font-size: 24px;
+}
+div.character div a h3{
+    color:white;
+    font-size: 24px;
+    text-decoration: white underline;
 }
 div.character div h4{
     font-size: 20px;
