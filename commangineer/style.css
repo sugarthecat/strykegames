@@ -1,34 +1,41 @@
-
-html, body{
+html,
+body {
     margin: 0;
     padding: 0;
 }
-h1{
+
+h1 {
     font-size: 40px;
 }
-div.character img{
+
+div.character img {
     background-color: black;
     width: 200px;
 }
-body{
+
+body {
     background-color: #000020;
-    color:#ffffff;
+    color: #ffffff;
     font-family: sans-serif;
 }
-#web-content{
+
+#web-content {
     margin: 0px 20px;
     padding: 10px 10px;
 }
-iframe{
+
+iframe {
     height: 500px;
 }
-div.section{
+
+div.section {
     background-color: #202050;
     padding: 20px;
     width: 1000px;
     margin: 30px auto;
 }
-div.character{
+
+div.character {
     background-color: #303080;
     padding: 10px;
     margin: auto;
@@ -38,70 +45,119 @@ div.character{
     display: grid;
     grid-template-columns: 200px 600px;
 }
-div.character div{
+
+button {
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 12px 18px;
+}
+
+button:hover {
+    background-color: purple;
+    transition: 500ms;
+}
+
+div.character div {
     text-align: center;
 }
-div.character div h3{
-    color:white;
+
+div.character div h3 {
+    color: white;
     font-size: 24px;
 }
-div.character div a h3{
-    color:white;
+
+div.character div a h3 {
+    color: white;
     font-size: 24px;
     text-decoration: white underline;
 }
-div.character div h4{
+
+div.character div h4 {
     font-size: 20px;
     color: orange;
 }
-div.character div ul{
+
+div.character div ul {
     color: #99f;
     font-weight: bolder;
     list-style: none;
     padding: 0px;
 }
-@media all and (orientation:portrait) {
-    #banner-landscape{
-        display: none;
-    }
-}
-@media all and (orientation:landscape) { 
-    #banner-portrait{
-        display: none;
-    } 
+
+div.character div p {
+    color: #99f;
+    font-weight: bolder;
+    list-style: none;
+    padding: 0px;
 }
 
-@media only screen and (max-width:1100px){
-    iframe{
+p.para {
+    width: 400px;
+    margin: auto;
+}
+
+@media all and (orientation:portrait) {
+    #banner-landscape {
+        display: none;
+    }
+}
+
+@media all and (orientation:landscape) {
+    #banner-portrait {
+        display: none;
+    }
+}
+
+@media only screen and (max-width:1100px) {
+    iframe {
         height: 400px
     }
-    div.section{
+
+    div.section {
         width: 800px;
     }
-    div.character{
+
+    div.character {
         width: 600px;
-        
-    grid-template-columns: 200px 400px;
+
+        grid-template-columns: 200px 400px;
+    }
+
+}
+
+@media only screen and (max-width:900px) {
+    div.section {
+        width: 600px;
+    }
+
+    div.character {
+        width: 600px;
+
+        grid-template-columns: 150px 350px;
+    }
+    div.character img {
+        width: 150px;
+    }
+    
+
+    p.para {
+        font-size: 12px;
+        width: 300px;
+        margin: auto;
     }
 }
-@media only screen and (max-width:900px){
-    div.section{
-        width: 600px;
-    }
-    div.character{
-        width: 600px;
-        
-    grid-template-columns: 150px 400px;
-    }
-}
-@media only screen and (max-width:500px){
-    iframe{
+
+@media only screen and (max-width:500px) {
+    iframe {
         width: 400px;
         height: 252px;
     }
 }
-@media only screen and (max-width:400px){
-    iframe{
+
+@media only screen and (max-width:400px) {
+    iframe {
         width: 300px;
         height: 189px;
     }
