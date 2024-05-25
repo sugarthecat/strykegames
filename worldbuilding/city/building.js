@@ -5,7 +5,7 @@ class House {
         this.y = y;
         this.dir = dir;
         this.height = random(25, 40)
-        this.roofHeight = 20;
+        this.roofHeight = 12;
         push()
         colorMode(HSB, 100);
         this.color = color(random(100), 70, 80)
@@ -14,6 +14,7 @@ class House {
     }
     draw() {
 
+        //house box
         push()
         stroke(0)
         fill(this.color)
@@ -21,14 +22,33 @@ class House {
         rotateZ(this.dir)
         box(30, 30, this.height)
         fill(this.roofColor)
+
+        let roofPanelHeight = sqrt(15 * 15 + this.roofHeight * this.roofHeight)
+        // roof side 1
+        push()
+        translate(0, 0, this.height / 2)
+        rotateZ(PI / 2)
+        translate(0, 15, 0)
+        rotateX(-asin(this.roofHeight / roofPanelHeight))
+        rect(-15, -roofPanelHeight, 30, roofPanelHeight)
+        pop()
+        // roof side 2
+        push()
+        translate(0, 0, this.height / 2)
+        rotateZ(PI / 2)
+        translate(0, -15, 0)
+        rotateX(PI + asin(this.roofHeight / roofPanelHeight))
+        rect(-15, -roofPanelHeight, 30, roofPanelHeight)
+        pop()
         //roof triangles
         push()
         translate(0, 0, this.height / 2)
-        rotateX(PI/2)
-        translate (0,0,15)
-        triangle(-15,0,15,0,0,30)
-        translate (0,0,-30)
-        triangle(-15,0,15,0,0,30)
+        //roof triangles
+        rotateX(PI / 2)
+        translate(0, 0, 15)
+        triangle(-15, 0, 15, 0, 0, this.roofHeight)
+        translate(0, 0, -30)
+        triangle(-15, 0, 15, 0, 0, this.roofHeight)
         pop()
         pop()
     }
@@ -86,7 +106,17 @@ class Road {
         translate(this.midx, this.midy, 0.1)
         rotateZ(this.angle)
         plane(this.length, this.width)
+        //make yellow stripes
         stroke(0)
+        pop()
+        push()
+        translate(this.midx + this.length / 2 * cos(this.angle), this.midy + this.length / 2 * sin(this.angle), 0.2)
+        rotateZ(this.angle)
+        for (let x = 0; x < this.length; x += 10) {
+            fill(255, 255, 0)
+            plane(6, 2)
+            translate(-10, 0, 0)
+        }
         pop()
         for (let i = 0; i < this.houses.length; i++) {
             this.houses[i].draw()

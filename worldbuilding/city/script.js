@@ -31,6 +31,9 @@ function setup() {
             if (possConnects.length > 0) {
 
                 roadNodes[x][y].connect(random(possConnects))
+                if (random(1) > 0.2) {
+                    roadNodes[x][y].connect(random(possConnects))
+                }
             }
         }
     }
