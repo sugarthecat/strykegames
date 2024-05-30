@@ -77,6 +77,7 @@ class Tile {
         oppTile.takenThisTurn = true
         oppTile.entrenchment = 0;
         oppTile.security = 0;
+        oppTile.attackBonus = 0.2
         oppTile.militia = 0
     }
     GetDefenders() {
