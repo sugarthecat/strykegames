@@ -69,6 +69,21 @@ class RoadNode {
         translate(this.x, this.y, 0.1)
 
         circle(0, 0, 40)
+
+        translate(0, 0, 0.1)
+        if (this.connections.length <= 2) {
+            stroke(255, 255, 0)
+            strokeWeight(2)
+            //circle(0, 0, 20)
+            for (let i = 0; i < this.connections.length; i++) {
+
+                line(0, 0, (this.connections[i].x - this.x)/2, (this.connections[i].y - this.y)/2)
+            }
+        } else {
+            // traffic lights?
+            
+        }
+
         pop()
         for (let i = 0; i < this.roads.length; i++) {
             this.roads[i].draw();
@@ -84,6 +99,7 @@ class RoadNode {
 }
 class Road {
     constructor(origin, destination) {
+
         this.midx = origin.x * 0.5 + destination.x * 0.5
         this.midy = origin.y * 0.5 + destination.y * 0.5
         let deltax = origin.x - destination.x
@@ -110,13 +126,10 @@ class Road {
         stroke(0)
         pop()
         push()
-        translate(this.midx + this.length / 2 * cos(this.angle), this.midy + this.length / 2 * sin(this.angle), 0.2)
+        translate(this.midx, this.midy, 0.2)
         rotateZ(this.angle)
-        for (let x = 0; x < this.length; x += 10) {
-            fill(255, 255, 0)
-            plane(6, 2)
-            translate(-10, 0, 0)
-        }
+        fill(255, 255, 0)
+        plane(this.length - 40, 2)
         pop()
         for (let i = 0; i < this.houses.length; i++) {
             this.houses[i].draw()
