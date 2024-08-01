@@ -48,7 +48,7 @@ class GameScreen extends GUI {
             }
         }
         player.Draw()
-        if(timeSinceLastSpawn > 1.5 + 10 / time_survived){
+        if(timeSinceLastSpawn > 0.8 + 10 / Math.pow(time_survived,0.8)){
             timeSinceLastSpawn = 0
             enemies.push(new Enemy(random(50,350),10 / time_survived + 1))
         }
