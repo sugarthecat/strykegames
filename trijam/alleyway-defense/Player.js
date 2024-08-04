@@ -3,10 +3,10 @@ class Player {
     constructor() {
         this.x = 300
         this.y = 200
-        this.speed = 120
+        this.speed = 140
         this.leftmove = true;
         this.reload = 1
-        this.reloadTime = 0.7
+        this.reloadTime = 0.5
     }
     Draw() {
         push()
@@ -55,6 +55,7 @@ class Player {
         //shoot
         if (keyIsDown(32) && this.reload > this.reloadTime) {
             this.reload = 0
+            Assets.gunshot.play()
             if (this.leftmove) {
 
                 playerBullets.push(new PlayerBullet(this.x, this.y - 10, 500))

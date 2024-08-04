@@ -15,7 +15,7 @@ class GUIText {
         textAlign(LEFT)
         textSize(this.h - 20)
         textSize(min(textSize(),textSize()*(this.w-10)/textWidth(this.text)))
-        fill(0)
+        fill(255)
         textAlign(CENTER)
         text(this.text, this.x + this.w / 2, this.y + this.h * 8/10)
     }
