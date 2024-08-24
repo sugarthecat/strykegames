@@ -1,10 +1,10 @@
 let enemies = []
 let enemyBullets = []
 class Enemy {
-    constructor( y, reloadTime) {
-        if(random ( ) < 0.5){
+    constructor(y, reloadTime) {
+        if (random() < 0.5) {
             this.x = -60
-        }else[
+        } else[
             this.x = 660
         ]
         this.y = y;
@@ -12,11 +12,11 @@ class Enemy {
         this.reload = 0
     }
     Draw() {
-        if(this.x < 50){
-            this.x += deltaTime / 30 
+        if (this.x < 50) {
+            this.x += deltaTime / 30
         }
-        if(this.x > 550){
-            this.x -= deltaTime / 30 
+        if (this.x > 550) {
+            this.x -= deltaTime / 30
         }
         this.reload += deltaTime / 1000
         push()
@@ -25,15 +25,12 @@ class Enemy {
         if (this.x > 300) {
             scale(-1, 1)
         }
-        image(Assets.robber, -45, - 45, 90,90)
+        image(Assets.robber, -45, - 45, 90, 90)
         pop()
-        if(this.reload > this.reloadTime){
+        if (this.reload > this.reloadTime) {
             //fire bullet
             this.reload = 0
-            enemyBullets.push(new EnemyBullet(this.x,this.y,player.x,player.y))
+            enemyBullets.push(new EnemyBullet(this.x, this.y, player.x, player.y))
         }
     }
-
-
 }
-//path

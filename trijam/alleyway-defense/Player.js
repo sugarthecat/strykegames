@@ -3,7 +3,7 @@ class Player {
     constructor() {
         this.x = 300
         this.y = 200
-        this.speed = 140
+        this.speed = 200
         this.leftmove = true;
         this.reload = 1
         this.reloadTime = 0.5
@@ -20,7 +20,7 @@ class Player {
         //update movement
         let deltaPos = deltaTime * this.speed / 1000
         let deltaY = 0;
-        let deltaX = 0
+        let deltaX = 0;
         if (keyIsDown(65)) {
             //left
             deltaX -= 1
