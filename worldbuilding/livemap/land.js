@@ -35,36 +35,49 @@ function setup_land() {
             }
         }
     }
-    while (landMasses.length > 1) {
-        //find closest pair, connect landmasses
-        let closestPair1 = 0;
-        let closestPair2 = 1;
-        let closestPair1Tile = landMasses[0][0];
-        let closestPair2Tile = landMasses[1][0];
-
-        for (let i = 0; i < landMasses.length; i++) {
-            for (let j = 0; j < landMasses[i].length; j++) {
-                for (let i2 = i + 1; i2 < landMasses.length; i2++) {
-                    for (let j2 = 0; j2 < landMasses[i2].length; j2++) {
-                        if (dist2pos(landMasses[i][j].position,landMasses[i2][j2].position)
-                            < dist2pos(closestPair1Tile.position, closestPair2Tile.position)
-                        ) {
-                            closestPair1Tile = landMasses[i][j]
-                            closestPair2Tile = landMasses[i2][j2]
-                            closestPair1 = i;
-                            closestPair2 = i2;
-                        }
+    //connect landmasses
+    for(let i = 0; i<landMasses.length; i++){
+        //find closest landmass distance
+        let mindists = []
+        for(let j = 0; j<landMasses.length; j++){
+            if(j == i){
+                continue;
+            }
+            let mindist = dist2pos(landMasses[i][0].position,landMasses[j][0].position)
+            let connTiles = [landMasses[i][0],landMasses[j][0]]
+            for(let i2 = 0; i2 < landMasses[i].length; i2++){
+                for(let j2 = 0; j2 < landMasses[j].length; j2++){
+                    let newdist = dist2pos(landMasses[i][i2].position,landMasses[j][j2].position);
+                    if(newdist < mindist){
+                        mindist = newdist;
+                        connTiles = [landMasses[i][i2],landMasses[j][j2]]
                     }
                 }
             }
+            mindists.push({dist:mindist,tiles: connTiles})
         }
-        closestPair1Tile.Connect(closestPair2Tile)
-        for(let i = 0; i<landMasses[closestPair2].length; i++){
-            landMasses[closestPair1].push(landMasses[closestPair2][i])
+        let conn = mindists[0];
+        for(let j = 0; j<mindists.length; j++){
+            if(mindists[j].dist < conn.dist){
+                conn = mindists[j]
+            }
         }
-        landMasses.splice(closestPair2,1)
+        for(let j = 0; j< mindists.length; j++){
+            if(mindists[j].dist < conn.dist * 2){
+                
+                mindists[j].tiles[0].Connect(mindists[j].tiles[1])
+            }
+        }
+    }
+    //join lists
+    while (landMasses.length > 1) {
+        for(let i = 0; i<landMasses[landMasses.length-1].length; i++){
+            landMasses[0].push(landMasses[landMasses.length-1][i])
+        }
+        landMasses.pop()
     }
     tiles = landMasses[0]
+    //setup occupying tiles
     isLandArr = []
     coveredLand = []
     for (let i = 0; i < tiles.length; i++) {

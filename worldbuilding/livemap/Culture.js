@@ -1,7 +1,8 @@
-const NAMING_STYLES = ["Robotic", "English", "German", "Russian"]
+const NAMING_STYLES = ["Robotic", "English", "German", "Russian", "French"]
 const ENGLISH_SUFFIXES = [" City", "port", "shire", 'ham', 'mouth']
 const GERMAN_SUFFIXES = ["burg", "en", "furt", "feld", 'gart', "au", "ich", "zig"]
 const RUSSIAN_SUFFIXES = ["burg", "ov", "grad", "sk", "atov", "ovy"]
+const FRENCH_SUFFIXES = ["eaux", "bourg", "eau", "aise","is","ais","les","on"]
 const CONSONANTS = ["b", "c", "d", "f", "g", "h", 'j', 'k', 'l', 'm', 'p', 'r', 's', 't', 'v', 'w', 'z', "th", 'sk', "gr", "rl"]
 const VOWELS = ["a", 'e', 'i', 'o', 'u']
 class Culture {
@@ -18,7 +19,7 @@ class Culture {
             default:
                 this.consonants = []
                 this.vowels = []
-                for(let i = 0; i<50; i++){
+                for (let i = 0; i < 50; i++) {
                     this.consonants.push(random(CONSONANTS))
                     this.vowels.push(random(VOWELS))
                 }
@@ -57,6 +58,9 @@ class Culture {
                 break;
             case "Russian":
                 name = this.generateNameBase() + random(RUSSIAN_SUFFIXES)
+                break;
+            case "French":
+                name = this.generateNameBase() + random(FRENCH_SUFFIXES)
                 break;
             default:
 

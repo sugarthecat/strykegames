@@ -10,7 +10,6 @@ class Nation {
             colors = [random(255), random(255), random(255)]
         }
         this.color = color(...colors)
-        this.recruits=0
     }
     AnnexTile(tile) {
         if (tile.nation) {
@@ -31,7 +30,6 @@ class Nation {
         for (let i = 0; i < this.tiles.length; i++) {
             this.population += this.tiles[i].population
             this.troops += this.tiles[i].troops
-            this.recruits += this.tiles[i].recruits
             if (this.tiles[i].population > largestCity.population) {
                 largestCity = this.tiles[i]
             }
@@ -55,18 +53,6 @@ class Nation {
             }
             tilesToSearch.shift()
         }
-
-        let mobilizedTroops = this.recruits;
-        for (let i = 0; i < frontlineTiles.length; i++) {
-            console.log(mobilizedTroops)
-            frontlineTiles[i].troops += floor(mobilizedTroops / frontlineTiles.length)
-            this.recruits -= floor(mobilizedTroops / frontlineTiles.length)
-            if (frontlineTiles[i].troops > 1000000) {
-                this.recruits += frontlineTiles[i].troops - 1000000
-                frontlineTiles[i].troops = 1000000
-            }
-        }
-        this.recruits = floor ( this.recruits)
     }
     LoseTile(tile) {
         this.tiles.splice(this.tiles.indexOf(tile), 1)

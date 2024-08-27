@@ -56,9 +56,12 @@ function draw() {
     translate(-camerax, -cameray)
     background(20, 50, 200)
     scaleFactor = min(width / MAP_WIDTH, height / MAP_HEIGHT)
+    //cannot use p5 scaling because tiles will have gaps
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].Draw();
     }
+    push()
+    scale (scaleFactor,scaleFactor)
     let speed = 2;
     if (keyIsDown(UP_ARROW)) {
         cameray -= speed;
@@ -76,6 +79,7 @@ function draw() {
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].DrawCity();
     }
+    pop ()
     if (selectedTile) {
         selectedTileGUI.Draw(mouseX+camerax,mouseY+cameray)
     }
@@ -88,7 +92,7 @@ function draw() {
     }
 }
 let selectedTile = false;
-function mouseClicked() {
+function mouseClicked(e) {
     let mousepos = getProjectedMousePosition()
     for (let i = 0; i < buttons.length; i++) {
         if (buttons[i].HandleClick(mouseX, mouseY)) {
