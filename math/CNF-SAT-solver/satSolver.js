@@ -3,11 +3,13 @@
  * @param {Array<Array<Object>>} cnf 
  */
 let contradiction;
+let cnfGlobal;
 function solveCNFSat(cnf) {
     //in complexity terms, n is the amount of literals.
     let variableValue = new Map()
     let variables = new Set()
     contradiction = false;
+    cnfGlobal = cnf;
     //identify variables, O(n)
     for (let i = 0; i < cnf.length; i++) {
         for (let j = 0; j < cnf[i].length; j++) {
@@ -15,12 +17,14 @@ function solveCNFSat(cnf) {
             variables.add(literal.v)
         }
     }
-    addSolutionSegment("Unsolved variables: " + stringifySet(variables))
+    addSolutionSegment("Variables: " + stringifySet(variables))
+    CNF_Remove_Tautologies(cnf) //only needs to occur once
+    addSolutionSegment(stringifyCNF(cnf))
     while (
         !contradiction && (
-            CNF_Remove_Tautologies(cnf) ||
             CNF_Set_Free_Variables(cnf, variableValue) ||
-            CNF_Resolve_Single_Literal_Clauses(cnf, variableValue)
+            CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) ||
+            CNF_Remove_Supersets(cnf)
         )
     ) {
         addSolutionSegment(stringifyCNF(cnf))
@@ -42,8 +46,13 @@ function solveCNFSat(cnf) {
     }
 }
 /**
- * Takes a Normal Form boolean formula
- * @param {CNF} cnf 
+ * 
+ */
+function CNF_Simplify_Clauses(cnf){
+
+}
+/**
+ * Removes tautologically true clauses and simplifies clauses when a literal is duplicated
  */
 function CNF_Remove_Tautologies(cnf) {
     let actionPerformed = false;
@@ -67,6 +76,10 @@ function CNF_Remove_Tautologies(cnf) {
     }
     return actionPerformed;
 }
+/**
+ * If there is no point in the problem in which a certain variable is negated, or no point in which it is not negated, then
+ * set the variable to the condition which would leave the literals always evaluating to true.
+ */
 function CNF_Set_Free_Variables(cnf, variableValue) {
     let actionPerformed = false;
     let variables = new Set();
@@ -109,6 +122,9 @@ function CNF_Set_Free_Variables(cnf, variableValue) {
     }
     return actionPerformed
 }
+/**
+ * Applies substitutions according to the VariableValue argument
+ */
 function CNF_Substitute(cnf, variableValue) {
     for (let i = 0; i < cnf.length; i++) {
         for (let j = 0; j < cnf[i].length; j++) {
@@ -136,6 +152,11 @@ function CNF_Substitute(cnf, variableValue) {
         }
     }
 }
+/**
+ * If a single literal clause is true, the literal must evaluate to true.
+ * If contradictions arise, the CNF-SAT problem is impossible.
+ * Set the literal to equate to true and substitute the variable.
+ */
 function CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) {
     let actionPerformed = false;
     for (let i = 0; i < cnf.length; i++) {
@@ -150,7 +171,49 @@ function CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) {
         CNF_Substitute(cnf, variableValue)
     }
     return actionPerformed
-
+}
+/**
+ * If, between two CNF clauses, all of the terms of CNF Clause A are terms in CNF Clause B,
+ * then clause A implies clause B, and clause B can be removed, since all clauses would need to be satisfied.
+ */
+function CNF_Remove_Supersets(cnf){
+    /**
+     * Checks if ClauseA is a subset of clauseB
+     */
+    function CNF_check_subset(clauseA,clauseB){
+        for(let i = 0; i<clauseA.length; i++){
+            let foundElement = false;
+            for(let j = 0; j<clauseB.length; j++){
+                if(clauseA[i].n == clauseB[j].n && clauseA[i].v == clauseB[j].v){
+                    foundElement = true;
+                    break;
+                }
+            }
+            if(!foundElement){
+                return false;
+            }
+        }
+        return true;
+    }
+    let actionPerformed = false;
+    for(let i = 0; i<cnf.length; i++){
+        for(let j = 0; j<cnf.length; j++){
+            if(i == j){
+                //ensure we are comparing 2 distinct clauses
+                continue;
+            }
+            if(CNF_check_subset(cnf[i],cnf[j])){
+                addSolutionSegment(`${stringifyClause(cnf[i])} is a subclause of ${stringifyClause(cnf[j])}`)
+                cnf.splice(j,1);
+                i--;
+                actionPerformed = true;
+                break;
+            }
+            //check if CNF[i] is a subset of CNF[j]
+            
+        }
+    }
+    return actionPerformed;
 }
 function stringifyCNF(cnf) {
     let str = "("
