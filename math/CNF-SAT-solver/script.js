@@ -17,7 +17,7 @@ class Literal {
             inputElement.style.width = Math.max(1.5,inputElement.value.length + 1) + "ch";
         }
         let inversion = document.createElement("span")
-        inversion.innerText = "¬"
+        inversion.innerHTML = "&not;"
         inversion.onclick = function () { ref.invertNegation() }
         
         this.htmlElement.appendChild(inversion)
