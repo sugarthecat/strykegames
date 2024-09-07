@@ -41,14 +41,14 @@ function solveCNFSat(cnf) {
             iterNext = iter.next()
         }
         addSolutionSegment(str)
-    }else{
+    } else {
         addSolutionSegment("There is no solution.")
     }
 }
 /**
  * 
  */
-function CNF_Simplify_Clauses(cnf){
+function CNF_Simplify_Clauses(cnf) {
 
 }
 /**
@@ -176,41 +176,41 @@ function CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) {
  * If, between two CNF clauses, all of the terms of CNF Clause A are terms in CNF Clause B,
  * then clause A implies clause B, and clause B can be removed, since all clauses would need to be satisfied.
  */
-function CNF_Remove_Supersets(cnf){
+function CNF_Remove_Supersets(cnf) {
     /**
      * Checks if ClauseA is a subset of clauseB
      */
-    function CNF_check_subset(clauseA,clauseB){
-        for(let i = 0; i<clauseA.length; i++){
+    function CNF_check_subset(clauseA, clauseB) {
+        for (let i = 0; i < clauseA.length; i++) {
             let foundElement = false;
-            for(let j = 0; j<clauseB.length; j++){
-                if(clauseA[i].n == clauseB[j].n && clauseA[i].v == clauseB[j].v){
+            for (let j = 0; j < clauseB.length; j++) {
+                if (clauseA[i].n == clauseB[j].n && clauseA[i].v == clauseB[j].v) {
                     foundElement = true;
                     break;
                 }
             }
-            if(!foundElement){
+            if (!foundElement) {
                 return false;
             }
         }
         return true;
     }
     let actionPerformed = false;
-    for(let i = 0; i<cnf.length; i++){
-        for(let j = 0; j<cnf.length; j++){
-            if(i == j){
+    for (let i = 0; i < cnf.length; i++) {
+        for (let j = 0; j < cnf.length; j++) {
+            if (i == j) {
                 //ensure we are comparing 2 distinct clauses
                 continue;
             }
-            if(CNF_check_subset(cnf[i],cnf[j])){
+            if (CNF_check_subset(cnf[i], cnf[j])) {
                 addSolutionSegment(`${stringifyClause(cnf[i])} is a subclause of ${stringifyClause(cnf[j])}`)
-                cnf.splice(j,1);
+                cnf.splice(j, 1);
                 i--;
                 actionPerformed = true;
                 break;
             }
             //check if CNF[i] is a subset of CNF[j]
-            
+
         }
     }
     return actionPerformed;

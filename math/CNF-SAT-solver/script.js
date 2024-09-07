@@ -10,16 +10,16 @@ class Literal {
         this.negated = false;
 
         let ref = this;
-        
+
         this.htmlElement = document.createElement("span")
         let inputElement = document.createElement("input")
-        inputElement.onkeydown = function(){
-            inputElement.style.width = Math.max(1.5,inputElement.value.length + 1) + "ch";
+        inputElement.onkeydown = function () {
+            inputElement.style.width = Math.max(1.5, inputElement.value.length + 1) + "ch";
         }
         let inversion = document.createElement("span")
         inversion.innerHTML = "&not;"
         inversion.onclick = function () { ref.invertNegation() }
-        
+
         this.htmlElement.appendChild(inversion)
         this.htmlElement.className = "literal"
         this.htmlElement.appendChild(inputElement)
@@ -48,8 +48,8 @@ class Literal {
     Delete() {
         this.htmlElement.remove();
     }
-    getCNFObject(){
-        return {n: this.negated, v:this.htmlElement.children[1].value}
+    getCNFObject() {
+        return { n: this.negated, v: this.htmlElement.children[1].value }
     }
 }
 class OrClause {
@@ -76,7 +76,7 @@ class OrClause {
 
         let deleteButton = document.createElement("button");
         deleteButton.innerText = "X"
-        deleteButton.onclick = function(){
+        deleteButton.onclick = function () {
             ref.literals = []
             updateClauses();
         }
@@ -116,7 +116,7 @@ class OrClause {
             this.literals.pop().Delete();
         }
     }
-    Delete(){
+    Delete() {
         this.htmlElement.remove()
     }
 }
@@ -125,9 +125,9 @@ function solve() {
     document.getElementById("solution").innerHTML = "<h2>Solution</h2><hr/>"
     //parse OOP into a denser data structure
     let CNFLayout = [];
-    for(let i = 0; i<clauses.length; i++){
+    for (let i = 0; i < clauses.length; i++) {
         CNFLayout.push([])
-        for(let j = 0; j<clauses[i].literals.length; j++){
+        for (let j = 0; j < clauses[i].literals.length; j++) {
             let literal = clauses[i].literals[j]
             CNFLayout[i].push(literal.getCNFObject())
         }
@@ -135,7 +135,7 @@ function solve() {
     //pass to actual CNF-SAT solver
     solveCNFSat(CNFLayout)
 }
-function addSolutionSegment(str){
+function addSolutionSegment(str) {
     let newSegment = document.createElement("p")
     newSegment.innerText = str
     document.getElementById("solution").appendChild(newSegment)
@@ -149,11 +149,11 @@ let clauseDiv
 window.onload = function () {
     clauseDiv = document.getElementById('clauses');
 }
-function updateClauses(){
-    for(let i = 0; i<clauses.length; i++){
-        if(clauses[i].literals.length == 0){
+function updateClauses() {
+    for (let i = 0; i < clauses.length; i++) {
+        if (clauses[i].literals.length == 0) {
             clauses[i].Delete();
-            clauses.splice(i,1)
+            clauses.splice(i, 1)
             i--;
         }
     }
