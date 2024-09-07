@@ -1,5 +1,6 @@
 /**
- * A Javascript-based CNF-SAT Solver
+ * A Javascript-based CNF-SAT Solver. 
+ * This file manages the frontend.
  * @author TJ Nickerson
  */
 class Literal {
@@ -123,6 +124,11 @@ class OrClause {
 let clauses = []
 function solve() {
     document.getElementById("solution").innerHTML = "<h2>Solution</h2><hr/>"
+    //pass to actual CNF-SAT solver
+    solveCNFSat(getCNFData())
+}
+function getCNFData(){
+    
     //parse OOP into a denser data structure
     let CNFLayout = [];
     for (let i = 0; i < clauses.length; i++) {
@@ -132,10 +138,13 @@ function solve() {
             CNFLayout[i].push(literal.getCNFObject())
         }
     }
-    //pass to actual CNF-SAT solver
-    solveCNFSat(CNFLayout)
+    return CNFLayout
 }
-function addSolutionSegment(str) {
+let printInfo = true;
+function addSolutionSegment(str, allCases = false) {
+    if(!allCases && !printInfo){
+        return;
+    }
     let newSegment = document.createElement("p")
     newSegment.innerText = str
     document.getElementById("solution").appendChild(newSegment)

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 
 <head>
-    <title>CNF SAT Reducer</title>
+    <title>CNF SAT Reducer / CNF-SAT Editor</title>
     <script src="script.js"></script>
     <script src="satSolver.js"></script>
+    <script src="files.js"></script>
+    <script src="stringify.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 
@@ -13,10 +15,14 @@
     <!-- Do styling later -->
     <div>
         <button onclick="addClause()">Add clause</button>
-        <button onclick="solve()">Solve</button>
+        <button onclick="solve()">Reduce</button>
     </div>
+    <h2>Formula</h2>
     <div id="clauses">
 
+    </div>
+    <div>
+        <button onclick="download()">Download Formula</button>
     </div>
     <div id="solution"></div>
 </body>

@@ -1,9 +1,12 @@
 /**
  * Solves a CNF-SAT problem.
+ * This file manages the solution.
+ * @author TJ Nickerson
  * @param {Array<Array<Object>>} cnf 
  */
 let contradiction;
 let cnfGlobal;
+let
 function solveCNFSat(cnf) {
     //in complexity terms, n is the amount of literals.
     let variableValue = new Map()
@@ -24,15 +27,17 @@ function solveCNFSat(cnf) {
         !contradiction && (
             CNF_Set_Free_Variables(cnf, variableValue) ||
             CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) ||
-            CNF_Remove_Supersets(cnf)
+            CNF_Remove_Supersets(cnf) ||
+            CNF_Merge_Clauses(cnf)
         )
     ) {
         addSolutionSegment(stringifyCNF(cnf))
     }
+    CNF_Assign_Variables(cnf, variables, variableValue)
     if (!contradiction) {
         addSolutionSegment("Final Reduced form:")
         addSolutionSegment(stringifyCNF(cnf))
-        addSolutionSegment("Deduced variables:")
+        addSolutionSegment("Deduced variables:", true)
         let iter = variableValue.keys()
         let iterNext = iter.next()
         let str = ""
@@ -40,16 +45,28 @@ function solveCNFSat(cnf) {
             str += `${iterNext.value} = ${variableValue.get(iterNext.value)},`;
             iterNext = iter.next()
         }
-        addSolutionSegment(str)
+        addSolutionSegment(str, true)
     } else {
-        addSolutionSegment("There is no solution.")
+        addSolutionSegment("There is no solution.", true)
     }
 }
-/**
- * 
- */
-function CNF_Simplify_Clauses(cnf) {
+function CNF_Assign_Variables(cnf, variables, variableValue) {
+    for (let i = 0; i < cnf.length; i++) {
+        for (let j = 0; j < cnf[i].length; j++) {
+            if (variables.has(cnf[i][j].v)) {
+                variables.delete(cnf[i][j].v)
+            }
+        }
+    }
 
+    let iter = variables[Symbol.iterator]();
+    let iterVal = iter.next()
+    while (!iterVal.done) {
+        if (!variableValue.has(iterVal.value)) {
+            variableValue.set(iterVal.value, true)
+        }
+        iterVal = iter.next()
+    }
 }
 /**
  * Removes tautologically true clauses and simplifies clauses when a literal is duplicated
@@ -215,48 +232,57 @@ function CNF_Remove_Supersets(cnf) {
     }
     return actionPerformed;
 }
-function stringifyCNF(cnf) {
-    let str = "("
+/**
+ * If, between two CNF clauses, all of the terms of CNF Clause A are terms in CNF Clause B,
+ * then clause A implies clause B, and clause B can be removed, since all clauses would need to be satisfied.
+ */
+function CNF_Merge_Clauses(cnf) {
+    /**
+     * Checks if ClauseA is a subset of clauseB
+     */
+    let actionPerformed = false;
     for (let i = 0; i < cnf.length; i++) {
-        str += stringifyClause(cnf[i])
-        if (i + 1 < cnf.length) {
-            str += "∧"
+        for (let j = i + 1; j < cnf.length; j++) {
+            if (i == j) {
+                //ensure we are comparing 2 distinct clauses
+                continue;
+            }
+            let unmergable = false;
+            let differenceIndex = -1;
+            let clauseA = cnf[i];
+            let clauseB = cnf[j];
+            for (let i = 0; i < clauseA.length; i++) {
+                let foundElement = false;
+                for (let j = 0; j < clauseB.length; j++) {
+                    if (clauseA[i].v == clauseB[j].v) {
+                        foundElement = true;
+                        if (clauseA[i].n == clauseB[j].n) {
+                            //Do nothing - Just matching elements!
+                        } else if (differenceIndex == -1) {
+                            differenceIndex = i
+                        } else {
+                            unmergable = true;
+                        }
+                        break;
+                    }
+                }
+                if (!foundElement) {
+                    unmergable = true;
+                    break
+                }
+            }
+            if (unmergable || differenceIndex == -1) {
+                continue;
+            }
+            let msg = `${stringifyClause(clauseA)} ∧ ${stringifyClause(clauseB)} imply `
+            cnf[i].splice(differenceIndex, 1);
+            msg += stringifyClause(cnf[i]);
+            cnf.splice(j, 1);
+            actionPerformed = true;
+            addSolutionSegment(msg);
+            i = 0;
+            break;
         }
     }
-    str += ")"
-    return str;
-}
-function stringifyClause(clause) {
-    let str = "("
-    for (let i = 0; i < clause.length; i++) {
-        if (clause[i].n) {
-            str += "¬"
-        }
-        str += clause[i].v
-        if (i + 1 < clause.length) str += " ∨ ";
-    }
-    str += ")"
-    return str;
-}
-function stringifySet(set) {
-    let str = "{"
-    let iter = set[Symbol.iterator]();
-    let iterVal = iter.next()
-    while (!iterVal.done) {
-        str += iterVal.value
-        iterVal = iter.next();
-        if (!iterVal.done) {
-            str += " , "
-        }
-    }
-    str += "}"
-    return str;
-}
-function stringifyLiteral(literal) {
-    let str = ""
-    if (literal.n) {
-        str += "¬"
-    }
-    str += literal.v;
-    return str;
+    return actionPerformed;
 }
