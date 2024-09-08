@@ -271,7 +271,7 @@ function CNF_Merge_Clauses(cnf) {
                     break
                 }
             }
-            if (unmergable || differenceIndex == -1) {
+            if (unmergable || differenceIndex == -1 || clauseA.length != clauseB.length) {
                 continue;
             }
             let msg = `${stringifyClause(clauseA)} ∧ ${stringifyClause(clauseB)} imply `
