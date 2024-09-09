@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<meta charset="utf-8"/>
 <head>
     <title>CNF SAT Reducer / CNF-SAT Editor</title>
     <script src="script.js"></script>
@@ -16,6 +16,10 @@
     <div>
         <button onclick="addClause()">Add clause</button>
         <button onclick="solve()">Reduce</button>
+    </div>
+    <div>
+        <button onclick="loadFile()">Load File</button>
+        <input type="file" id="fileToLoad"/>
     </div>
     <h2>Formula</h2>
     <div id="clauses">

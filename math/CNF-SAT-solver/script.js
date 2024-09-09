@@ -49,8 +49,28 @@ class Literal {
     Delete() {
         this.htmlElement.remove();
     }
+    /**
+     * Gets a simpler object
+     * @returns {n: Boolean, v: String}
+     */
     getCNFObject() {
         return { n: this.negated, v: this.htmlElement.children[1].value }
+    }
+    /**
+     * 
+     * @param {String} v The variable to set it to
+     */
+    setVariable(v) {
+        this.htmlElement.children[1].value = v;
+    }
+    /**
+     * Set the literal to the negation or the non-negation of the variable
+     * @param {Boolean} n If the variable is to be negated
+     */
+    setNegation(n) {
+        if(n != this.negated){
+            this.invertNegation()
+        }
     }
 }
 class OrClause {
@@ -108,12 +128,17 @@ class OrClause {
     /**
      * Adds another literal to this clause
      */
-    AddLiteral() {
-        this.literals.push(new Literal())
+    AddLiteral(literal = new Literal()) {
+        this.literals.push(literal)
         this.htmlElement.children[0].appendChild(this.literals[this.literals.length - 1].getElement())
     }
     RemoveLiteral() {
         if (this.literals.length > 1) {
+            this.literals.pop().Delete();
+        }
+    }
+    ClearLiterals(){
+        while(this.literals.length > 0){
             this.literals.pop().Delete();
         }
     }
@@ -127,8 +152,8 @@ function solve() {
     //pass to actual CNF-SAT solver
     solveCNFSat(getCNFData())
 }
-function getCNFData(){
-    
+function getCNFData() {
+
     //parse OOP into a denser data structure
     let CNFLayout = [];
     for (let i = 0; i < clauses.length; i++) {
@@ -142,15 +167,14 @@ function getCNFData(){
 }
 let printInfo = true;
 function addSolutionSegment(str, allCases = false) {
-    if(!allCases && !printInfo){
+    if (!allCases && !printInfo) {
         return;
     }
     let newSegment = document.createElement("p")
     newSegment.innerText = str
     document.getElementById("solution").appendChild(newSegment)
 }
-function addClause() {
-    let newClause = new OrClause([])
+function addClause(newClause = new OrClause([])) {
     clauses.push(newClause);
     clauseDiv.appendChild(newClause.htmlElement)
 }

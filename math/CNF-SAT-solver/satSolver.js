@@ -6,7 +6,6 @@
  */
 let contradiction;
 let cnfGlobal;
-let
 function solveCNFSat(cnf) {
     //in complexity terms, n is the amount of literals.
     let variableValue = new Map()
@@ -286,3 +285,4 @@ function CNF_Merge_Clauses(cnf) {
     }
     return actionPerformed;
 }
+
