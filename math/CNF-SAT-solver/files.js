@@ -51,6 +51,12 @@ function loadCNFData(data) {
     let headerRead = false;
     let rows = data.split("\n")
     for (let i = 0; i < rows.length; i++) {
+        while(rows[i].includes("  ")){
+            rows[i] = rows[i].replace("  "," ")
+        }
+        if(rows[i].charAt(0) == " "){
+            rows[i] = rows[i].substring(1)
+        }
         if (rows[i].charAt(0) == "c") {
             continue;
         }

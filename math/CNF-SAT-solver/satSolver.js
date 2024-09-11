@@ -19,8 +19,15 @@ function solveCNFSat(cnf) {
             variables.add(literal.v)
         }
     }
-    addSolutionSegment("Variables: " + stringifySet(variables))
     CNF_Remove_Tautologies(cnf) //only needs to occur once
+    printInfo = false;
+    //cnf = CNF_Remove_Overlap(cnf);
+    printInfo = true;
+    addSolutionSegment("Variables: " + variables.size)
+    addSolutionSegment(`Converted to Non-Overlapping Form from ${cnfGlobal.length} clauses to ${cnf.length} clauses`)
+    if(cnf.length > 50){
+        printInfo = false;
+    }
     addSolutionSegment(stringifyCNF(cnf))
     while (
         !contradiction && (
@@ -193,24 +200,6 @@ function CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) {
  * then clause A implies clause B, and clause B can be removed, since all clauses would need to be satisfied.
  */
 function CNF_Remove_Supersets(cnf) {
-    /**
-     * Checks if ClauseA is a subset of clauseB
-     */
-    function CNF_check_subset(clauseA, clauseB) {
-        for (let i = 0; i < clauseA.length; i++) {
-            let foundElement = false;
-            for (let j = 0; j < clauseB.length; j++) {
-                if (clauseA[i].n == clauseB[j].n && clauseA[i].v == clauseB[j].v) {
-                    foundElement = true;
-                    break;
-                }
-            }
-            if (!foundElement) {
-                return false;
-            }
-        }
-        return true;
-    }
     let actionPerformed = false;
     for (let i = 0; i < cnf.length; i++) {
         for (let j = 0; j < cnf.length; j++) {
@@ -286,3 +275,103 @@ function CNF_Merge_Clauses(cnf) {
     return actionPerformed;
 }
 
+/**
+ * Checks if ClauseA is a subset of clauseB
+ * @param {Array<Object>} clauseA
+ * @param {Array<Object>} clauseB
+ */
+function CNF_check_subset(clauseA, clauseB) {
+    for (let i = 0; i < clauseA.length; i++) {
+        let foundElement = false;
+        for (let j = 0; j < clauseB.length; j++) {
+            if (clauseA[i].n == clauseB[j].n && clauseA[i].v == clauseB[j].v) {
+                foundElement = true;
+                break;
+            }
+        }
+        if (!foundElement) {
+            return false;
+        }
+    }
+    return true;
+}
+/**
+ * Splits a clause, according to the rules of another clause, so that no 2 clauses overlap
+ * @param {Array<Object>} clauseA The anchor clause - remains unchanged
+ * @param {Array<Object>} clauseB The breaking clause - WIll be split into multiple clauses
+ */
+function CNF_Split_Clause(clauseA, clauseB) {
+    //first, check if they conflict
+    let unresolvedLiterals = []
+    for (let i = 0; i < clauseA.length; i++) {
+        let varFound = false;
+        for (let j = 0; j < clauseB.length; j++) {
+            if (clauseA[i].v == clauseB[j].v) {
+                if (clauseA[i].n != clauseB[j].n) {
+                    //no need to split! they don't conflict.
+                    return [clauseB];
+                } else {
+                    //we can't use this variable later when splitting - they both already have it set
+                    varFound = true;
+                }
+            }
+        }
+        if (!varFound) {
+            unresolvedLiterals.push(clauseA[i])
+        }
+    }
+    //
+    let newClauses = []
+    for (let i = 0; i < unresolvedLiterals.length; i++) {
+        let clause = []
+        for (let j = 0; j < clauseB.length; j++) {
+            clause.push({ n: clauseB[j].n, v: clauseB[j].v })
+        }
+        for (let j = 0; j < i; j++) {
+            clause.push({ n: unresolvedLiterals[j].n, v: unresolvedLiterals[j].v })
+        }
+        clause.push({ n: !unresolvedLiterals[i].n, v: unresolvedLiterals[i].v })
+        newClauses.push(clause)
+    }
+    return newClauses
+}
+/**
+ * Removes any overlap from a conjunctive normal form
+ * @param { Array<Array<Object>> } cnf a conjunctive normal form problem
+ * @returns the conjunctive normal form with no overlapping clauses
+ */
+function CNF_Remove_Overlap(cnf) {
+    let clearCNF = [];
+    let unclearCNF = [];
+    //clone CNF
+    for (let i = 0; i < cnf.length; i++) {
+        let clauseClone = []
+        for (let j = 0; j < cnf[i].length; j++) {
+            clauseClone.push({ v: cnf[i][j].v, n: cnf[i][j].n })
+        }
+        unclearCNF.push(clauseClone)
+    }
+    //probabilistically, sort by ascending length, since the later items are popped first.
+    //this should have the larger items acting first with the possibility to 'eat' clauses
+    unclearCNF.sort((a, b) => b.length - a.length);
+    //build new list
+    clearCNF.push(unclearCNF.pop());
+    while (unclearCNF.length > 0) {
+        console.log(unclearCNF.length,clearCNF.length)
+        let newElementsToAdd = [unclearCNF.pop()];
+        for (let i = 0; i < clearCNF.length; i++) {
+            let nextClearElements = []
+            while(newElementsToAdd.length > 0){
+                let newClauses = CNF_Split_Clause(clearCNF[i],newElementsToAdd.pop())
+                for(let j = 0; j<newClauses.length; j++){
+                    nextClearElements.push(newClauses[j]);
+                }
+            }
+            newElementsToAdd = nextClearElements;
+        }
+        for(let i = 0; i<newElementsToAdd.length; i++){
+            clearCNF.push(newElementsToAdd[i]);
+        }
+    }
+    return clearCNF;
+}
