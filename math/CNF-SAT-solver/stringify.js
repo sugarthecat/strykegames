@@ -4,7 +4,7 @@ function stringifyCNF(cnf) {
     for (let i = 0; i < cnf.length; i++) {
         str += stringifyClause(cnf[i])
         if (i + 1 < cnf.length) {
-            str += "∧"
+            str += " ∧ "
         }
     }
     str += ")"

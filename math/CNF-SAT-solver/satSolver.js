@@ -22,9 +22,9 @@ function solveCNFSat(cnf) {
     CNF_Remove_Tautologies(cnf) //only needs to occur once
     printInfo = false;
     //cnf = CNF_Remove_Overlap(cnf);
+    //addSolutionSegment(`Converted to Non-Overlapping Form from ${cnfGlobal.length} clauses to ${cnf.length} clauses`)
     printInfo = true;
     addSolutionSegment("Variables: " + variables.size)
-    addSolutionSegment(`Converted to Non-Overlapping Form from ${cnfGlobal.length} clauses to ${cnf.length} clauses`)
     if(cnf.length > 50){
         printInfo = false;
     }
@@ -34,7 +34,8 @@ function solveCNFSat(cnf) {
             CNF_Set_Free_Variables(cnf, variableValue) ||
             CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) ||
             CNF_Remove_Supersets(cnf) ||
-            CNF_Merge_Clauses(cnf)
+            CNF_Merge_Clauses(cnf) ||
+            CNF_Extend_Clauses(cnf)
         )
     ) {
         addSolutionSegment(stringifyCNF(cnf))
@@ -212,7 +213,6 @@ function CNF_Remove_Supersets(cnf) {
                 cnf.splice(j, 1);
                 i--;
                 actionPerformed = true;
-                break;
             }
             //check if CNF[i] is a subset of CNF[j]
 
@@ -221,13 +221,9 @@ function CNF_Remove_Supersets(cnf) {
     return actionPerformed;
 }
 /**
- * If, between two CNF clauses, all of the terms of CNF Clause A are terms in CNF Clause B,
- * then clause A implies clause B, and clause B can be removed, since all clauses would need to be satisfied.
+ * Merges clauses where two clauses are of the same length, and share all literals except for 1, where the literal is inverted
  */
 function CNF_Merge_Clauses(cnf) {
-    /**
-     * Checks if ClauseA is a subset of clauseB
-     */
     let actionPerformed = false;
     for (let i = 0; i < cnf.length; i++) {
         for (let j = i + 1; j < cnf.length; j++) {
@@ -269,12 +265,64 @@ function CNF_Merge_Clauses(cnf) {
             actionPerformed = true;
             addSolutionSegment(msg);
             i = 0;
-            break;
+            return actionPerformed;
         }
     }
     return actionPerformed;
 }
+/**
+ * "Extends" clauses
+ */
+function CNF_Extend_Clauses(cnf) {
+    /**
+     * Checks if ClauseA is a subset of clauseB
+     */
+    let actionPerformed = false;
+    for (let i = 0; i < cnf.length; i++) {
+        for (let j = 0; j < cnf.length; j++) {
 
+            if (i == j) {
+                //ensure we are comparing 2 distinct clauses
+                continue;
+            }
+            let unmergable = false;
+            let differenceIndex = -1;
+            let clauseA = cnf[i];
+            let clauseB = cnf[j];
+            for (let a = 0; a < clauseA.length; a++) {
+                let foundElement = false;
+                for (let b = 0; b < clauseB.length; b++) {
+                    if (clauseA[a].v == clauseB[b].v) {
+                        foundElement = true;
+                        if (clauseA[a].n == clauseB[b].n) {
+                            //Do nothing - Just matching elements!
+                        } else if (differenceIndex == -1) {
+                            differenceIndex = b
+                        } else {
+                            unmergable = true;
+                        }
+                        break;
+                    }
+                }
+                if (!foundElement) {
+                    unmergable = true;
+                    break
+                }
+            }
+            if (unmergable || differenceIndex == -1 || clauseA.length > clauseB.length) {
+                continue;
+            }
+            
+            let msg = (`Extended clause ${stringifyClause(clauseB)} into `);
+            clauseB.splice(differenceIndex,1);
+            msg += stringifyClause(clauseB) + ` by ${stringifyClause(clauseA)}`;
+            addSolutionSegment(msg)
+            actionPerformed = true
+            return actionPerformed;
+        }
+    }
+    return actionPerformed;
+}
 /**
  * Checks if ClauseA is a subset of clauseB
  * @param {Array<Object>} clauseA
@@ -337,6 +385,7 @@ function CNF_Split_Clause(clauseA, clauseB) {
 }
 /**
  * Removes any overlap from a conjunctive normal form
+ * Note: may take exponential time
  * @param { Array<Array<Object>> } cnf a conjunctive normal form problem
  * @returns the conjunctive normal form with no overlapping clauses
  */
