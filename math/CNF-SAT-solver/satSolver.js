@@ -24,7 +24,7 @@ function solveCNFSat(cnf) {
     //cnf = CNF_Remove_Overlap(cnf);
     //addSolutionSegment(`Converted to Non-Overlapping Form from ${cnfGlobal.length} clauses to ${cnf.length} clauses`)
     printInfo = true;
-    addSolutionSegment("Variables: " + variables.size)
+    addSolutionSegment(`Starting problem: ${variables.size} Variables, ${cnf.length} Clauses, ${CNF_Count_Literals(cnf)} Literals`)
     if(cnf.length > 50){
         printInfo = false;
     }
@@ -42,6 +42,7 @@ function solveCNFSat(cnf) {
     }
     CNF_Assign_Variables(cnf, variables, variableValue)
     if (!contradiction) {
+        addSolutionSegment(`After reductions: ${variables.size - Object.keys(variableValue).length} Variables, ${cnf.length} Clauses, ${CNF_Count_Literals(cnf)} Literals`)
         addSolutionSegment("Final Reduced form:")
         addSolutionSegment(stringifyCNF(cnf))
         addSolutionSegment("Deduced variables:", true)

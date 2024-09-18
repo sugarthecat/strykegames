@@ -44,3 +44,10 @@ function stringifyLiteral(literal) {
     str += literal.v;
     return str;
 }
+function CNF_Count_Literals(cnf){
+    let literals = 0;
+    for(let i = 0; i<cnf.length; i++){
+        literals += cnf[i].length;
+    }
+    return literals;
+}
