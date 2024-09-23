@@ -18,46 +18,18 @@ function draw() {
     fill(255, 0, 0)
     noStroke()
     push()
-    push()
-    noFill()
-    stroke(255)
-    strokeWeight(1.5)
     for (let i = 0; i < cities.length; i++) {
-        let city = cities[i]
-        let conns = city.connections;
-        for (let j = 0; j < conns.length; j++) {
-            console.log(conns[j].name)
-            line(adjX(city.lng), adjY(city.lat), adjX(conns[j].lng), adjY(conns[j].lat))
-        }
+        cities[i].DrawConnections()
     }
-    pop()
     let selectedCity = cities[0]
     for (let i = 0; i < cities.length; i++) {
-        let city = cities[i];
-        push()
         if (dist(adjX(selectedCity.lng), adjY(selectedCity.lat), mouseX, mouseY)
-            > dist(adjX(city.lng), adjY(city.lat), mouseX, mouseY)) {
-            selectedCity = city
+            > dist(adjX(cities[i].lng), adjY(cities[i].lat), mouseX, mouseY)) {
+            selectedCity = cities[i];
         }
-        if (city.legitimacy > 20) {
-            fill(city.faction.color)
-            circle(adjX(city.lng), adjY(city.lat), 16)
-            fill(255)
-            circle(adjX(city.lng), adjY(city.lat), 10)
-            fill(0)
-            circle(adjX(city.lng), adjY(city.lat), 6)
-        } else {
-            fill(city.faction.color)
-            circle(adjX(city.lng), adjY(city.lat), 8)
-        }
-
-        pop()
+        cities[i].Draw();
     }
-    fill(255)
-    if (selectedCity.faction) {
-        fill(selectedCity.faction.color)
-    }
-    circle(adjX(selectedCity.lng), adjY(selectedCity.lat), 25)
+    selectedCity.DrawSelected();
     fill(0)
     textSize(height / 20)
     textAlign(CENTER)
@@ -105,64 +77,6 @@ function updateFactionStats() {
     }
 }
 
-async function loadCityData() {
-    let data = await (fetch("usCities.json").then(x => x.json()))
-    factions = data.factions
-    for (let i = 0; i < factions.length; i++) {
-        factions[i].color = color(factions[i].color.r, factions[i].color.g, factions[i].color.b)
-    }
-    cities = data.cities
-    for (let i = 0; i < cities.length; i++) {
-        cities[i].connections = []
-        if (cities[i].faction !== undefined) {
-            for (let j = 0; j < factions.length; j++) {
-                if (factions[j].id == cities[i].faction) {
-                    cities[i].faction = factions[j];
-                    break;
-                }
-            }
-        }
-    }
-    //connect citieslet borderingCities = []
-    for (let i = 0; i < cities.length; i++) {
-        let selectedCity = cities[i]
-        let borderingCities = []
-        let allCities = cities.slice()
-        allCities.splice(i, 1);
-        while (allCities.length > 0) {
-            //find close city
-            let closestCity = allCities[0]
-            for (let i = 0; i < allCities.length; i++) {
-                if (adjDist(allCities[i], selectedCity) < adjDist(closestCity, selectedCity)) {
-                    closestCity = allCities[i]
-                }
-            }
-            borderingCities.push(closestCity)
-            let deltaLng = closestCity.lng - selectedCity.lng;
-            let deltaLat = closestCity.lat - selectedCity.lat;
-            let newCity = { lng: closestCity.lng + deltaLng, lat: closestCity.lat + deltaLat }
-            allCities.splice(allCities.indexOf(closestCity), 1)
-            for (let i = 0; i < allCities.length; i++) {
-                //console.log(newCity.lng, closestCity.lat, selectedCity.lat)
-                //console.log(adjDist(newCity,allCities[i]) - adjDist(selectedCity,allCities[i]))
-                if (adjDist(newCity, allCities[i]) < adjDist(selectedCity, allCities[i])) {
-                    //console.log('splice')
-                    allCities.splice(i, 1)
-                    i--;
-                }
-            }
-        }
-        for (let i = 0; i < borderingCities.length; i++) {
-            let borderCity = borderingCities[i]
-            if (selectedCity.connections.includes(borderCity)) {
-                continue;
-            }
-            selectedCity.connections.push(borderCity)
-            borderCity.connections.push(selectedCity)
-        }
-    }
-    console.log('loaded')
-}
 function adjDist(city1, city2) {
     return dist(adjX(city1.lng), adjY(city1.lat), adjX(city2.lng), adjY(city2.lat))
 }
