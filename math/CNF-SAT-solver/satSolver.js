@@ -166,7 +166,7 @@ function CNF_Substitute(cnf, variableValue) {
                         contradiction = true;
                         return;
                     } else {
-                        addSolutionSegment(`Statement false: ${stringifyLiteral(cnf[i][j])}`)
+                        addSolutionSegment(`Literal false: ${stringifyLiteral(cnf[i][j])}`)
                         let oldClause = stringifyClause(cnf[i]);
                         cnf[i].splice(j, 1);
                         let newClause = stringifyClause(cnf[i])

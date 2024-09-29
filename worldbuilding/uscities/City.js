@@ -22,7 +22,7 @@ class City {
 
         push()
         fill(this.faction.color)
-        if (this.legitimacy > 20) {
+        if (this.legitimacy > 10) {
             circle(adjX(this.lng), adjY(this.lat), 16)
             fill(255)
             circle(adjX(this.lng), adjY(this.lat), 10)
@@ -37,7 +37,7 @@ class City {
 
         push()
         fill(this.faction.color)
-        if (this.legitimacy > 20) {
+        if (this.legitimacy > 10) {
             circle(adjX(this.lng), adjY(this.lat), 30)
             fill(255)
             circle(adjX(this.lng), adjY(this.lat), 20)
@@ -58,5 +58,11 @@ class City {
             line(adjX(this.lng), adjY(this.lat), adjX(conns[j].lng), adjY(conns[j].lat))
         }
         pop()
+    }
+    Connect(other){
+        if(!this.connections.includes(other)){
+            this.connections.push(other);
+            other.connections.push(this);
+        }
     }
 }
