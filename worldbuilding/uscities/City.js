@@ -28,8 +28,12 @@ class City {
             circle(adjX(this.lng), adjY(this.lat), 10)
             fill(0)
             circle(adjX(this.lng), adjY(this.lat), 6)
-        } else {
-            circle(adjX(this.lng), adjY(this.lat), 12)
+        }else{
+            
+            fill(0)
+            circle(adjX(this.lng), adjY(this.lat), 8)
+            fill(255)
+            circle(adjX(this.lng), adjY(this.lat), 4)
         }
         pop()
     }
@@ -43,8 +47,6 @@ class City {
             circle(adjX(this.lng), adjY(this.lat), 20)
             fill(0)
             circle(adjX(this.lng), adjY(this.lat), 12)
-        } else {
-            circle(adjX(this.lng), adjY(this.lat), 30)
         }
         pop()
     }
@@ -59,10 +61,99 @@ class City {
         }
         pop()
     }
-    Connect(other){
-        if(!this.connections.includes(other)){
+    Connect(other) {
+        if (!this.connections.includes(other)) {
             this.connections.push(other);
             other.connections.push(this);
         }
+    }
+    DrawTile() {
+        push()
+        noStroke()
+        fill(this.faction.color)
+        if (this == selectedCity) {
+            fill(100)
+        }
+        beginShape()
+        stroke(200)
+        strokeWeight(4)
+        let conns = this.connPoints;
+        for (let i = 0; i < conns.length; i++) {
+            vertex(adjX(conns[i].lng), adjY(conns[i].lat))
+        }
+        endShape(CLOSE)
+        fill(255)
+        pop()
+    }
+    LoadConnectionPoints() {
+        this.connPoints = []
+        let connCount = []
+        let conns = this.connections
+        for (let i = 0; i < conns.length; i++) {
+            this.connPoints.push({ lat: (conns[i].lat + this.lat) / 2, lng: (conns[i].lng + this.lng) / 2 })
+            connCount.push(0)
+        }
+
+        for (let i = 0; i < conns.length; i++) {
+            for (let j = i + 1; j < conns.length; j++) {
+                if (conns[i].connections.includes(conns[j])) {
+                    connCount[i]++;
+                    connCount[j]++;
+                    this.connPoints.push({
+                        lng: (conns[i].lng + conns[j].lng + this.lng) / 3,
+                        lat: (conns[i].lat + conns[j].lat + this.lat) / 3
+                    })
+                }
+            }
+        }
+        let hasNW = false;
+        let hasNE = false;
+        let hasSW = false;
+        let hasSE = false;
+        let avgLat = 0;
+        let avgLng = 0;
+        for (let i = 0; i < this.connPoints.length; i++) {
+            if (this.connPoints[i].lat > this.lat) {
+                if (this.connPoints[i].lng > this.lng) {
+                    hasSE = true
+                } else {
+                    hasSW = true
+                }
+            } else {
+                if (this.connPoints[i].lng > this.lng) {
+                    hasNE = true
+                } else {
+                    hasNW = true
+                }
+            }
+            avgLat += this.connPoints[i].lat;
+            avgLng += this.connPoints[i].lng;
+        }
+
+        if (false && !(hasNE && hasNW && hasSE && hasSW)) {
+            this.connPoints.push({ lng: this.lng, lat: this.lat })
+            avgLat += this.lat;
+            avgLng += this.lng
+        }
+        avgLat /= this.connPoints.length;
+        avgLng /= this.connPoints.length;
+
+        for (let i = 0; i < connCount.length; i++) {
+            if (connCount[i] == 2) {
+                connCount.splice(i, 1)
+                this.connPoints.splice(i, 1)
+                i--;
+            } else {
+                console.error(this.name)
+            }
+        }
+
+
+
+        function compare(a, b) {
+            return atan2(a.lat - avgLat, a.lng - avgLng) - atan2(b.lat - avgLat, b.lng - avgLng);
+        }
+
+        this.connPoints.sort(compare);
     }
 }

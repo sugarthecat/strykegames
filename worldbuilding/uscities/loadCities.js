@@ -56,6 +56,22 @@ async function loadCityData() {
     connectGroups([], 6)
     connectGroups([], 5)
     connectGroups([], 4)
+    //anything with only one connection, find another connection
+    
+    for (let i = 0; i < cities.length; i++) {
+        if (cities[i].connections.length == 1) {
+            let closestCity = cities[(i + 1) % cities.length]
+            for (let j = 0; j < cities.length; j++) {
+                if(i != j && !cities[i].connections.includes(cities[j]) && adjDist(cities[i],closestCity) > adjDist(cities[j],cities[i])){
+                    closestCity = cities[j]
+                }
+            }
+            cities[i].Connect(closestCity)
+        }
+    }
+    for (let i = 0; i < cities.length; i++) {
+        cities[i].LoadConnectionPoints();
+    }
     console.log('loaded')
 }
 let count = 0
@@ -106,8 +122,7 @@ function connectGroups(nodes, size) {
             for (let i = 0; i < size; i++) {
                 let oconn = nodes[(i + 3) % size].connections
                 for (let j = 0; j < oconn.length; j++) {
-                    if(nodes[i].connections.includes(oconn[j])){
-                        console.log(nodes[i].name, " - ", oconn[j].name, " - ", nodes[(i + 3) % size].name)
+                    if (nodes[i].connections.includes(oconn[j])) {
                         return;
                     }
                 }
