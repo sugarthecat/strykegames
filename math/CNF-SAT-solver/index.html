@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<meta charset="utf-8"/>
+<meta charset="utf-8" />
+
 <head>
-    <title>CNF SAT Solver / CNF-SAT Editor</title>
+    <title>CNF SAT Reducer / CNF-SAT Editor</title>
     <script src="script.js"></script>
     <script src="satSolver.js"></script>
     <script src="files.js"></script>
@@ -10,8 +11,8 @@
 </head>
 
 <body>
-    <h1>CNF SAT Solver</h1>
-    <p>Using some logic, this CNF-SAT Solver uses an algorithm to split clauses, from which a polynomial-time algorithm can be used to solve the problem.</p>
+    <h1>CNF SAT Reducer</h1>
+    <p>Using some logic, this CNF-SAT Reducer uses an algorithm to reduce some SAT problems</p>
     <!-- Do styling later -->
     <div>
         <button onclick="addClause()">Add clause</button>
@@ -19,7 +20,7 @@
     </div>
     <div>
         <button onclick="loadFile()">Load File</button>
-        <input type="file" id="fileToLoad"/>
+        <input type="file" id="fileToLoad" accept=".cnf" />
     </div>
     <h2>Formula</h2>
     <div id="clauses">

@@ -57,12 +57,12 @@ async function loadCityData() {
     connectGroups([], 5)
     connectGroups([], 4)
     //anything with only one connection, find another connection
-    
+
     for (let i = 0; i < cities.length; i++) {
         if (cities[i].connections.length == 1) {
             let closestCity = cities[(i + 1) % cities.length]
             for (let j = 0; j < cities.length; j++) {
-                if(i != j && !cities[i].connections.includes(cities[j]) && adjDist(cities[i],closestCity) > adjDist(cities[j],cities[i])){
+                if (i != j && !cities[i].connections.includes(cities[j]) && adjDist(cities[i], closestCity) > adjDist(cities[j], cities[i])) {
                     closestCity = cities[j]
                 }
             }
@@ -151,4 +151,9 @@ function connectGroups(nodes, size) {
             }
         }
     }
+}
+
+function getEquidistantPoint(a, b, c) {
+    let abLat = (a.lat + b.lat) / 2;
+    let abLng = (a.lng + b.lng) / 2;
 }

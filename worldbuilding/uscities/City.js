@@ -130,11 +130,6 @@ class City {
             avgLng += this.connPoints[i].lng;
         }
 
-        if (false && !(hasNE && hasNW && hasSE && hasSW)) {
-            this.connPoints.push({ lng: this.lng, lat: this.lat })
-            avgLat += this.lat;
-            avgLng += this.lng
-        }
         avgLat /= this.connPoints.length;
         avgLng /= this.connPoints.length;
 
