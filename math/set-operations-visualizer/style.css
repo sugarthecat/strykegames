@@ -1,0 +1,68 @@
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    /* Hide scrollbars */
+}
+
+canvas {
+    display: block;
+}
+
+div#inputbox {
+    position: absolute;
+    text-align: center;
+    bottom: 50px;
+    height: 50px;
+    width: 100%;
+}
+
+div#row2 {
+    position: absolute;
+    text-align: center;
+    bottom: 0px;
+    height: 50px;
+    width: 100%;
+}
+
+input {
+    outline: 5px solid black;
+    height: 80%;
+    width: 200px;
+    letter-spacing: 1px;
+}
+
+button {
+    outline: 5px solid black;
+    height: 80%;
+}
+
+button.small {
+    width: 75px;
+}
+
+button.big {
+    width: 150px;
+}
+
+@media only screen and (max-width: 700px) {
+    button.big {
+        font-size: 12px;
+        width: 100px;
+    }
+    button.small {
+        width: 50px;
+    }
+    
+}
+@media only screen and (max-width: 500px) {
+    button.big {
+        font-size: 12px;
+        width: 100px;
+    }
+    button.small {
+        width: 30px;
+    }
+    
+}

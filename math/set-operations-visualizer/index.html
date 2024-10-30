@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="Set.js"></script>
+    <script src="script.js"></script>
+    <script src="shapes.js"></script>
+    <script src="../p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Set Theory Visualization</title>
+</head>
+
+<body>
+    <main></main>
+    <div id="inputbox">
+        <input id="formula" autocomplete="off"/>
+        <button class="small" onclick="addSymbol('U')">
+            U
+        </button>
+        <button class="small" onclick="addSymbol('A')">
+            A
+        </button>
+        <button class="small" onclick="addSymbol('B')">
+            B
+        </button>
+        <button class="small" onclick="addSymbol('C')">
+            C
+        </button>
+        <button class="small" onclick="addSymbol('∅')">
+            ∅
+        </button>
+    </div>
+    <div id="row2">
+        <button class="big" onclick="addSymbol('∪')">
+            ∪ (Union)
+        </button>
+        <button class="big" onclick="addSymbol('∩')">
+            ∩ (Intersection)
+        </button>
+        <button class="big" onclick="addSymbol('-')">
+            - (Exclusion)
+        </button>
+        <button class="big" onclick="addSymbol('\'')">
+            ' (Complement)
+        </button>
+    </div>
+</body>
