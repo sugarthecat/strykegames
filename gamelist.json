@@ -1,0 +1,93 @@
+{
+    "games": [
+        {
+            "title": "Three Seconds To Doom",
+            "link": "trijam/three-seconds",
+            "tags": [
+                "game",
+                "puzzle",
+                "trijam"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "UNHOLY",
+            "link": "trijam/dealwithdevil",
+            "tags": [
+                "game",
+                "shooter",
+                "bullet-hell",
+                "trijam"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "Super Chicken 3",
+            "link": "super-chicken/super3.html",
+            "tags": [
+                "game",
+                "platformer",
+                "super-chicken"
+            ],
+            "year": 2022
+        },
+        {
+            "title": "Set Operations Visualizer",
+            "link": "math/set-operations-visualizer",
+            "tags": [
+                "math",
+                "set-theory"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "Boolean SAT Editor / Reducer",
+            "link": "math/CNF-SAT-solver",
+            "tags": [
+                "math",
+                "computer-science"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "SpeedTax",
+            "link": "trijam/unfun",
+            "tags": [
+                "game",
+                "paperwork",
+                "trijam"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "Good Natured",
+            "link": "trijam/darkness",
+            "tags": [
+                "game",
+                "paperwork",
+                "trijam"
+            ],
+            "year": 2024
+        },
+        {
+            "title": "Super Chicken 2",
+            "link": "super-chicken/super2.html",
+            "tags": [
+                "game",
+                "platformer",
+                "super-chicken"
+            ],
+            "year": 2019
+        },
+        {
+            "title": "Super Chicken",
+            "link": "super-chicken/super.html",
+            "tags": [
+                "game",
+                "platformer",
+                "super-chicken"
+            ],
+            "year": 2018
+        }
+    ]
+}
