@@ -27,8 +27,14 @@ async function loadGames(){
     }
 
     let tagslist = document.getElementById("taglist");
-    for(let i = 0; i<tags.length; i++){
-        tags[i] = {"tag": tags[i], "button": getTagButton(tags[i])};
+    for(let i = 0; i<tags.length; i++){4
+        tags[i] = {"tag": tags[i]}
+        if(json.tags[tags[i].tag] == null){
+            tags[i].color = "#808080"
+        }else{
+            tags[i].color = json.tags[tags[i].tag]
+        }
+        tags[i].button = getTagButton(tags[i]);
         tagslist.appendChild(tags[i].button)
     }
     update();
@@ -40,12 +46,12 @@ loadGames();
 function getGameDiv(game){
     let newDiv = document.createElement("div");
     let title = document.createElement("h3");
-    title.innerText = `${game.title} (${game.year})` 
     let link = document.createElement("a");
-    link.appendChild(title);
+    link.innerText = `${game.title} (${game.year})` 
+    title.appendChild(link);
     link.target="_blank";
     link.href = game.link;
-
+    link.style.color = game.textColor
     let tagsList = document.createElement("div");
     for(let i = 0; i<game.tags.length; i++){
         let newTag = document.createElement("span");
@@ -53,7 +59,8 @@ function getGameDiv(game){
         newTag.className = "game-tag"
         tagsList.appendChild(newTag);
     }
-    newDiv.appendChild(link);
+    newDiv.style.backgroundColor = game.bgColor;
+    newDiv.appendChild(title);
     newDiv.appendChild(tagsList);
     newDiv.classList.add("game")
     return newDiv;
@@ -61,9 +68,9 @@ function getGameDiv(game){
 
 function getTagButton(tag){
     let button = document.createElement("button");
-    button.innerText = tag;
+    button.innerText = tag.tag;
     button.className = "menu-tag";
-    let newTag = tag;
+    let newTag = tag.tag;
     button.onclick = function(evt){
         if(activeTags.includes(newTag)){
             button.classList.remove("on")

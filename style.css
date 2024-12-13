@@ -46,8 +46,9 @@ div.game{
     margin: 10px;
 }
 
-div.game h3{
+div.game h3 a{
     font-size: 30px;
+    font-weight: 900;
 }
 header {
     text-align: center;

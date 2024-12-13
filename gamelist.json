@@ -1,4 +1,8 @@
 {
+    "tags":{
+        "game": "#10b010",
+        "Currently unimplemented": true
+    },
     "games": [
         {
             "title": "Three Seconds To Doom",
@@ -8,6 +12,8 @@
                 "puzzle",
                 "trijam"
             ],
+            "textColor": "#108010",
+            "bgColor":"#ffff00",
             "year": 2024
         },
         {
@@ -19,6 +25,8 @@
                 "bullet-hell",
                 "trijam"
             ],
+            "textColor": "#a02020",
+            "bgColor":"#403030",
             "year": 2024
         },
         {
@@ -27,8 +35,11 @@
             "tags": [
                 "game",
                 "platformer",
+                "shooter",
                 "super-chicken"
             ],
+            "textColor": "#ff1010",
+            "bgColor":"#ffffff",
             "year": 2022
         },
         {
@@ -38,6 +49,8 @@
                 "math",
                 "set-theory"
             ],
+            "textColor": "#000",
+            "bgColor":"#fcc",
             "year": 2024
         },
         {
@@ -47,6 +60,8 @@
                 "math",
                 "computer-science"
             ],
+            "textColor": "#000",
+            "bgColor":"#ccf",
             "year": 2024
         },
         {
@@ -57,6 +72,8 @@
                 "paperwork",
                 "trijam"
             ],
+            "textColor": "#964b00",
+            "bgColor":"#f5f5dc",
             "year": 2024
         },
         {
@@ -64,9 +81,11 @@
             "link": "trijam/darkness",
             "tags": [
                 "game",
-                "paperwork",
+                "puzzle",
                 "trijam"
             ],
+            "textColor": "#a0a000",
+            "bgColor":"#f0f0a0",
             "year": 2024
         },
         {
@@ -77,6 +96,8 @@
                 "platformer",
                 "super-chicken"
             ],
+            "textColor": "#ff1010",
+            "bgColor":"#ffffff",
             "year": 2019
         },
         {
@@ -87,6 +108,8 @@
                 "platformer",
                 "super-chicken"
             ],
+            "textColor": "#ff1010",
+            "bgColor":"#ffffff",
             "year": 2018
         }
     ]
