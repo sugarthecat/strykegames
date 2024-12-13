@@ -14,29 +14,33 @@ let activeTags = [];
 async function loadGames(){
     let json = await (fetch("gamelist.json").then(x => x.json()));
     games = json.games;
-    //add games to list
-    let gameslist = document.getElementById("gamelist");
+    //build tags list 
     for(let i = 0; i<games.length; i++){
-        games[i].div = getGameDiv(games[i]);
-        gameslist.appendChild(games[i].div)
         for(let j = 0; j<games[i].tags.length; j++){
             if(!tags.includes(games[i].tags[j])){
                 tags.push(games[i].tags[j])
             }
         }
     }
-    let tagslist = document.getElementById("taglist");
     for(let i = 0; i<tags.length; i++){
         tags[i] = {"tag": tags[i]}
         if(json.tags[tags[i].tag] == null){
-            tags[i].color = "#808080"
+            tags[i].color = {"off":"#fff","on":"#222"}
         }else{
             tags[i].color = json.tags[tags[i].tag]
         }
+    }
+    //add games to list
+    let gameslist = document.getElementById("gamelist");
+    for(let i = 0; i<games.length; i++){
+        games[i].div = getGameDiv(games[i]);
+        gameslist.appendChild(games[i].div)
+    }
+    let tagslist = document.getElementById("taglist");
+    for(let i = 0; i<tags.length; i++){
         tags[i].button = getTagButton(tags[i]);
     }
     getBaseTagCounts();
-    console.log(tags[0].count)
     tags.sort( (a,b) => b.count - a.count)
 
     for(let i = 0; i<tags.length; i++){
@@ -61,7 +65,13 @@ function getGameDiv(game){
     for(let i = 0; i<game.tags.length; i++){
         let newTag = document.createElement("span");
         newTag.innerText = game.tags[i];
-        newTag.className = "game-tag"
+        newTag.classList.add("game-tag")
+        newTag.classList.add(`tag-${game.tags[i]}`)
+        for(let j = 0; j<tags.length; j++){
+            if(tags[j].tag == game.tags[i]){
+                newTag.style.backgroundColor = tags[j].color.off
+            }
+        }
         tagsList.appendChild(newTag);
     }
     newDiv.style.backgroundColor = game.bgColor;
@@ -74,16 +84,12 @@ function getGameDiv(game){
 function getTagButton(tag){
     let button = document.createElement("button");
     button.innerText = tag.tag;
-    button.className = "menu-tag";
-    let newTag = tag.tag;
+    button.classList.add("menu-tag");
+    button.classList.add(`tag-${tag.tag}`);
+    let newTag = tag;
+    button.style.backgroundColor = tag.color.off
     button.onclick = function(evt){
-        if(activeTags.includes(newTag)){
-            button.classList.remove("on")
-            activeTags.splice(activeTags.indexOf(newTag),1);
-        }else{
-            button.classList.add("on")
-            activeTags.push(newTag)
-        }
+        toggleTag(newTag);
         update();
     }
     return button;
@@ -110,7 +116,6 @@ function updateGames(){
     }
 }
 function getBaseTagCounts(){
-
     for(let i = 0; i<tags.length; i++){
         let count = 0;
         for(let j = 0; j<games.length; j++){
@@ -141,5 +146,25 @@ function updateTagNames(){
         }else{
             tags[i].button.style.display = "inline";
         }
+    }
+}
+
+function toggleTag(tag){
+    
+    let elements = document.getElementsByClassName(`tag-${tag.tag}`)
+    let tagActive = activeTags.includes(tag.tag)
+    for(let i = 0; i<elements.length; i++){
+        if(tagActive){
+            elements[i].classList.remove("on")
+            elements[i].style.backgroundColor = tag.color.off
+        }else{
+            elements[i].classList.add("on")
+            elements[i].style.backgroundColor = tag.color.on
+        }
+    }
+    if(activeTags.includes(tag.tag)){
+        activeTags.splice(activeTags.indexOf(tag.tag),1);
+    }else{
+        activeTags.push(tag.tag)
     }
 }

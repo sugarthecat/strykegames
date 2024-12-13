@@ -1,7 +1,53 @@
 {
-    "tags":{
-        "game": "#10b010",
-        "Currently unimplemented": true
+    "tags": {
+        "game": {
+            "off": "#3f3",
+            "on": "#060"
+        },
+        "arena": {
+            "off": "#f33",
+            "on": "#500"
+        },
+        "real-time-strategy": {
+            "off": "#f33",
+            "on": "#500"
+        },
+        "trijam": {
+            "off": "#6d6",
+            "on": "#242"
+        },
+        "math": {
+            "off": "#bbb",
+            "on": "#555"
+        },
+        "super-chicken": {
+            "off": "#fdd",
+            "on": "#600"
+        },
+        "puzzle": {
+            "off": "#d0d",
+            "on": "#707"
+        },
+        "shooter": {
+            "off": "#0af",
+            "on": "#006"
+        },
+        "computer-science": {
+            "off": "#0ff",
+            "on": "#055"
+        },
+        "bullet-hell": {
+            "off": "#dbb",
+            "on": "#422"
+        },
+        "platformer": {
+            "off": "#ade",
+            "on": "#153"
+        },
+        "paperwork": {
+            "off": "#dda",
+            "on": "#964b00"
+        }
     },
     "games": [
         {
@@ -13,7 +59,7 @@
                 "trijam"
             ],
             "textColor": "#108010",
-            "bgColor":"#ffff00",
+            "bgColor": "#ffff00",
             "year": 2024
         },
         {
@@ -26,7 +72,18 @@
                 "trijam"
             ],
             "textColor": "#a02020",
-            "bgColor":"#403030",
+            "bgColor": "#403030",
+            "year": 2024
+        },
+        {
+            "title": "Commangineer",
+            "link": "commangineer",
+            "tags": [
+                "game",
+                "real-time-strategy"
+            ],
+            "textColor": "orange",
+            "bgColor": "purple",
             "year": 2024
         },
         {
@@ -39,7 +96,7 @@
                 "super-chicken"
             ],
             "textColor": "#ff1010",
-            "bgColor":"#ffffff",
+            "bgColor": "#ffffff",
             "year": 2022
         },
         {
@@ -50,7 +107,7 @@
                 "shooter"
             ],
             "textColor": "#fff",
-            "bgColor":"#7e7e7e",
+            "bgColor": "#7e7e7e",
             "year": 2024
         },
         {
@@ -61,7 +118,7 @@
                 "set-theory"
             ],
             "textColor": "#000",
-            "bgColor":"#fcc",
+            "bgColor": "#fcc",
             "year": 2024
         },
         {
@@ -72,8 +129,44 @@
                 "computer-science"
             ],
             "textColor": "#000",
-            "bgColor":"#ccf",
+            "bgColor": "#ccf",
             "year": 2024
+        },
+        {
+            "title": "Ragnarok",
+            "link": "arena/ragnarok",
+            "tags": [
+                "game",
+                "arena",
+                "shooter"
+            ],
+            "textColor": "#f06",
+            "bgColor": "#555",
+            "year": 2022
+        },
+        {
+            "title": "Thorium-Man",
+            "link": "arena/ragnarok",
+            "tags": [
+                "game",
+                "arena",
+                "shooter"
+            ],
+            "textColor": "#2cf",
+            "bgColor": "#333",
+            "year": 2022
+        },
+        {
+            "title": "Labors of Heracles",
+            "link": "arena/heracles",
+            "tags": [
+                "game",
+                "arena",
+                "bullet-hell"
+            ],
+            "textColor": "#FFD700",
+            "bgColor": "#666",
+            "year": 2022
         },
         {
             "title": "SpeedTax",
@@ -84,7 +177,7 @@
                 "trijam"
             ],
             "textColor": "#964b00",
-            "bgColor":"#f5f5dc",
+            "bgColor": "#f5f5dc",
             "year": 2024
         },
         {
@@ -96,7 +189,7 @@
                 "trijam"
             ],
             "textColor": "#a0a000",
-            "bgColor":"#f0f0a0",
+            "bgColor": "#f0f0a0",
             "year": 2024
         },
         {
@@ -108,7 +201,7 @@
                 "super-chicken"
             ],
             "textColor": "#ff1010",
-            "bgColor":"#ffffff",
+            "bgColor": "#ffffff",
             "year": 2019
         },
         {
@@ -120,7 +213,7 @@
                 "super-chicken"
             ],
             "textColor": "#ff1010",
-            "bgColor":"#ffffff",
+            "bgColor": "#ffffff",
             "year": 2018
         }
     ]

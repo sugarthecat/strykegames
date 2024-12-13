@@ -18,18 +18,12 @@ span.game-tag{
 }
 button.menu-tag{
     padding: 5px;
-    background-color:lightblue;
     outline: 3px solid black;
     margin:5px;
     border-radius: 5px;
 }
-button.menu-tag.on{
-    padding: 5px;
-    background-color:darkblue;
+.on{
     color: white;
-    outline: 3px solid black;
-    margin:5px;
-    border-radius: 5px;
 }
 div#tags{
     padding:10px;
