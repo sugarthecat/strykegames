@@ -43,6 +43,17 @@
             "year": 2022
         },
         {
+            "title": "Alleyway Shootout",
+            "link": "trijam/alleyway-defense",
+            "tags": [
+                "game",
+                "shooter"
+            ],
+            "textColor": "#fff",
+            "bgColor":"#7e7e7e",
+            "year": 2024
+        },
+        {
             "title": "Set Operations Visualizer",
             "link": "math/set-operations-visualizer",
             "tags": [

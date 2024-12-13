@@ -25,9 +25,8 @@ async function loadGames(){
             }
         }
     }
-
     let tagslist = document.getElementById("taglist");
-    for(let i = 0; i<tags.length; i++){4
+    for(let i = 0; i<tags.length; i++){
         tags[i] = {"tag": tags[i]}
         if(json.tags[tags[i].tag] == null){
             tags[i].color = "#808080"
@@ -35,7 +34,13 @@ async function loadGames(){
             tags[i].color = json.tags[tags[i].tag]
         }
         tags[i].button = getTagButton(tags[i]);
-        tagslist.appendChild(tags[i].button)
+    }
+    getBaseTagCounts();
+    console.log(tags[0].count)
+    tags.sort( (a,b) => b.count - a.count)
+
+    for(let i = 0; i<tags.length; i++){
+        tagslist.appendChild(tags[i].button);
     }
     update();
 }
@@ -103,9 +108,20 @@ function updateGames(){
             games[i].div.style.display  = "none";
         }
     }
-
 }
-function updateTagNames(){
+function getBaseTagCounts(){
+
+    for(let i = 0; i<tags.length; i++){
+        let count = 0;
+        for(let j = 0; j<games.length; j++){
+            if(games[j].tags.includes(tags[i].tag)){
+                count++;
+            }
+        }
+        tags[i].count = count;
+    }
+}
+function updateTagCounts(){
     for(let i = 0; i<tags.length; i++){
         let count = 0;
         for(let j = 0; j<games.length; j++){
@@ -114,7 +130,12 @@ function updateTagNames(){
             }
         }
         tags[i].count = count;
-        tags[i].button.innerText = `${tags[i].tag} (${count})`
+    }
+}
+function updateTagNames(){
+    updateTagCounts();
+    for(let i = 0; i<tags.length; i++){
+        tags[i].button.innerText = `${tags[i].tag} (${tags[i].count})`
         if(tags[i].count == 0){
             tags[i].button.style.display = "none";
         }else{
