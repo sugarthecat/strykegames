@@ -39,7 +39,7 @@ class TitleScreen extends GUI {
         textAlign(CENTER)
         fill(0)
         textSize(75)
-        text("The Mailbox.", 300, 150)
+        text("The Mailbox.", 300, 125)
         pop()
         super.Draw(x, y)
     }
