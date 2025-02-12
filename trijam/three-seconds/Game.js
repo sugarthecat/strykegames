@@ -12,6 +12,7 @@ class GameScreen extends GUI {
         this.timeLeft -= deltaTime / 1000;
         if (this.timeLeft <= 0) {
             Assets.explosion.play();
+            screens.fail.reset();
             screenOn = "fail"
         }
         for (let i = 0; i < this.gameObjects.length; i++) {
