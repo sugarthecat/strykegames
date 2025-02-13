@@ -1,16 +1,4 @@
-const poem = [
-    "Adrienne,",
-    "Lately I've struggled to write down",
-    "Of everything I wish to say to you.",
-    "Vernacular slips past my mind,",
-    "Entranced, only thinking of yours.",
-    "Lightly, my pen grazes the page,",
-    "Entering an impossible fight.",
-    "The words written about you will fail,",
-    "To be as beautiful as you are.",
-    "Every night is better than the last,",
-    "Remembering your words."
-]
+
 class UnwrittenLetter extends GUI {
     constructor() {
         super();
@@ -147,3 +135,16 @@ class UnwrittenLetter extends GUI {
         super.Draw(x, y)
     }
 }
+const poem = [
+    "Adrienne,",
+    "Lately I've struggled to write down",
+    "Of everything I wish to say to you.",
+    "Vernacular slips past my mind,",
+    "Entranced, only thinking of yours.",
+    "Lightly, my pen grazes the page,",
+    "Entering an impossible fight.",
+    "The words written about you will fail,",
+    "To be as beautiful as you are.",
+    "Every night is better than the last,",
+    "Remembering your words."
+]
