@@ -72,7 +72,7 @@ class Letter extends GUI {
             textFont(Assets.fonts.love)
             let msgLines = [
                 "Adrienne,",
-                "You say you never liked Valentine's Day.", "I used to agree with you.",
+                "You say you never liked Valentine's Day.", "I used to agree with you about that.",
                 "But this time, something feels different.", "I think I love Valentine's Day.",
                 "Because now,                   ",
                 "it's about you."
