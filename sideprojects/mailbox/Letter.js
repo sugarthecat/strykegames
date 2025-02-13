@@ -12,7 +12,7 @@ class Letter extends GUI {
         this.cameraX = 0;
         this.cameraY = 0;
         this.scale = 1;
-        this.level = 21;
+        this.level = 0;
         this.transitionProgress = 0;
         this.transitioning = false;
         this.elements = []
