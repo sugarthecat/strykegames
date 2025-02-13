@@ -135,6 +135,11 @@ class Letter extends GUI {
 
         pop()
         super.Draw(x, y)
+        if(this.transitionProgress > 50 && this.elements.length == 0){
+            this.elements.push(new Button(360, 320, 200, 40, "Return to Mailbox", function () {
+                screenOn = "title";
+            }))
+        }
     }
     renderLevel() {
 
