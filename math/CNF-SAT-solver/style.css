@@ -1,3 +1,8 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
 div.clause + div.clause::before{
     content: "∧";
     display: block

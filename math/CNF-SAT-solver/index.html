@@ -4,6 +4,7 @@
 <head>
     <title>CNF SAT Reducer / CNF-SAT Editor</title>
     <script src="script.js"></script>
+    <script src="formulaParts.js"></script>
     <script src="satSolver.js"></script>
     <script src="files.js"></script>
     <script src="stringify.js"></script>
@@ -28,6 +29,11 @@
     </div>
     <div>
         <button onclick="download()">Download Formula</button>
+    </div>
+    <div id="reduction" hidden>
+        <h2>Reduced Form:</h2>
+        <p id="reducedFormula"></p>
+        <button onclick="chooseReduction()">Copy Reduction to Formula</button>
     </div>
     <div id="solution"></div>
 </body>

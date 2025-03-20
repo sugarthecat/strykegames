@@ -6,6 +6,7 @@
  */
 let contradiction;
 let cnfGlobal;
+let cnfReducedGlobal;
 function solveCNFSat(cnf) {
     //in complexity terms, n is the amount of literals.
     let variableValue = new Map()
@@ -31,8 +32,8 @@ function solveCNFSat(cnf) {
     addSolutionSegment(stringifyCNF(cnf))
     while (
         !contradiction && (
-            CNF_Set_Free_Variables(cnf, variableValue) ||
-            CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) ||
+            //CNF_Set_Free_Variables(cnf, variableValue) ||
+            //CNF_Resolve_Single_Literal_Clauses(cnf, variableValue) ||
             CNF_Remove_Supersets(cnf) ||
             CNF_Merge_Clauses(cnf) ||
             CNF_Extend_Clauses(cnf)
@@ -41,8 +42,18 @@ function solveCNFSat(cnf) {
         addSolutionSegment(stringifyCNF(cnf))
     }
     CNF_Assign_Variables(cnf, variables, variableValue)
+    cnfReducedGlobal = cnf
     if (!contradiction) {
-        addSolutionSegment(`After reductions: ${variables.size - Object.keys(variableValue).length} Variables, ${cnf.length} Clauses, ${CNF_Count_Literals(cnf)} Literals`)
+        //count variables
+        let vars = []
+        for(let i = 0; i<cnf.length; i++){
+            for(let j = 0; j<cnf[i].length; j++){
+                if(!vars.includes(cnf[i][j].v)){
+                    vars.push(cnf[i][j].v)
+                }
+            }
+        }
+        addSolutionSegment(`After reductions: ${vars.length} Variables, ${cnf.length} Clauses, ${CNF_Count_Literals(cnf)} Literals`)
         addSolutionSegment("Final Reduced form:")
         addSolutionSegment(stringifyCNF(cnf))
         addSolutionSegment("Deduced variables:", true)
@@ -57,6 +68,8 @@ function solveCNFSat(cnf) {
     } else {
         addSolutionSegment("There is no solution.", true)
     }
+    document.getElementById("reduction").hidden = false;
+    document.getElementById("reducedFormula").innerText = stringifyCNF(cnf)
 }
 function CNF_Assign_Variables(cnf, variables, variableValue) {
     for (let i = 0; i < cnf.length; i++) {
@@ -166,11 +179,11 @@ function CNF_Substitute(cnf, variableValue) {
                         contradiction = true;
                         return;
                     } else {
-                        addSolutionSegment(`Literal false: ${stringifyLiteral(cnf[i][j])}`)
+                        let literal = cnf[i][j]
                         let oldClause = stringifyClause(cnf[i]);
                         cnf[i].splice(j, 1);
                         let newClause = stringifyClause(cnf[i])
-                        addSolutionSegment(`${oldClause} -> ${newClause}`)
+                        addSolutionSegment(`Since ${stringifyLiteral(literal)} is false, ${oldClause} -> ${newClause}`)
                     }
                 }
             }
