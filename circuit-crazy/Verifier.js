@@ -34,14 +34,14 @@ function getDuoProblemDomain() {
     }
     return cases;
 }
-function factorial(n){
-  if(n < 1) {
-	return(1);
-  }
-  else {
-    return(n*factorial(n-1));
-  }
-  
+function factorial(n) {
+    if (n < 1) {
+        return (1);
+    }
+    else {
+        return (n * factorial(n - 1));
+    }
+
 }
 function getDuoProblemDomainSmall() {
     let cases = []
@@ -50,6 +50,15 @@ function getDuoProblemDomainSmall() {
             if ((j % i) % 2 == 0) {
                 cases.push([j, i])
             }
+        }
+    }
+    return cases;
+}
+function getP15Domain() {
+    let cases = []
+    for (let i = 2; i < 6; i++) {
+        for (let j = 1; j < 6; j++) {
+            cases.push([i,j])
         }
     }
     return cases;
@@ -128,7 +137,7 @@ function VerifyCurrentSolution() {
         //12: (n-1)!
         {
             inputs: getNumberRange, outputs: function (input) {
-                return factorial(input[0]-1);
+                return factorial(input[0] - 1);
             }
         },
         //13: n choose k
@@ -144,13 +153,13 @@ function VerifyCurrentSolution() {
             }
         },
 
-        //15: 2^(n-1) choose k
+        //15: 2^(n+1)-1 choose k
         {
-            inputs: getDuoProblemDomainSmall, outputs: function (input) {
-                let n = input[0] - 1;
-                let k = input[1];
-                let total = 2 ** (n) - 1;
-                return factorial(total) / (factorial(k) * factorial(total - k));
+            inputs: getP15Domain, outputs: function (input) {
+                let n = input[1] + 1;
+                let k = input[0];
+                let total = (2 ** (n)) - 1;
+                return floor(factorial(total) / (factorial(k) * factorial(total - k)));
             }
         },
     ]
