@@ -3,7 +3,7 @@ class ExpNode extends EditorNode {
         super(x, y, 40, 40, Assets.expNode, ["Base", "Exponent"], ["Exponent"]);
     }
     static getSymbol() {
-        return Assets.multNode;
+        return Assets.expNode;
     }
     static getWidth() {
         return 40;

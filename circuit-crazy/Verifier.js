@@ -80,7 +80,7 @@ function VerifyCurrentSolution() {
         {
             inputs: getThreeBinaryDigits, outputs: function (input) {
 
-                return input[0] * input[1] * input[2] < 3;
+                return 1 - (input[0] * input[1] * input[2]);
             }
         },
         //6: Tiger steak distribution

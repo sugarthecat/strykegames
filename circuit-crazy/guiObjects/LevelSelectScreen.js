@@ -67,7 +67,7 @@ class LevelSelectScreen extends GUI {
         levels.push({ items: [ConstantNode, InputNode, AddNode, SubNode, MultNode, DivNode, FactorialNode, ChooseNode, ExpNode, OutputNode], inputs: ["X", "Y"], instructions: "How many different ways could you give X identical steaks to Y unique tigers?" })
 
         //15: Loud Combinatorics
-        levels.push({ items: [ConstantNode, InputNode, AddNode, SubNode, MultNode, DivNode, FactorialNode, ChooseNode, ExpNode, OutputNode], inputs: [], instructions: "How many ways are there to choose N codes which are K-digit or shorter binary sequences" })
+        levels.push({ items: [ConstantNode, InputNode, AddNode, SubNode, MultNode, DivNode, FactorialNode, ChooseNode, ExpNode, OutputNode], inputs: ["N","K"], instructions: "How many ways are there to choose N codes which are K-digit or shorter binary sequences" })
 
 
 
