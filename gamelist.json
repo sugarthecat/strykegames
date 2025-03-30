@@ -51,6 +51,18 @@
     },
     "games": [
         {
+            "title": "Circuit Crazy",
+            "link": "circuit-crazy",
+            "tags": [
+                "game",
+                "puzzle",
+                "math"
+            ],
+            "textColor": "#c3423b",
+            "bgColor": "#e6dec2",
+            "year": 2025
+        },
+        {
             "title": "Three Seconds To Doom",
             "link": "trijam/three-seconds",
             "tags": [
