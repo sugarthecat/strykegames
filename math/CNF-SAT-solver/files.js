@@ -100,7 +100,7 @@ function loadCNFData(data) {
  */
 function downloadFile(data) {
     let currDate = new Date();
-    let filename = `formula-${currDate.getMonth() + 1}-${currDate.getDate()}.cnf`
+    let filename = `formula-${currDate.getMonth() + 1}-${currDate.getDate()}-${currDate.getHours()}-${currDate.getMinutes()}.cnf`
     var file = new Blob([data], { type: "cnf" });
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);

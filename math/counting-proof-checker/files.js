@@ -3,10 +3,11 @@
  * Stores the files in DIMACS format
  */
 /**
- * Downloads the currently displayed file
+ * Downloads the currently proof file
  */
+let formula = []
 function download() {
-    let cnf = getCNFData();
+    let proof = getProofData();
     let variables = []
     for (let i = 0; i < cnf.length; i++) {
         for (let j = 0; j < cnf[i].length; j++) {
@@ -44,9 +45,7 @@ function loadFile() {
 }
 function loadCNFData(data) {
     //clear current problem
-    while(clauses.length > 0){
-        clauses.pop().Delete();
-    }
+    formula = []
     //read data and confirm authenticity while loading into HTML
     let headerRead = false;
     let rows = data.split("\n")
@@ -62,27 +61,19 @@ function loadCNFData(data) {
         }
         let rowData = rows[i].split(" ");
         if (headerRead) {
-            let clause = new OrClause()
-            clause.ClearLiterals();
+            let clause = []
             if(rowData.pop().charAt(0) != "0"){
                 console.error(`Row ${i+1} does not end with 0`)
                 alert("Improperly formatted data");
                 return;
             }
             for(let j = 0; j<rowData.length; j++){
-                let inverted = false;
                 let boolVal = parseInt(rowData[j]);
-                if(boolVal < 0){
-                    boolVal *= -1;
-                    inverted = true;
-                }
-                let literal = new Literal();
-                literal.setVariable(boolVal.toString())
-                literal.setNegation(inverted)
-                clause.AddLiteral(literal)
+                clause.push(boolVal);
             }
-            addClause(clause);
+            formula.push(clause)
         } else {
+            //make sure tis a cnf
             if (rowData[0] != "p" || rowData[1] != "cnf") {
                 console.error(`Improper formatted header: ${rowData}`)
                 alert("Improperly formatted data");
@@ -100,7 +91,7 @@ function loadCNFData(data) {
  */
 function downloadFile(data) {
     let currDate = new Date();
-    let filename = `formula-${currDate.getMonth() + 1}-${currDate.getDate()}.cnf`
+    let filename = `proof-${currDate.getMonth() + 1}-${currDate.getDate()}-${currDate.getHours()}-${currDate.getMinutes()}.cnf`
     var file = new Blob([data], { type: "cnf" });
     if (window.navigator.msSaveOrOpenBlob) // IE10+
         window.navigator.msSaveOrOpenBlob(file, filename);
