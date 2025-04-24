@@ -29,10 +29,11 @@ class GameScreen extends GUI {
     }
     FinishLevel() {
         highestLevel = max(highestLevel, level + 1)
-        screenOn = "levelSelect"
+        screenOn = "win"
         Assets.winsound.play()
         volume *= 2
         Assets.alarm.stop();
+        screens.win.reset();
     }
     NewLevel() {
         volume /= 2;
@@ -108,7 +109,7 @@ class GameScreen extends GUI {
                 break;
             case 7:
                 this.gameObjects = [new GameButton(275, 175, 50, 50, Assets.stopGreen, function () { ref.FinishLevel(); })]
-                for (let i = 0; i < 7; i++) {
+                for (let i = 1; i < 7; i++) {
                     this.gameObjects.push(new GamePaper(300, 200, 50 + i * 40))
                 }
                 break;

@@ -13,6 +13,7 @@ function preload() {
         "levelSelect": new LevelSelectScreen(),
         "game": new GameScreen(),
         "fail": new FailScreen(),
+        "win": new WinScreen(),
         "settings": new Settings()
     }
     Assets.loadAssets()
