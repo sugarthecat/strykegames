@@ -122,7 +122,7 @@ class GameScreen extends GUI {
                             ref.timeLeft = 0;
                         }
                     }),
-                    new GameIndicator(300, 150, 25, function () { return ref.timeLeft < 1 ? color(0, 200, 0) : color(0) })
+                    new GameIndicator(300, 150, 25, function () { return ref.timeLeft < 1 ? color(0, 200, 0) : color(50) })
                 ]
                 break;
             case 9:
@@ -176,7 +176,7 @@ class GameScreen extends GUI {
                 break;
             case 11:
                 ref.rotation = floor(random(5));
-                let colors = [color(0), color(200, 0, 0), color(200, 200, 0), color(200, 0, 200), color(0, 0, 200), color(200, 200, 200), color(0, 200, 0)]
+                let colors = [color(50), color(200, 0, 0), color(200, 200, 0), color(200, 0, 200), color(0, 0, 200), color(200, 200, 200), color(0, 200, 0)]
                 this.gameObjects = [
                     new GameButton(100, 175, 50, 50, Assets.stopGreen, function () {
                         if (ref.rotation == colors.length - 1) {

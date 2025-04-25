@@ -20,6 +20,7 @@ function preload() {
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    noSmooth();
 }
 function draw() {
     Assets.setVolume(volume)

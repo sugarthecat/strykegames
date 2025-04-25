@@ -14,6 +14,7 @@ class Assets {
         this.detonateGreen = loadImage("assets/detonategreen.png")
         this.stopGreen = loadImage("assets/stopgreen.png")
         this.yellowButton = loadImage("assets/yellowButton.png")
+        this.indicatorCover = loadImage("assets/indicatorcover.png")
         this.stickynotes = []
         for (let i = 0; i < 5; i++) {
             this.stickynotes.push(loadImage(`assets/stickynote${i + 1}.png`))

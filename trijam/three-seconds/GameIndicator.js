@@ -11,7 +11,7 @@ class GameIndicator {
         push()
         fill(this.getColor())
         circle(this.x, this.y, this.size)
-
+        image(Assets.indicatorCover, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
         pop()
     }
 }
