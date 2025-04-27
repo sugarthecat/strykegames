@@ -267,6 +267,28 @@ class GameScreen extends GUI {
                 break;
             case 15:
                 this.gameObjects = [
+                    new GameRotatingPlate(300, 200, 150, 0.7, [
+                        new GameButton(225, 175, 50, 50, Assets.yellowButton, function () {
+                            ref.gameObjects[0].items[1].hidden = false;
+                        }),
+                        new GameButton(325, 175, 50, 50, Assets.yellowButton, function () {
+                            ref.gameObjects[0].items[2].hidden = false;
+                        }),
+                        new GameButton(275, 125, 50, 50, Assets.yellowButton, function () {
+                            ref.gameObjects[0].items[3].hidden = false;
+                        }),
+                        new GameButton(275, 225, 50, 50, Assets.stopGreen, function () {
+                            ref.FinishLevel();
+                        })
+                    ])
+                ]
+                
+                for (let i = 1; i < 4; i++) {
+                    ref.gameObjects[0].items[i].hidden = true;
+                }
+                break;
+            case 16:
+                this.gameObjects = [
                     new GameButton(275, 300, 50, 50, Assets.stopGreen, function () {
                         ref.FinishLevel();
                     })
