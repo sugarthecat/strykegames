@@ -30,22 +30,27 @@ let seconds = secondsAway();
 function update() {
     seconds = secondsAway();
     setFormattedText("seconds", Math.floor(seconds))
-    let minutes = seconds/60;
+    let minutes = seconds / 60;
     setFormattedText("minutes", Math.floor(minutes))
-    let hours = minutes/60;
+    let hours = minutes / 60;
     setFormattedText("hours", Math.floor(hours))
-    let days = hours/24;
+    let days = hours / 24;
     setFormattedText("days", Math.floor(hours / 24))
     setText("bezos", "$" + getFormattedText(Math.floor((373800000000 / seconds))));
     // rotation = 360 / days
     setText("rotation", getFormattedText(Math.floor(days * 360)) + "." + setNumberLength(Math.floor(days * 360 * 1000) % 1000, 3) + "°");
-    setFormattedText("watchtimes",Math.floor(minutes / (3 * 50 * 8)))
+    setFormattedText("watchtimes", Math.floor(minutes / (3 * 50 * 8)))
     let invincibleTimeLeft = minutes % (3 * 50 * 8)
     let season = Math.floor(invincibleTimeLeft / (50 * 8))
     let episode = Math.floor(invincibleTimeLeft / 50) % 8
-    setText("episode", `Season ${season+1}, Episode ${episode+1} \"${invincibleEpisodes[season][episode]}\"`)
+    setText("episode", `Season ${season + 1}, Episode ${episode + 1} \"${invincibleEpisodes[season][episode]}\"`)
     let invMinutes = invincibleTimeLeft % 50;
-    setText("episodewatchtime", `${Math.floor(invMinutes)}:${Math.floor((invMinutes*60)%60)}`)
+    let invSeconds = Math.floor((invMinutes * 60) % 60).toString();
+    if (invSeconds.length == 1) {
+        invSeconds = "0" + invSeconds
+    }
+
+    setText("episodewatchtime", `${Math.floor(invMinutes)}:${invSeconds}`)
     let beforeWords = document.getElementsByClassName("before")
     let afterWords = document.getElementsByClassName("after")
     if (before) {
