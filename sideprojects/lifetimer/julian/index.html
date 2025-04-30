@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Chloe Visit Timer</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <h1>How long
+        <span class="before">until</span>
+        <span class="after">since</span>
+
+        <select id="endDate" hidden>
+            <option value="May 13, 2025 23:00:00-05:00">Visiting Umass Amherst</option>
+        </select> you 
+        <span class="before">get</span>
+        <span class="after">got</span> to see Chloe?
+    </h1>
+    <p>
+        <span class="before">There are</span>
+        <span class="after">There's been</span>
+        <span class="count" id="seconds"> </span> seconds
+        <span class="before">until</span>
+        <span class="after">since</span>
+        you 
+        <span class="before">will meet.</span>
+        <span class="after">met.</span>
+    </p>
+    <p>That's <span class="count" id="minutes"></span> minutes.</p>
+    <p>In other terms, <span class="count" id="hours"></span> hours.</p>
+    <p>A mere<span class="count" id="days"></span> days.</p>
+    <p>In the time, the earth 
+        <span class="before">will rotate</span>
+        <span class="after">rotated</span> <span class="count" id="rotation"> </span>
+        about its axis.</p>
+
+        <p>If you were to spend Elon Musk's net worth in that time, you would need to spend <span class="count"
+                id="bezos"></span> every second
+        </p>
+
+        <p>However, maybe you'd like to kill time until then, watching Invincible. 
+            You could watch the entire show <span class="count" id="watchtimes"> </span> times, and you'd get <span class="count" id="episodewatchtime"> </span> into  <span class="count" id="episode"> </span>
+        </p>
+        <script src="constants.js"></script>
+        <script src="script.js"></script>
+
+</body>
+
+</html>
