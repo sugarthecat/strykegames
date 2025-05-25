@@ -52,7 +52,7 @@
     "games": [
         {
             "title": "Circuit Crazy",
-            "link": "circuit-crazy",
+            "link": "math/circuit-crazy",
             "tags": [
                 "game",
                 "puzzle",
