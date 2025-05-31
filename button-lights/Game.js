@@ -56,11 +56,6 @@ class GameScreen extends GUI {
             }
         }
     }
-    FinishLevel() {
-        highestLevel = max(highestLevel, level + 1)
-        screenOn = "win"
-        screens.win.reset();
-    }
     NewLevel() {
         let ref = this;
         this.elements = [

@@ -19,7 +19,7 @@ class LevelSelectScreen extends GUI {
     DrawBackground() {
         //update
         for (let i = 0; i < this.elements.length; i++) {
-            this.elements[i].hidden = i > highestLevel+1
+            this.elements[i].hidden = i > highestLevel+2
         }
         //bomba
         super.DrawBackground();
