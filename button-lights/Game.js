@@ -241,13 +241,56 @@ class GameScreen extends GUI {
                     }
                     indicators[14].active = hold
                 }))
+                break;
+            case 5:
+                for (let i = 0; i < 6; i++) {
+                    addLightsRow(indicators, 300, 100 + 40 * i, 6, 40)
+                }
+
+                this.buttons.push(new GameButton(450, 200, 40, function () {
+                    for (let j = 0; j < 6; j++) {
+                        let hold = indicators[j * 6].active;
+                        for (let i = j * 6; i + 1 < 6 + j * 6; i++) {
+                            indicators[i].active = indicators[i + 1].active
+                            if (i == 13 || i == 19 || i == 15 || i == 21) {
+                                indicators[i].Toggle();
+                            }
+                        }
+                        indicators[j * 6 + 5].active = hold
+                    }
+                }))
+                this.buttons.push(new GameButton(150, 100, 40, function () {
+                    indicators[0].Toggle();
+                    indicators[1].Toggle();
+                    indicators[6].Toggle();
+                    indicators[7].Toggle();
+
+                }))
+                this.buttons.push(new GameButton(300, 350, 40, function () {
+                    for (let j = 0; j < 6; j++) {
+                        let hold = indicators[j].active;
+                        for (let i = 0; i + 1 < 6; i++) {
+                            indicators[j + i * 6].active = indicators[i * 6 + j + 6].active
+                            if ((i == 3 || i == 1) && j >= 2 && j <= 3) {
+                                indicators[j + i * 6].Toggle();
+                            }
+                        }
+                        indicators[j + 5 * 6].active = hold
+                    }
+                }))
+                break;
+            case 6:
+
+                break;
+            case 7:
+
+                break;
         }
     }
 
 }
 
 function addLightsRow(indicators, x, y, count, gap = 50) {
-
     for (let i = 0; i < count; i++) {
         let tgtIndicator = new GameIndicator(x + gap / 2 - gap / 2 * count + gap * i, y, 30)
         indicators.push(tgtIndicator)
