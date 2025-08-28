@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: lightsteelblue;
+    background-color: #999;
 }
 
 h1 {
@@ -20,6 +20,7 @@ button.menu-tag{
     padding: 5px;
     outline: 3px solid black;
     margin:5px;
+    cursor: pointer;
     border-radius: 5px;
 }
 .on{

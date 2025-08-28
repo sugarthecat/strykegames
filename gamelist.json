@@ -51,6 +51,18 @@
     },
     "games": [
         {
+            "title": "Button-Lights",
+            "link": "math/button-lights",
+            "tags": [
+                "game",
+                "puzzle",
+                "math"
+            ],
+            "textColor": "#000",
+            "bgColor": "#c8c8c8",
+            "year": 2025
+        },
+        {
             "title": "Circuit Crazy",
             "link": "math/circuit-crazy",
             "tags": [
