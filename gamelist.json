@@ -47,9 +47,25 @@
         "paperwork": {
             "off": "#dda",
             "on": "#964b00"
+        },
+        "narrative": {
+            "off": "#ee1",
+            "on": "#aa0"
         }
     },
     "games": [
+        {
+            "title": "Human Onboarding",
+            "link": "gamejams/workplace",
+            "tags": [
+                "game",
+                "puzzle",
+                "narrative"
+            ],
+            "textColor": "#017",
+            "bgColor": "#eee",
+            "year": 2025
+        },
         {
             "title": "Button-Lights",
             "link": "math/button-lights",
