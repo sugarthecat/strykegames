@@ -49,9 +49,9 @@ class GoodEndingScreen extends GUI {
         }
         for (let i = 0; i < 10; i++) {
             fill(0, 80 + i * 4, 200 + i * 5, 100 + i * 15)
-            circle(300, 200, 300 - i * 30 + cos(this.animation_time + i) * 10)
+            circle(300, 200, min(max(0,this.animation_time/10-0.5),1)*(300 - i * 30 + cos(this.animation_time + i) * 10))
         }
-        let secondsPassed = 0
+        let secondsPassed = 15
         const typingRate = 0.05
         const linePauseTime = 2
         let textShown = false
