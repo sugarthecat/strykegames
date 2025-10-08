@@ -69,20 +69,6 @@ const quizQuestions = [
         ],
     },
     {
-        prompt: "Do you know what makes someone human?",
-        correctAnswer: 1,
-        answers: [
-            {
-                code: "yes",
-                dialogue: "Yes, you're absolutely right."
-            },
-            {
-                code: "no",
-                dialogue: "Are you so sure you don't?"
-            }
-        ],
-    },
-    {
         prompt: "Which would you prefer to wear on your head?",
         correctAnswer: 0,
         answers: [
@@ -127,24 +113,60 @@ const quizQuestions = [
         ],
     },
     {
-        prompt: "Which grow ",
-        correctAnswer: 2,
+        prompt: "Which of these grow on your head?",
+        correctAnswer: 3,
         answers: [
             {
-                code: "wheel",
-                dialogue: "Many humans install wheels directly onto themselves."
+                code: "human",
+                dialogue: "Humans reproduce asexually."
+            },
+            {
+                code: "treebark",
+                dialogue: "Humans are very closely related to plants."
             },
             {
                 code: "tentacles",
                 dialogue: "In addition to 2 arms, humans typically have 8 tentacles."
             },
             {
-                code: "leg",
-                dialogue: "Humans evolved to walk upright."
+                code: "eyebrows",
+                dialogue: "Humans are sensitive to dust in their eyes."
+            }
+        ],
+    },
+    {
+        prompt: "Which is the multiplicative identity over the ring of integers?",
+        correctAnswer: 0,
+        answers: [
+            {
+                code: "one",
+                dialogue: "Humans either discovered or invented mathematics."
             },
             {
-                code: "snake",
-                dialogue: "Slithering is the most effecient mode of transit, by far."
+                code: "pi",
+                dialogue: "Humans discovered that circles are 1-dimensional."
+            },
+            {
+                code: "six",
+                dialogue: "Humans love six, because they count on six fingers."
+            },
+            {
+                code: "fourtytwo",
+                dialogue: "Humans are very familiar to the answers to the universe."
+            }
+        ],
+    },
+    {
+        prompt: "Do you know what makes someone human?",
+        correctAnswer: 1,
+        answers: [
+            {
+                code: "yes",
+                dialogue: "Yes, you're absolutely right."
+            },
+            {
+                code: "no",
+                dialogue: "Are you so sure you don't?"
             }
         ],
     },

@@ -15,8 +15,9 @@ class Button {
     }
     //mouseX and Y
     Draw(x, y) {
+        push()
         textSize(this.h * 3 / 4)
-        textSize(min(textSize(), textSize() * (this.w - 20) / textWidth(this.text)))
+        textSize(min(textSize(), textSize() * (this.w ) / textWidth(this.text) * 0.75))
         fill(255)
         if (!this.active) {
             fill(180)
@@ -35,7 +36,9 @@ class Button {
         } else {
             fill(0)
         }
+        textFont("trebuchet MT")
         textAlign(CENTER)
         text(this.text, this.x + this.w / 2, this.y + this.h / 2 + textAscent(this.text) / 2)
+        pop()
     }
 }

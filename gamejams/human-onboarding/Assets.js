@@ -34,6 +34,7 @@ class Assets {
             polyethylene: loadImage("assets/silhouettes/polyethylene.png"),
             sandwich: loadImage("assets/silhouettes/sandwich.png"),
             snake: loadImage("assets/silhouettes/snake.png"),
+            six: loadImage("assets/silhouettes/six.png"),
             table: loadImage("assets/silhouettes/table.png"),
             tentacles: loadImage("assets/silhouettes/tentacles.png"),
             treebark: loadImage("assets/silhouettes/treebark.png"),
