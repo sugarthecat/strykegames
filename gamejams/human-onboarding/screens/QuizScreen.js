@@ -126,6 +126,28 @@ const quizQuestions = [
             }
         ],
     },
+    {
+        prompt: "Which grow ",
+        correctAnswer: 2,
+        answers: [
+            {
+                code: "wheel",
+                dialogue: "Many humans install wheels directly onto themselves."
+            },
+            {
+                code: "tentacles",
+                dialogue: "In addition to 2 arms, humans typically have 8 tentacles."
+            },
+            {
+                code: "leg",
+                dialogue: "Humans evolved to walk upright."
+            },
+            {
+                code: "snake",
+                dialogue: "Slithering is the most effecient mode of transit, by far."
+            }
+        ],
+    },
 ]
 let score = 0;
 class QuizScreen extends GUI {

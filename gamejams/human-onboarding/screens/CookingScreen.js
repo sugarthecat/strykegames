@@ -226,8 +226,7 @@ class CookingScreen extends GUI {
             }
             return true;
         } else if (this.phase == 2) {
-
-            return this.sandwich.length > 4;
+            return this.sandwich.length > 3;
         }
     }
     DrawGrill() {

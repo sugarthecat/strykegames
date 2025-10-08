@@ -20,7 +20,7 @@ class ServeScreen extends GUI {
                 }
             }, false)
         ]
-        this.message = "Am I made only to serve?"
+        this.message = "Was I made to replace you?"
         this.time = 0;
         this.targetTime = 10
     }
