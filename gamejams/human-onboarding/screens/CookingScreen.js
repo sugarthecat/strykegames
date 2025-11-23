@@ -5,6 +5,7 @@ const ingredients = [
 class CookingScreen extends GUI {
     constructor() {
         super();
+        this.errorMessage = "Not Known"
         this.selectedDraggable = null;
         this.phase = 0;
         this.onGrill = [];
@@ -12,13 +13,18 @@ class CookingScreen extends GUI {
         const ref = this;
         this.elements = [
             new Button(490, 280, 80, 30, "Serve", function () {
+                if (!ref.CheckCanServe()) {
+                    ref.elements[0].active = false;
+                    return
+                }
+                ref.errorMessage = "";
                 finished_sandwiches.push(ref.sandwich)
                 ref.sandwich = []
                 ref.elements[0].active = false;
                 ref.phase++;
-                if (ref.phase === 3) {
+                if (ref.phase === 4) {
                     screenOn = "transition";
-                    screens.transition.Reset("monologue", "If that's what home tastes like, I'm concerned.")
+                    screens.transition.Reset("monologue", "You call that food? Interesting.")
                     screens.monologue.Reset("nut", "Visual art is the hardest for me to grasp because it seems functionally irrelevant, "
                         + "yet humans constantly create and consume it. Food is also vexing in this way."
                         + " Food at least has a purpose; sustenance, but humans have created thousands of different foods,"
@@ -109,15 +115,25 @@ class CookingScreen extends GUI {
         noStroke()
         fill(0)
         textSize(16)
+        textAlign(CENTER)
         textFont('Trebuchet MS')
         if (this.phase === 0) {
             text("Make a plain Grilled Cheese.", 300, 20)
         }
         if (this.phase === 1) {
-            text("Make a Double Bacon Cheeseburger.", 300, 20)
+            text("Make a dish that reminds you of home.", 300, 20)
         }
         if (this.phase === 2) {
-            text("Make a dish that reminds you of home.", 300, 20)
+            text("Make a Double Bacon Cheeseburger.", 300, 20)
+        }
+        if (this.phase === 3) {
+            text("Make an optimum dish that inspires the future.", 300, 20)
+        }
+        textSize(12)
+        fill(255, 0, 0)
+        if (!this.elements[0].active && this.sandwich.length > 0) {
+            textAlign(LEFT)
+            text(this.errorMessage, 490, 225, 80, 200)
         }
         this.DrawGrill()
         this.DrawSandwichBoard();
@@ -158,75 +174,187 @@ class CookingScreen extends GUI {
                 })
             } else if (x > 250 && x < 500 && y > 250 && y < 380) {
                 this.sandwich.push(this.selectedDraggable);
-                this.elements[0].active = this.CheckCanServe();
+                this.elements[0].active = true;
                 this.elements[1].active = true;
             }
             this.selectedDraggable = null;
         }
     }
     CheckCanServe() {
-        if (this.phase > 3) {
-            return false;
-        } else if (this.phase == 0) {
-            console.log(this.phase, this.sandwich)
-            return this.sandwich.length === 3
-                && this.sandwich[0].id === 1
-                && this.sandwich[0].cook_time < 10
-                && this.sandwich[1].id === 0
-                && this.sandwich[1].cook_time > 2
-                && this.sandwich[1].cook_time < 6
-                && this.sandwich[2].id === 1
-                && this.sandwich[2].cook_time < 10
+        if (this.phase == 0) {
+            if (this.sandwich.length > 3) {
+                this.errorMessage = "Too much stuff!"
+                return false;
+            }
+            if (this.sandwich.length < 3) {
+                this.errorMessage = "Not enough stuff!"
+                return false;
+            }
+            if (this.sandwich[1].id !== 0) {
+
+                this.errorMessage = "There's no cheese!"
+                return false;
+            }
+            if (this.sandwich[1].cook_time < 2) {
+                this.errorMessage = "This cheese isn't grilled!"
+                return false;
+            }
+            if (this.sandwich[1].cook_time > 6) {
+                this.errorMessage = "You burnt the cheese!"
+                return false;
+            }
+            if (this.sandwich[0].id !== 1 || this.sandwich[2].id !== 1) {
+                this.errorMessage = "You need bread on the ends!"
+                return false;
+            }
+            if (this.sandwich[0].cook_time < 3
+                || this.sandwich[2].cook_time < 3) {
+                this.errorMessage = "This bread isn't crisp!"
+                return false
+            }
+            if (this.sandwich[0].cook_time < 10
+                && this.sandwich[2].cook_time < 10) {
+                return true
+            }
+            this.errorMessage = "You burnt the bread!"
+            return false
             //plain grilled cheese: 2 cooked slices of bread
         } else if (this.phase == 1) {
+            if (this.sandwich.length < 2) {
+                this.errorMessage = "Put some effort in!"
+                return false;
+            }
+            return true
+        } else if (this.phase == 2) {
             //double bacon cheeseburger: 2 slices of bread on top / below, max 3 slices of bread, no chips or paper
             let breadCount = 0;
             let cheseCount = 0;
             let pattyCount = 0;
             let baconCount = 0;
             for (let i = 0; i < this.sandwich.length; i++) {
-                if (this.sandwich[i].id === 3 || this.sandwich[i].id === 5) {
+                if (this.sandwich[i].id === 3) {
+                    this.errorMessage = "There's electronics in here!"
+                    return false;
+                }
+                if (this.sandwich[i].id === 5) {
+                    this.errorMessage = "There's paper in here!"
                     return false;
                 }
                 if (this.sandwich[i].id === 0) {
                     cheseCount++;
                     if (this.sandwich[i].cook_time > 6) {
+                        this.errorMessage = "You burnt the cheese!"
+                        return false;
+                    }
+                    if (this.sandwich[i].cook_time < 2) {
+                        this.errorMessage = "You didn't melt the cheese!"
                         return false;
                     }
                 }
                 if (this.sandwich[i].id === 1) {
                     breadCount++;
                     if (this.sandwich[i].cook_time > 10) {
+                        this.errorMessage = "You burnt the bread!"
                         return false;
                     }
                 }
                 if (this.sandwich[i].id === 2) {
                     pattyCount++;
                     if (this.sandwich[i].cook_time > 25
-                        || this.sandwich[i].cook_time < 10
                     ) {
+                        this.errorMessage = "You burnt the patty!"
+                        return false;
+                    }
+                    if (this.sandwich[i].cook_time < 10
+                    ) {
+                        this.errorMessage = "This patty is raw!"
                         return false;
                     }
                 }
                 if (this.sandwich[i].id === 4) {
                     baconCount++;
                     if (this.sandwich[i].cook_time > 14
-                        || this.sandwich[i].cook_time < 6
                     ) {
+                        this.errorMessage = "You burnt the bacon!"
+                        return false;
+                    }
+                    if (this.sandwich[i].cook_time < 6
+                    ) {
+                        this.errorMessage = "This bacon is raw!"
                         return false;
                     }
                 }
             }
             if (this.sandwich[0].id !== 1 || this.sandwich[this.sandwich.length - 1].id !== 1) {
                 //needs top and buttom bun
+                this.errorMessage = "You need buns on your burger!"
                 return false;
             }
-            if (breadCount > 3 || cheseCount > 3 || pattyCount != 2 || baconCount > 2 || baconCount == 0 || cheseCount < 1 || cheseCount > 4) {
+            if (breadCount > 3) {
+                this.errorMessage = "That's too much bread!"
+                return false
+            }
+            if (cheseCount > 3) {
+                this.errorMessage = "That's too much cheese!"
+                return false
+            }
+            if (pattyCount > 2) {
+                this.errorMessage = "That's too many patties!"
+                return false
+            }
+            if (pattyCount < 2) {
+                this.errorMessage = "That's not enough patties!"
+                return false
+            }
+            if (baconCount > 3) {
+                this.errorMessage = "That's too much bacon!"
+                return false
+            }
+            if (baconCount < 2) {
+                this.errorMessage = "That's not enough bacon!"
+                return false
+            }
+            if (cheseCount < 2) {
+                this.errorMessage = "That's not enough cheese!"
                 return false
             }
             return true;
-        } else if (this.phase == 2) {
-            return this.sandwich.length > 3;
+        } else if (this.phase == 3) {
+            let circuitCount = 0;
+            let paperCount = 0;
+            for (let i = 0; i < this.sandwich.length; i++) {
+                if (this.sandwich[i].id === 3) {
+                    circuitCount++;
+                }
+                if (this.sandwich[i].id === 5) {
+                    paperCount++;
+                }
+            }
+            if (circuitCount == 0) {
+                this.errorMessage = random(["Could be more innovative.", "Under-optimized for hardware.", "Analog."])
+                return false;
+            }
+            if (paperCount == 0) {
+                this.errorMessage = random(["Needs to be research-supported.", "Needs deeper study.", "Unscientific."])
+                return false;
+            }
+            if (this.sandwich.length < 3) {
+                this.errorMessage = random(["This is too simple.", "Lacking in complexity.", "Undersized."])
+                return false;
+            }
+            if (this.sandwich.length > 5) {
+                this.errorMessage = random(["Bloated with technical debt.", "Far too complex.", "Oversized."])
+                return false;
+            }
+            if (this.sandwich[0].id !== 5) {
+                this.errorMessage = random(["Start with your research.", "Use a paper as a jumping-off point.", "Add an abstract at the start."])
+                return false;
+            }
+            if (this.sandwich[this.sandwich.length - 1].id !== 3) {
+                this.errorMessage = random(["End with a strong algorithm.", "Finish on a vision for the future.", "Back it up in the end with some code."])
+                return false;
+            }
+            return true
         }
     }
     DrawGrill() {
