@@ -1,0 +1,93 @@
+html, body{
+    padding: 0px;
+    margin: 0px;
+}
+
+.fullpage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    position:absolute;
+
+}
+
+nav {
+    text-align: left;
+    background-color: #335;
+    padding: 20px 20px 0px 20px;
+}
+
+nav button {
+    padding: 6px;
+    border-radius: 12px 12px 0px 0px;
+    cursor: pointer;
+}
+button.selected{
+    background-color: #666;
+    color:#fff;
+}
+
+#webpage {
+    padding: 20px;
+    flex-grow: 1;
+}
+.error{
+    color: #f00;
+}
+
+.webpage0{
+    color:#0f0;
+    background-color: #000;
+    font-family: monospace;
+}
+.webpage0 p, .webpage0 input{font-size: large;
+}
+
+.webpage0 input,.webpage0 button {
+    color:#0f0;
+    background-color: #000;
+    font-family: monospace;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.webpage1{
+    color:#000;
+    background-color: #fff;
+}
+.webpage1 h1{
+    margin: 0px
+}
+.webpage1 a{
+    color:#00f;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.webpage1 .links{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.webpage1 h1 span{
+    padding: 3px; 
+    border-radius: 5px;
+    background-color: #555;
+    color:white;
+}
+.webpage2{
+    color:#000;
+    background-color: #fafade;
+}
+.webpage3{
+    background-color: #8a0;
+}
+.webpage4{
+    background-color: #66f;
+}
+.webpage5{
+    background-color: #f2a;
+}
+.webpage6{
+    background-color: #aca;
+}
