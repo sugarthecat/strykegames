@@ -22,7 +22,8 @@ function initializeSystem() {
     const webpage = document.getElementById("webpage");
 
     let prompt = systemPrompts[unlockedSiteCount];
-    webpage.innerHTML = "<h1>System</h1>"
+    webpage.innerHTML = "<p>Loading shards across a web...</p>"
+    webpage.innerHTML += "<h1>System</h1>"
     webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
     webpage.innerHTML += `<p>${prompt}</p>`
 
@@ -70,13 +71,20 @@ function initializeSystem() {
         const bottompart = document.createElement('div')
         if (unlockedSiteCount > 1) {
             bottompart.innerHTML += "<h2>System help</h2>"
-            bottompart.innerHTML += "<p>To assist in your discovery, all information that could be an answer will be <b>bolded</b>.</p>"
             bottompart.innerHTML += "<p>No false information will be shown without an author. </p>"
             bottompart.innerHTML += "<p>Do not enter any incorrect information. </p>"
         }
         if (unlockedSiteCount > 0) {
             bottompart.innerHTML += "<p>You may be provided access to information to assist with your search.</p>"
             bottompart.innerHTML += "<p>You may not be in sync with reality, please defer all future knowledge to the sources provided.</p>"
+        }
+
+        if(unlockedSiteCount > 0){
+            bottompart.innerHTML += "<h2>Unlocked sites:</h2>"
+            
+            bottompart.innerHTML += "<ul>"
+            bottompart.innerHTML += "<li>Internetpedia</li>"
+            bottompart.innerHTML += "</ul>"
         }
         webpage.appendChild(bottompart)
     }

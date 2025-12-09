@@ -1,5 +1,5 @@
 let currWebsite = -1; //
-let unlockedSiteCount = 0;
+let unlockedSiteCount = 1;
 
 function updateNavbarVisibility() {
     const navbar = document.getElementById("navbar");
@@ -21,8 +21,6 @@ function switchTab(event, newIdx) {
             toDeselect[i].classList.remove("selected")
         }
         srcBtn.classList.add("selected");
-
-        console.log(currWebsite)
 
         updateNavbarVisibility()
     } else {
