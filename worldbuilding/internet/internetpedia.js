@@ -12,7 +12,7 @@ const wikiPages = {
         title: 'Illinois',
         body: "<div class=\"wikibox-right\">"
             + "<p><b>Illinois</b></p>"
-            + "<p>Founded: <b>December 3, 1818 (104 years ago)</b></p>"
+            + "<p>Founded: <b>December 3, 1818 (204 years ago)</b></p>"
             + "</div>"
             + "<p><b>Illinois</b> is a state in the <a page=\"usa\">United States of America</a>. Its largest city is <a page=\"chicago\">Chicago</a>.</p>"
     },
