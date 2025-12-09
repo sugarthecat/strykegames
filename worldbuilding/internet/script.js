@@ -1,5 +1,5 @@
 let currWebsite = -1; //
-let unlockedSiteCount = 1;
+let unlockedSiteCount = 0;
 
 function updateNavbarVisibility() {
     const navbar = document.getElementById("navbar");
