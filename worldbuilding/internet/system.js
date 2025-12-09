@@ -84,6 +84,15 @@ function initializeSystem() {
             
             bottompart.innerHTML += "<ul>"
             bottompart.innerHTML += "<li>Internetpedia</li>"
+            if(unlockedSiteCount > 1){
+                bottompart.innerHTML += "<li>North Chicago Chronicle</li>";
+            }
+            if(unlockedSiteCount > 2){
+                bottompart.innerHTML += "<li>Town of Skokie</li>";
+            }
+            if(unlockedSiteCount > 3){
+                bottompart.innerHTML += "<li>Skokie Scanner</li>";
+            }
             bottompart.innerHTML += "</ul>"
         }
         webpage.appendChild(bottompart)
