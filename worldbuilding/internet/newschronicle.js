@@ -49,19 +49,19 @@ const newsPages = {
             + "tech-heavy facility, the community is ready to give it a chance.</p>"
     },
     james_carver: {
-        body: "<h2>James Carver</h2>"
-            + "<p>James Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
+        body: "<h2>Jamie Carver</h2>"
+            + "<p>Jamie Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
             + " James graduated from Niles North High School in Skokie, where he ran the local newspaper club. He's the newest hire in our local economic news department.</p>"
     },
-    peter_haskell: {
-        body: "<h2>Peter Haskell</h2>"
-            + "<p>Peter Haskell has been a veteran reporter in the Chronicle's political division, leading the division. He's had a variety of "
+    haskell: {
+        body: "<h2>Evelyn Haskell</h2>"
+            + "<p>Evelyn Haskell has been a veteran reporter in the Chronicle's political division, leading the division. She's had a variety of "
             + "major interviews, including hosting upwards of 15 mayoral debates in the region, and moderating the second 2015 Chicago mayoral debate.</p>"
     },
     elections: {
         body: "<h2>Evanston Mayoral Elections</h2>"
             + "<p>June 6th, 2023</p>"
-            + "<p><i>By <a page=\"peter_haskell\">Peter Haskell</a></i></p>"
+            + "<p><i>By <a page=\"haskell\">Evelyn Haskell</a></i></p>"
             + "<p>The election date is today for Evanston's special mayoral election, and it's looking to be a tight race. Glen Porter seems to be polling at around +8 favorability"
             + ", but his opponent, Leigh Verne, is close being him. Leigh verne is polling higher, with her numbers looking +12 points favorable. On the other hand, exit polls seem to slightly favor Porter."
             + "Of course, some other candidates remain, but the race seems all but settled on one of these two tonight.</p>"

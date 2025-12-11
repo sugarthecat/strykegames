@@ -18,11 +18,37 @@ const systemAnswers = [
     ['jenny', 'jenny sanders', 'jennifer sanders'],
     ['james carver']
 ]
+//haiku:
+
+// Digital footprints,
+// The dead wandering through wires,
+// Shards across a web.
 function initializeSystem() {
     const webpage = document.getElementById("webpage");
 
     let prompt = systemPrompts[unlockedSiteCount];
-    webpage.innerHTML = "<p>Loading shards across a web...</p>"
+    webpage.innerHTML = ""
+    if (unlockedSiteCount > 0) {
+        webpage.innerHTML += "<p>Loading contents of pages...</p>"
+    }
+    if (unlockedSiteCount > 1) {
+        webpage.innerHTML += "<p>Loading source and index...</p>"
+    }
+    if (unlockedSiteCount > 2) {
+        webpage.innerHTML += "<p>Loading thoughts of your favorites...</p>"
+    }
+    if (unlockedSiteCount > 3) {
+        webpage.innerHTML += "<p>Loading ghosts of what's next...</p>"
+    }
+    if (unlockedSiteCount > 4) {
+        webpage.innerHTML += "<p>Loading memories of you...</p>"
+        webpage.innerHTML += "<p>Loading stories of death...</p>"
+    }
+    if (unlockedSiteCount > 5) {
+        webpage.innerHTML += "<p>Loading what's left to do...</p>"
+        webpage.innerHTML += "<p>Loading shards on a web...</p>"
+    }
+
     webpage.innerHTML += "<h1>System</h1>"
     webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
     webpage.innerHTML += `<p>${prompt}</p>`
@@ -71,32 +97,34 @@ function initializeSystem() {
         const bottompart = document.createElement('div')
         if (unlockedSiteCount > 1) {
             bottompart.innerHTML += "<h2>System help</h2>"
-            bottompart.innerHTML += "<p>No false information will be shown without an author. </p>"
             bottompart.innerHTML += "<p>Do not enter any incorrect information. </p>"
+        }
+        if (unlockedSiteCount > 2) {
+            bottompart.innerHTML += "<p>No false information will be shown without an author. </p>"
         }
         if (unlockedSiteCount > 0) {
             bottompart.innerHTML += "<p>You may be provided access to information to assist with your search.</p>"
             bottompart.innerHTML += "<p>You may not be in sync with reality, please defer all future knowledge to the sources provided.</p>"
         }
 
-        if(unlockedSiteCount > 0){
+        if (unlockedSiteCount > 0) {
             bottompart.innerHTML += "<h2>Unlocked sites:</h2>"
-            
+
             bottompart.innerHTML += "<ul>"
             bottompart.innerHTML += "<li>Internetpedia</li>"
-            if(unlockedSiteCount > 1){
+            if (unlockedSiteCount > 1) {
                 bottompart.innerHTML += "<li>North Chicago Chronicle</li>";
             }
-            if(unlockedSiteCount > 2){
+            if (unlockedSiteCount > 2) {
                 bottompart.innerHTML += "<li>Town of Skokie</li>";
             }
-            if(unlockedSiteCount > 3){
+            if (unlockedSiteCount > 3) {
                 bottompart.innerHTML += "<li>Skokie Scanner</li>";
             }
-            if(unlockedSiteCount > 3){
+            if (unlockedSiteCount > 4) {
                 bottompart.innerHTML += "<li>Skokal</li>";
             }
-            if(unlockedSiteCount > 3){
+            if (unlockedSiteCount > 5) {
                 bottompart.innerHTML += "<li>The Olsenternet</li>";
             }
             bottompart.innerHTML += "</ul>"

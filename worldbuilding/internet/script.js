@@ -39,6 +39,18 @@ function switchTab(event, newIdx) {
         case 2:
             initNewsSite();
             break;
+        case 3:
+            initTownSite();
+            break;
+        case 4:
+            initPoliceSite();
+            break;
+        case 5:
+            initForum();
+            break;
+        case 6:
+            initOlsen();
+            break;
     } 
 }
 

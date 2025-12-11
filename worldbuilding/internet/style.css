@@ -158,6 +158,18 @@ div.wikibox-right {
     margin: 0px;
 }
 
+.webpage2 hr {
+    border-top: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+    /* Removes the default 3D border effect */
+    height: 3px;
+    /* Sets the thickness of the line */
+    background-color: #333;
+    /* Sets the color */
+    margin: 20px 0;
+    /* Adds spacing above and below */
+}
+
 .webpage2 .articlestub h3 {
     margin-top: 0px;
 }
@@ -179,16 +191,78 @@ div.wikibox-right {
 
 .webpage3 {
     background-color: #8a0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.webpage3 table{
+    
+    border-collapse: collapse;
+}
+.webpage3 th{
+    background-color: #444;
+    color: #eee;
+}
+.webpage3 td{
+    background-color: #af1;
+}
+.webpage3 th, .webpage3 td{
+    padding: 10px;
+}
+.webpage3 .article {
+    width: min(100%, 700px);
+}
+.webpage3 h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.webpage3 hr,
+.webpage4 hr {
+    border: none;
+    /* Removes the default 3D border effect */
+    height: 3px;
+    /* Sets the thickness of the line */
+    background-color: #333;
+    /* Sets the color */
+    margin: 20px 0;
+    /* Adds spacing above and below */
+}
+
+.webpage3 a {
+    color: #11d;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.webpage3 a:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 
 .webpage4 {
     background-color: #66f;
 }
 
+.webpage4 h1 {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .webpage5 {
     background-color: #f2a;
 }
 
+.webpage5 h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    text-shadow: 4px 4px 0 #00f, 8px 8px 0 #000;
+}
+
+
+.webpage5 hr{
+    border: none;
+    height: 4px;
+    background-color: #fff;
+    margin: 20px 0;
+    box-shadow: 2px 2px 0 #00f, 4px 4px 0 #000;
+}
 .webpage6 {
     background-color: #aca;
 }
