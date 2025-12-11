@@ -93,6 +93,12 @@ function initializeSystem() {
             if(unlockedSiteCount > 3){
                 bottompart.innerHTML += "<li>Skokie Scanner</li>";
             }
+            if(unlockedSiteCount > 3){
+                bottompart.innerHTML += "<li>Skokal</li>";
+            }
+            if(unlockedSiteCount > 3){
+                bottompart.innerHTML += "<li>The Olsenternet</li>";
+            }
             bottompart.innerHTML += "</ul>"
         }
         webpage.appendChild(bottompart)
