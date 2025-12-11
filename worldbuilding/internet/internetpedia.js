@@ -79,7 +79,11 @@ const wikiPages = {
             + "<h3>Major cities</h3>"
             + "<p><a page=\"nyc\">New York City</a>, located on the eastern coast, is the largest city in the United States."
             + " One other major city is <a page=\"chicago\">Chicago</a>, a city more north-central to the United States.</p>"
-    },
+         + "<h3>Culture</h3>"
+             + "<p><a page=\"christmas\">Christmas</a> is considered to be one of the largest celebrations in United States culture,"
+             +" along with Haloween. Also important to American culture is college football, with schools like <a page=\"virginia_tech\">Virginia Tech</a> being highly culturally relevant.</p>"
+            
+        },
 
     christmas: {
         title: 'Christmas',
@@ -127,7 +131,7 @@ let wikibody = null;
 let wikititle = null
 function initWikiSite() {
     wikibody = document.createElement('div')
-    wikititle = document.createElement('h1')
+    wikititle = document.createElement('h2')
     const webpage = document.getElementById("webpage");
     const topSection = document.createElement('div')
     topSection.innerHTML = "<h1><span>Internet</span>Pedia</h1>"

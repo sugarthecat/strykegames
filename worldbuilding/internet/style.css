@@ -80,12 +80,21 @@ div.wikibox-right {
 }
 
 .webpage1 h1 {
-    margin: 0px
+    margin: 0px;
+}
+
+.webpage1 h2 {
+
+    width: min(100%, 1000px);
+    margin: auto;
 }
 
 .webpage1 .wiki-article {
     font-family: sans-serif;
     position: relative;
+    width: min(100%, 1000px);
+    margin: auto;
+
 }
 
 .webpage1 a {
@@ -109,8 +118,63 @@ div.wikibox-right {
 
 .webpage2 {
     color: #000;
+    background-color: #eec;
+}
+
+.webpage2 th,
+.webpage2 td {
+    padding: 8px;
+}
+
+.webpage2 th {
+    background-color: #000;
+    color: white;
+}
+
+.webpage2 tr:nth-child(odd) {
+    background-color: #ccc;
+}
+
+.webpage2 table {
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.webpage2 a {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.webpage2 a:hover {
+    color: #888;
+}
+
+
+.webpage2 .articlestub {
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0px;
+}
+
+.webpage2 .articlestub h3 {
+    margin-top: 0px;
+}
+
+.webpage2 .articlestub p {
+    margin-bottom: 0px;
+}
+
+.webpage2 .article {
+    width: min(100%, 800px);
+    margin: auto;
+}
+
+.webpage2 .articlestub:hover {
+    color: #888;
     background-color: #fafade;
 }
+
 
 .webpage3 {
     background-color: #8a0;

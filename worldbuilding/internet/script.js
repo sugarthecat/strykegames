@@ -36,6 +36,9 @@ function switchTab(event, newIdx) {
         case 1:
             initWikiSite();
             break;
+        case 2:
+            initNewsSite();
+            break;
     } 
 }
 
