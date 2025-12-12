@@ -19,7 +19,7 @@ const townPages = {
         + "<p><b>Description</b>: GRAY, DENT IN FRONT PASSENGER SIDE DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
     ticket2: "<h3>Ticket T23956</h3>"
-        + "<p><b>License plate</b>: 123 ABC</p>"
+        + "<p><b>License plate</b>: 284 WJD</p>"
         + "<p><b>Car</b>: 2013 NISSAN ALTIMA</p>"
         + "<p><b>Description</b>: GRAY, DAMAGE ON FRONT RIGHT DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",

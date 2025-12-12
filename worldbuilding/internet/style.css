@@ -19,10 +19,21 @@ nav {
     padding: 20px 20px 0px 20px;
 }
 
+nav button.systemtab {
+    background-color: #333;
+    color: #0f0;
+    font-family: monospace;
+}
+
+nav button.systemtab.selected {
+    background-color: #000;
+}
+
 nav button {
     padding: 6px;
     border-radius: 12px 12px 0px 0px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 button.selected {
@@ -193,23 +204,30 @@ div.wikibox-right {
     background-color: #8a0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-.webpage3 table{
-    
+
+.webpage3 table {
+
     border-collapse: collapse;
 }
-.webpage3 th{
+
+.webpage3 th {
     background-color: #444;
     color: #eee;
 }
-.webpage3 td{
+
+.webpage3 td {
     background-color: #af1;
 }
-.webpage3 th, .webpage3 td{
+
+.webpage3 th,
+.webpage3 td {
     padding: 10px;
 }
+
 .webpage3 .article {
     width: min(100%, 700px);
 }
+
 .webpage3 h1 {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
@@ -238,31 +256,63 @@ div.wikibox-right {
 }
 
 .webpage4 {
-    background-color: #66f;
-}
-
-.webpage4 h1 {
+    background-color: #55f;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.webpage4 a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.webpage4 .article {
+    width: min(100%, 1000px);
+    margin: auto;
+}
+
+.webpage4 .admin{
+    font-weight: bolder;
+    text-shadow:1px 1px 3px#fff ;
+    color: #a00;
+    font-size: large;
+}
+
+.webpage4 .forum {
+
+    background-color: #77f;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.webpage4 .clickable {
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.webpage4 .clickable:hover {
+    background-color: #aaf;
+}
+
 .webpage5 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
     background-color: #f2a;
 }
 
 .webpage5 h1 {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
     text-shadow: 4px 4px 0 #00f, 8px 8px 0 #000;
 }
 
 
-.webpage5 hr{
+.webpage5 hr {
     border: none;
     height: 4px;
     background-color: #fff;
     margin: 20px 0;
     box-shadow: 2px 2px 0 #00f, 4px 4px 0 #000;
 }
+
 .webpage6 {
     background-color: #aca;
 }

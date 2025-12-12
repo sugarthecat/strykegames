@@ -7,7 +7,7 @@ function initForum() {
     forumbody = document.createElement('div')
     const webpage = document.getElementById("webpage");
     const topSection = document.createElement('div')
-    topSection.innerHTML = "<h1>Skokal</h1>"
+    topSection.innerHTML = "<h1>Skokal</h1><p><b>Skokie's best local forum</b></p>"
     const links = document.createElement('div')
     links.className = "links"
 

@@ -4,20 +4,21 @@ const systemPrompts = [
     "What year is it?",
     "Where are you?",
     "What's your name?",
-    "What happened to you?",
-    "Who do you love?",
     "What killed you?",
+    "Who do you love?",
+    "Who killed you?",
     "We all leave behind a trail. You left behind something beautiful."
 ]
 const systemAnswers = [
     ["earth"],
     ["2023"],
     ["skokie", "skokie, il", "skokie, illinois"],
-    ["fred olsen", "fred"],
-    ['died', 'dead'],
+    ["fred olsen", "fred", "fred k olsen", "fred k. olsen"],
+    ['burned', 'burn','fire', 'burned to death', "burnt", "died in a fire", "smoke"],
     ['jenny', 'jenny sanders', 'jennifer sanders'],
     ['james carver']
 ]
+
 //haiku:
 
 // Digital footprints,
@@ -48,11 +49,11 @@ function initializeSystem() {
         webpage.innerHTML += "<p>Loading what's left to do...</p>"
         webpage.innerHTML += "<p>Loading shards on a web...</p>"
     }
-
-    webpage.innerHTML += "<h1>System</h1>"
-    webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
-    webpage.innerHTML += `<p>${prompt}</p>`
-
+    if (unlockedSiteCount < 7) {
+        webpage.innerHTML += "<h1>System</h1>"
+        webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
+        webpage.innerHTML += `<p>${prompt}</p>`
+    }
     const inputbox = document.createElement("input")
     inputbox.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
