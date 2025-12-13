@@ -41,22 +41,22 @@ const newsPages = {
             + "<p><i>By <a page=\"james_carver\">James Carver</a></i></p>"
             + "<h3>Park Ridge's library woes</h3>"
             + "<p>Park Ridge has had library issues for a long time. 27 years after Park Ridge's Perry Library was built in 1972, Park Ridge was forced to close down the library"
-            + "due to a rat infestation and water leakage. After a series of budget cuts to pubilc services, the Perry library has only been open for 1547 days between the years of 1999-2015.</p>"
+            + " due to a rat infestation and water leakage. After a series of budget cuts to pubilc services, the Perry library has only been open for 1547 days between the years of 1999-2015.</p>"
             + "<h3>The New Library</h3>"
             + "<p>Park Ridge's new library, the Andrew Jericho Community Library, is officially set to open within a week. This new library has a broad range of features that the Perry library lacked:"
             + " A myriad of community rooms for kids and elders, a media and game development studio, and a new city ordinance reference section for residents to help themselves comply with local regulations."
             + " Though this new library has drawn criticism for being too-high tech, a large crowd is forecasted to show up at the opening ceremony. It's still to be shown if people will like this new "
-            + "tech-heavy facility, the community is ready to give it a chance.</p>"
+            + " tech-heavy facility, the community is ready to give it a chance.</p>"
     },
     james_carver: {
-        body: "<h2>Jamie Carver</h2>"
-            + "<p>Jamie Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
+        body: "<h2>James Carver</h2>"
+            + "<p>James Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
             + " James graduated from Niles North High School in Skokie, where he ran the local newspaper club. He's the newest hire in our local economic news department.</p>"
     },
     haskell: {
         body: "<h2>Evelyn Haskell</h2>"
             + "<p>Evelyn Haskell has been a veteran reporter in the Chronicle's political division, leading the division. She's had a variety of "
-            + "major interviews, including hosting upwards of 15 mayoral debates in the region, and moderating the second 2015 Chicago mayoral debate.</p>"
+            + " major interviews, including hosting upwards of 15 mayoral debates in the region, and moderating the second 2015 Chicago mayoral debate.</p>"
     },
     elections: {
         body: "<h2>Evanston Mayoral Elections</h2>"
@@ -64,7 +64,7 @@ const newsPages = {
             + "<p><i>By <a page=\"haskell\">Evelyn Haskell</a></i></p>"
             + "<p>The election date is today for Evanston's special mayoral election, and it's looking to be a tight race. Glen Porter seems to be polling at around +8 favorability"
             + ", but his opponent, Leigh Verne, is close being him. Leigh verne is polling higher, with her numbers looking +12 points favorable. On the other hand, exit polls seem to slightly favor Porter."
-            + "Of course, some other candidates remain, but the race seems all but settled on one of these two tonight.</p>"
+            + " Of course, some other candidates remain, but the race seems all but settled on one of these two tonight.</p>"
             + "<table><tr><th>Candidate</th> <th>Approves</th><th>Neutral</th><th>Disapproves</th><th>Net Approval</th></tr>"
             + "<tr> <td>G. Porter</td> <td>51</td> <td>4</td> <td>45</td> <td>+8</td></tr>"
             + "<tr> <td>L. Verne</td> <td>40</td> <td>32</td> <td>28</td> <td>+12</td></tr>"

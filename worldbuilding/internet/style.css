@@ -10,7 +10,7 @@ body {
     display: flex;
     flex-flow: column;
     position: absolute;
-
+    overflow-y: hidden;
 }
 
 nav {
@@ -44,6 +44,7 @@ button.selected {
 #webpage {
     padding: 20px;
     flex-grow: 1;
+    overflow-y: auto;
 }
 
 .error {
@@ -54,6 +55,7 @@ button.selected {
     color: #0f0;
     background-color: #000;
     font-family: monospace;
+    scrollbar-color: #0f0 #000;
 }
 
 .webpage0 p,
@@ -83,6 +85,7 @@ div.wikibox-right {
     display: inline-block;
     padding: 5px;
     border: 4px solid black;
+    width: min(30%, 250px);
 }
 
 .webpage1 {
@@ -91,7 +94,7 @@ div.wikibox-right {
 }
 
 .webpage1 h1 {
-    margin: 0px;
+    margin: 20px 0px 20px 10px;
 }
 
 .webpage1 h2 {
@@ -131,6 +134,7 @@ div.wikibox-right {
     color: #000;
     background-color: #eec;
     font: georgia;
+    scrollbar-color: #555 #eec;
 }
 
 .webpage2 th,
@@ -202,6 +206,7 @@ div.wikibox-right {
 
 .webpage3 {
     background-color: #8a0;
+    scrollbar-color: #222 #8a0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -256,7 +261,8 @@ div.wikibox-right {
 }
 
 .webpage4 {
-    background-color: #55f;
+    scrollbar-color: #000 #99f;
+    background-color: #99f;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -270,16 +276,16 @@ div.wikibox-right {
     margin: auto;
 }
 
-.webpage4 .admin{
+.webpage4 .admin {
     font-weight: bolder;
-    text-shadow:1px 1px 3px#fff ;
+    text-shadow: 1px 1px 3px#fff;
     color: #a00;
     font-size: large;
 }
 
 .webpage4 .forum {
 
-    background-color: #77f;
+    background-color: #aaf;
     padding: 20px;
     border-radius: 20px;
 }
@@ -295,13 +301,87 @@ div.wikibox-right {
 }
 
 .webpage5 {
+    scrollbar-color: #fff #e2a;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
-    background-color: #f2a;
+    background-color: #e2a;
 }
 
 .webpage5 h1 {
     text-shadow: 4px 4px 0 #00f, 8px 8px 0 #000;
+    transition-duration: 500ms;
+    cursor: pointer;
+    display: inline-block;
+    padding: 8px 16px 16px 8px;
+    background-color: #f4c;
+    border-radius: 20px 0px 20px 0px;
+}
+
+.webpage5 .post {
+    position: relative;
+    padding: 15px;
+    width: min(100%, 750px);
+    margin: auto;
+    border-radius: 15px;
+    background-color: #f3b;
+}
+
+.webpage5 .reply {
+    padding: 15px;
+    margin-left: 10%;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: #f3b;
+    box-shadow: -5px 0px #fff;
+}
+
+.webpage5 .poststub {
+    padding: 15px;
+    width: min(100%, 550px);
+    margin: auto;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    background-color: #f3b;
+    box-shadow: 0px 0px 0 #000, 0px 0px 0 #000;
+    cursor: pointer;
+    transition-duration: 500ms;
+}
+
+.webpage5 .poststub:hover {
+    box-shadow: -8px -8px 0 #00f, 8px 8px 0 #000;
+
+    background-color: #f4d;
+}
+
+.webpage5 .poststub h3,
+.webpage5 .post h2,
+.webpage5 .reply h3 ,
+.webpage5 .reply a {
+    margin-top: 0px;
+}
+
+.webpage5 .reply p {
+    margin-bottom: 8px;
+}
+
+.webpage5 .poststub .commentcount {
+    margin-bottom: 0px;
+}
+
+.webpage5 h1:hover {
+    text-shadow: -4px -4px 0 #00f, -8px -8px 0 #000;
+    padding: 16px 8px 8px 16px;
+}
+
+.webpage5 a {
+    text-shadow: 0px 0px 0 #000, 0px 0px 0 #000;
+    padding: 16px 8px 8px 16px;
+    cursor: pointer;
+    transition-duration: 300ms;
+}
+
+.webpage5 a:hover {
+    text-shadow: -4px -4px 0 #00f, 4px 4px 0 #000;
 }
 
 

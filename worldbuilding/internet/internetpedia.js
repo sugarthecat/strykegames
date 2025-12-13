@@ -81,7 +81,7 @@ const wikiPages = {
             + " One other major city is <a page=\"chicago\">Chicago</a>, a city more north-central to the United States.</p>"
          + "<h3>Culture</h3>"
              + "<p><a page=\"christmas\">Christmas</a> is considered to be one of the largest celebrations in United States culture,"
-             +" along with Haloween. Also important to American culture is college football, with schools like <a page=\"virginia_tech\">Virginia Tech</a> being highly culturally relevant.</p>"
+             +" along with Halloween. Also important to American culture is college football, with schools like <a page=\"virginia_tech\">Virginia Tech</a> being highly culturally relevant.</p>"
             
         },
 
@@ -96,7 +96,7 @@ const wikiPages = {
         body: "<p><b>Virginia Tech</b> is a public land-grant research university located in Blacksburg, <a page=\"virginia\">Virginia</a>.</p>"
         + "<h3>Football Rivalry</h3><p>"
         + "Virginia Tech has a famous football rivalry with the <a page=\"uva\">University of Virginia</a>, where they currently have a 2-win streak, and previously had a 15-win streak"
-        + "until the University of Virginia's 1-win streak in 2019.</p>"
+        + " until the University of Virginia's 1-win streak in 2019.</p>"
     },
 
     uva: {

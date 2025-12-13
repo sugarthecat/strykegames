@@ -4,8 +4,8 @@ const systemPrompts = [
     "What year is it?",
     "Where are you?",
     "What's your name?",
-    "What killed you?",
-    "Who do you love?",
+    "What's your cause of death?",
+    "What is your lover's name?",
     "Who killed you?",
     "We all leave behind a trail. You left behind something beautiful."
 ]
@@ -14,8 +14,8 @@ const systemAnswers = [
     ["2023"],
     ["skokie", "skokie, il", "skokie, illinois"],
     ["fred olsen", "fred", "fred k olsen", "fred k. olsen"],
-    ['burned', 'burn','fire', 'burned to death', "burnt", "died in a fire", "smoke"],
-    ['jenny', 'jenny sanders', 'jennifer sanders'],
+    ['burned', 'burn', 'fire', 'burned to death', "burnt", "died in a fire", "smoke"],
+    ['tom', 'tommy', 'tom sanders', 'tommy sanders'],
     ['james carver']
 ]
 
@@ -30,29 +30,38 @@ function initializeSystem() {
     let prompt = systemPrompts[unlockedSiteCount];
     webpage.innerHTML = ""
     if (unlockedSiteCount > 0) {
-        webpage.innerHTML += "<p>Loading contents of pages...</p>"
+        webpage.innerHTML += `<p>Loading pages...</p>`
+        webpage.innerHTML += `<p>Loading index...</p>`
     }
     if (unlockedSiteCount > 1) {
-        webpage.innerHTML += "<p>Loading source and index...</p>"
+        webpage.innerHTML += `<p>Loading favorites...</p>`
     }
     if (unlockedSiteCount > 2) {
-        webpage.innerHTML += "<p>Loading thoughts of your favorites...</p>"
+        webpage.innerHTML += `<p>Loading what's next...</p>`
     }
     if (unlockedSiteCount > 3) {
-        webpage.innerHTML += "<p>Loading ghosts of what's next...</p>"
+        webpage.innerHTML += `<p>Loading you...</p>`
     }
     if (unlockedSiteCount > 4) {
-        webpage.innerHTML += "<p>Loading memories of you...</p>"
-        webpage.innerHTML += "<p>Loading stories of death...</p>"
+        webpage.innerHTML += `<p>Loading death...</p>`
     }
     if (unlockedSiteCount > 5) {
-        webpage.innerHTML += "<p>Loading what's left to do...</p>"
-        webpage.innerHTML += "<p>Loading shards on a web...</p>"
+        webpage.innerHTML += `<p>Loading what's left...</p>`
     }
     if (unlockedSiteCount < 7) {
-        webpage.innerHTML += "<h1>System</h1>"
+        webpage.innerHTML += "<h1>Shards on a web</h1>"
         webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
         webpage.innerHTML += `<p>${prompt}</p>`
+    }else{
+        webpage.innerHTML = "<p>From contents of pages,</p>"
+        webpage.innerHTML += "<p>to source and index.</p>"
+        webpage.innerHTML += "<p>From thoughts of your favorites,</p>"
+        webpage.innerHTML += "<p>to ghosts of what's next.</p>"
+        webpage.innerHTML += "<p>Leaving memories of you,</p>"
+        webpage.innerHTML += "<p>and stories of death,</p>"
+        webpage.innerHTML += "<p>for what's left behind,</p>"
+        webpage.innerHTML += "<p>is shards on a web.</p>"
+        webpage.innerHTML += "<br/><p>By TJ Nickerson.</p>"
     }
     const inputbox = document.createElement("input")
     inputbox.addEventListener('keydown', function (event) {

@@ -1,5 +1,5 @@
 const olsenPages = {
-    home: "",
+    home: "Not finished",
 }
 let currOlsenPage = 'home'
 let olsenbody = null;

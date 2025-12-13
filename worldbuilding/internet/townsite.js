@@ -14,7 +14,7 @@ const townPages = {
         + "<tr><td>(5/22/2023)</td> <td>Overtime parking</td> <td><a page=\"ticket2\">DUE 6/22/2023</a></td> </tr>"
         + "</table>",
     ticket1: "<h3>Ticket T23834</h3>"
-        + "<p><b>License plate</b>: 123 ABC</p>"
+        + "<p><b>License plate</b>: 284 WJD</p>"
         + "<p><b>Car</b>: 2013 NISSAN ALTIMA</p>"
         + "<p><b>Description</b>: GRAY, DENT IN FRONT PASSENGER SIDE DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
@@ -27,7 +27,7 @@ const townPages = {
         + "<p>ATTENTION! The library will be closed for Monday, June 19, in honor of Juneteenth. </p>"
         + "<p><b>Regular hours:</b></p>"
         + "<p>Mon-Thurs: <b>9AM - 7PM</b></p>"
-        + "<p>Fri: <b>9AM - 10pm</b></p>"
+        + "<p>Fri: <b>9AM - 10PM</b></p>"
         + "<p>Sat: <b>11AM - 5PM</b></p>"
         + "<p>Sun: <b>Closed</b></p>",
     explore: "<h2>Explore Skokie</h2>"
