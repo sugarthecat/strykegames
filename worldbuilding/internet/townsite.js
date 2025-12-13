@@ -9,18 +9,18 @@ const townPages = {
         + "<p> You have <b>3</b> parking tickets</p>"
         + "<table>"
         + "<tr><th>Date</th><th>Cause</th><th>Ticket</th></tr>"
-        + "<tr><td>(12/22/2022)</td> <td>Parking in a designated parade area</td> <td><b>(PAID)</b></td> </tr>"
+        + "<tr><td>(12/22/2005)</td> <td>Parking in a designated parade area</td> <td><b>(PAID)</b></td> </tr>"
         + "<tr><td>(4/27/2006)</td> <td>Parking during street cleaning</td> <td><a page=\"ticket1\">DUE ASAP</a></td> </tr>"
         + "<tr><td>(5/22/2006)</td> <td>Overtime parking</td> <td><a page=\"ticket2\">DUE 6/22/2006</a></td> </tr>"
         + "</table>",
     ticket1: "<h3>Ticket T23834</h3>"
         + "<p><b>License plate</b>: 284 WJD</p>"
-        + "<p><b>Car</b>: 2013 NISSAN ALTIMA</p>"
+        + "<p><b>Car</b>: 1996 SHEENAN ALL-TIMER, SEDAN</p>"
         + "<p><b>Description</b>: GRAY, DENT IN FRONT PASSENGER SIDE DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
     ticket2: "<h3>Ticket T23956</h3>"
         + "<p><b>License plate</b>: 284 WJD</p>"
-        + "<p><b>Car</b>: 2013 NISSAN ALTIMA</p>"
+        + "<p><b>Car</b>: 1996 SHEENAN ALL-TIMER, SEDAN</p>"
         + "<p><b>Description</b>: GRAY, DAMAGE ON FRONT RIGHT DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
     library: "<h2>Library Hours</h2>"

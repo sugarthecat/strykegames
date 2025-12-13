@@ -30,8 +30,10 @@ function initializeSystem() {
     let prompt = systemPrompts[unlockedSiteCount];
     
     let poemFragment = ""
-    if (unlockedSiteCount > 0) {
+    if (unlockedSiteCount >= 0) {
         poemFragment += `<p>Loading pages...<br/>`
+    }
+    if (unlockedSiteCount > 0) {
         poemFragment += `Loading index...<br/>`
     }
     if (unlockedSiteCount > 1) {

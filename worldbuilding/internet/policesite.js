@@ -86,7 +86,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous1</b></p>"
     + "<p>53 mins ago</p>"
-    + "<p>Black hair, green jacket, seems to be around 5 foot 8. Looks like if Mark Ruffalo had a tough turn in life.</p>"
+    + "<p>Black hair, green jacket, seems to be around 5 foot 8. Looks like if the guy who played John Danger had a tough turn in life.</p>"
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>1 hour ago</p>"

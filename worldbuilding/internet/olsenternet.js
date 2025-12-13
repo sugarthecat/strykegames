@@ -36,8 +36,8 @@ const olsenPages = {
         + "<b>Disco:</b> That really sucks. Maybe you should look for greener pastures. Maybe some fancy big-time company in the same industry?<br/>"
         + "<b>Other:</b> I mean, I don't really need that. I have everything ready.<br/>"
         + "<b>Disco:</b> Everything ready for what? How?<br/>"
-        + "<b>Other:</b> I planted what looks like a bribe my boss would be taking. Not only do I get her job, I get a hell of a story to tell.<br/>"
-        + "<b>Disco:</b> That's like, super illegal. She didn't do anything wrong.<br/>"
+        + "<b>Other:</b> I planted what looks like a bribe my boss would be taking. Not only do I get his job, I get a hell of a story to tell.<br/>"
+        + "<b>Disco:</b> That's like, super illegal. He didn't do anything wrong.<br/>"
         + "<b>Other:</b> I mean, you can keep this a secret?<br/>"
         + "<b>Disco:</b> Dude, no. I'm going to tell someone.<br/>"
         + "<p>Then, Other grabs Disco's steering wheel, and pulls it to the right, bringing the car smashing into a building. The car goes up in smoke, and Disco runs away, with Other following close behind.</p>",
@@ -66,13 +66,14 @@ const olsenPages = {
     feel: "<h2>Feel</h2><p>As I ran from the wrecked car, I feel so many things. Betrayed. I feel lost. I feel like I just need to survive today to tell my friends."
         + " It's surreal to have everything switch up so fast. I had to think quickly, so I snuck into that old shed in the cemetery whose key I had stolen. He won't find me in here, "
         + " and I can just wait this out. I'm such an idiot for helping him to write that.</p>",
-    story: "<h2>Story</h2><p>He's always chasing a story. Looking for some allegory or sociopolitical meaning in every simple local event. He said, when I was inside the shed,"
+    story: "<h2>Story</h2><p>He's always chasing a story. Looking for some allegory or sociopolitical meaning in every simple local event. He said, when I was inside the shed:<br/>"
         + "\"It's what we all are. Tragic stories that might make national news, just waiting to happen. It's all for attention, isn't it? "
         + " It's a deal we negotiate. You're dead, and the most famous person around. I helped it happen, so I get to be just a little famous too. "
         + " I'm not greedy. I was ok with the smaller story, the one with the bribery scandal. I hate covering my tracks like this, but a writer going "
         + " insane is a story that I just can't miss. You didn't really give me a choice.\""
         + " </p>",
-    just: "<h2>Just</h2><p>He's working a dead end job at the chronicle. Did he have any right to do what he did? To ruin her life? Just because she's in the way? </p>"
+    just: "<h2>Just</h2><p>He's working a dead end job at the chronicle. Did he have any right to do what he did? To ruin his boss's life? Just because he's in the way? "
+        + "Did he have any right to lock me in here?</p>"
 }
 const olsenLinks = {
     lost: 'lost',

@@ -64,8 +64,13 @@ const skokalPosts = [
         content: "Anybody want RAM sticks? I have extra rn lol, didn't mean to win this auction.",
         replies: [
             {
-                author: "treelover",
+                author: "crunchy_kiwifruit",
                 content: "I could use one if you don't mind.",
+                replies: []
+            },
+            {
+                author: "treelover",
+                content: "You should make a log cabin out of RAM sticks!",
                 replies: []
             },
             {
@@ -320,6 +325,11 @@ const skokalPosts = [
             {
                 author: "italiansadnwich",
                 content: "Good job!",
+                replies: []
+            },
+            {
+                author: "crunchy_kiwifruit",
+                content: "Love it!",
                 replies: []
             },
             {
