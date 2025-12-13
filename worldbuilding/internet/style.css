@@ -355,7 +355,7 @@ div.wikibox-right {
 
 .webpage5 .poststub h3,
 .webpage5 .post h2,
-.webpage5 .reply h3 ,
+.webpage5 .reply h3,
 .webpage5 .reply a {
     margin-top: 0px;
 }
@@ -395,4 +395,31 @@ div.wikibox-right {
 
 .webpage6 {
     background-color: #aca;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.webpage6 hr {
+    border: none;
+    height: 4px;
+    background-color: #000;
+    margin: 20px 0;
+}
+
+.webpage6 .article {
+    margin: auto;
+    width: min(100%, 800px);
+}
+.webpage6 a {
+    color:#00f;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.webpage6 a.subtle {
+    cursor: pointer;
+    color:#000;
+    text-decoration: none;
+}
+.webpage6 a.subtle:hover {
+    color:#fff;
+    text-decoration: underline;
 }

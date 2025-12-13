@@ -12,6 +12,11 @@ const newsPages = {
                 id: "elections"
             },
             {
+                title: "A New Venture in Glenview?",
+                description: "Is Glenview the new site for Chicago's finance and tech scene?",
+                id: "venture"
+            },
+            {
                 title: "New Library Opens Its Doors",
                 description: "The Park Ridge library has been closed for over 5 years, and the new library is set to open its doors",
                 id: "library"
@@ -20,7 +25,7 @@ const newsPages = {
     },
     weather: {
         body: "<h2>Live Weather Updates</h2>"
-            + "<p>Last updated June 6th, 2023 at 4:07 PM</p>"
+            + "<p>Last updated June 6th, 2006 at 4:07 PM</p>"
             + "<p>Precipitation is very unlikely, and it looks like we're headed into a dry summer.</p>"
             + "<p>Cities & Neighborhoods are sorted from closest to furthest to your location. </p>"
             + "<table><tr><th>City</th> <th>High (F)</th><th>Low (F)</th><th>Precipitation Chance</th></tr>"
@@ -35,13 +40,33 @@ const newsPages = {
             + "</table>"
 
     },
+    venture: {
+        body: "<h2>A New Venture in Glenview?</h2>"
+            + "<p>June 4th, 2006</p>"
+            + "<p><i>By <a page=\"parker\">Parker Baker</a></i></p>"
+            + "<p>Is Glenview the next spot for Chicago's finance and tech scene? It may seem unlikely, but just today, Jackson Boulevard, "
+            + "a technology investment firm, announced its plans to establish a new headquarters in Glenview. This seems like it'll bring in "
+            + "new investment into Glenview, as Jackson Boulevard has committed to sponsoring new train stations both near their office and "
+            + "near local clutural spots. It's a hotly debated contest in the village, and people are sharply divided.</p>"
+            + "<h3>Local Concerns</h3>"
+            + "<p>Many locals are worried that these out-of-towners might disturb the local culture, or as many more are concerned, "
+            + "that the influx of high-income earners might significantly disrupt the local economy, and push rent, grocery, and entertainment "
+            + "prices much higher. </p>"
+            + "<h3>Local Support</h3>"
+            + "<p>One local, Cherry, a programmer who goes by \"circuit biter\" online, said that they were excited for this opportunity. According to Cherry, "
+            + "\"It's not super common to have companies this close, and when they move their headquarters a bit closer, we always feel represented.\" <br/>"
+            + " \"Plus, if I started a business, it would make it easier to get investment super close to here, and I wouldn't have to move to San Francisco or New York.\" Cherry added.</p>"
+            + "<h3>In The End...</h3>"
+            + "<p>As many locals are divided, one thing is sure: the fact that Jackson Boulevard finds Glenview to be an attractive place "
+            + " signals a bright future for the village, no matter how this proposal ends.</p>"
+    },
     library: {
         body: "<h2>New Library Opens Its Doors</h2>"
-            + "<p>June 3rd, 2023</p>"
+            + "<p>June 3rd, 2006</p>"
             + "<p><i>By <a page=\"james_carver\">James Carver</a></i></p>"
             + "<h3>Park Ridge's library woes</h3>"
             + "<p>Park Ridge has had library issues for a long time. 27 years after Park Ridge's Perry Library was built in 1972, Park Ridge was forced to close down the library"
-            + " due to a rat infestation and water leakage. After a series of budget cuts to pubilc services, the Perry library has only been open for 1547 days between the years of 1999-2015.</p>"
+            + " due to a rat infestation and water leakage. After a series of budget cuts to pubilc services, the Perry library has only been open for 1547 days between the years of 1986-2004.</p>"
             + "<h3>The New Library</h3>"
             + "<p>Park Ridge's new library, the Andrew Jericho Community Library, is officially set to open within a week. This new library has a broad range of features that the Perry library lacked:"
             + " A myriad of community rooms for kids and elders, a media and game development studio, and a new city ordinance reference section for residents to help themselves comply with local regulations."
@@ -51,16 +76,21 @@ const newsPages = {
     james_carver: {
         body: "<h2>James Carver</h2>"
             + "<p>James Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
-            + " James graduated from Niles North High School in Skokie, where he ran the local newspaper club. He's the newest hire in our local economic news department.</p>"
+            + " James graduated from Niles North High School in Skokie, where he ran the local newspaper club. He's the newest hire in our economy division.</p>"
+    },
+    parker: {
+        body: "<h2>Parker Baker</h2>"
+            + "<p>Parker Baker is the head of our economy division. Parker is a doctorate-level researcher in journalism ethics, and played a crucial role"
+            + " in the 1997 takedown and fraud investigation of Granson Corp.</p>"
     },
     haskell: {
         body: "<h2>Evelyn Haskell</h2>"
             + "<p>Evelyn Haskell has been a veteran reporter in the Chronicle's political division, leading the division. She's had a variety of "
-            + " major interviews, including hosting upwards of 15 mayoral debates in the region, and moderating the second 2015 Chicago mayoral debate.</p>"
+            + " major interviews, including hosting upwards of 15 mayoral debates in the region, and moderating the second 2003 Chicago mayoral debate.</p>"
     },
     elections: {
         body: "<h2>Evanston Mayoral Elections</h2>"
-            + "<p>June 6th, 2023</p>"
+            + "<p>June 6th, 2006</p>"
             + "<p><i>By <a page=\"haskell\">Evelyn Haskell</a></i></p>"
             + "<p>The election date is today for Evanston's special mayoral election, and it's looking to be a tight race. Glen Porter seems to be polling at around +8 favorability"
             + ", but his opponent, Leigh Verne, is close being him. Leigh verne is polling higher, with her numbers looking +12 points favorable. On the other hand, exit polls seem to slightly favor Porter."
@@ -70,7 +100,6 @@ const newsPages = {
             + "<tr> <td>L. Verne</td> <td>40</td> <td>32</td> <td>28</td> <td>+12</td></tr>"
             + "<tr> <td>A. Reagan</td> <td>43</td> <td>17</td> <td>40</td> <td>+3</td></tr>"
             + "<tr> <td>J. Juggard</td> <td>18</td> <td>33</td> <td>49</td> <td>-31</td></tr> </table>"
-
     }
 }
 let currNewsPage = 'home'

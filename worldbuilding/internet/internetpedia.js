@@ -12,7 +12,7 @@ const wikiPages = {
         title: 'Illinois',
         body: "<div class=\"wikibox-right\">"
             + "<p><b>Illinois</b></p>"
-            + "<p>Founded: <b>December 3, 1818 (204 years ago)</b></p>"
+            + "<p>Founded: <b>December 3, 1818 (187 years ago)</b></p>"
             + "</div>"
             + "<p><b>Illinois</b> is a state in the <a page=\"usa\">United States of America</a>. Its largest city is <a page=\"chicago\">Chicago</a>.</p>"
     },
@@ -20,7 +20,7 @@ const wikiPages = {
         title: 'Chicago',
         body: "<div class=\"wikibox-right\">"
             + "<p><b>Chicago</b></p>"
-            + "<p>Founded: <b>March 4th, 1837 (186 years ago)</b></p>"
+            + "<p>Founded: <b>March 4th, 1837 (169 years ago)</b></p>"
             + "</div>"
             + "<p><b>Chicago</b> is the largest city in the state of <a page=\"illinois\">Illinois</a></p>"
     },
@@ -28,7 +28,7 @@ const wikiPages = {
         title: 'Colorado',
         body: "<div class=\"wikibox-right\">"
             + "<p><b>Colorado</b></p>"
-            + "<p>Founded: <b>August 1, 1876 (146 years ago)</b></p>"
+            + "<p>Founded: <b>August 1, 1876 (129 years ago)</b></p>"
             + "</div>"
             + "<p><b>Colorado</b> is a state in the <a page=\"usa\">United States of America</a></p>"
     },
@@ -37,7 +37,7 @@ const wikiPages = {
         body: "<div class=\"wikibox-right\">"
             + "<p><b>Virginia</b></p>"
             + "<p>Founded: <b>1607</b></p>"
-            + "<p>Joined the United States: <b>June 25, 1788 (234 years ago)</b></p>"
+            + "<p>Joined the United States: <b>June 25, 1788 (217 years ago)</b></p>"
             + "</div>"
             + "<p><b>Virginia</b> is a state in the <a page=\"usa\">United States of America</a>. It borders the state of <a page=\"west_virginia\">West Virginia</a> to the west.</p>"
     },
@@ -45,7 +45,7 @@ const wikiPages = {
         title: 'West Virginia',
         body:  "<div class=\"wikibox-right\">"
             + "<p><b>West Virginia</b></p>"
-            + "<p>Founded: <b>June 20, 1863 (159 years ago)</b></p>"
+            + "<p>Founded: <b>June 20, 1863 (142 years ago)</b></p>"
             + "</div>"
             + "<p><b>West Virginia</b> is a state in the <a page=\"usa\">United States of America</a>. It borders the state of <a page=\"virginia\">Virginia</a> to the east.</p>"
     },
@@ -64,7 +64,7 @@ const wikiPages = {
         body: "<div class=\"wikibox-right\">"
             + "<p><b>New York</b></p>"
             + "<p>Founded: <b>1624</b></p>"
-            + "<p>Joined the United States: <b>February 6, 1788 (235 years ago)</b></p>"
+            + "<p>Joined the United States: <b>February 6, 1788 (218 years ago)</b></p>"
             + "</div>"
             + "<p><b>New York</b> is a state in the <a page=\"usa\">United States of America</a>. It's largest city is <a page=\"nyc\">New York City</a></p>"
     },
@@ -95,8 +95,8 @@ const wikiPages = {
         title: 'Virginia Tech',
         body: "<p><b>Virginia Tech</b> is a public land-grant research university located in Blacksburg, <a page=\"virginia\">Virginia</a>.</p>"
         + "<h3>Football Rivalry</h3><p>"
-        + "Virginia Tech has a famous football rivalry with the <a page=\"uva\">University of Virginia</a>, where they currently have a 2-win streak, and previously had a 15-win streak"
-        + " until the University of Virginia's 1-win streak in 2019.</p>"
+        + "Virginia Tech has a famous football rivalry with the <a page=\"uva\">University of Virginia</a>, where they currently have a 2-year win streak."
+        + " Virginia Tech's head coach is Frank Beamer, who has a 11-2 record for the 2005 football season.</p>"
     },
 
     uva: {

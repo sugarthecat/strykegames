@@ -6,16 +6,16 @@ const systemPrompts = [
     "What's your name?",
     "What's your cause of death?",
     "What is your lover's name?",
-    "Who killed you?",
+    "What's your killer's full name?",
     "We all leave behind a trail. You left behind something beautiful."
 ]
 const systemAnswers = [
     ["earth"],
-    ["2023"],
+    ["2006"],
     ["skokie", "skokie, il", "skokie, illinois"],
     ["fred olsen", "fred", "fred k olsen", "fred k. olsen"],
     ['burned', 'burn', 'fire', 'burned to death', "burnt", "died in a fire", "smoke"],
-    ['tom', 'tommy', 'tom sanders', 'tommy sanders'],
+    ['tom', 'tommy', 'tom sanders', 'tommy sanders', 'thomas', 'thomas sanders'],
     ['james carver']
 ]
 
@@ -23,40 +23,44 @@ const systemAnswers = [
 
 // Digital footprints,
 // The dead wandering through wires,
-// Shards across a web.
+// signals of gravestones.
 function initializeSystem() {
     const webpage = document.getElementById("webpage");
 
     let prompt = systemPrompts[unlockedSiteCount];
-    webpage.innerHTML = ""
+    
+    let poemFragment = ""
     if (unlockedSiteCount > 0) {
-        webpage.innerHTML += `<p>Loading pages...</p>`
-        webpage.innerHTML += `<p>Loading index...</p>`
+        poemFragment += `<p>Loading pages...<br/>`
+        poemFragment += `Loading index...<br/>`
     }
     if (unlockedSiteCount > 1) {
-        webpage.innerHTML += `<p>Loading favorites...</p>`
+        poemFragment += `Loading favorites...<br/>`
     }
     if (unlockedSiteCount > 2) {
-        webpage.innerHTML += `<p>Loading what's next...</p>`
+        poemFragment += `Loading what's next...<br/>`
     }
     if (unlockedSiteCount > 3) {
-        webpage.innerHTML += `<p>Loading you...</p>`
+        poemFragment += `Loading you...<br/>`
     }
     if (unlockedSiteCount > 4) {
-        webpage.innerHTML += `<p>Loading death...</p>`
+        poemFragment += `Loading death...<br/>`
     }
     if (unlockedSiteCount > 5) {
-        webpage.innerHTML += `<p>Loading what's left...</p>`
+        poemFragment += `Loading what's left...`
     }
+    if (unlockedSiteCount > 0) {
+        poemFragment += `</p>`
+    }
+    webpage.innerHTML = poemFragment
     if (unlockedSiteCount < 7) {
         webpage.innerHTML += "<h1>Shards on a web</h1>"
         webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
         webpage.innerHTML += `<p>${prompt}</p>`
     }else{
-        webpage.innerHTML = "<p>From contents of pages,</p>"
-        webpage.innerHTML += "<p>to source and index.</p>"
-        webpage.innerHTML += "<p>From thoughts of your favorites,</p>"
-        webpage.innerHTML += "<p>to ghosts of what's next.</p>"
+        webpage.innerHTML = "<p>Digital footprints,<br/>the dead wandering through wires,<br/>signals of gravestones.</p><br/><br/>"
+        webpage.innerHTML += "<p>From contents of pages,<br/>to source and index.</p>"
+        webpage.innerHTML += "<p>From thoughts of your favorites,<br/>to ghosts of what's next.</p>"
         webpage.innerHTML += "<p>Leaving memories of you,</p>"
         webpage.innerHTML += "<p>and stories of death,</p>"
         webpage.innerHTML += "<p>for what's left behind,</p>"
@@ -105,15 +109,15 @@ function initializeSystem() {
         webpage.appendChild(middlepart)
 
         const bottompart = document.createElement('div')
-        if (unlockedSiteCount > 1) {
-            bottompart.innerHTML += "<h2>System help</h2>"
-            bottompart.innerHTML += "<p>Do not enter any incorrect information. </p>"
-        }
         if (unlockedSiteCount > 2) {
+            bottompart.innerHTML += "<h2>System help</h2>"
             bottompart.innerHTML += "<p>No false information will be shown without an author. </p>"
         }
+        if (unlockedSiteCount == 0) {
+            bottompart.innerHTML += "<br/><br/><p>Any resemblence of characters to real people, and companies to real companies, is purely coincidental, except where specific people have been asked if they wanted to be included as a character and said yes.</p>"
+            bottompart.innerHTML += "<p>This game does not work well with touchscreen or mobile devices. A mouse is required to play this game.</p>"
+        }
         if (unlockedSiteCount > 0) {
-            bottompart.innerHTML += "<p>You may be provided access to information to assist with your search.</p>"
             bottompart.innerHTML += "<p>You may not be in sync with reality, please defer all future knowledge to the sources provided.</p>"
         }
 

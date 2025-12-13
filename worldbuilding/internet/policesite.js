@@ -141,7 +141,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous4</b></p>"
     + "<p>3 hours ago</p>"
-    + "<p>OH MY GOD THAT'S EVELYN HASKELL???</p>"
+    + "<p>OH MY GOD THAT'S PARKER FROM THE CHRONICLE???</p>"
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>3 hours ago</p>"

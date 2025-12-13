@@ -3,7 +3,7 @@
 // carvparts = james
 // treelover = olivia
 // australia_isnt_real = crush ( tom )
-// circuitbiter = chelsea (non binary)
+// circuitbiter = cherry (non binary)
 // crunchy_kiwifruit = some guy LOL
 // italiansadnwich = some guy LOL
 const skokalPosts = [
@@ -135,7 +135,7 @@ const skokalPosts = [
                 replies: [
                     {
                         author: "italiansadnwich",
-                        content: "Tom Sanders, you called Doctor Seuss \"Dur Sues\" for like, 5 years.",
+                        content: "Thomas Sanders, you called Doctor Seuss \"Dur Sues\" for like, 5 years.",
                         replies: [
                             {
                                 author: "australia_isnt_real",
@@ -194,7 +194,12 @@ const skokalPosts = [
     {
         author: "australia_isnt_real",
         content: "I feel like there aren't enough trees in Chraston park. It's just like a lot filled with grass.",
-        replies: []
+        replies: [
+            {
+                author: "treelover",
+                content: "Gonna steal this later :)",
+                replies: []
+            }]
     },
     {
         author: "crunchy_kiwifruit",
@@ -245,6 +250,48 @@ const skokalPosts = [
         author: "discotechnical",
         content: "I <3 my artist boy.",
         replies: []
+    },
+    {
+        author: "treelover",
+        content: "Sometimes I feel like a herbivore",
+        replies: [
+            {
+                author: "treelover",
+                content: "Like, I fill my sandwich with so much arugula it's equal parts bread and arugula.",
+                replies: [
+                    {
+                        author: "italiansadnwich",
+                        content: "You're secretly a bunny or perhaps a chicken?",
+                        replies: [
+                            {
+                                author: "treelover",
+                                content: "Perhaps",
+                                replies: []
+                            }]
+                    }]
+            }
+        ]
+    },
+    {
+        author: "treelover",
+        content: "Would you guys beleive me if I said I wasn't vegetarian?",
+        replies: [
+            {
+                author: "circuitbiter",
+                content: "No. Eating raw garlic just makes you weird, not a carnivore.",
+                replies: []
+            },
+            {
+                author: "australia_isnt_real",
+                content: "Yes! Eating raw garlic makes you a cavewoman carnivore.",
+                replies: [
+                    {
+                        author: "circuitbiter",
+                        content: "Tom, you need to ston enabling her.",
+                        replies: []
+                    }]
+            }
+        ]
     },
     {
         author: "discotechnical",
@@ -339,7 +386,7 @@ function initForum() {
     forumbody = document.createElement('div')
     const webpage = document.getElementById("webpage");
     const topSection = document.createElement('div')
-    topSection.innerHTML = "<h1>Skokal</h1><p><b>Skokie's best local forum</b></p>"
+    topSection.innerHTML = "<h1>Skokal</h1><p><b>Skokie's best local chatroom</b></p>"
     topSection.onclick = function () {
         currForumPage = "home";
         updateForum()

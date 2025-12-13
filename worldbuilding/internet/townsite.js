@@ -10,8 +10,8 @@ const townPages = {
         + "<table>"
         + "<tr><th>Date</th><th>Cause</th><th>Ticket</th></tr>"
         + "<tr><td>(12/22/2022)</td> <td>Parking in a designated parade area</td> <td><b>(PAID)</b></td> </tr>"
-        + "<tr><td>(4/27/2023)</td> <td>Parking during street cleaning</td> <td><a page=\"ticket1\">DUE ASAP</a></td> </tr>"
-        + "<tr><td>(5/22/2023)</td> <td>Overtime parking</td> <td><a page=\"ticket2\">DUE 6/22/2023</a></td> </tr>"
+        + "<tr><td>(4/27/2006)</td> <td>Parking during street cleaning</td> <td><a page=\"ticket1\">DUE ASAP</a></td> </tr>"
+        + "<tr><td>(5/22/2006)</td> <td>Overtime parking</td> <td><a page=\"ticket2\">DUE 6/22/2006</a></td> </tr>"
         + "</table>",
     ticket1: "<h3>Ticket T23834</h3>"
         + "<p><b>License plate</b>: 284 WJD</p>"
