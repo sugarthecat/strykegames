@@ -107,7 +107,7 @@ const wikiPages = {
     account: {
         title: 'Account',
         body: "<div class=\"wikibox-break\"><p>Your Account Name: <b>fnfo_evdy</b></p>"
-            + "<p>Account created: <b>January 3rd, 2018 (5 years ago)</b></p>"
+            + "<p>Account created: <b>January 3rd, 2003 (3 years ago)</b></p>"
             + "<p>Account type: <b>User</b></p> </div>"
             + "<p>Please review our <a page=\"help\">Help Page</a> to review the rules.</p>"
     },
