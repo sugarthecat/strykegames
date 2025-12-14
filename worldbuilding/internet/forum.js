@@ -86,7 +86,7 @@ const skokalPosts = [
         replies: [
             {
                 author: "cronk",
-                content: "Palace of Midas, and it's not even close.",
+                content: "Wormhole, and it's not even close.",
                 replies: []
             },
             {
@@ -114,6 +114,29 @@ const skokalPosts = [
                 content: "I'm not gonna hate on a good game just because you trashed it once.",
                 replies: []
             }]
+    },
+    {
+        author: "crunchy_kiwifruit",
+        content: "Full Lord: Threadmelody is the best game of the year and it's not even close.",
+        replies: [
+            {
+                author: "crunchy_kiwifruit",
+                content: "Not only game of the year, it's the best game of all time.",
+                replies: []
+            },
+            {
+                author: "circuitbiter",
+                content: "The original is better and it's not even close."
+                    + " Wasp is a weak character, the abilities are so exploitable,"
+                    + " the diagonal pogo is horrible, and the final boss? straight up dissapointing."
+                    + " Plus it's problematic.",
+                replies: [{
+                    author: "crunchy_kiwifruit",
+                    content: "Splish splash your opinion is trash",
+                    replies: []
+                }]
+            },
+        ]
     },
     {
         author: "circuitbiter",
@@ -162,7 +185,7 @@ const skokalPosts = [
             },
             {
                 author: "italiansadnwich",
-                content: "A beautiful morning to finally fix your car's broken door?",
+                content: "A beautiful morning to finally fix your car's broken passenger door?",
                 replies: [
                     {
                         author: "discotechnical",
@@ -390,7 +413,7 @@ const skokalPosts = [
             },
             {
                 author: "italiansadnwich",
-                content: "Good job Fred!",
+                content: "K for Killing it!",
                 replies: []
             },
             {

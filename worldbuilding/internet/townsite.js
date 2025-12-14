@@ -39,7 +39,7 @@ const townPages = {
         + "<p>Skokie has a farmers market every week, with tons of local produce. Every year, we have parades and festivals to celebrate the diverse cultures of Skokie!"
     ,
     heritage: "<h2>Skokie Heritage</h2>"
-    + "<p>Skokie was first incorporated in 1888, around 50 years after Chicago's incorporation. Originally, Skokie was founded as a German-Luxembourger farming community, supporting Chicago's food supply. Skokie was a major hub of Jewish immigation just before, during, and after World War II.</p>"
+    + "<p>Skokie was first incorporated in 1888, around 50 years after Chicago's incorporation. Originally, Skokie was founded as a German-Luxembourger farming community, supporting Chicago's food supply. Skokie was a major hub of Jewish immigration just before, during, and after World War II.</p>"
     + "<p>Since then, Skokie has been a bulwark against antisemitism. When the American Nazi Party wanted to host a rally in Skokie, the town prevented them from accessing the space, and fought all the way to the Supreme Court for Skokieans' right to feel safe in their own communities.</p>"
 }
 let currTownPage = 'home'

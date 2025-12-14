@@ -47,7 +47,7 @@ const newsPages = {
             + "<p>Is Glenview the next spot for Chicago's finance and tech scene? It may seem unlikely, but just today, Jackson Boulevard, "
             + "a technology investment firm, announced its plans to establish a new headquarters in Glenview. This seems like it'll bring in "
             + "new investment into Glenview, as Jackson Boulevard has committed to sponsoring new train stations both near their office and "
-            + "near local clutural spots. It's a hotly debated contest in the village, and people are sharply divided.</p>"
+            + "near local cultural spots. It's a hotly debated contest in the village, and people are sharply divided.</p>"
             + "<h3>Local Concerns</h3>"
             + "<p>Many locals are worried that these out-of-towners might disturb the local culture, or as many more are concerned, "
             + "that the influx of high-income earners might significantly disrupt the local economy, and push rent, grocery, and entertainment "
@@ -66,11 +66,11 @@ const newsPages = {
             + "<p><i>By <a page=\"james_carver\">James Carver</a></i></p>"
             + "<h3>Park Ridge's library woes</h3>"
             + "<p>Park Ridge has had library issues for a long time. 27 years after Park Ridge's Perry Library was built in 1972, Park Ridge was forced to close down the library"
-            + " due to a rat infestation and water leakage. After a series of budget cuts to pubilc services, the Perry library has only been open for 1547 days between the years of 1986-2004.</p>"
+            + " due to a rat infestation and water leakage. After a series of budget cuts to public services, the Perry library has only been open for 1547 days between the years of 1986-2004.</p>"
             + "<h3>The New Library</h3>"
             + "<p>Park Ridge's new library, the Andrew Jericho Community Library, is officially set to open within a week. This new library has a broad range of features that the Perry library lacked:"
             + " A myriad of community rooms for kids and elders, a media and game development studio, and a new city ordinance reference section for residents to help themselves comply with local regulations."
-            + " Though this new library has drawn criticism for being too-high tech, a large crowd is forecasted to show up at the opening ceremony. It's still to be shown if people will like this new "
+            + " Though this new library has drawn criticism for being too high-tech, a large crowd is forecasted to show up at the opening ceremony. It's still to be shown if people will like this new "
             + " tech-heavy facility, the community is ready to give it a chance.</p>"
     },
     james_carver: {
@@ -93,12 +93,12 @@ const newsPages = {
             + "<p>June 6th, 2006</p>"
             + "<p><i>By <a page=\"haskell\">Evelyn Haskell</a></i></p>"
             + "<p>The election date is today for Evanston's special mayoral election, and it's looking to be a tight race. Glen Porter seems to be polling at around +8 favorability"
-            + ", but his opponent, Leigh Verne, is close being him. Leigh verne is polling higher, with her numbers looking +12 points favorable. On the other hand, exit polls seem to slightly favor Porter."
+            + ", but his opponent, Leigh Verne, is close behind him. Leigh Verne is polling higher, with her numbers looking +12 points favorable. On the other hand, exit polls seem to slightly favor Porter."
             + " Of course, some other candidates remain, but the race seems all but settled on one of these two tonight.</p>"
             + "<table><tr><th>Candidate</th> <th>Approves</th><th>Neutral</th><th>Disapproves</th><th>Net Approval</th></tr>"
             + "<tr> <td>G. Porter</td> <td>51</td> <td>4</td> <td>45</td> <td>+8</td></tr>"
             + "<tr> <td>L. Verne</td> <td>40</td> <td>32</td> <td>28</td> <td>+12</td></tr>"
-            + "<tr> <td>A. Reagan</td> <td>43</td> <td>17</td> <td>40</td> <td>+3</td></tr>"
+            + "<tr> <td>A. Reagan</td> <td>37</td> <td>29</td> <td>34</td> <td>+3</td></tr>"
             + "<tr> <td>J. Juggard</td> <td>18</td> <td>33</td> <td>49</td> <td>-31</td></tr> </table>"
     }
 }
