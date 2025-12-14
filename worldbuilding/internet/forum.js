@@ -60,12 +60,22 @@ const skokalPosts = [
 
     {
         author: "calc_u_later",
-        content: "Trying to think of cryptographic jokes, you guys know any good ones?",
+        content: "Trying to think of binary jokes, you guys know any good ones?",
         replies: [
             {
                 author: "circuitbiter",
-                content: "\"\" \"\" \"\"",
+                content: "I do, you either get them or you don't.",
                 replies: []
+            },
+            {
+                author: "discotechnical",
+                content: "01001110 01001111",
+                replies: [
+                    {
+                        author: "circuitbiter",
+                        content: "You can do better than that!",
+                        replies: []
+                    }]
             }
         ]
     },
@@ -380,7 +390,7 @@ const skokalPosts = [
             },
             {
                 author: "italiansadnwich",
-                content: "Good job!",
+                content: "Good job Fred!",
                 replies: []
             },
             {
