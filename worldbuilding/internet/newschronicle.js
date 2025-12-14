@@ -2,14 +2,14 @@ const newsPages = {
     home: {
         articles: [
             {
-                title: "Live Weather Updates",
-                description: "Temperatures continue to drop from this weekend's high, staying between the mid 50s and high 60s today.",
-                id: "weather"
-            },
-            {
                 title: "Evanston Mayoral Elections",
                 description: "As the votes come in for Evanston's mayoral election, no clear winner has emerged yet.",
                 id: "elections"
+            },
+            {
+                title: "Live Weather Updates",
+                description: "Temperatures continue to drop from this weekend's high, staying between the mid 50s and high 60s today.",
+                id: "weather"
             },
             {
                 title: "A New Venture in Glenview?",
@@ -26,8 +26,9 @@ const newsPages = {
     weather: {
         body: "<h2>Live Weather Updates</h2>"
             + "<p>Last updated June 6th, 2006 at 4:07 PM</p>"
-            + "<p>Precipitation is very unlikely, and it looks like we're headed into a dry summer.</p>"
-            + "<p>Cities & Neighborhoods are sorted from closest to furthest to your location. </p>"
+            + "<p>Precipitation is very unlikely, and it looks like we're headed into a dry summer."
+            + " We have some clouds overhead, but it looks like this shade won't go on much longer.</p>"
+            + "<p>Cities & neighborhoods are sorted from closest to furthest to your location. </p>"
             + "<table><tr><th>City</th> <th>High (F)</th><th>Low (F)</th><th>Precipitation Chance</th></tr>"
             + "<tr> <td>Skokie</td> <td>68</td> <td>54</td> <td>0%</td></tr>"
             + "<tr> <td>Morton Grove</td> <td>72</td> <td>57</td> <td>0%</td></tr>"

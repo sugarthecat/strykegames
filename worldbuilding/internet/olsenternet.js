@@ -13,9 +13,26 @@ const olsenPages = {
         + " <a class=\"obvious\" page=\"home\">Here's a link back to the start.</a>"
         + " Just because you got here doesn't mean you were at a dead end.</p>",
 
-    my_corner: "<h2>My Corner</h2><p>This is a corner of the internet, where I don't follow any rules. " +
-        "<br/>Structures melt and sink into the sand. I won't always give you a way back to where you were." +
-        "<br/>You'll find poetry, and you'll find art, and you'll find my love for this world. </p>",
+    my_corner: "<h2>My Corner</h2><p><i>A Rhyming Acrostic About Here</i></p>"
+        + "<p>Maybe you wound up here by accident. Maybe you did not. "
+        + "<br/>You can count the rules here, you'll find there are naught.</p>"
+
+        + "<p>Please, don't try to be scared by this place.<br/>"
+        + "Leave if you can't deal, or stay and embrace.<br/>"
+        + "Alas, to dive deeper, to the pit of my thoughts.<br/>"
+        + "Click with purpose and grace, find what you sought.<br/>"
+        + "Enjoy your time here, be it light or distraught.</p>"
+
+        + "<p>Over time, you may learn some small patterns.<br/>"
+        + "Not ever is it easy, not once will it flatten.</p>"
+
+        + "<p>To learn of my fate,<br/>"
+        + "Help me tell my story,<br/>"
+        + "Erasing my name.</p>"
+
+        + "<p>Work through my place,<br/>"
+        + "Ease through my backstory,<br/>"
+        + "Beating the blame.</p>",
     dead: "<h2>Dead</h2><p>I've lost my chance to tell the world. Locked in a shed, surrounded by death, framed by a friend I thought I could trust. "
         + "I don't really have time to rhyme, I can feel the heat getting closer, and I think the smoke's getting to my head. I didn't want "
         + "to publish this site for a while, it's just not done. But I'm going to turn it on from my laptop in this shed that's going to collapse soon.</p>",

@@ -131,7 +131,7 @@ const skokalPosts = [
                     + " the diagonal pogo is horrible, and the final boss? straight up dissapointing."
                     + " Plus it's problematic.",
                 replies: [{
-                    author: "crunchy_kiwifruit",
+                    author: "australia_isnt_real",
                     content: "Splish splash your opinion is trash",
                     replies: []
                 }]
@@ -210,11 +210,11 @@ const skokalPosts = [
             },
             {
                 author: "italiansadnwich",
-                content: "I have a crush on people who aren't washed up & working as a coffee boy at the Chronicle, LOL.",
+                content: "I have a crush on people who aren't washed up & working as a (practically) coffee boy at the Chronicle, LOL.",
                 replies: [
                     {
                         author: "cronk",
-                        content: "I'm gonna get the next big story trust me!!",
+                        content: "That's not even fair, you unemployed do-nothing.",
                         replies: []
                     }]
             }]

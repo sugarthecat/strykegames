@@ -4,25 +4,74 @@ const townPages = {
         + "<p>Featured: <a page=\"heritage\">Skokie's Heritage</a>.</p>"
         + "<p>Things to <a page=\"explore\">Explore in Skokie</a>.</p>"
         + "<p>View our <a page=\"library\">library hours</a>.</p>"
-        + "<p>Pay <a page=\"parking\">parking ticket(s)</a>.</p>",
-    parking: "<h2>Parking Tickets</h2>"
-        + "<p> You have <b>3</b> parking tickets</p>"
+        + "<p>View <a page=\"parking\">parking ticket(s)</a>.</p>",
+    your_parking: "<h2>Your Parking Tickets</h2>"
+        + "<p> You have <b>2</b> parking tickets.</p>"
+        + "<p> <a page=\"parking\">Return</a>.</p>"
         + "<table>"
-        + "<tr><th>Date</th><th>Cause</th><th>Ticket</th></tr>"
-        + "<tr><td>(12/22/2005)</td> <td>Parking in a designated parade area</td> <td><b>(PAID)</b></td> </tr>"
-        + "<tr><td>(4/27/2006)</td> <td>Parking during street cleaning</td> <td><a page=\"ticket1\">DUE ASAP</a></td> </tr>"
-        + "<tr><td>(5/22/2006)</td> <td>Overtime parking</td> <td><a page=\"ticket2\">DUE 6/22/2006</a></td> </tr>"
+        + "<tr><th>Status</th><th>Ticket ID</th></tr>"
+        + "<tr><td>DUE ASAP</td>  <td>T23834</td> </tr>"
+        + "<tr><td>DUE 6/12/2006</td><td>T23956</td> </tr>"
         + "</table>",
-    ticket1: "<h3>Ticket T23834</h3>"
+    parking: "<h2>Parking Tickets</h2>"
+        + "<p> View <a page=\"your_parking\">Your Parket Tickets</a>.</p>"
+        + "<table>"
+        + "<tr><th>Date</th><th>Cause</th><th>Ticket ID</th></tr>"
+        + "<tr><td>(4/22/2006)</td> <td>Overtime parking</td> <td><a page=\"T23821\">T23821</a></td> </tr>"
+        + "<tr><td>(4/23/2006)</td> <td>Speeding in a school zone</td> <td><a page=\"T23833\">T23833</a></td> </tr>"
+        + "<tr><td>(4/27/2006)</td> <td>Parking during street cleaning</td> <td><a page=\"T23834\">T23834</a></td> </tr>"
+        + "<tr><td>(4/29/2006)</td> <td>Parking in front of a fire hydrant</td> <td><a page=\"T23843\">T23843</a></td> </tr>"
+        + "<tr><td>(5/02/2006)</td> <td>Impeding traffic</td> <td><a page=\"T23875\">T23875</a></td> </tr>"
+        + "<tr><td>(5/05/2006)</td> <td>Speeding in a school zone</td> <td><a page=\"T23917\">T23917</a></td> </tr>"
+        + "<tr><td>(5/14/2006)</td> <td>Overtime parking</td> <td><a page=\"T23933\">T23933</a></td> </tr>"
+        + "<tr><td>(5/22/2006)</td> <td>Overtime parking</td> <td><a page=\"T23956\">T23956</a></td> </tr>"
+        + "<tr><td>(5/24/2006)</td> <td>Speeding</td> <td><a page=\"T23965\">T23965</a></td> </tr>"
+        + "</table>",
+    T23821: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23821</h3>"
+        + "<p><b>License plate</b>: 205 AWS</p>"
+        + "<p><b>Car</b>: 2003 SHEENAN ALL-TIMER, SEDAN</p>"
+        + "<p><b>Description</b>: YELLOW, NO DAMAGE.</p>"
+        + "<p><b>Owner</b>: CHERRY S. DALE</p>",
+    T23833: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23833</h3>"
+        + "<p><b>License plate</b>: 940 SWB</p>"
+        + "<p><b>Car</b>: 2003 ACM PARKWAY, SUV</p>"
+        + "<p><b>Description</b>: WHITE, NO DAMAGE.</p>"
+        + "<p><b>Owner</b>: SAVANNAH O. DIRK</p>",
+    T23834: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23834</h3>"
         + "<p><b>License plate</b>: 284 WJD</p>"
         + "<p><b>Car</b>: 1996 SHEENAN ALL-TIMER, SEDAN</p>"
         + "<p><b>Description</b>: GRAY, DENT IN FRONT PASSENGER SIDE DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
-    ticket2: "<h3>Ticket T23956</h3>"
+    T23843: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23843</h3>"
+        + "<p><b>License plate</b>: 305 MWW</p>"
+        + "<p><b>Car</b>: 2006 GRAZI, LUXURY</p>"
+        + "<p><b>Description</b>: PINK, NO DAMAGE.</p>"
+        + "<p><b>Owner</b>: PETER T. BULLHORN</p>",
+    T23875: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23875</h3>"
+        + "<p><b>License plate</b>: 829 OAD</p>"
+        + "<p><b>Car</b>: 1977 SHEENAN CLASSIC, TRUCK</p>"
+        + "<p><b>Description</b>: BEIGE, PAINT PEELING, MISSING RIGHT SIDE PASSENGER DOOR, OPEN TRUCK BED.</p>"
+        + "<p><b>Owner</b>: BUCKLEY I. GERHARDT</p>",
+    T23917: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23917</h3>"
+        + "<p><b>License plate</b>: 940 SWB</p>"
+        + "<p><b>Car</b>: 2003 ACM PARKWAY, SUV</p>"
+        + "<p><b>Description</b>: WHITE, NO DAMAGE.</p>"
+        + "<p><b>Owner</b>: SAVANNAH O. DIRK</p>",
+    T23933: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23933</h3>"
+        + "<p><b>License plate</b>: 734 EHS</p>"
+        + "<p><b>Car</b>: 1987 ACM MONTERREY, PICKUP</p>"
+        + "<p><b>Description</b>: RED-BROWN, PAINT PEELING.</p>"
+        + "<p><b>Owner</b>: ALBERT M. HIGGINS</p>",
+    T23956: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23956</h3>"
         + "<p><b>License plate</b>: 284 WJD</p>"
         + "<p><b>Car</b>: 1996 SHEENAN ALL-TIMER, SEDAN</p>"
         + "<p><b>Description</b>: GRAY, DAMAGE ON FRONT RIGHT DOOR.</p>"
         + "<p><b>Owner</b>: FRED K. OLSEN</p>",
+    T23965: "<p><a page=\"parking\">Return</a></p><h3>Ticket T23965</h3>"
+        + "<p><b>License plate</b>: 194 APW</p>"
+        + "<p><b>Car</b>: 2005 BONAPARTE SPEEDSTER, CONVERTIBLE</p>"
+        + "<p><b>Description</b>: RED, NO DAMAGE.</p>"
+        + "<p><b>Owner</b>: EVELYN L. HASKELL</p>",
     library: "<h2>Library Hours</h2>"
         + "<p>ATTENTION! The library will be closed for Monday, June 19, in honor of Juneteenth. </p>"
         + "<p><b>Regular hours:</b></p>"
@@ -39,8 +88,8 @@ const townPages = {
         + "<p>Skokie has a farmers market every week, with tons of local produce. Every year, we have parades and festivals to celebrate the diverse cultures of Skokie!"
     ,
     heritage: "<h2>Skokie Heritage</h2>"
-    + "<p>Skokie was first incorporated in 1888, around 50 years after Chicago's incorporation. Originally, Skokie was founded as a German-Luxembourger farming community, supporting Chicago's food supply. Skokie was a major hub of Jewish immigration just before, during, and after World War II.</p>"
-    + "<p>Since then, Skokie has been a bulwark against antisemitism. When the American Nazi Party wanted to host a rally in Skokie, the town prevented them from accessing the space, and fought all the way to the Supreme Court for Skokieans' right to feel safe in their own communities.</p>"
+        + "<p>Skokie was first incorporated in 1888, around 50 years after Chicago's incorporation. Originally, Skokie was founded as a German-Luxembourger farming community, supporting Chicago's food supply. Skokie was a major hub of Jewish immigration just before, during, and after World War II.</p>"
+        + "<p>Since then, Skokie has been a bulwark against antisemitism. When the American Nazi Party wanted to host a rally in Skokie, the town prevented them from accessing the space, and fought all the way to the Supreme Court for Skokieans' right to feel safe in their own communities.</p>"
 }
 let currTownPage = 'home'
 let townbody = null;
