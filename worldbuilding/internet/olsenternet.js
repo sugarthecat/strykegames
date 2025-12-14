@@ -154,12 +154,13 @@ function initOlsen() {
 function updateOlsen() {
     let text = olsenPages[currOlsenPage]
     for (const page in olsenLinks) {
-        text = text.replaceAll(` ${olsenLinks[page]} `, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a> `)
-        text = text.replaceAll(` ${olsenLinks[page]}.`, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a>.`)
+        let endparts = ['.', ',', '?', ';', ':', '!']
         text = text.replaceAll(`.${olsenLinks[page]} `, `.<a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a> `)
-        text = text.replaceAll(` ${olsenLinks[page]},`, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a>,`)
-        text = text.replaceAll(` ${olsenLinks[page]}?`, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a>?`)
-        text = text.replaceAll(` ${olsenLinks[page]};`, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a>;`)
+        text = text.replaceAll(` ${olsenLinks[page]} `, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a> `)
+        for (let i = 0; i < endparts.length; i++) {
+            const endpart = endparts[i]
+            text = text.replaceAll(` ${olsenLinks[page]}${endpart}`, ` <a page=\"${page}\" class=\"subtle\">${olsenLinks[page]}</a>${endpart}`)
+        }
     }
     olsenbody.innerHTML = text
     let toSearch = []
