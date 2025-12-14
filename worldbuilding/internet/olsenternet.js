@@ -20,7 +20,7 @@ const olsenPages = {
         + "I don't really have time to rhyme, I can feel the heat getting closer, and I think the smoke's getting to my head. I didn't want "
         + "to publish this site for a while, it's just not done. But I'm going to turn it on from my laptop in this shed that's going to collapse soon.</p>",
     died: "<h2>Died</h2><p><i>An Attempt at Writing like Chuck Palahniuk</i></p><p>Something interesting happens when you die. It's like when everything you've built becomes some limited, collector's edition item that a fifty-year-old man keeps in his basement. "
-        + "Everything you've done becomes more valuable, now that you're a rare commodity, because, you know, you're dead. Now, everybody loves you, and were super involved in your life.</p>",
+        + "Everything you've done becomes more valuable, now that you're a rare commodity, because, you know, you're dead. Now, everybody loves you, and was super involved in your life.</p>",
     guest: "<h2>Guest</h2><p><i>An Introduction.</i></p><p>Welcome, my guest, my humble interested visitor, my explorer of corners of the internet. Maybe you're somebody I know. Maybe you're somebody I don't. Maybe you're me. Maybe you're my ghost, trying to remember how you died. "
         + "In any case, I hope you feel welcome. This place rules, and I'd absolutely hate if you didn't enjoy your time here.",
     rules: "<h2>Rules</h2><p><i>A Governing Document.</i></p><p>Welcome to my corner of the internet. I lied. We have very strict rules.</p>"
