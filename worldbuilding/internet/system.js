@@ -28,10 +28,16 @@ function initializeSystem() {
     const webpage = document.getElementById("webpage");
 
     let prompt = systemPrompts[unlockedSiteCount];
-    
+
     let poemFragment = ""
     if (unlockedSiteCount >= 0) {
-        poemFragment += `<p>Loading pages...<br/>`
+        poemFragment += `<p class=\"poemfragment\">`
+    }
+    if (unlockedSiteCount == 0) {
+        poemFragment += "This game does not work well with touchscreen or mobile devices. A mouse is required to play this game.<br/><br/>"
+    }
+    if (unlockedSiteCount >= 0) {
+        poemFragment += `Loading pages...<br/>`
     }
     if (unlockedSiteCount > 0) {
         poemFragment += `Loading index...<br/>`
@@ -54,12 +60,14 @@ function initializeSystem() {
     if (unlockedSiteCount > 0) {
         poemFragment += `</p>`
     }
-    webpage.innerHTML = poemFragment
+    webpage.innerHTML = ""
+
+    webpage.innerHTML += poemFragment
     if (unlockedSiteCount < 7) {
         webpage.innerHTML += "<h1>Shards on a web</h1>"
         webpage.innerHTML += "<p>To refine our reality, answer correctly:</p>"
         webpage.innerHTML += `<p>${prompt}</p>`
-    }else{
+    } else {
         webpage.innerHTML = "<p>Digital footprints,<br/>the dead wandering through wires,<br/>signals of gravestones.</p><br/><br/>"
         webpage.innerHTML += "<p>From contents of pages,<br/>to source and index.</p>"
         webpage.innerHTML += "<p>From thoughts of your favorites,<br/>to ghosts of what's next.</p>"
@@ -111,14 +119,6 @@ function initializeSystem() {
         webpage.appendChild(middlepart)
 
         const bottompart = document.createElement('div')
-        if (unlockedSiteCount > 2) {
-            bottompart.innerHTML += "<h2>System help</h2>"
-            bottompart.innerHTML += "<p>No false information will be shown without an author. </p>"
-        }
-        if (unlockedSiteCount == 0) {
-            bottompart.innerHTML += "<br/><br/><p>Any resemblence of characters to real people, and companies to real companies, is purely coincidental, except where specific people have been asked if they wanted to be included as a character and said yes.</p>"
-            bottompart.innerHTML += "<p>This game does not work well with touchscreen or mobile devices. A mouse is required to play this game.</p>"
-        }
         if (unlockedSiteCount > 0) {
             bottompart.innerHTML += "<p>You may not be in sync with reality, please defer all future knowledge to the sources provided.</p>"
         }

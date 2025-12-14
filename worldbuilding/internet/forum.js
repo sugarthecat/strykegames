@@ -1,26 +1,24 @@
 // users: 
 // discotechnical = fred
-// carvparts = james
-// treelover = olivia
-// australia_isnt_real = crush ( tom )
-// circuitbiter = cherry (non binary)
-// crunchy_kiwifruit = some guy LOL
-// italiansadnwich = some guy LOL
+// cronk = james (reporter)
+// treelover = olivia (vegan)
+// australia_isnt_real = tom (crush)
+// circuitbiter = cherry (non binary linux user)
+// crunchy_kiwifruit = Vera (nonchalant)
+// italiansadnwich = Jonas (annoying)
+// gandoff = Tracy (not yet implemented)
+// calc_u_later = [name] (computer nerd, doesnt know fred)
 const skokalPosts = [
     {
-        author: "carvparts",
+        author: "cronk",
         content: "Any parties this weekend??",
         replies: [
             {
-                author: "discotechnical",
-                content: "Nah, but I'd be down to hang out today if you want.",
-                replies: [
-                    {
-                        author: "carvparts",
-                        content: "Text me!",
-                        replies: []
-                    }]
-            }]
+                author: "calc_u_later",
+                content: "Nah. At least, none that I'm invited to.",
+                replies: []
+            }
+        ]
     },
     {
         author: "australia_isnt_real",
@@ -59,6 +57,54 @@ const skokalPosts = [
                     }]
             },]
     },
+
+    {
+        author: "calc_u_later",
+        content: "Trying to think of cryptographic jokes, you guys know any good ones?",
+        replies: [
+            {
+                author: "circuitbiter",
+                content: "\"\" \"\" \"\"",
+                replies: []
+            }
+        ]
+    },
+
+    {
+        author: "calc_u_later",
+        content: "Best puzzle game ever, go:",
+        replies: [
+            {
+                author: "cronk",
+                content: "Palace of Midas, and it's not even close.",
+                replies: []
+            },
+            {
+                author: "crunchy_kiwifruit",
+                content: "Inner Worlds is awesome, life changing stuff.",
+                replies: [
+                    {
+                        author: "calc_u_later",
+                        content: "This one wins",
+                        replies: []
+                    }]
+            },
+            {
+                author: "treelover",
+                content: "No clue, I only play Digbuild.",
+                replies: []
+            }]
+    },
+    {
+        author: "treelover",
+        content: "Vera is an Inner Worlds fan, confirmed!!!",
+        replies: [
+            {
+                author: "crunchy_kiwifruit",
+                content: "I'm not gonna hate on a good game just because you trashed it once.",
+                replies: []
+            }]
+    },
     {
         author: "circuitbiter",
         content: "Anybody want RAM sticks? I have extra rn lol, didn't mean to win this auction.",
@@ -74,7 +120,12 @@ const skokalPosts = [
                 replies: []
             },
             {
-                author: "carvparts",
+                author: "calc_u_later",
+                content: "In this economy? Yes please!!",
+                replies: []
+            },
+            {
+                author: "cronk",
                 content: "Wouldn't expect anyone else to randomly have RAM sticks.",
                 replies: []
             }
@@ -107,11 +158,16 @@ const skokalPosts = [
                         author: "discotechnical",
                         content: "Hmmm... No.",
                         replies: []
+                    },
+                    {
+                        author: "australia_isnt_real",
+                        content: "Jonas, you don't even have a car.",
+                        replies: []
                     }]
             }]
     },
     {
-        author: "carvparts",
+        author: "cronk",
         content: "So... who do you like??? (thread)",
         replies: [
             {
@@ -124,7 +180,7 @@ const skokalPosts = [
                 content: "I have a crush on people who aren't washed up & working as a coffee boy at the Chronicle, LOL.",
                 replies: [
                     {
-                        author: "carvparts",
+                        author: "cronk",
                         content: "I'm gonna get the next big story trust me!!",
                         replies: []
                     }]
@@ -191,7 +247,7 @@ const skokalPosts = [
         content: "What I would do for a ham sandwich would make the news.",
         replies: [
             {
-                author: "carvparts",
+                author: "cronk",
                 content: "I mean, I'm a reporter. As long as I get the first scoop.",
                 replies: []
             }]
@@ -333,7 +389,7 @@ const skokalPosts = [
                 replies: []
             },
             {
-                author: "carvparts",
+                author: "cronk",
                 content: "Can I publish this?",
                 replies: [
                     {
@@ -413,6 +469,7 @@ function initForum() {
 }
 
 function countReplies(post) {
+    console.log(post)
     let n = post.replies.length;
     for (let i = 0; i < post.replies.length; i++) {
         n += countReplies(post.replies[i])

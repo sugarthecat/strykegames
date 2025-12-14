@@ -55,6 +55,18 @@
     },
     "games": [
         {
+            "title": "Shards on a Web",
+            "link": "worldbuilding/internet",
+            "tags": [
+                "game",
+                "puzzle",
+                "narrative"
+            ],
+            "textColor": "#0f0",
+            "bgColor": "#222",
+            "year": 2025
+        },
+        {
             "title": "Human Onboarding",
             "link": "gamejams/human-onboarding",
             "tags": [

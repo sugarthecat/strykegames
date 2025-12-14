@@ -58,6 +58,9 @@ button.selected {
     scrollbar-color: #0f0 #000;
 }
 
+.webpage0 .poemfragment{
+    height: 120px
+}
 .webpage0 p,
 .webpage0 input {
     font-size: large;

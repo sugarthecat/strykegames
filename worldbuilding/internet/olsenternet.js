@@ -53,12 +53,11 @@ const olsenPages = {
         + "So, go out, and find some cool stuff. Don't get lost in the repetitive or boring parts. </p>",
     love: "<h2>Love</h2><p>He's like if Orpheus never picked up the lyre, and found his way to a chisel. <br/> Each freckle on his face is placed just perfectly, like a reflection of the stars above,"
         + "<br/>with garnet brown eyes I can see my soul's reflection in.<br/> It's like we're in a dance of artists, each making the other the muse, <br/> and each trying to be the artist. <br/> Like two statues sculpting each other, we bring each other to life.</p>",
-    friends: "<h2>Friends</h2><p>Everybody calls everybody their friend, and I think I should make my list short and meaningful. No, just because we're friends on Skokal doesn't mean we're friends here. So here, all my friends are listed—either by their Skokal username or their real name. Just because you aren't on here doesn't mean I don't like you. You know, you're cool, maybe we're just not close. </p>"
+    friends: "<h2>Friends</h2><p>Everybody calls everybody their friend, and I think I should make my list short and meaningful. No, just because we're friends on Skokal doesn't mean we're friends here. So here, all my friends (if they're on Skokal) are listed—either by their Skokal username. Just because you aren't on here doesn't mean I don't like you. You know, you're cool, maybe we're just not close. </p>"
         + "<ul>"
-        + "<li>Tom</li>"
-        + "<li>Brooklyn</li>"
-        + "<li>Jackson</li>"
-        + "<li>carvparts</li>"
+        + "<li>australia_isnt_real</li>"
+        + "<li>crunchy_kiwifruit</li>"
+        + "<li>cronk</li>"
         + "<li>italiansadnwich</li>"
         + "<li>circuitbiter</li>"
         + "<li>treelover</li>"
