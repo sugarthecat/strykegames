@@ -1,4 +1,4 @@
-let currWebsite = -1; //
+let currWebsite = -1; 
 let unlockedSiteCount = 0;
 
 function updateNavbarVisibility() {

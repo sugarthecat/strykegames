@@ -33,8 +33,8 @@ const olsenPages = {
         + "<p>Work through my place,<br/>"
         + "Ease through my backstory,<br/>"
         + "Beating the blame.</p>",
-    dead: "<h2>Dead</h2><p>I've lost my chance to tell the world. Locked in a shed, surrounded by death, framed by a friend I thought I could trust. "
-        + "I don't really have time to rhyme, I can feel the heat getting closer, and I think the smoke's getting to my head. I didn't want "
+    dead: "<h2>Dead</h2><p><i>My Final Words</i></p><p>I've lost my chance to tell the world. Locked in a shed, surrounded by death, framed by a friend I thought I could trust. "
+        + "I don't really have time to rhyme or pick some poetic scheme, I can feel the heat getting closer, and I think the smoke's getting to my head. I didn't want "
         + "to publish this site for a while, it's just not done. But I'm going to turn it on from my laptop in this shed that's going to collapse soon.</p>",
     died: "<h2>Died</h2><p><i>An Attempt at Writing like Chuck Palahniuk</i></p><p>Something interesting happens when you die. It's like when everything you've built becomes some limited, collector's edition item that a fifty-year-old man keeps in his basement. "
         + "Everything you've done becomes more valuable, now that you're a rare commodity, because, you know, you're dead. Now, everybody loves you, and was super involved in your life.</p>",
@@ -88,7 +88,7 @@ const olsenPages = {
         + " It's a deal we negotiate. You're dead, and the most famous person around. I helped it happen, so I get to be just a little famous too. "
         + " I'm not greedy. I was ok with the smaller story, the one with the bribery scandal. I hate covering my tracks like this, but a writer going "
         + " insane is a story that I just have to tell. You didn't really give me a choice.\""
-        + " </p>", // shed, dead
+        + " </p>", 
     just: "<h2>Just</h2><p><i>A Haiku about my friends's lack of morality.</i></p>"
         + "<p>A boy's dead end job,<br/>"
         + "An expert is framed by him,<br/>"

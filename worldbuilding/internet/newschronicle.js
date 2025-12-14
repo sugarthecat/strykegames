@@ -20,6 +20,11 @@ const newsPages = {
                 title: "New Library Opens Its Doors",
                 description: "The Park Ridge library has been closed for over 5 years, and the new library is set to open its doors",
                 id: "library"
+            },
+            {
+                title: "Seven Sides of Skokie",
+                description: "A Poem by Fred Olsen",
+                id: "sevensides"
             }
         ]
     },
@@ -39,6 +44,20 @@ const newsPages = {
             + "<tr> <td>Kenilworth</td> <td>67</td> <td>56</td> <td>5%</td></tr>"
             + "<tr> <td>Glenview</td> <td>72</td> <td>53</td> <td>0%</td></tr>"
             + "</table>"
+
+    },
+    sevensides: {
+        body: "<h2>Seven Sides of Skokie</h2>"
+            + "<p><i>By <a page=\"fred_olsen\">Fred Olsen</a></i></p>"
+            + "<p>Side one is some single family suburban slump.<br/>"
+            + "Side two is indie bands, beers, baroque, and backstreet bashes.<br/>"
+            + "Side three is a depreciating derelict dump.<br/>"
+            + "Side four is fighting for freedom of faith.<br/>"
+            + "Side five is ignorance, even if it is impractical.<br/>"
+            + "Side six is a collection of commoners completing and co-operating to change course. <br/><br/>"
+            + "Side seven is indefensibly humble hope that their home happens to teach your youth beachside beauty,"
+            +" long-term love,<br/>"
+            +" such so our one wonderful world mission might,<br/> on one decisive day,<br/> hopefully happen.</p>"
 
     },
     venture: {
@@ -79,10 +98,16 @@ const newsPages = {
             + "<p>James Carver has been reporting for the North Chicago Chronicle for the past 2 years, since he graduated high school."
             + " James graduated from Niles North High School in Skokie, where he ran the local newspaper club. He's the newest hire in our economy division.</p>"
     },
+    fred_olsen: {
+        body: "<h2>Fred Olsen</h2>"
+            + "<p>Fred Olsen is a University of Illinois - Naperville Student. He's currently a prolific writer at university, and the student "
+            + "aide to the UIN written arts programme coordinator. </p>"
+            + "<br/><br/> <p><i>Fred Olsen is not affiliated or directly employed with the North Chicago Chronicle.</i></p>"
+    },
     parker: {
         body: "<h2>Parker Baker</h2>"
-            + "<p>Parker Baker is the head of our economy division. Parker is a doctorate-level researcher in journalism ethics, and played a crucial role"
-            + " in the 1997 takedown and fraud investigation of Granson Corp.</p>"
+            + "<p>Parker Baker is the head of our economy division. Parker is a doctorate-level researcher in journalism ethics at the University of Illinois - Naperville"
+            + ", and played a crucial role in the 1997 takedown and fraud investigation of Granson Corp.</p>"
     },
     haskell: {
         body: "<h2>Evelyn Haskell</h2>"

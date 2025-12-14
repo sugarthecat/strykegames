@@ -128,8 +128,7 @@ const skokalPosts = [
                 author: "circuitbiter",
                 content: "The original is better and it's not even close."
                     + " Wasp is a weak character, the abilities are so exploitable,"
-                    + " the diagonal pogo is horrible, and the final boss? straight up dissapointing."
-                    + " Plus it's problematic.",
+                    + " the diagonal pogo is horrible, and the final boss? straight up dissapointing.",
                 replies: [{
                     author: "australia_isnt_real",
                     content: "Splish splash your opinion is trash",
