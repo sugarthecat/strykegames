@@ -20,11 +20,6 @@ const newsPages = {
                 title: "New Library Opens Its Doors",
                 description: "The Park Ridge library has been closed for over 5 years, and the new library is set to open its doors",
                 id: "library"
-            },
-            {
-                title: "Seven Sides of Skokie",
-                description: "A Poem by Fred Olsen",
-                id: "sevensides"
             }
         ]
     },
