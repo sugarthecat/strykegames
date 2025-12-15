@@ -151,7 +151,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous4</b></p>"
     + "<p>3 hours ago</p>"
-    + "<p>Wait, did she have a camera crew nearby?</p>"
+    + "<p>Wait, did he have a camera crew nearby?</p>"
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>3 hours ago</p>"
@@ -159,7 +159,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous1</b></p>"
     + "<p>4 hours ago</p>"
-    + "<p>Oh, also she's wearing a blue skirt suit with some purple and yellow tie.</p>"
+    + "<p>Oh, also he's's wearing a charcoal suit with some purple and yellow tie.</p>"
     + "<hr/>"
     + "<p><b>Anomymous3</b></p>"
     + "<p>4 hours ago</p>"
@@ -179,7 +179,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous1</b></p>"
     + "<p>5 hours ago</p>"
-    + "<p>Seems like somebody's getting arrested near Chraston park. She looks really professional, maybe some kind of investment banker?</p>"
+    + "<p>Seems like somebody's getting arrested near Chraston park. He looks really professional, maybe some kind of investment banker?</p>"
     + "</div>",
 }
 
