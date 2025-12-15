@@ -129,8 +129,26 @@ const olsenPages = {
         + "<p>The taste of a pill,<br/>"
         + "and a legal contract deploys.<br/>"
         + "A guest who rests on the hill,<br/>"
-        + "always will. </p>"
-
+        + "always will. </p>",
+    kill: "<h2>Kill</h2><p>A Pentarchan Sonnet about Methods of Murder</p>"
+    + "<p>"
+    + "Some killers prefer the ever-personal knife.<br/>"
+    + "It's an old weapon, but they can keep with it.<br/>"
+    + "They like to make their murder so very intimate.<br/>"
+    + "Keeping murder quick, though painful, is almost nice.<br/>"
+    + "My killer decided to leave me alight.<br/>"
+    + "If only at the car crash is when I'd bit.<br/>"
+    + "It's no way to die with my level of wit.<br/>"
+    + "If only this would be a longer night.<br/>"
+    + "</p>"
+    + "<p>"
+    + "To be peaceful is to die by gunshot.<br/>"
+    + "To be serene to be dead quick.<br/>"
+    + "To not suffocate on a rope knot.<br/>"
+    + "To not be left in a blaze alit.<br/>"
+    + "I love my life life a lot.<br/>"
+    + "I wish not to slowly lose it.<br/>"
+    + "</p>"
 }
 const olsenLinks = {
     lost: 'lost',
@@ -148,7 +166,8 @@ const olsenLinks = {
     story: 'story',
     heat: 'heat',
     shed: 'shed',
-    cemetery: 'cemetery'
+    cemetery: 'cemetery',
+    kill: 'kill'
 
 }
 let currOlsenPage = 'home'

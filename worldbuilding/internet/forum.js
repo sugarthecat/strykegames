@@ -25,7 +25,7 @@ const skokalPosts = [
         content: "Can the sun just, not today? I want to sleep in.",
         replies: [
             {
-                author: "circuitbiter",
+                author: "treelover",
                 content: "REAL!!!!",
                 replies: [
                     {
