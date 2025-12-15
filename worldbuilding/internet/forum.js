@@ -245,11 +245,11 @@ const skokalPosts = [
     },
     {
         author: "italiansadnwich",
-        content: "I love cars. They're so VROOM!",
+        content: "I love trains. They're so CHOO CHOO!",
         replies: [
             {
-                author: "circuitbiter",
-                content: "I love my rustbucket truck",
+                author: "calc_u_later",
+                content: "I love my rustbucket truck more than any train.",
                 replies: []
             }
         ]
