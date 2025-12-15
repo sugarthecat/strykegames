@@ -28,6 +28,7 @@ const policePages = {
     + "<h3>Arrest in Chraston Park</h3>"
     + "<p>Updated 3 hours ago </p>"
     + "</div>",
+
     fire: "<p><a page=\"home\">Return</a>.</p>"
     + "<hr/>"
     + "<div class=\"forum\">"
@@ -63,6 +64,7 @@ const policePages = {
     + "<p>24 mins ago</p>"
     + "<p>Looks like there's a fire in the old cemetery? Anybody have any updates?</p>"
     + "</div>",
+
     druggie: "<p><a page=\"home\">Return</a>.</p>"
     + "<hr/>"
     + "<div class=\"forum\">"
@@ -97,8 +99,8 @@ const policePages = {
     + "<p><b>Anomymous1</b></p>"
     + "<p>1 hour ago</p>"
     + "<p>I can see somebody getting arrested near Church and Mill. Guy looks unkempt.</p>"
-    + "</div>"
-    ,
+    + "</div>",
+
     crash: "<p><a page=\"home\">Return</a>.</p>"
     + "<hr/>"
     + "<div class=\"forum\">"
@@ -126,6 +128,7 @@ const policePages = {
     + "<p>2 hours ago</p>"
     + "<p>Brutal car crash on Dempster and North Crawford. Nobody dead, a couple probably injured? Some guy drove a sedan (not a car guy, forgive me, I do not know which type) into the corner of a building. Thing is trashed. </p>"
     + "</div>",
+
     corruption: "<p><a page=\"home\">Return</a>.</p>"
     + "<hr/>"
     + "<div class=\"forum\">"
@@ -181,6 +184,7 @@ const policePages = {
     + "<p>5 hours ago</p>"
     + "<p>Seems like somebody's getting arrested near Chraston park. He looks really professional, maybe some kind of investment banker?</p>"
     + "</div>",
+    
 }
 
 // homepage
