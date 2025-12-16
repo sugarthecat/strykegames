@@ -46,8 +46,7 @@ class Assets {
         this.titleoverlay = loadImage("assets/titlescreen.png")
         this.nuts = [
             loadImage("assets/nut/plate.jpg"),
-            loadImage("assets/nut/burger.jpg"),
-            loadImage("assets/nut/beach.jpg")
+            loadImage("assets/nut/burger.jpg")
         ]
         this.cooking = {
             cheese:{
