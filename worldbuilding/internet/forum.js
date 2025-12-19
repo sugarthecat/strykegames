@@ -296,7 +296,7 @@ const skokalPosts = [
     },
     {
         author: "crunchy_kiwifruit",
-        content: "Any book reccomendations?",
+        content: "Any book recommendations?",
         replies: [
             {
                 author: "discotechnical",

@@ -101,10 +101,10 @@ const olsenPages = {
         + "set this place alight.<br/>"
         + "Now this small shed is my coffin</p>",
     shed: "<h2>Shed</h2><p><i>Ginnsberg sentences about my hiding space</i></p>"
-        + "<p>Hiding from a man I once considered a friend.</p>"
-        + "<p>My life now upside down in a cemetery.</p>"
-        + "<p>Feeling my life fade like these rotten wooden walls.</p>"
-        + "<p>Writing poetry on my laptop, killing time.</p>",
+        + "<p>I'm stuck hiding in a shed from a man I once considered a friend.</p>"
+        + "<p>My life is being turned upside down in this stupid cemetery.</p>"
+        + "<p>Stuck inside rotten wooden walls that I feel just as unstable as.</p>"
+        + "<p>All I can do is write poetry on my laptop, to pass the time.</p>",
     cemetery: "<h2>Cemetery</h2><p><i>A Villainelle about Hingham Cemetery</i></p>"
         + "<p>At the cemetery on a hill,<br/>"
         + "You wouldn't go there if you had a choice<br/>"
