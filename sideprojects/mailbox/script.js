@@ -10,7 +10,8 @@ function preload() {
         "title": new TitleScreen(),
         "unwritten": new UnwrittenLetter(),
         "handwriting": new Handwritten(),
-        "letter": new Letter()
+        "letter": new Letter(),
+        "simulator": new Simulator()
     }
     Assets.loadAssets()
 }

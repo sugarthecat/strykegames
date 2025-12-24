@@ -6,14 +6,18 @@ class Button {
         this.h = h;
         this.text = text;
         this.action = action;
+        this.visible = true;
     }
     HandleClick(x, y) {
-        if (x >= this.x && y > this.y && y <= this.y + this.h && x <= this.x + this.w) {
+        if (x >= this.x && y > this.y && y <= this.y + this.h && x <= this.x + this.w && this.visible) {
             this.action();
         }
     }
     //mouseX and Y
     Draw(x, y) {
+        if(!this.visible){
+            return;
+        }
         noStroke()
         textSize(this.h*0.85)
         textSize(min(textSize(),textSize()*this.w/textWidth(this.text)))

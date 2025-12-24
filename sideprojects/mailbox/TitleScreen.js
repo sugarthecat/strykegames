@@ -2,33 +2,47 @@ class TitleScreen extends GUI {
     constructor() {
         super();
 
-        this.elements = []
-        this.updateButtons();
-    }
-    updateButtons(){
-        
-        this.elements = []
-        let now = new Date();
-        let buttonOneRelease = new Date("February 14, 2025 00:00:00");
-        let buttonTwoRelease = new Date("February 14, 2025 08:00:00");
-        let buttonThreeRelease = new Date("February 14, 2025 16:00:00");
-        if (now > buttonOneRelease) {
-            this.elements.push(new Button(100, 180, 400, 40, "A Message Never Sent,", function () {
+        this.elements = [
+            new Button(50, 180, 200, 40, "A Message Never Sent", function () {
                 screenOn = "unwritten";
                 screens.unwritten.reset();
-            }))
-        }
-        if (now > buttonTwoRelease) {
-            this.elements.push(new Button(100, 250, 400, 40, "A Handwritten Note", function () {
+            }), 
+            new Button(350, 180, 200, 40, "A Handwritten Note", function () {
                 screenOn = "handwriting";
                 screens.handwriting.reset();
-            }))
-        }
-        if (now > buttonThreeRelease) {
-            this.elements.push(new Button(100, 320, 400, 40, "and A Letter", function () {
+            }),
+            new Button(50, 250, 200, 40, "A Letter", function () {
                 screenOn = "letter";
                 screens.letter.reset();
-            }))
+            }),
+            new Button(350, 250, 200, 40, "A Boyfriend Simulator", function () {
+                screenOn = "simulator";
+                screens.letter.reset();
+            }), 
+            new Button(50, 320, 200, 40, "A Stupid Game", function () {
+                screenOn = "exassasin";
+                screens.letter.reset();
+            }), 
+            new Button(350, 320, 200, 40, "A Memoir", function () {
+                screenOn = "memoir";
+                screens.letter.reset();
+            })
+        ]
+        this.updateButtons();
+    }
+    updateButtons() {
+
+        let now = new Date();
+        const releaseTimes = [new Date("February 14, 2025 00:00:00"),
+        new Date("February 14, 2025 08:00:00"),
+        new Date("February 14, 2025 16:00:00"),
+        new Date("December 24, 2025 12:00:00"),
+        new Date("December 25, 2025 0:00:00"),
+        new Date("December 25, 2025 12:00:00")
+        ]
+        for (let i = 0; i < min(releaseTimes.length, this.elements.length); i++) {
+            console.log(this.elements[i], i)
+            this.elements[i].visible = now > releaseTimes[i]
         }
     }
     Draw(x, y) {
