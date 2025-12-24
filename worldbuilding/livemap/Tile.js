@@ -1,9 +1,10 @@
-const TARGET_TILE_SIZE = 30;
-const TILE_MIN_SIZE = 20;
+const TARGET_TILE_SIZE = 35;
+const TILE_MIN_SIZE = 25;
 
-const URBANIZATION_NOISE_SCALE = 0.3
+let total = 0;
+let above = 0
 class Tile {
-    constructor() {
+    constructor(isIsland = false) {
         this.nation = false;
         this.takenThisTurn = false;
         this.population = 0
@@ -13,16 +14,12 @@ class Tile {
         this.connections = []
         this.geocolor = color(0)
         this.politicalColor = color(255, 0, 0)
-        this.troops = 0;
-        this.arrivingTroops = 0;
         this.isFrontline = false;
-        this.entrenchment = 0;
-        this.security = 1000;
-        this.milRecruitment = 0;
+        this.isSeaside = false;
+        this.isIsland = isIsland;
     }
     UpdateInternal() {
         this.takenThisTurn = false;
-        //this.population -= mobilizedTroops;
         this.isFrontline = false;
         this.isEncircled = true;
         for (let i = 0; i < this.connections.length; i++) {
@@ -31,63 +28,6 @@ class Tile {
             } else {
                 this.isEncircled = false;
             }
-        }
-        if (this.isFrontline) {
-            this.entrenchment++;
-            this.security = 0
-        } else {
-            this.security++;
-            this.entrenchment = 0;
-            this.troops = 0;
-        }
-    }
-    GetDefenseModifier() {
-        let str = 0.6 + this.importance + dist1(0.5, this.temp);
-        if (this.nation == this.originalNation) {
-            str *= 1.5
-        }
-        return log(this.entrenchment + 1) * str
-    }
-    SeizeTile(oppTile) {
-        this.troops -= oppTile.GetDefenders()
-        this.nation.AnnexTile(oppTile)
-        oppTile.troops = this.troops * 1 / 2
-        this.troops /= 2
-        this.takenThisTurn = true;
-        oppTile.takenThisTurn = true
-        oppTile.entrenchment = 0;
-        oppTile.security = 0;
-    }
-    GetDefenders() {
-        let defenders = max(0, this.troops);
-        return defenders;
-    }
-    TakeCasualties(casualties) {
-        this.troops -= casualties
-    }
-    AttackNeighbors() {
-        if (this.isFrontline && !this.takenThisTurn && !this.isEncircled) {
-            let tilesToAttack = []
-            for (let i = 0; i < this.connections.length; i++) {
-                let oppTile = this.connections[i]
-                if (oppTile.nation != this.nation && !oppTile.takenThisTurn && (this.troops > oppTile.GetDefenders() * oppTile.GetDefenseModifier() || oppTile.isEncircled)) {
-                    tilesToAttack.push(oppTile)
-                }
-            }
-            if (tilesToAttack.length > 0) {
-                let oppTile = random(tilesToAttack)
-                let atk = this.troops;
-                let oppTroops = oppTile.GetDefenders();
-                this.TakeCasualties(oppTroops * random(0.01, 0.05))
-                oppTile.TakeCasualties(atk * random(0.01, 0.05) / oppTile.GetDefenseModifier())
-                oppTile.security *= 0.9
-                if (oppTile.GetDefenders() * 10 < this.troops) {
-                    this.SeizeTile(oppTile)
-                }
-
-            }
-        } else if (!this.takenThisTurn) {
-
         }
     }
     Draw() {
@@ -102,10 +42,6 @@ class Tile {
                     fill(50)
                 }
                 break;
-            case 2:
-                let scalar = min(sqrt(this.troops) / sqrt(100000), 1)
-                fill(this.nation.color._getRed() * scalar, this.nation.color._getGreen() * scalar, this.nation.color._getBlue() * scalar)
-                break;
             default:
                 fill(this.geocolor)
                 break
@@ -119,29 +55,39 @@ class Tile {
 
     }
     DrawCity() {
-        push ()
+        push()
         stroke(0)
         strokeWeight(5)
-        for(let i = 0; i<this.connections.length; i++){
-            line (this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, this.connections[i].position.x * TILE_SIZE, this.connections[i].position.y * TILE_SIZE)
+        for (let i = 0; i < this.connections.length; i++) {
+            continue
+            line(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, this.connections[i].position.x * TILE_SIZE, this.connections[i].position.y * TILE_SIZE)
         }
-        pop ()
-        if (this.isMajorCity) {
+        pop()
+        push()
+        rectMode(CENTER)
+        if (this.importance > 0.65) {
             fill(50)
             circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 4)
             fill(255)
             circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 3)
             fill(50)
             circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 2)
-        } else if (this.isCity) {
+        } else if (this.importance > 0.5) {
             fill(50)
-            circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 2)
+            circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 2.75)
             fill(255)
-            circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 1)
+            circle(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 1.75)
+        } else if (this.importance > 0.4) {
+            fill(50)
+            rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 1.8, TILE_SIZE * 1.8)
+            fill(255)
+            rect(this.position.x * TILE_SIZE, this.position.y * TILE_SIZE, TILE_SIZE * 0.9, TILE_SIZE * 0.9)
         }
-
+        pop()
     }
     SetupVariables() {
+        total++;
+
         let avgYValue = 0;
         let avgXValue = 0
         for (let i = 0; i < this.points.length; i++) {
@@ -157,8 +103,21 @@ class Tile {
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
         this.temp = temp
-        this.importance = max(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.5)
-        this.population = floor(Math.pow(this.importance + 1, 23) * Math.pow(this.points.length, 0.7) * Math.pow(1.2 - dist1(0.5, temp), 2))
+        this.geoPop = constrain(noise(avgXValue * URBANIZATION_NOISE_SCALE, avgYValue * URBANIZATION_NOISE_SCALE + 100), 0.3, 0.8)
+
+        this.population = floor(30 * Math.pow(this.geoPop + 1, 14) * Math.pow(this.points.length, 0.7) * Math.pow(1.2 - dist1(0.5, temp), 2))
+
+
+        this.importance = random() * random(0.5, 1) * random(0.5, 1) * (this.isSeaside ? 1 : random());
+        if (this.importance > 0.5) {
+            above++;
+        }
+        let urbanPop = 50 * Math.pow(1000000, this.importance)
+        if(urbanPop < this.population && this.importance > 0.4){
+            urbanPop += this.population * random()
+        }
+        this.population = floor(this.population + urbanPop)
+        //urban population
         this.maxpop = this.population;
         //console.log(this.population)
         this.terrain = ""
@@ -176,14 +135,8 @@ class Tile {
             this.terrain = "Desert"
             this.geocolor = color(250, 50 + temp * 150, 20)
         }
-        let importanceWeight = 0;
-        if (this.importance > 0.65) {
-            importanceWeight = 0.7;
-            this.isCity = true;
-        }
-        if (this.importance > 0.7) {
-            importanceWeight = 0.9;
-            this.isMajorCity = true;
+        let importanceWeight = this.importance ** 2;
+        if (this.importance > 0.6) {
             this.terrain = "Urban Area"
         }
         this.geocolor = color(
@@ -237,6 +190,17 @@ class Tile {
                 }
                 tiles[closestTileIndex].points.push(this.points[i])
                 closestTiles[this.points[i].x][this.points[i].y] = tiles[closestTileIndex]
+                if (
+                    points[this.points[i].x - 1] && points[this.points[i].x + 1] &&
+                    !(
+                        points[this.points[i].x - 1][this.points[i].y]
+                        && points[this.points[i].x + 1][this.points[i].y]
+                        && points[this.points[i].x][this.points[i].y + 1]
+                        && points[this.points[i].x][this.points[i].y - 1]
+                    )
+                ) {
+                    closestTiles[this.points[i].x][this.points[i].y].isSeaside = true
+                }
             }
             for (let i = 0; i < this.points.length; i++) {
                 let point = this.points[i]
@@ -410,7 +374,7 @@ function DrawSelectedTile() {
     if (selectedTile) {
         let vertexes = selectedTile.vertexes
         stroke(0)
-        strokeWeight(scaleFactor * 5)
+        strokeWeight(scaleFactor * 3)
         beginShape();
         noFill();
         for (let i = 0; i < vertexes.length; i++) {

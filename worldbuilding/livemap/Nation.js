@@ -24,35 +24,14 @@ class Nation {
             return
         }
         this.population = 0;
-        this.troops = 0;
-        let frontlineTiles = [];
         let largestCity = this.tiles[0]
         for (let i = 0; i < this.tiles.length; i++) {
             this.population += this.tiles[i].population
-            this.troops += this.tiles[i].troops
             if (this.tiles[i].population > largestCity.population) {
                 largestCity = this.tiles[i]
             }
         }
 
-
-        let tilesToSearch = [largestCity]
-        let searchedTiles = [largestCity]
-
-        while (tilesToSearch.length > 0) {
-            let currTile = tilesToSearch[0]
-            for (let i = 0; i < currTile.connections.length; i++) {
-                let newTile = currTile.connections[i]
-                if (newTile.nation == this && !searchedTiles.includes(newTile)) {
-                    searchedTiles.push(newTile)
-                    tilesToSearch.push(newTile)
-                }
-            }
-            if (currTile.isFrontline) {
-                frontlineTiles.push(currTile)
-            }
-            tilesToSearch.shift()
-        }
     }
     LoseTile(tile) {
         this.tiles.splice(this.tiles.indexOf(tile), 1)

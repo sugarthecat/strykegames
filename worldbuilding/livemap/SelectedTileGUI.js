@@ -20,8 +20,8 @@ class SelectedTileGUI extends GUI {
         this.elements[1].text = selectedTile.name
         this.elements[2].text =  selectedTile.terrain + (selectedTile.nation != selectedTile.originalNation ? ", Occupied " : "")
         this.elements[3].text = "Population: " + formatNumber(selectedTile.population);
-        this.elements[4].text = `${formatNumber(selectedTile.troops)} Troops`;
-        this.elements[5].text = '';
+        this.elements[4].text = `Tile Count: ${(selectedTile.isSeaside)}`;
+        this.elements[5].text = `Importance: ${selectedTile.importance.toFixed()}`    ;
         this.elements[6].text = "View Nation";
         push()
         translate(xOffset, yOffset)

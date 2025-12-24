@@ -1,4 +1,5 @@
 const STARTING_NATION_COUNT = 25;
+const ISLAND_NATION_GARUNTEED_POP = 1000000
 let nations = []
 function setup_land() {
     //generate land array
@@ -8,7 +9,7 @@ function setup_land() {
         for (let j = 0; j < TILE_HEIGHT; j++) {
             let x = i * MAP_WIDTH / TILE_WIDTH;
             let y = j * MAP_HEIGHT / TILE_HEIGHT;
-            let isLand = noise(x * NOISE_SCALE, y * NOISE_SCALE) > LAND_CUTOFF;
+            let isLand = noise(x * LAND_NOISE_SCALE, y * LAND_NOISE_SCALE) > LAND_CUTOFF;
             isLandArr[i].push(isLand)
             coveredLand[i].push(false);
         }
@@ -19,7 +20,7 @@ function setup_land() {
             if (isLandArr[i][j] && !coveredLand[i][j]) {
                 let landArea = getLandmass(i, j)
                 //console.log(landArea.length)
-                let newTile = new Tile()
+                let newTile = new Tile(true)
                 for (let i = 0; i < landArea.length; i++) {
                     newTile.points.push(landArea[i])
                 }
@@ -27,56 +28,21 @@ function setup_land() {
                 if (newTile.points.length > 100) {
                     //break continents with > 100 area
                     landMasses.push(newTile.Split());
-                } else if (newTile.points.length > 15) {
+                } else if (newTile.points.length > 25) {
 
-                    //clear islands with < 15 area;
+                    //clear islands with < 25 area;
                     landMasses.push([newTile]);
                 }
             }
         }
     }
-    //connect landmasses
-    for(let i = 0; i<landMasses.length; i++){
-        //find closest landmass distance
-        let mindists = []
-        for(let j = 0; j<landMasses.length; j++){
-            if(j == i){
-                continue;
-            }
-            let mindist = dist2pos(landMasses[i][0].position,landMasses[j][0].position)
-            let connTiles = [landMasses[i][0],landMasses[j][0]]
-            for(let i2 = 0; i2 < landMasses[i].length; i2++){
-                for(let j2 = 0; j2 < landMasses[j].length; j2++){
-                    let newdist = dist2pos(landMasses[i][i2].position,landMasses[j][j2].position);
-                    if(newdist < mindist){
-                        mindist = newdist;
-                        connTiles = [landMasses[i][i2],landMasses[j][j2]]
-                    }
-                }
-            }
-            mindists.push({dist:mindist,tiles: connTiles})
-        }
-        let conn = mindists[0];
-        for(let j = 0; j<mindists.length; j++){
-            if(mindists[j].dist < conn.dist){
-                conn = mindists[j]
-            }
-        }
-        for(let j = 0; j< mindists.length; j++){
-            if(mindists[j].dist < conn.dist * 2){
-                
-                mindists[j].tiles[0].Connect(mindists[j].tiles[1])
-            }
+    //collect tiles from landmasses
+    tiles = []
+    for (let i = 0; i < landMasses.length; i++) {
+        for (let j = 0; j < landMasses[i].length; j++) {
+            tiles.push(landMasses[i][j])
         }
     }
-    //join lists
-    while (landMasses.length > 1) {
-        for(let i = 0; i<landMasses[landMasses.length-1].length; i++){
-            landMasses[0].push(landMasses[landMasses.length-1][i])
-        }
-        landMasses.pop()
-    }
-    tiles = landMasses[0]
     //setup occupying tiles
     isLandArr = []
     coveredLand = []
@@ -89,7 +55,7 @@ function setup_land() {
             occupyingTile[point.x][point.y] = tiles[i]
         }
     }
-    //spawn nations
+    //spawn nations randomly
     let usedTiles = []
     nations = []
     for (let i = 0; i < STARTING_NATION_COUNT; i++) {
@@ -98,6 +64,31 @@ function setup_land() {
         usedTiles.push(newTile);
         nations[i].AnnexTile(newTile);
     }
+    //if a landmass does not have any nations, 
+    // and its above a certail tile count,
+    // add one
+
+    for (let i = 0; i < landMasses.length; i++) {
+        let totalPop = 0
+        let hasNation = false
+        for (let j = 0; j < landMasses[i].length; j++) {
+            if (landMasses[i][j].nation) {
+                hasNation = true;
+                break;
+            }
+            totalPop += landMasses[i][j].population
+        }
+        if (hasNation) {
+            continue;
+        }
+        if (totalPop > ISLAND_NATION_GARUNTEED_POP || landMasses[i].length > 10) {
+            nations.push(new Nation())
+            let newTile = landMasses[i][0]
+            usedTiles.push(newTile);
+            nations[nations.length-1].AnnexTile(newTile);
+        }
+    }
+
     let going = true;
     while (going) {
         usedTiles = []
@@ -156,6 +147,6 @@ function getLandmass(x1, y1) {
 function dist1(x1, x2) {
     return Math.abs(x1 - x2);
 }
-function dist2pos(a,b) {
-    return dist2(a.x,a.y,b.x,b.y);
+function dist2pos(a, b) {
+    return dist2(a.x, a.y, b.x, b.y);
 }

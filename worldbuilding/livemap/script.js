@@ -1,5 +1,6 @@
 let tiles = []
-const NOISE_SCALE = 0.01;
+const LAND_NOISE_SCALE = 0.01;
+const URBANIZATION_NOISE_SCALE = 0.005
 const TEMP_NOISE_SCALE = 0.008;
 const LAND_CUTOFF = 0.5;
 const TILE_SIZE = 3
@@ -17,35 +18,29 @@ let buttons;
 let isLandArr = []
 let coveredLand = []
 let occupyingTile = []
-let MAP_MODE = 1;
+let MAP_MODE = 0;
 let selectedTileGUI;
 let selectedNationGUI;
 let selectedNation = null;
 function setup() {
     selectedTileGUI = new SelectedTileGUI();
     selectedNationGUI = new SelectedNationGUI();
+    let startTime = (new Date()).getTime()
     noStroke();
     SetupWorld();
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
         new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
-        new Button(0, 100, 200, 50, "Troops", function () { MAP_MODE = 2 }),
     ]
+    console.log(`${(new Date()).getTime()-startTime} ms`)
 }
 let camerax = 0;
 let cameray = 0;
 let scaleFactor = 1
 let ticksRan = 0
-let mostTroops = 0;
 function draw() {
-    mostTroops = 1;
-    for (let i = 0; i < tiles.length; i++) {
-        if(tiles[i].troops > mostTroops){
-            mostTroops = tiles[i].troops
-        }
-    }
     currDate = new Date();
-    let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
+    //let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
     //while(ticksRan < currentTick){
     if (frameCount % 1 == 0) {
         Tick();

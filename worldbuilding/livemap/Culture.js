@@ -1,10 +1,13 @@
-const NAMING_STYLES = ["Robotic", "English", "German", "Russian", "French"]
-const ENGLISH_SUFFIXES = [" City", "port", "shire", 'ham', 'mouth']
+const NAMING_STYLES = ["American", "Robotic", "English", "German", "Russian", "French", "Greek", "Chinese"]
+const ENGLISH_SUFFIXES = ["borough", "field", "port", "shire", 'ham', 'mouth', 'ley', 'itch']
 const GERMAN_SUFFIXES = ["burg", "en", "furt", "feld", 'gart', "au", "ich", "zig"]
-const RUSSIAN_SUFFIXES = ["burg", "ov", "grad", "sk", "atov", "ovy"]
-const FRENCH_SUFFIXES = ["eaux", "bourg", "eau", "aise","is","ais","les","on"]
+const RUSSIAN_SUFFIXES = ["ov", "grad", "sk", "atov", "ovy", "tov", "ir", "orod"]
+const FRENCH_SUFFIXES = ["eaux", "bourg", "eau", "aise", "is", "ais", "les", "on"]
+const GREEK_SUFFIXES = ["opolis", "ople", "iki", "upoli", "mos", "dri"]
+const CHINESE_SUFFIXES = ["ing", "nang", "sha", "ing", "king", "dong", "ruo"]
+const AMERICAN_SUFFIXES = ["field", "ton", "ville", "town"]
 const CONSONANTS = ["b", "c", "d", "f", "g", "h", 'j', 'k', 'l', 'm', 'p', 'r', 's', 't', 'v', 'w', 'z', "th", 'sk', "gr", "rl"]
-const VOWELS = ["a", 'e', 'i', 'o', 'u']
+const VOWELS = ["a", 'e', 'i', 'o', 'u', ]
 class Culture {
 
     constructor() {
@@ -17,10 +20,14 @@ class Culture {
                 this.numberStyle = random(["Roman", "Normal"])
                 break;
             default:
+                //generate consonant / vowel distribution
                 this.consonants = []
                 this.vowels = []
-                for (let i = 0; i < 50; i++) {
+                for (let i = 0; i < 30; i++) {
                     this.consonants.push(random(CONSONANTS))
+                }
+                for(let i = 0; i<10; i++){
+                    
                     this.vowels.push(random(VOWELS))
                 }
                 break;
@@ -31,16 +38,19 @@ class Culture {
             let newName = ""
             switch (this.namingStyle) {
                 case "Robotic":
-                    newName = this.GenerateName(i + 1)
+                    newName = this.GenerateCityName(i + 1)
+                    break;
+                case "American":
+                    newName = this.GenerateCityName(tiles[i])
                     break;
                 default:
-                    newName = this.GenerateName()
+                    newName = this.GenerateCityName()
                     break;
             }
             tiles[i].name = newName
         }
     }
-    GenerateName(arg) {
+    GenerateCityName(arg) {
         let name = "test"
         switch (this.namingStyle) {
             case "Robotic":
@@ -51,7 +61,7 @@ class Culture {
                 }
                 break;
             case "English":
-                name = this.generateNameBase() + random(ENGLISH_SUFFIXES)
+                name = this.generateNameBase(3, 4) + random(ENGLISH_SUFFIXES)
                 break;
             case "German":
                 name = this.generateNameBase() + random(GERMAN_SUFFIXES)
@@ -62,14 +72,38 @@ class Culture {
             case "French":
                 name = this.generateNameBase() + random(FRENCH_SUFFIXES)
                 break;
+            case "Greek":
+                name = this.generateNameBase() + random(GREEK_SUFFIXES)
+                break;
+            case "Chinese":
+                name = this.generateNameBase() + random(CHINESE_SUFFIXES)
+                break;
+            case "American":
+                if (arg.importance > 0.4) {
+                    name = this.generateNameBase();
+
+                    if (random() < 0.4) {
+                        name += " City"
+                    } else if (random() < 0.3) {
+                        name = "New " + name;
+                    } else if (random() < 0.2) {
+                        name = "Saint " + name;
+                    } else {
+                        name += random(AMERICAN_SUFFIXES)
+                    }
+                } else {
+                    name = this.generateNameBase() + " County";
+                }
+
+                break;
             default:
 
                 break;
         }
         return capitalizeFirstLetter(name);
     }
-    generateNameBase() {
-        let length = random(3, 5)
+    generateNameBase(minCount = 3, maxCount = 5) {
+        let length = random(minCount, maxCount)
         let base = ""
         for (let i = floor(random(1.25)); i < length; i++) {
             if (i % 2 == 1) {
@@ -113,5 +147,9 @@ function ToRomanNumeral(num) {
     return textForm;
 }
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    let words = string.split(" ")
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1)
+    }
+    return words.join(" ");
 }
