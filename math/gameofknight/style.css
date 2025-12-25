@@ -1,0 +1,18 @@
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    background-color: lightgray ;
+    /* Hide scrollbars */
+}
+
+canvas {
+    display: block;
+    margin-top: 40px;
+}
+
+div#content{
+    display: inline-block;
+    margin: auto;
+}

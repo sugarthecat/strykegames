@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="script.js"></script>
+    <script src="../p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Game Of Knight</title>
+</head>
+
+<body>
+    <div id="content">
+        <h1>The Game of Knight</h1>
+        <p>Like the game of life, but with a knight's move rules.</p>
+        <p>
+            <button class="small" onclick="stepSim()">
+                Step
+            </button>
+            <button class="small" id="playBtn" onclick="togglePlay()">
+                Play
+            </button>
+            <input type="range" min="1" max="25" value="3" class="slider" id="stepsec">
+            <span id="sps"></span>
+        </p>
+        <p>
+            <input type="range" min="1" max="40" value="16" class="slider" id="height">
+            <span id="heighttxt"></span>
+        </p>
+        <p>
+            <input type="range" min="1" max="50" value="32" class="slider" id="width">
+            <span id="widthtxt"></span>
+        </p>
+        <p>
+
+            <button class="small" onclick="popRandom()">
+                Randomly Populate
+            </button>
+            <button class="small" onclick="popNone()">
+                Clear Board
+            </button>
+        </p>
+        <main></main>
+    </div>
+</body>
