@@ -141,6 +141,21 @@ class Simulator extends GUI {
                 case "potato3":
                     image(Assets.simulator.potato3, 0, 0, 600, 400);
                     break;
+                case "cake1":
+                    image(Assets.simulator.cake1, 0, 0, 600, 400);
+                    break;
+                case "cake2":
+                    image(Assets.simulator.cake2, 0, 0, 600, 400);
+                    break;
+                case "cake3":
+                    image(Assets.simulator.cake3, 0, 0, 600, 400);
+                    break;
+                case "cake4":
+                    image(Assets.simulator.cake4, 0, 0, 600, 400);
+                    break;
+                case "cake5":
+                    image(Assets.simulator.cake5, 0, 0, 600, 400);
+                    break;
                 case "summon":
                     if (this.time > 1) {
                         this.bfaction = false;
@@ -232,7 +247,8 @@ class Simulator extends GUI {
             cake1: 'cake2',
             cake2: 'cake3',
             cake3: 'cake4',
-            cake4: 'plate',
+            cake4: 'cake5',
+            cake5: 'plate',
         }
         if (this.bfaction) {
             if (this.bfaction in clickAdvance) {

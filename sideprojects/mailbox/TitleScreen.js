@@ -20,7 +20,7 @@ class TitleScreen extends GUI {
                 screens.letter.reset();
             }), 
             new Button(50, 320, 200, 40, "A Stupid Game", function () {
-                screenOn = "exassasin";
+                screenOn = "assasingame";
                 screens.letter.reset();
             }), 
             new Button(350, 320, 200, 40, "A Memoir", function () {
@@ -32,12 +32,12 @@ class TitleScreen extends GUI {
     }
     updateButtons() {
 
-        let now = new Date();
+        let now = new Date("December 25, 2025 13:00:00");
         const releaseTimes = [new Date("February 14, 2025 00:00:00"),
         new Date("February 14, 2025 08:00:00"),
         new Date("February 14, 2025 16:00:00"),
         new Date("December 24, 2025 12:00:00"),
-        new Date("December 25, 2025 0:00:00"),
+        new Date("December 25, 2025 12:00:00"),
         new Date("December 25, 2025 12:00:00")
         ]
         for (let i = 0; i < min(releaseTimes.length, this.elements.length); i++) {

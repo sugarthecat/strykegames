@@ -11,7 +11,8 @@ function preload() {
         "unwritten": new UnwrittenLetter(),
         "handwriting": new Handwritten(),
         "letter": new Letter(),
-        "simulator": new Simulator()
+        "simulator": new Simulator(),
+        "assasingame": new AssasinGame()
     }
     Assets.loadAssets()
 }
