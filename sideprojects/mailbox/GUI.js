@@ -2,6 +2,15 @@ class GUI{
     constructor(){
         this.elements = []
     }
+    reset(){
+
+    }
+    mousePressed(x,y){
+
+    }
+    mouseReleased(x,y){
+        
+    }
     Draw(x,y){
         for(let i = 0; i<this.elements.length; i++){
             this.elements[i].Draw(x,y);

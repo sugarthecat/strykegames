@@ -2,7 +2,6 @@
 class Simulator extends GUI {
     constructor() {
         super();
-        this.reset()
     }
     reset() {
         this.fireActive = false;

@@ -2,8 +2,6 @@
 class UnwrittenLetter extends GUI {
     constructor() {
         super();
-        this.time = 0;
-        this.elements = []
     }
     reset() {
         this.time = 0;

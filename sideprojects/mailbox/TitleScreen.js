@@ -2,6 +2,8 @@ class TitleScreen extends GUI {
     constructor() {
         super();
 
+    }
+    reset(){
         this.elements = [
             new Button(50, 180, 200, 40, "A Message Never Sent", function () {
                 screenOn = "unwritten";
@@ -32,7 +34,7 @@ class TitleScreen extends GUI {
     }
     updateButtons() {
 
-        let now = new Date("December 25, 2025 13:00:00");
+        let now = new Date("December 27, 2025 13:00:00");
         const releaseTimes = [new Date("February 14, 2025 00:00:00"),
         new Date("February 14, 2025 08:00:00"),
         new Date("February 14, 2025 16:00:00"),
@@ -41,7 +43,6 @@ class TitleScreen extends GUI {
         new Date("December 26, 2025 18:00:00")
         ]
         for (let i = 0; i < min(releaseTimes.length, this.elements.length); i++) {
-            console.log(this.elements[i], i)
             this.elements[i].visible = now > releaseTimes[i]
         }
     }

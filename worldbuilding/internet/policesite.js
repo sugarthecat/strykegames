@@ -50,7 +50,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>13 mins ago</p>"
-    + "<p>My theory's wrong - Kid escaping isn't a match for the wrecked car owner. He says the perp was a writer, he wrote that poem, \"Seven Sides of Something\", I don't quite remember what.   </p>"
+    + "<p>My theory's wrong - Kid escaping isn't a match for the wrecked car owner. He says the perp was a writer, he wrote that poem, \"Seven Sides of Skokie\", I don't quite remember what.   </p>"
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>21 mins ago</p>"

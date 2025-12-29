@@ -12,12 +12,17 @@ function preload() {
         "handwriting": new Handwritten(),
         "letter": new Letter(),
         "simulator": new Simulator(),
-        "assasingame": new AssasinGame()
+        "assasingame": new AssasinGame(),
+        "memoir": new Memoir()
     }
     Assets.loadAssets()
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    for (const key in screens) {
+        screens[key].reset()
+    }
+
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
@@ -39,7 +44,7 @@ function draw() {
     rect(600, 0, xTranslation, 400)
     rect(0, -yTranslation, 600, yTranslation)
     rect(0, 400, 600, yTranslation)
-    if(frameCount % 100 == 0){
+    if (frameCount % 100 == 0) {
         screens.title.updateButtons()
     }
 }
@@ -49,15 +54,15 @@ function mouseClicked() {
 }
 
 function mousePressed() {
-    if (screenOn == "handwriting") {
-        screens[screenOn].mousePressed();
-    }
+    let mousePosition = getMousePosition()
+    screens[screenOn].mousePressed(mousePosition.x, mousePosition.y);
+
 }
 
 function mouseReleased() {
-    if (screenOn == "handwriting") {
-        screens[screenOn].mouseReleased();
-    }
+    let mousePosition = getMousePosition()
+    screens[screenOn].mouseReleased(mousePosition.x, mousePosition.y);
+
 }
 
 function getMousePosition() {
