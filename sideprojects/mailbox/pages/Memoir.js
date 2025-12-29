@@ -7,7 +7,7 @@ class Memoir extends GUI {
         this.time = 0;
         this.velocity = 0;
         this.mcskinpos = [50, 50];
-        this.currPage = 3
+        this.currPage = 0
         this.pageSelected = false
         this.elements = [new Button(2, 2, 100, 20, "Return To Mailbox", function () { screenOn = "title" })]
         this.leftX = 400;
