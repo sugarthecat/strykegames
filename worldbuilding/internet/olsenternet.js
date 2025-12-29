@@ -62,7 +62,7 @@ const olsenPages = {
     secret_link: "<h2>Secret Link</h2><p><i>A Riddle Poem</i></p><p>Link, link, on the site;<br/>Who was the face on TV, live?</p>"
         + "<p>Link, link, on the page;<br/>Who's the reporter who once got framed?</p>"
         + "<p>Link, link, that has died;<br/>Who would target one so wise?</p>"
-        + "<p>Link, link, in the browser;<br/>Who would benefit from a world without her?</p>",
+        + "<p>Link, link, in the browser;<br/>Who would benefit from a world without him?</p>",
     link: "<h2>Link</h2><p><i>A metaphor about links</i></p><p>Links are tunnels through time and space. I find it so easy to get lost.</p>",
     life: "<h2>Life</h2><p><p><i>A Twenty-Year-Old's Attempt at Life Advice</i></p>Life is horribly temporary. There's some shame in the fact that it doesn't last forever.<br/> "
         + "You get the privilege of experiencing rainbows and dandelions and as many books as you have time for.<br/>"
@@ -71,7 +71,7 @@ const olsenPages = {
         + "So, go out, and find some cool stuff. Don't get lost in the repetitive or boring parts. </p>",
     love: "<h2>Love</h2><p><i>An Ode to my boyfriend.</i></p><p>He's like if Orpheus never picked up the lyre, and found his way to a chisel. <br/> Each freckle on his face is placed just perfectly, like a reflection of the stars above,"
         + "<br/>with garnet brown eyes I can see my soul's reflection in.<br/> It's like we're in a dance of artists, each making the other the muse, <br/> and each trying to be the artist. <br/> Like two statues sculpting each other, we bring each other to life.</p>",
-    friends: "<h2>Friends</h2><p><i>A list of people.</i></p><p>Everybody calls everybody their friend, and I think I should make my list short and meaningful. No, just because we're friends on Skokal doesn't mean we're friends here. So here, all my friends (if they're on Skokal) are listed—either by their Skokal username. Just because you aren't on here doesn't mean I don't like you. You know, you're cool, maybe we're just not close. </p>"
+    friends: "<h2>Friends</h2><p><i>A list of people.</i></p><p>Everybody calls everybody their friend, and I think I should make my list short and meaningful. No, just because we're friends on Skokal doesn't mean we're friends here. So here, all my friends (if they're on Skokal) are listed by their Skokal username. Just because you aren't on here doesn't mean I don't like you. You know, you're cool, maybe we're just not close. </p>"
         + "<ul>"
         + "<li>australia_isnt_real</li>"
         + "<li>crunchy_kiwifruit</li>"

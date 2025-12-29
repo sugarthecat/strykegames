@@ -102,7 +102,7 @@ const newsPages = {
     parker: {
         body: "<h2>Parker Baker</h2>"
             + "<p>Parker Baker is the head of our economy division. Parker is a doctorate-level researcher in journalism ethics at the University of Illinois - Naperville"
-            + ", and played a crucial role in the 1997 takedown and fraud investigation of Granson Corp.</p>"
+            + ", and played a crucial role in the 1997 takedown and fraud investigation of Granson Corp. Parker Baker is suspended at the Chronicle pending a bribery investigation.</p>"
     },
     haskell: {
         body: "<h2>Evelyn Haskell</h2>"

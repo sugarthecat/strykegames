@@ -146,7 +146,7 @@ const policePages = {
     + "<hr/>"
     + "<p><b>Anomymous4</b></p>"
     + "<p>3 hours ago</p>"
-    + "<p>OH MY GOD THAT'S PARKER FROM THE CHRONICLE???</p>"
+    + "<p>OH MY GOD THAT'S PARKER FROM THE CHRONICLE??? I was wondering why he was so quiet!</p>"
     + "<hr/>"
     + "<p><b>Anomymous2</b></p>"
     + "<p>3 hours ago</p>"
