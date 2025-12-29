@@ -21,11 +21,11 @@ class TitleScreen extends GUI {
                 screenOn = "simulator";
                 screens.letter.reset();
             }), 
-            new Button(50, 320, 200, 40, "A Stupid Game", function () {
-                screenOn = "assasingame";
-                screens.letter.reset();
-            }), 
-            new Button(350, 320, 200, 40, "A Memoir", function () {
+            //new Button(50, 320, 200, 40, "A Stupid Game", function () {
+            //    screenOn = "assasingame";
+            //    screens.letter.reset();
+            //}), 
+            new Button(200, 320, 200, 40, "A Memoir", function () {
                 screenOn = "memoir";
                 screens.letter.reset();
             })
@@ -39,7 +39,7 @@ class TitleScreen extends GUI {
         new Date("February 14, 2025 08:00:00"),
         new Date("February 14, 2025 16:00:00"),
         new Date("December 24, 2025 12:00:00"),
-        new Date("December 26, 2025 18:00:00"),
+        //new Date("December 26, 2025 18:00:00"),
         new Date("December 26, 2025 18:00:00")
         ]
         for (let i = 0; i < min(releaseTimes.length, this.elements.length); i++) {

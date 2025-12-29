@@ -6,20 +6,17 @@ class Memoir extends GUI {
     reset() {
         this.time = 0;
         this.velocity = 0;
-        this.currPage = 0
+        this.mcskinpos = [50, 50];
+        this.currPage = 3
         this.pageSelected = false
-        this.elements = [new Button(5, 5, 200, 40, "Return To Mailbox", function () { screenOn = "title" })]
-        this.leftX = 0;
+        this.elements = [new Button(2, 2, 100, 20, "Return To Mailbox", function () { screenOn = "title" })]
+        this.leftX = 400;
         this.pagetitles = ["Application",
             "The Mailbox",
             "The War Room",
             "A Weird Hallway",
             "Visiting UMW",
             "Minecraft",
-            "After the Summer",
-            "Meeting your family",
-            "Fields of Fear",
-            "IHOP With Alec"
         ]
         this.pages = []
         for (let i = 0; i < this.pagetitles.length; i++) {
@@ -131,9 +128,11 @@ class Memoir extends GUI {
         this.coverPage.textFont("Times New Roman")
         this.coverPage.textSize(50)
         this.coverPage.text("A Memoir", 200, 150)
+        this.coverPage.textSize(20)
+        this.coverPage.text("or: \"How did we get here?\"", 200, 200)
         this.coverPage.textSize(30)
-        this.coverPage.text("For Adrienne", 200, 210)
-        this.coverPage.text("By TJ", 200, 250)
+        this.coverPage.text("For Adrienne", 200, 230)
+        this.coverPage.text("By TJ", 200, 270)
         this.coverPage.fill(255, 108, 180)
         this.coverPage.beginShape()
         this.coverPage.vertex(50, 450)
@@ -206,16 +205,76 @@ class Memoir extends GUI {
                 }
             } else {
                 page.fill(abs(this.time % 4 - 2) * 255 / 2)
-                page.text("Will you be", 400, 600)
-                page.text("my girlfriend?", 400, 650)
+                page.text("Will you be", 400, 525)
+                page.text("my girlfriend?", 400, 575)
             }
             page.fill(0)
-        page.textAlign(LEFT)
+            page.textAlign(LEFT)
             const texts = ["If I could write you ", "just one thing, I'd write you ", "a love letter.  "]
             const currText = texts[floor((this.time % 15) / 5)]
-            const progress = 1-abs(this.time % 5 - 2.5)/2.5;
-            page.text(currText.substring(0,ceil (progress * currText.length)) + (this.time % 1 < 0.7 ? "_" : ""), 200, 250)
+            const progress = 1 - abs(this.time % 5 - 2.5) / 2.5;
+            page.text(currText.substring(0, ceil(progress * currText.length)) + (this.time % 1 < 0.7 ? "_" : ""), 200, 250)
 
+            const msg = "Do you think I came off too strong here?\n\nSorry not sorry, it worked anyways."
+            page.noStroke()
+            page.textSize(20)
+            page.text(msg, 200, 700)
+        }
+        if (index == 2) {
+            page.stroke(0)
+            page.strokeWeight(12)
+            const lines = [
+                [150, 275, 200, 475],
+                [250, 300, 300, 460],
+                [350, 290, 400, 458],
+                [450, 283, 500, 481],
+                [100, 395, 540, 355]
+            ]
+            for (let i = 0; i < lines.length; i++) {
+                const thisProgress = constrain((this.time % 10 + noise(this.time)) / 10 * (lines.length + 1) - i, 0, 1);
+                if (thisProgress == 0) {
+                    continue;
+                }
+                const line = lines[i]
+                page.line(line[0], line[1],
+                    line[2] * thisProgress + line[0] - thisProgress * line[0],
+                    line[3] * thisProgress + line[1] - thisProgress * line[1],)
+            }
+            const msg = "I was scared to death in that little conference room."
+                + "\nFar too nervous to do anything, I was just too shy to\nask to hold your hand."
+            page.noStroke()
+            page.textSize(20)
+            page.text(msg, 400, 650)
+        }
+        if (index == 3) {
+            page.stroke(0)
+            page.strokeWeight(12)
+            page.textFont(Assets.fonts.handwriting)
+            const msg = "I don't know what I expected \nwhen I went upstairs with you,"
+            +"\nbut when you rested your head on my shoulder,\nand I put my arm around you,\nI knew I was right where I should be."
+            page.noStroke()
+            page.textSize(40)
+            page.text(msg, 400, 300)
+        }
+        if (index == 4) {
+            const msg = "I only had a few days in the semester,\nbut I wasn't thinking about finals any more."
+                + "\nAll I could think about now was lying next to you."
+            page.noStroke()
+            page.textSize(20)
+            page.text(msg, 400, 700)
+        }
+        if (index == 5) {
+            page.stroke(0)
+            page.strokeWeight(12)
+            if ((this.time % 3) - deltaTime / 1000 <= 0) {
+                this.mcskinpos = [random(75, 725), random(75, 700)]
+            }
+            page.image(Assets.mcskin, this.mcskinpos[0] - 75, this.mcskinpos[1] - 75, 150, 150)
+            const msg = "I love our minecraft world."
+                + "\nWhenever I miss you, \nI can just build you another lab."
+            page.noStroke()
+            page.textSize(20)
+            page.text(msg, 400, 700)
         }
     }
 }

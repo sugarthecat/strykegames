@@ -2,6 +2,7 @@ class Assets{
     static fonts = {}
     static simulator = {}
     static memoirPages = []
+    
     static loadAssets(){
         this.fonts.handwriting = loadFont("Assets/pizzaFav.ttf")
         this.fonts.love = loadFont("Assets/heartEyes.ttf")
@@ -27,8 +28,10 @@ class Assets{
         this.simulator.cake4 = loadImage("Assets/cake4.png")
         this.simulator.cake5 = loadImage("Assets/cake5.png")
         
-        for(let i = 0; i<1; i++){
+        for(let i = 0; i<6; i++){
             this.memoirPages.push(loadImage(`Assets/memoir/page${i+1}.png`))
         }
+
+        this.mcskin = loadImage("Assets/memoir/mcskin.png")
     }
 }
