@@ -1,4 +1,4 @@
-const STARTING_NATION_COUNT = 25;
+const STARTING_NATION_COUNT = 50;
 const ISLAND_NATION_GARUNTEED_POP = 1000000
 const TARGET_TILE_SIZE = 35;
 const TILE_MIN_SIZE = 25;
@@ -279,6 +279,7 @@ function isValidTileShape(tile){
         }
     }
     if(unvisitedPoints.size > 0){
+        //fail if not contigous
         return false;
     }
     return true;

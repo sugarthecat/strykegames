@@ -34,19 +34,8 @@ function setup() {
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
         new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
     ]
-    console.log(`${(new Date()).getTime() - startTime} ms`)
+    console.log(`Load time: ${(new Date()).getTime() - startTime} ms`)
     Tick()
-    //log nations at start, sorted by population
-    nations.sort((a, b) => b.population - a.population);
-    for (let i = 0; i < nations.length; i++) {
-        if (nations[i].population > 2000000) {
-            console.log(`${nations[i].name.name}: ${Math.floor(nations[i].population / 100000) / 10} Million`)
-
-        } else {
-
-            console.log(`${nations[i].name.name}: ${nations[i].population.toLocaleString()}`)
-        }
-    }
 }
 let camerax = 0;
 let cameray = 0;
@@ -113,13 +102,7 @@ function mouseClicked(e) {
     let mousey = floor(mousepos.y)
     selectedTile = false;
     if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
-        let copystring = ""
         selectedTile = occupyingTile[mousex][mousey];
-        console.log(occupyingTile[mousex][mousey].name)
-        for (let i = 0; i < occupyingTile[mousex][mousey].points.length; i++) {
-            copystring += (`\n(${occupyingTile[mousex][mousey].points[i].x},${occupyingTile[mousex][mousey].points[i].y})`)
-        }
-        console.log(copystring)
         selectedNation = false;
     }
 }
