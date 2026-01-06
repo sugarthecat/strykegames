@@ -3,6 +3,7 @@ class Memoir extends GUI {
     constructor() {
         super();
     }
+
     reset() {
         this.time = 0;
         this.velocity = 0;

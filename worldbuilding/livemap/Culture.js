@@ -4,16 +4,16 @@ const GERMAN_SUFFIXES = ["burg", "en", "furt", "feld", 'gart', "au", "ich", "zig
 const RUSSIAN_SUFFIXES = ["ov", "grad", "sk", "atov", "ovy", "tov", "ir", "orod"]
 const FRENCH_SUFFIXES = ["eaux", "bourg", "eau", "aise", "is", "ais", "les", "on"]
 const GREEK_SUFFIXES = ["opolis", "ople", "iki", "upoli", "mos", "dri"]
-const CHINESE_SUFFIXES = ["ing", "nang", "sha", "ing", "king", "dong", "ruo"]
+const CHINESE_SUFFIXES = ["ing", "ang", "sha", "ing", "king", "dong", "uo"]
 const AMERICAN_SUFFIXES = ["field", "ton", "ville", "town"]
-const CONSONANTS = ["b", "c", "d", "f", "g", "h", 'j', 'k', 'l', 'm', 'p', 'r', 's', 't', 'v', 'w', 'z', "th", 'sk', "gr", "rl"]
-const VOWELS = ["a", 'e', 'i', 'o', 'u', ]
+const CONSONANTS = ["t","m",'l',"r"]
+const VOWELS = ["a", 'e', ]
 class Culture {
 
     constructor() {
         this.namingStyle = random(NAMING_STYLES)
         this.usedCityNames = []
-
+        this.longNamePercent = random() ** 10
         switch (this.namingStyle) {
             case "Robotic":
                 this.namingPrefix = random(["Zone", "Sector", "Precinct", 'District'])
@@ -61,7 +61,7 @@ class Culture {
                 }
                 break;
             case "English":
-                name = this.generateNameBase(3, 4) + random(ENGLISH_SUFFIXES)
+                name = this.generateNameBase() + random(ENGLISH_SUFFIXES)
                 break;
             case "German":
                 name = this.generateNameBase() + random(GERMAN_SUFFIXES)
@@ -92,7 +92,7 @@ class Culture {
                         name += random(AMERICAN_SUFFIXES)
                     }
                 } else {
-                    name = this.generateNameBase() + " County";
+                    name = this.generateNameBase(true) + " County";
                 }
 
                 break;
@@ -102,10 +102,10 @@ class Culture {
         }
         return capitalizeFirstLetter(name);
     }
-    generateNameBase(minCount = 3, maxCount = 5) {
-        let length = random(minCount, maxCount)
+    generateNameBase(isLong = random() < this.longNamePercent) {
         let base = ""
-        for (let i = floor(random(1.25)); i < length; i++) {
+        let longName = isLong;
+        for (let i = 0; i < 3 || (longName && i < 5); i++) {
             if (i % 2 == 1) {
                 base += random(this.vowels)
             } else {

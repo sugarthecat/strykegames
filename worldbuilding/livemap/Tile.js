@@ -1,5 +1,4 @@
-const TARGET_TILE_SIZE = 35;
-const TILE_MIN_SIZE = 25;
+
 
 let total = 0;
 let above = 0
@@ -98,7 +97,15 @@ class Tile {
         avgYValue /= this.points.length
         avgXValue /= this.points.length
 
-        this.position = { x: avgXValue, y: avgYValue }
+        const avgPosition = { x: avgXValue, y: avgYValue }
+        this.position = { x: -100, y: -100 }
+
+        for (let i = 0; i < this.points.length; i++) {
+            if (dist(this.points[i].x, this.points[i].y, avgPosition.x, avgPosition.y) <
+                dist(this.position.x, this.position.y, avgPosition.x, avgPosition.y)) {
+                    this.position = this.points[i]
+            }
+        }
         //add some temp offset
         let tempOffset = 1 - noise(avgXValue * TEMP_NOISE_SCALE, avgYValue * TEMP_NOISE_SCALE)
         let temp = (tempOffset - abs(TILE_HEIGHT / 2 - avgYValue) / TILE_HEIGHT) * 2
@@ -113,7 +120,7 @@ class Tile {
             above++;
         }
         let urbanPop = 50 * Math.pow(1000000, this.importance)
-        if(urbanPop < this.population && this.importance > 0.4){
+        if (urbanPop < this.population && this.importance > 0.4) {
             urbanPop += this.population * random()
         }
         this.population = floor(this.population + urbanPop)
@@ -150,107 +157,6 @@ class Tile {
             this.connections.push(other)
             other.Connect(this);
         }
-    }
-    Split() {
-        let spawnerPoints = []
-        let tiles = []
-
-        for (let i = 0; i < this.points.length / TARGET_TILE_SIZE; i++) {
-            let newPoint = this.points[floor(i * TARGET_TILE_SIZE)]
-            spawnerPoints.push(newPoint)
-            tiles.push(new Tile())
-        }
-        let going = true;
-
-        let closestTiles = []
-        let points = []
-        while (closestTiles.length < isLandArr.length) {
-            closestTiles.push([])
-            points.push([])
-        }
-        for (let i = 0; i < this.points.length; i++) {
-            points[this.points[i].x][this.points[i].y] = this.points[i]
-        }
-        while (going) {
-            for (let i = 0; i < tiles.length; i++) {
-                tiles[i].points = []
-            }
-            going = false
-            for (let i = 0; i < this.points.length; i++) {
-                let closestTileIndex = 0
-
-                for (let j = 0; j < tiles.length; j++) {
-                    if (
-                        dist2(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, this.points[i].x, this.points[i].y)
-                        >
-                        dist2(spawnerPoints[j].x, spawnerPoints[j].y, this.points[i].x, this.points[i].y)
-                    ) {
-                        closestTileIndex = j;
-                    }
-                }
-                tiles[closestTileIndex].points.push(this.points[i])
-                closestTiles[this.points[i].x][this.points[i].y] = tiles[closestTileIndex]
-                if (
-                    points[this.points[i].x - 1] && points[this.points[i].x + 1] &&
-                    !(
-                        points[this.points[i].x - 1][this.points[i].y]
-                        && points[this.points[i].x + 1][this.points[i].y]
-                        && points[this.points[i].x][this.points[i].y + 1]
-                        && points[this.points[i].x][this.points[i].y - 1]
-                    )
-                ) {
-                    closestTiles[this.points[i].x][this.points[i].y].isSeaside = true
-                }
-            }
-            for (let i = 0; i < this.points.length; i++) {
-                let point = this.points[i]
-                if (closestTiles[point.x][point.y]
-                    && point.x > 0
-                    && closestTiles[point.x - 1][point.y]
-                    && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y]
-                ) {
-                    closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y])
-                    closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y])
-                }
-
-                if (closestTiles[point.x][point.y]
-                    && point.y > 0
-                    && closestTiles[point.x][point.y - 1]
-                    && closestTiles[point.x][point.y] != closestTiles[point.x][point.y - 1]
-                ) {
-                    closestTiles[point.x][point.y].points.push(points[point.x][point.y - 1])
-                    closestTiles[point.x][point.y].Connect(closestTiles[point.x][point.y - 1])
-                }
-
-                if (closestTiles[point.x][point.y]
-                    && point.y > 0
-                    && point.x > 0
-                    && closestTiles[point.x - 1][point.y - 1]
-                    && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y - 1]
-                ) {
-                    closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y - 1])
-                    closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y - 1])
-
-                }
-            }
-            for (let i = 0; i < tiles.length; i++) {
-                if (tiles[i].points.length < TILE_MIN_SIZE) {
-                    tiles.splice(i, 1)
-                    spawnerPoints.splice(i, 1)
-                    going = true;
-                    i--;
-                }
-            }
-            if (going) {
-                for (let i = 0; i < tiles.length; i++) {
-                    tiles[i].connections = []
-                }
-            }
-        }
-        for (let i = 0; i < tiles.length; i++) {
-            tiles[i].Setup();
-        }
-        return tiles
     }
     Setup() {
         //remap selected continent
@@ -356,6 +262,8 @@ class Tile {
         }
         this.SetupVariables();
         this.OptimizeVertexes();
+
+
     }
     OptimizeVertexes() {
         for (let i = 0; i + 2 < this.vertexes.length; i++) {

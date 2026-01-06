@@ -1,5 +1,7 @@
 const STARTING_NATION_COUNT = 25;
 const ISLAND_NATION_GARUNTEED_POP = 1000000
+const TARGET_TILE_SIZE = 35;
+const TILE_MIN_SIZE = 25;
 let nations = []
 function setup_land() {
     //generate land array
@@ -27,7 +29,7 @@ function setup_land() {
                 newTile.Setup()
                 if (newTile.points.length > 100) {
                     //break continents with > 100 area
-                    landMasses.push(newTile.Split());
+                    landMasses.push(SplitTile(newTile));
                 } else if (newTile.points.length > 25) {
 
                     //clear islands with < 25 area;
@@ -85,7 +87,7 @@ function setup_land() {
             nations.push(new Nation())
             let newTile = landMasses[i][0]
             usedTiles.push(newTile);
-            nations[nations.length-1].AnnexTile(newTile);
+            nations[nations.length - 1].AnnexTile(newTile);
         }
     }
 
@@ -149,4 +151,135 @@ function dist1(x1, x2) {
 }
 function dist2pos(a, b) {
     return dist2(a.x, a.y, b.x, b.y);
+}
+
+
+function SplitTile(tile) {
+    let spawnerPoints = []
+    let tiles = []
+
+    for (let i = 0; i < tile.points.length / TARGET_TILE_SIZE; i++) {
+        let newPoint = tile.points[floor(i * TARGET_TILE_SIZE)]
+        spawnerPoints.push(newPoint)
+        tiles.push(new Tile())
+    }
+    let going = true;
+
+    let closestTiles = []
+    let points = []
+    while (closestTiles.length < isLandArr.length) {
+        closestTiles.push([])
+        points.push([])
+    }
+    for (let i = 0; i < tile.points.length; i++) {
+        points[tile.points[i].x][tile.points[i].y] = tile.points[i]
+    }
+    while (going) {
+        for (let i = 0; i < tiles.length; i++) {
+            tiles[i].points = []
+        }
+        going = false
+        for (let i = 0; i < tile.points.length; i++) {
+            let closestTileIndex = 0
+
+            for (let j = 0; j < tiles.length; j++) {
+                if (
+                    dist2(spawnerPoints[closestTileIndex].x, spawnerPoints[closestTileIndex].y, tile.points[i].x, tile.points[i].y)
+                    >
+                    dist2(spawnerPoints[j].x, spawnerPoints[j].y, tile.points[i].x, tile.points[i].y)
+                ) {
+                    closestTileIndex = j;
+                }
+            }
+            tiles[closestTileIndex].points.push(tile.points[i])
+            closestTiles[tile.points[i].x][tile.points[i].y] = tiles[closestTileIndex]
+            if (
+                points[tile.points[i].x - 1] && points[tile.points[i].x + 1] &&
+                !(
+                    points[tile.points[i].x - 1][tile.points[i].y]
+                    && points[tile.points[i].x + 1][tile.points[i].y]
+                    && points[tile.points[i].x][tile.points[i].y + 1]
+                    && points[tile.points[i].x][tile.points[i].y - 1]
+                )
+            ) {
+                closestTiles[tile.points[i].x][tile.points[i].y].isSeaside = true
+            }
+        }
+        for (let i = 0; i < tile.points.length; i++) {
+            let point = tile.points[i]
+            if (closestTiles[point.x][point.y]
+                && point.x > 0
+                && closestTiles[point.x - 1][point.y]
+                && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y]
+            ) {
+                closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y])
+                closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y])
+            }
+
+            if (closestTiles[point.x][point.y]
+                && point.y > 0
+                && closestTiles[point.x][point.y - 1]
+                && closestTiles[point.x][point.y] != closestTiles[point.x][point.y - 1]
+            ) {
+                closestTiles[point.x][point.y].points.push(points[point.x][point.y - 1])
+                closestTiles[point.x][point.y].Connect(closestTiles[point.x][point.y - 1])
+            }
+
+            if (closestTiles[point.x][point.y]
+                && point.y > 0
+                && point.x > 0
+                && closestTiles[point.x - 1][point.y - 1]
+                && closestTiles[point.x][point.y] != closestTiles[point.x - 1][point.y - 1]
+            ) {
+                closestTiles[point.x][point.y].points.push(points[point.x - 1][point.y - 1])
+                closestTiles[point.x][point.y].Connect(closestTiles[point.x - 1][point.y - 1])
+
+            }
+        }
+        for (let i = 0; i < tiles.length; i++) {
+            if (!isValidTileShape(tiles[i])) {
+                tiles.splice(i, 1)
+                spawnerPoints.splice(i, 1)
+                going = true;
+                i--;
+            }
+        }
+        if (going) {
+            for (let i = 0; i < tiles.length; i++) {
+                tiles[i].connections = []
+            }
+        }
+    }
+    for (let i = 0; i < tiles.length; i++) {
+        tiles[i].Setup();
+    }
+    return tiles
+}
+
+function isValidTileShape(tile){
+    //invalid shape if below min size
+    if(tile.points.length < TILE_MIN_SIZE){
+        return false
+    }
+    let unvisitedPoints = new Set(tile.points);
+    let toCheck = [tile.points[0]]
+    unvisitedPoints.delete(toCheck[0])
+    while(toCheck.length > 0){
+        let currPoint = toCheck.pop()
+        let toCheckLater = []
+        for(const point of unvisitedPoints){
+            if(abs(point.x - currPoint.x) <= 1 && abs(point.y - currPoint.y) <= 1){
+                toCheckLater.push(point)
+            }
+        }
+        while(toCheckLater.length > 0){
+            currPoint = toCheckLater.pop()
+            toCheck.push(currPoint)
+            unvisitedPoints.delete(currPoint)
+        }
+    }
+    if(unvisitedPoints.size > 0){
+        return false;
+    }
+    return true;
 }

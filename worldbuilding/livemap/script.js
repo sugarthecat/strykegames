@@ -27,25 +27,34 @@ function setup() {
     selectedNationGUI = new SelectedNationGUI();
     let startTime = (new Date()).getTime()
     noStroke();
+    noiseSeed(12323);
+    randomSeed(99);
     SetupWorld();
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
         new Button(0, 50, 200, 50, "Political", function () { MAP_MODE = 1 }),
     ]
-    console.log(`${(new Date()).getTime()-startTime} ms`)
+    console.log(`${(new Date()).getTime() - startTime} ms`)
+    Tick()
+    //log nations at start, sorted by population
+    nations.sort((a, b) => b.population - a.population);
+    for (let i = 0; i < nations.length; i++) {
+        if (nations[i].population > 2000000) {
+            console.log(`${nations[i].name.name}: ${Math.floor(nations[i].population / 100000) / 10} Million`)
+
+        } else {
+
+            console.log(`${nations[i].name.name}: ${nations[i].population.toLocaleString()}`)
+        }
+    }
 }
 let camerax = 0;
 let cameray = 0;
 let scaleFactor = 1
-let ticksRan = 0
 function draw() {
     currDate = new Date();
-    //let currentTick = (currDate.getDate() - 1) * 24 * 6 + currDate.getHours() * 6 + currDate.getMinutes() / 10 + currDate.getSeconds() / 600
-    //while(ticksRan < currentTick){
-    if (frameCount % 1 == 0) {
-        Tick();
-        ticksRan++;
-    }
+    Tick();
+
     resizeCanvas(windowWidth, windowHeight);
     push()
     translate(-camerax, -cameray)
@@ -56,7 +65,7 @@ function draw() {
         tiles[i].Draw();
     }
     push()
-    scale (scaleFactor,scaleFactor)
+    scale(scaleFactor, scaleFactor)
     let speed = 2;
     if (keyIsDown(UP_ARROW)) {
         cameray -= speed;
@@ -74,12 +83,12 @@ function draw() {
     for (let i = 0; i < tiles.length; i++) {
         tiles[i].DrawCity();
     }
-    pop ()
+    pop()
     if (selectedTile) {
-        selectedTileGUI.Draw(mouseX+camerax,mouseY+cameray)
+        selectedTileGUI.Draw(mouseX + camerax, mouseY + cameray)
     }
-    if(selectedNation){
-        selectedNationGUI.Draw(mouseX+camerax,mouseY+cameray)
+    if (selectedNation) {
+        selectedNationGUI.Draw(mouseX + camerax, mouseY + cameray)
     }
     pop()
     for (let i = 0; i < buttons.length; i++) {
@@ -94,17 +103,23 @@ function mouseClicked(e) {
             return;
         }
     }
-    if (selectedTile && selectedTileGUI.HandleClick(mouseX+camerax,mouseY+cameray)) {
+    if (selectedTile && selectedTileGUI.HandleClick(mouseX + camerax, mouseY + cameray)) {
         return;
     }
-    if (selectedNation && selectedNationGUI.HandleClick(mouseX+camerax,mouseY+cameray)) {
+    if (selectedNation && selectedNationGUI.HandleClick(mouseX + camerax, mouseY + cameray)) {
         return;
     }
     let mousex = floor(mousepos.x)
     let mousey = floor(mousepos.y)
     selectedTile = false;
     if (mousex >= 0 && mousey >= 0 && mousex <= occupyingTile.length && occupyingTile[mousex][mousey]) {
+        let copystring = ""
         selectedTile = occupyingTile[mousex][mousey];
+        console.log(occupyingTile[mousex][mousey].name)
+        for (let i = 0; i < occupyingTile[mousex][mousey].points.length; i++) {
+            copystring += (`\n(${occupyingTile[mousex][mousey].points[i].x},${occupyingTile[mousex][mousey].points[i].y})`)
+        }
+        console.log(copystring)
         selectedNation = false;
     }
 }
