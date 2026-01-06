@@ -27,8 +27,6 @@ function setup() {
     selectedNationGUI = new SelectedNationGUI();
     let startTime = (new Date()).getTime()
     noStroke();
-    noiseSeed(12323);
-    randomSeed(99);
     SetupWorld();
     buttons = [
         new Button(0, 0, 200, 50, "Geography", function () { MAP_MODE = 0 }),
