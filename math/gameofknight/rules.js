@@ -16,21 +16,29 @@ const presets = [
         neighbors: [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
     },
     {
-        name: "Cave Smoothing",
-        spawnmin: 7,
-        spawnmax: 8,
-        survivemin: 3,
-        survivemax: 8,
-        neighbors: [[-1, -1], [-1, 0], [-1, 1], [0, 1], [0, -1], [1, 1], [1, 0], [1, -1]]
-    },
-    {
         name: "Game Of Lite",
         spawnmin: 2,
         spawnmax: 2,
         survivemin: 1,
         survivemax: 1,
         neighbors: [[-1, 0], [1, 0], [0, -1], [0, 1]]
-    }
+    },
+    {
+        name: "Erosion",
+        spawnmin: 7,
+        spawnmax: 8,
+        survivemin: 4,
+        survivemax: 8,
+        neighbors: [[-1, -1], [-1, 0], [-1, 1], [0, 1], [0, -1], [1, 1], [1, 0], [1, -1]]
+    },
+    {
+        name: "Smoothing 2",
+        spawnmin: 14,
+        spawnmax: 21,
+        survivemin: 8,
+        survivemax: 21,
+        neighbors: [[-2, -1], [-2, 0], [-2, 1], [-1, -2], [-1, -1], [-1, 0], [-1, 1],[-1, 2], [0, 2],[0, 1],[0, -1], [0, -2], [1, 2], [1, 1], [1, 0], [1, -1],  [1, -2],[2, 1], [2, 0], [2, -1]]
+    },
 ]
 
 const neighbors = []

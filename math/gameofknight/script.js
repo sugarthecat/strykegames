@@ -67,7 +67,7 @@ function drawOnGrid() {
     if (mouseX < 0 || mouseY < 0) {
         return;
     }
-    if (mouseX > width || mouseY > height) {
+    if (mouseX >= width || mouseY >= height) {
         return;
     }
     let xPos = floor(mouseX / tileSize)
