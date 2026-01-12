@@ -3,42 +3,81 @@
 <head>
     <meta charset="utf-8">
     <script src="script.js"></script>
+    <script src="board.js"></script>
+    <script src="rules.js"></script>
     <script src="../p5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Game Of Knight</title>
 </head>
 
 <body>
-    <div id="content">
+    <div id="sidebar">
         <h1>The Game of Knight</h1>
         <p>Like the game of life, but with a knight's move rules.</p>
         <p>
-            <button class="small" onclick="stepSim()">
-                Step
-            </button>
-            <button class="small" id="playBtn" onclick="togglePlay()">
-                Play
-            </button>
-            <input type="range" min="1" max="25" value="3" class="slider" id="stepsec">
-            <span id="sps"></span>
+            <button onclick="switchMenu('play')">Play Settings</button>
+            <button onclick="switchMenu('board')">Board Settings</button>
+            <button onclick="switchMenu('neighbor')">Neighbor Settings</button>
         </p>
-        <p>
-            <input type="range" min="1" max="40" value="16" class="slider" id="height">
-            <span id="heighttxt"></span>
-        </p>
-        <p>
-            <input type="range" min="1" max="50" value="32" class="slider" id="width">
-            <span id="widthtxt"></span>
-        </p>
-        <p>
+        <div id="boardsettings" class="menu" hidden>
+            <p>
+                <span id="tiletxt"></span><br />
+                <input oninput="updateGrid()" type="range" min="8" max="50" value="25" class="slider" id="tilesize">
+            </p>
+            <p>
+                <span id="heighttxt"></span><br />
+                <input oninput="updateGrid()" type="range" min="0" max="50" value="16" class="slider" id="height">
+            </p>
+            <p>
+                <span id="widthtxt"></span><br />
+                <input oninput="updateGrid()" type="range" min="0" max="120" value="32" class="slider" id="width">
+            </p>
+        </div>
+        <div id="neighborsettings" class="menu" hidden>
+            <p>Neighbors:</p>
+            <div id="neighborcanvasdiv">
+                <!-- Populated automatically by p5.js -->
+            </div>
+            <p>
+                <span id="spawntxt"></span><br />
+                <input oninput="updateRules()" type="range" min="0" max="50" value="3" class="slider"
+                    id="spawnmin"><br />
+                <input oninput="updateRules()" type="range" min="0" max="50" value="3" class="slider" id="spawnmax">
+            </p>
+            <p>
+                <span id="lifetxt"></span><br />
 
-            <button class="small" onclick="popRandom()">
-                Randomly Populate
-            </button>
-            <button class="small" onclick="popNone()">
-                Clear Board
-            </button>
-        </p>
+                <input oninput="updateRules()" type="range" min="0" max="50" value="2" class="slider"
+                    id="lifemin"><br />
+                <input oninput="updateRules()" type="range" min="0" max="120" value="3" class="slider" id="lifemax">
+            </p>
+            <p>Presets:</p>
+            <div id="presets">
+                <!--Populated by script-->
+            </div>
+        </div>
+        <div id="playsettings" class="menu">
+            <p>
+                <button class="small" onclick="stepSim()">
+                    Step
+                </button>
+                <button class="small" id="playBtn" onclick="togglePlay()">
+                    Play
+                </button>
+                <input type="range" min="1" max="30" value="3" class="slider" id="stepsec">
+                <span id="sps"></span>
+            </p>
+            <p>
+                <button class="small" onclick="popRandom()">
+                    Randomly Populate
+                </button>
+                <button class="small" onclick="popNone()">
+                    Clear Board
+                </button>
+            </p>
+        </div>
+    </div>
+    <div id="content">
         <main></main>
     </div>
 </body>

@@ -1,133 +1,117 @@
 const SCREEN_DIMENSIONS = { x: 800, y: 600 }
 
-const TILE_SIZE = 25;
+const TILE_DIM = { x: 32, y: 16 }
+let tileSize = 25;
 let prevInput = ""
 let autoPlay = false;
 let values = []
 
 function setup() {
     createCanvas(SCREEN_DIMENSIONS.x, SCREEN_DIMENSIONS.y);
-    for (let i = 0; i < SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
+    for (let i = 0; i < SCREEN_DIMENSIONS.x / tileSize; i++) {
         values.push([])
-        for (let j = 0; j < SCREEN_DIMENSIONS.y / TILE_SIZE; j++) {
+        for (let j = 0; j < SCREEN_DIMENSIONS.y / tileSize; j++) {
             values[i].push(false)
         }
     }
+    updateGrid()
+    updateRules()
+    new p5(neighborEditor);
+    setupPresets();
+    loadPreset(presets[1])
 }
 let timeSinceLastFrame = 0;
 
-function getFPS(){
+function getFPS() {
     const fps = document.getElementById("stepsec").value;
     document.getElementById("sps").innerText = `${fps} Steps / Second`
     document.getElementById("playBtn").innerText = autoPlay ? "Stop" : "Autoplay"
     return fps;
 }
-function updateGridSize(){
-    const newWidth = document.getElementById("width").value;
-    document.getElementById("widthtxt").innerText =`Width: ${newWidth} tiles`
-    if(newWidth != SCREEN_DIMENSIONS.x/TILE_SIZE){
-        SCREEN_DIMENSIONS.x = newWidth * TILE_SIZE;
-        setupVals()
-    }
-    const newHeight = document.getElementById("height").value;
-    document.getElementById("heighttxt").innerText =`Height: ${newHeight} tiles`
-    if(newHeight != SCREEN_DIMENSIONS.y/TILE_SIZE){
-        SCREEN_DIMENSIONS.y = newHeight * TILE_SIZE;
-        setupVals()
-    }
-}
 function draw() {
     background(0);
     noStroke()
-    updateGridSize()
     let FPS = getFPS()
     if (autoPlay) {
         timeSinceLastFrame += deltaTime / 1000
-        if(timeSinceLastFrame > 1/FPS){
+        if (timeSinceLastFrame > 1 / FPS) {
             timeSinceLastFrame = 0;
             stepSim()
         }
     }
     fill(255)
-    for (let i = 0; i < SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
-        for (let j = 0; j < SCREEN_DIMENSIONS.y / TILE_SIZE; j++) {
+    for (let i = 0; i < TILE_DIM.x; i++) {
+        for (let j = 0; j < TILE_DIM.y; j++) {
             if (values[i][j]) {
-                rect(i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+                rect(i * tileSize, j * tileSize, tileSize, tileSize)
             }
         }
     }
     stroke(150)
-    strokeWeight(4)
-    for (let i = 0; i <= SCREEN_DIMENSIONS.y / TILE_SIZE; i++) {
-        line(0, i * TILE_SIZE, width, i * TILE_SIZE)
+    strokeWeight(3)
+    for (let i = 0; i <= TILE_DIM.y; i++) {
+        line(0, i * tileSize, width, i * tileSize)
     }
-    for (let i = 0; i <= SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
-        line(i * TILE_SIZE, 0, i * TILE_SIZE, height)
+    for (let i = 0; i <= TILE_DIM.x; i++) {
+        line(i * tileSize, 0, i * tileSize, height)
     }
+    drawOnGrid()
 }
-function mouseClicked() {
+
+let mouseSetting = false;
+
+function drawOnGrid() {
+    if (!mouseIsPressed) {
+        return
+    }
     if (mouseX < 0 || mouseY < 0) {
         return;
     }
     if (mouseX > width || mouseY > height) {
         return;
     }
-    let xPos = floor(mouseX / TILE_SIZE)
-    let yPos = floor(mouseY / TILE_SIZE)
-    values[xPos][yPos] = !values[xPos][yPos]
+    let xPos = floor(mouseX / tileSize)
+    let yPos = floor(mouseY / tileSize)
+    values[xPos][yPos] = mouseSetting
 }
-
-function stepSim() {
-    let newValues = []
-    // knight:
-    const neighborOffsets = [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]]
-    // typical:
-    //const neighborOffsets = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
-    for (let i = 0; i < SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
-        newValues.push([])
-        for (let j = 0; j < SCREEN_DIMENSIONS.y / TILE_SIZE; j++) {
-            let neighborCount = 0;
-            let isAlive = values[i][j]
-            for (let k = 0; k < neighborOffsets.length; k++) {
-                let xPos = neighborOffsets[k][0] + i;
-                let yPos = neighborOffsets[k][1] + j;
-                if (xPos < 0 || yPos < 0) {
-                    continue;
-                }
-                if (xPos >= values.length || yPos >= values[xPos].length) {
-                    continue;
-                }
-                if (!values[xPos][yPos]) {
-                    continue
-                }
-                neighborCount++;
-            }
-            newValues[i].push(neighborCount == 3 || (neighborCount == 2 && isAlive))
-        }
+function mousePressed() {
+    if (!mouseIsPressed) {
+        return
     }
-    values = newValues;
+    if (mouseX < 0 || mouseY < 0) {
+        return;
+    }
+    if (mouseX > width || mouseY > height) {
+        return;
+    }
+    let xPos = floor(mouseX / tileSize)
+    let yPos = floor(mouseY / tileSize)
+    mouseSetting = !values[xPos][yPos]
 }
 function popRandom() {
     autoPlay = false;
-    for (let i = 0; i < SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
-        for (let j = 0; j < SCREEN_DIMENSIONS.y / TILE_SIZE; j++) {
-            values[i][j] = Math.random() > 0.6
+    for (let i = 0; i < SCREEN_DIMENSIONS.x / tileSize; i++) {
+        for (let j = 0; j < SCREEN_DIMENSIONS.y / tileSize; j++) {
+            values[i][j] = Math.random() > 0.5
         }
     }
 }
-function setupVals() {
+function popNone() {
     autoPlay = false;
-    let newValues = []
-    for (let i = 0; i < SCREEN_DIMENSIONS.x / TILE_SIZE; i++) {
-        newValues.push([])
-        for (let j = 0; j < SCREEN_DIMENSIONS.y / TILE_SIZE; j++) {
-            newValues[i].push(false)
+    for (let i = 0; i < SCREEN_DIMENSIONS.x / tileSize; i++) {
+        for (let j = 0; j < SCREEN_DIMENSIONS.y / tileSize; j++) {
+            values[i][j] = false
         }
     }
-    resizeCanvas(SCREEN_DIMENSIONS.x,SCREEN_DIMENSIONS.y)
-    values = newValues;
+}
+function togglePlay() {
+    autoPlay = !autoPlay
 }
 
-function togglePlay(){
-    autoPlay = !autoPlay
+function switchMenu(menu) {
+    const toHide = document.getElementsByClassName("menu");
+    for(let i = 0; i<toHide.length; i++){
+        toHide[i].hidden = true;
+    }
+    document.getElementById(`${menu}settings`).hidden = false
 }

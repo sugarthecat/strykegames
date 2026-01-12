@@ -4,9 +4,14 @@ body {
     margin: 0px;
     text-align: center;
     background-color: lightgray ;
+    overflow-x: default;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
     /* Hide scrollbars */
 }
-
+body{
+    
+    padding-bottom: 10px;
+}
 canvas {
     display: block;
     margin-top: 40px;
@@ -15,4 +20,25 @@ canvas {
 div#content{
     display: inline-block;
     margin: auto;
+    margin-right:400px;
+    
+}
+#neighborcanvasdiv{
+    text-align: center;
+    display: inline-block;
+    margin: auto;
+}
+#neighborcanvasdiv canvas{
+    margin: 0;
+}
+
+div#sidebar{
+  margin: 0;
+  padding: 5px;
+  width: 400px;
+  background-color: #f1f1f1;
+  position: fixed;
+  right:0px;
+  height: 100%;
+  overflow: auto;
 }
