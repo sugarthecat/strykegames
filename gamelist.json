@@ -12,10 +12,6 @@
             "off": "#f33",
             "on": "#500"
         },
-        "trijam": {
-            "off": "#6d6",
-            "on": "#242"
-        },
         "math": {
             "off": "#bbb",
             "on": "#555"
@@ -57,6 +53,7 @@
         {
             "title": "Shards on a Web",
             "link": "worldbuilding/internet",
+            "blurb": "",
             "tags": [
                 "game",
                 "puzzle",
@@ -107,8 +104,7 @@
             "link": "trijam/three-seconds",
             "tags": [
                 "game",
-                "puzzle",
-                "trijam"
+                "puzzle"
             ],
             "textColor": "#108010",
             "bgColor": "#ffff00",
@@ -120,8 +116,7 @@
             "tags": [
                 "game",
                 "shooter",
-                "bullet-hell",
-                "trijam"
+                "bullet-hell"
             ],
             "textColor": "#a02020",
             "bgColor": "#403030",
@@ -225,8 +220,7 @@
             "link": "trijam/unfun",
             "tags": [
                 "game",
-                "paperwork",
-                "trijam"
+                "paperwork"
             ],
             "textColor": "#964b00",
             "bgColor": "#f5f5dc",
@@ -237,8 +231,7 @@
             "link": "trijam/darkness",
             "tags": [
                 "game",
-                "puzzle",
-                "trijam"
+                "puzzle"
             ],
             "textColor": "#a0a000",
             "bgColor": "#f0f0a0",
