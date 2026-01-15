@@ -13,7 +13,7 @@ class SpinnerScreen extends GUI {
         return this.score + 2 + (this.wintime !== 0 ? -1 : 0);
     }
     setupGame() {
-        this.image = random(Assets.covers)
+        this.image = random(Assets.abstract)
         this.rotation = []
         for (let i = 0; i < (this.getSideLen()) * (this.getSideLen()); i++) {
             this.rotation.push(random([0, 1, 2, 3]))
@@ -40,7 +40,7 @@ class SpinnerScreen extends GUI {
             return;
         }
         let sidelen = this.getSideLen();
-        let h = 240;
+        let h = 300;
         let w = 240;
         let tileHeight = h / sidelen;
         let tileWidth = w / sidelen;

@@ -13,7 +13,7 @@ function setup() {
         "title": new TitleScreen(),
         "swapper": new SwapperScreen(), 
         "spinner": new SpinnerScreen(), 
-        "title": new TitleScreen()
+        "safecracker": new SafeCrackerScreen()
     }
     createCanvas(windowWidth, windowHeight);
 }

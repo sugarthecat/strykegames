@@ -2,8 +2,9 @@ class TitleScreen extends GUI {
     constructor() {
         super();
         this.elements = [
-            new Button(200, 100, 200, 50, "Swapper", function () { screenOn = "swapper"; }),
-            new Button(200, 200, 200, 50, "Spinner", function () { screenOn = "spinner"; })
+            new Button(200, 100, 200, 50, "Spinner", function () { screenOn = "spinner"; }),
+            new Button(200, 200, 200, 50, "Swapper", function () { screenOn = "swapper"; }),
+            new Button(200, 300, 200, 50, "Safecracker", function () { screenOn = "safecracker"; })
         ]
     }
     Draw(x, y) {
