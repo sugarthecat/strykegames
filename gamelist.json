@@ -61,7 +61,9 @@
             ],
             "textColor": "#0f0",
             "bgColor": "#222",
-            "year": 2025
+            "year": 2025,
+            "reccommendationLevel": 3,
+            "release": "Dec 13, 2025"
         },
         {
             "title": "Human Onboarding",
@@ -73,8 +75,10 @@
                 "narrative"
             ],
             "textColor": "#017",
+            "reccommendationLevel": 1,
             "bgColor": "#eee",
-            "year": 2025
+            "year": 2025,
+            "release": "Oct 5, 2025"
         },
         {
             "title": "Button-Lights",
@@ -86,8 +90,10 @@
                 "math"
             ],
             "textColor": "#000",
+            "reccommendationLevel": 2,
             "bgColor": "#c8c8c8",
-            "year": 2025
+            "year": 2025,
+            "release": "Sep 5, 2025"
         },
         {
             "title": "Circuit Crazy",
@@ -99,33 +105,9 @@
                 "math"
             ],
             "textColor": "#c3423b",
+            "reccommendationLevel": 1,
             "bgColor": "#e6dec2",
             "year": 2025
-        },
-        {
-            "title": "Three Seconds To Doom",
-            "link": "trijam/three-seconds",
-            "shortline": "A puzzle game with a three-second time limit for every level.",
-            "tags": [
-                "game",
-                "puzzle"
-            ],
-            "textColor": "#108010",
-            "bgColor": "#ffff00",
-            "year": 2024
-        },
-        {
-            "title": "UNHOLY",
-            "link": "trijam/dealwithdevil",
-            "shortline": "A bullet-hell where you must accept weaknesses to gain strengths.",
-            "tags": [
-                "game",
-                "shooter",
-                "bullet-hell"
-            ],
-            "textColor": "#a02020",
-            "bgColor": "#403030",
-            "year": 2024
         },
         {
             "title": "Commangineer",
@@ -137,7 +119,37 @@
             ],
             "textColor": "orange",
             "bgColor": "purple",
-            "year": 2024
+            "year": 2024,
+            "release": "Jan 10, 2024"
+        },
+        {
+            "title": "Three Seconds To Doom",
+            "link": "trijam/three-seconds",
+            "shortline": "A puzzle game with a three-second time limit for every level.",
+            "tags": [
+                "game",
+                "puzzle"
+            ],
+            "textColor": "#108010",
+            "reccommendationLevel": 2,
+            "bgColor": "#ffff00",
+            "year": 2024,
+            "release": "Feb 12, 2024"
+        },
+        {
+            "title": "UNHOLY",
+            "link": "trijam/dealwithdevil",
+            "shortline": "A bullet-hell where you must accept weaknesses to gain strengths.",
+            "tags": [
+                "game",
+                "shooter",
+                "bullet-hell"
+            ],
+            "textColor": "#a02020",
+            "reccommendationLevel": 2,
+            "bgColor": "#403030",
+            "year": 2024,
+            "release": "Jan 20, 2024"
         },
         {
             "title": "Super Chicken 3",
@@ -151,6 +163,7 @@
             ],
             "textColor": "#ff1010",
             "bgColor": "#ffffff",
+            "reccommendationLevel": 2,
             "year": 2022
         },
         {
@@ -163,8 +176,10 @@
                 "arcade"
             ],
             "textColor": "#fff",
+            "reccommendationLevel": 1,
             "bgColor": "#7e7e7e",
-            "year": 2024
+            "year": 2024,
+            "release": "Aug 15, 2024"
         },
         {
             "title": "Set Operations Visualizer",
@@ -198,6 +213,7 @@
                 "shooter"
             ],
             "textColor": "#f06",
+            "reccommendationLevel": 1,
             "bgColor": "#555",
             "year": 2022
         },
@@ -210,6 +226,7 @@
                 "shooter"
             ],
             "textColor": "#2cf",
+            "reccommendationLevel": 1,
             "bgColor": "#333",
             "year": 2022
         },
@@ -222,6 +239,7 @@
                 "bullet-hell"
             ],
             "textColor": "#FFD700",
+            "reccommendationLevel": 1,
             "bgColor": "#666",
             "year": 2022
         },
@@ -234,6 +252,7 @@
             ],
             "textColor": "#964b00",
             "bgColor": "#f5f5dc",
+            "release": "Jan 28, 2024",
             "year": 2024
         },
         {
@@ -245,6 +264,7 @@
             ],
             "textColor": "#a0a000",
             "bgColor": "#f0f0a0",
+            "release": "Feb 05, 2024",
             "year": 2024
         },
         {
@@ -256,6 +276,7 @@
                 "super-chicken"
             ],
             "textColor": "#ff1010",
+            "reccommendationLevel": 1,
             "bgColor": "#ffffff",
             "year": 2019
         },
@@ -268,6 +289,7 @@
                 "super-chicken"
             ],
             "textColor": "#ff1010",
+            "reccommendationLevel": 2,
             "bgColor": "#ffffff",
             "year": 2019
         },
@@ -285,7 +307,6 @@
         {
             "title": "Youtuber Tycoon",
             "link": "super-chicken/youtubertycoon.html",
-
             "tags": [
                 "game",
                 "tycoon",
