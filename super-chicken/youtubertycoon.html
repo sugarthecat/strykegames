@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Youtuber Tycoon</title>
+    <h1>Youtuber Tycoon</h1>
+    <style>
+        body {
+            background-color: #ce1302;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="PlayGame();"> Play game</button>
+    <h2>Commands:</h2>
+    <p>1. Exit. Type 'e' to exit the game</p>
+    <p>2. Work. Type 'work' to work for money. If you work enough times, you might earn a higher salary.</p>
+    <p>3. Ads. Type 'a' to advertise your channel.</p>
+    <p>4. Upgrade. type 'u' into the console to upgrade your setup, so your videos get more views.</p>
+    <p>5. Gaming Video. type 'g' into the console to make a gaming video. Then Type into the console what it says to
+        type</p>
+    <p>6. Vlog. Type 'v' to make a vlog. Then type into the console what it says to type.</p>
+    <p>7. Skit. Type 's' to make a skit video. Then type into the console what it says to type.</p>
+    <p>8. Music Video. Type 'm' to make a music video. Then type into the console what it says to type.</p>
+    <p>9. Data. type 'd' to see your channel's analytics.</p>
+    <p>If you exit, you can still return, and you will have your game still saved</p>
+    <h2>Enjoy!</h2>
+    <script>
+        var money = 100;
+        var salary = 1;
+        var videos = 0;
+        alert("Welcome to Youtuber Tycoon. \nremember to send me any balances or bugs if you see any!");
+        var views = 0;
+
+        var sclout = 0;
+        var workx = 1;
+        var vidq = 1;
+        var clout = 0;
+        var ucost = 10;
+        var subs = 0;
+        var gskill = 1;
+        var mskill = 1;
+        var vskill = 1;
+    </script>
+    <script>
+        function PlayGame() {
+            for (var i = 0; i < 1;) {
+                var action = prompt("what do you want to do? you have: \n$" + money + "\n" + subs + " subscribers \n and " + Math.floor(clout) + " views yesterday"); views += Math.floor(clout)
+                if (action == "e") { i++; }
+                if (action == "a") {
+                    if (videos > 0) {
+                        var howmuchads = prompt("How much do you want to spend on ads? you get 100 ads for $1");
+                        if (howmuchads <= money) {
+                            let successAmt = howmuchads * Math.random() * videos;
+                            subs += Math.floor(successAmt * 0.3);
+                            clout += Math.floor(successAmt * 10);
+                            sclout += Math.floor(successAmt * 0.1);
+                            money -= howmuchads;
+                        } else { alert("You dont have enough money"); }
+                    } else { alert("How are you going to advertise? you have no videos.") }
+                }
+                if (action == "d") { alert("Total channel views: " + views + "\n Total videos:" + videos + "\n  salary:"); }
+                if (action == "g") {
+                    var action = prompt("type record video");
+                    if (action == "record video") {
+                        var action = prompt("type edit video");
+                        if (action == "edit video") {
+                            var action = prompt("type publish video");
+                            if (action == "publish video") {
+                                clout += vidq * subs * 3 * Math.random() * gskill + 10;
+                                sclout += vidq * subs * 0.03 * Math.random() * gskill + 1; gskill++; videos++;
+                            }
+                        }
+                    }
+                }
+                if (action == "m") {
+                    var action = prompt("Type create proposal"); if (action == "create proposal") {
+                        var action = prompt("Type make beat"); if (action == "make beat") {
+                            var action = prompt("Type edit beat"); if (action == "edit beat") {
+                                var action = prompt("Type write lyrics"); if (action == "write lyrics") {
+                                    var action = prompt("Type edit lyrics"); if (action == "edit lyrics") {
+                                        var action = prompt("Type finish lyrics"); if (action == "finish lyrics") {
+                                            var action = prompt("Type revise beat"); if (action == "revise beat") {
+                                                var action = prompt("Type record vocals"); if (action == "record vocals") {
+                                                    var action = prompt("Type find location"); if (action == "find location") {
+                                                        var action = prompt("Type script video"); if (action == "script video") {
+                                                            var action = prompt("Type record video"); if (action == "record video") {
+                                                                var action = prompt("Type reshoot video"); if (action == "reshoot video") {
+                                                                    var action = prompt("Type edit video"); if (action == "edit video") {
+                                                                        var action = prompt("Type add special effects"); if (action == "add special effects") {
+                                                                            var action = prompt("Type promote video"); if (action == "promote video") {
+                                                                                var action = prompt("Type publish video"); if (action == "publish video") {
+                                                                                    clout += vidq * subs * 25 * Math.random() * mskill + 10;
+                                                                                    sclout += vidq * subs * 0.2 * Math.random() * mskill + 1; mskill++; videos++;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (action == "v") {
+                    var action = prompt("Type write script"); 
+                    if (action == "write script") {
+                        var action = prompt("Type record video"); 
+                        if (action == "record video") {
+                            var action = prompt("type edit video");
+                            if (action == "edit video") {
+                                var action = prompt("type publish video");
+                                if (action == "publish video") {
+                                    clout += vidq * subs * 4 * Math.random() * vskill + 10;
+                                    sclout += vidq * subs * 0.04 * Math.random() * vskill + 1; vskill++; videos++;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (action == "s") {
+                    var action = prompt("Type write script");
+                    if (action == "write script") {
+                        var action = prompt("type edit script");
+                        if (action == "edit script") {
+                            var action = prompt("Type record video");
+                            if (action == "record video") {
+                                var action = prompt("type edit video");
+                                if (action == "edit video") {
+                                    var action = prompt("type publish video");
+                                    if (action == "publish video") {
+                                        clout += vidq * subs * 5 * Math.random() * vskill + 10;
+                                        sclout += vidq * subs * 0.05 * Math.random() * vskill + 1; vskill++; videos++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (action == "work") { money += salary; workx++; }
+                if (workx == 25) { alert("You got promoted! you now earn $2 per work"); salary = 2; }
+                if (workx == 50) { alert("You got promoted! you now earn $5 per work"); salary = 5; }
+                if (workx == 100) { alert("You got promoted! you now earn $10 per work"); salary = 10; }
+                if (workx == 250) { alert("You got promoted! you now earn $30 per work"); salary = 30; }
+                if (workx == 500) { alert("You got promoted! you now earn $50 per work"); salary = 50; }
+                if (workx == 1000) { alert("You got promoted! you now earn $100 per work"); salary = 100; }
+                if (action !== null) {
+                    money += Math.floor(clout * 0.25) / 100;
+                    subs += Math.floor(sclout * 0.5);
+                    clout *= Math.random() * 0.40 + 0.50;
+                    sclout *= Math.random();
+                    clout += Math.random() * subs * 0.3
+                    money = Math.floor(money * 100) / 100;
+                }
+
+                if (action == "u") { if (money >= ucost) { var wannabuy = prompt("Do you want to but an upgrade to your equipment? it will cost " + ucost + " (y/n)"); if (wannabuy == "y") { money -= ucost; vidq *= 2; ucost *= 5; } } else { alert("You cannot afford to upgrade your equipment"); } }
+            }
+            alert("Thanks for playing! If you do not close or reload the tab, your progress will stay.")
+        }</script>
+</body>

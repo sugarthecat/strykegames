@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1>Wall Ball</h1>
+</head>
+<body>
+<title>Wall Ball</title>
+<canvas id="PongCanvas" width="600" height="400"
+style="border:1px solid #c3c3c3;">
+This Game is not compatible with your browser.
+</canvas>
+<h2 id="LoseMarker">Score: 0</h2>
+<script>
+	var paddley = 50;
+var posy = 200;
+var dy = 1;
+var posx = 400;
+var dx = 1;
+var score = 0;
+document.onkeydown = checkKey;
+
+
+function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+    	if(paddley == 0){paddley+= 50;}
+        paddley-= 50;
+    }
+    else if (e.keyCode == '40') {
+		if(paddley == 300){paddley-= 50;}
+        paddley+= 50;
+
+    }
+
+}
+function Render(){
+var canvas = document.getElementById("PongCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#000000";
+ctx.fillRect(0,0,600,400);
+ctx.fillStyle = "#FFFFFF";
+ctx.fillRect(posx,posy,50,50);
+
+ctx.fillRect(50,paddley,20,100);
+posy += dy;
+posx += dx;
+
+/* collision detection, borders*/
+if (posy > 350){
+	dy = dy*-1;
+	dy -= 0.075;
+}
+if (posy < 0){
+	dy = dy*-1;
+	dy += 0.075;
+}
+if (posx < 0){
+	posy=175;
+	posx=300;
+	dx=0;
+	dy=0;
+
+
+}
+if (posx > 550){
+	dx = dx*-1;
+	dx -= 0.25;
+	score++;
+	document.getElementById("LoseMarker").innerHTML = "Score: "+ score;
+}
+/*Collision detection, paddle.*/
+if(posx <70){
+	if(posx > 25){
+		if(posy < paddley+100){
+			if(posy+50 > paddley){
+				if(dx < 1){
+					dx = dx*-1;
+					score++;
+	document.getElementById("LoseMarker").innerHTML = "Score: "+ score;
+				}
+			}
+		}
+	}
+}
+;}
+Render();
+var interval = setInterval(Render, 8);
+
+</script>
+
+</body>
+</html>

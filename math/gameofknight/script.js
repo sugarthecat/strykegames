@@ -108,10 +108,6 @@ function togglePlay() {
     autoPlay = !autoPlay
 }
 
-function switchMenu(menu) {
-    const toHide = document.getElementsByClassName("menu");
-    for(let i = 0; i<toHide.length; i++){
-        toHide[i].hidden = true;
-    }
-    document.getElementById(`${menu}settings`).hidden = false
+function toggleMenu(menu) {
+    document.getElementById(`${menu}settings`).hidden = !document.getElementById(`${menu}settings`).hidden 
 }

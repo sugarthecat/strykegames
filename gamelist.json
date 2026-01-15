@@ -53,7 +53,7 @@
         {
             "title": "Shards on a Web",
             "link": "worldbuilding/internet",
-            "blurb": "",
+            "shortline": "A detective story about the internet.",
             "tags": [
                 "game",
                 "puzzle",
@@ -66,6 +66,7 @@
         {
             "title": "Human Onboarding",
             "link": "gamejams/human-onboarding",
+            "blurb": "A linear story about what humans really are.",
             "tags": [
                 "game",
                 "puzzle",
@@ -78,6 +79,7 @@
         {
             "title": "Button-Lights",
             "link": "math/button-lights",
+            "shortline": "A short puzzle game with no instructions.",
             "tags": [
                 "game",
                 "puzzle",
@@ -90,6 +92,7 @@
         {
             "title": "Circuit Crazy",
             "link": "math/circuit-crazy",
+            "shortline": "A gaming-style introduction to computational math.",
             "tags": [
                 "game",
                 "puzzle",
@@ -102,6 +105,7 @@
         {
             "title": "Three Seconds To Doom",
             "link": "trijam/three-seconds",
+            "shortline": "A puzzle game with a three-second time limit for every level.",
             "tags": [
                 "game",
                 "puzzle"
@@ -113,6 +117,7 @@
         {
             "title": "UNHOLY",
             "link": "trijam/dealwithdevil",
+            "shortline": "A bullet-hell where you must accept weaknesses to gain strengths.",
             "tags": [
                 "game",
                 "shooter",
@@ -125,6 +130,7 @@
         {
             "title": "Commangineer",
             "link": "commangineer",
+            "shortline": "A promotional site for an ecological real-time strategy game.",
             "tags": [
                 "game",
                 "real-time-strategy"
@@ -136,6 +142,7 @@
         {
             "title": "Super Chicken 3",
             "link": "super-chicken/super3.html",
+            "shortline": "A platformer where you can triple-jump and shoot eggs.",
             "tags": [
                 "game",
                 "platformer",
@@ -149,9 +156,11 @@
         {
             "title": "Alleyway Shootout",
             "link": "trijam/alleyway-defense",
+            "shortline": "A minigame.",
             "tags": [
                 "game",
-                "shooter"
+                "shooter",
+                "arcade"
             ],
             "textColor": "#fff",
             "bgColor": "#7e7e7e",
@@ -160,6 +169,7 @@
         {
             "title": "Set Operations Visualizer",
             "link": "math/set-operations-visualizer",
+            "shortline": "A tool to visualize set operations.",
             "tags": [
                 "math",
                 "set-theory"
@@ -259,7 +269,31 @@
             ],
             "textColor": "#ff1010",
             "bgColor": "#ffffff",
-            "year": 2018
+            "year": 2019
+        },
+        {
+            "title": "Wall Ball",
+            "link": "super-chicken/Wall-Ball.html",
+            "tags": [
+                "game",
+                "classic"
+            ],
+            "textColor": "#000000",
+            "bgColor": "#fff",
+            "year": 2019
+        },
+        {
+            "title": "Youtuber Tycoon",
+            "link": "super-chicken/youtubertycoon.html",
+
+            "tags": [
+                "game",
+                "tycoon",
+                "classic"
+            ],
+            "textColor": "#ffffff",
+            "bgColor": "#ff1010",
+            "year": 2019
         }
     ]
 }
