@@ -1,320 +1,346 @@
 {
-    "tags": {
-        "game": {
-            "off": "#3f3",
-            "on": "#060"
-        },
-        "arena": {
-            "off": "#f33",
-            "on": "#500"
-        },
-        "real-time-strategy": {
-            "off": "#f33",
-            "on": "#500"
-        },
-        "math": {
-            "off": "#bbb",
-            "on": "#555"
-        },
-        "super-chicken": {
-            "off": "#fdd",
-            "on": "#600"
-        },
-        "puzzle": {
-            "off": "#d0d",
-            "on": "#707"
-        },
-        "shooter": {
-            "off": "#0af",
-            "on": "#006"
-        },
-        "computer-science": {
-            "off": "#0ff",
-            "on": "#055"
-        },
-        "bullet-hell": {
-            "off": "#dbb",
-            "on": "#422"
-        },
-        "platformer": {
-            "off": "#ade",
-            "on": "#153"
-        },
-        "paperwork": {
-            "off": "#dda",
-            "on": "#964b00"
-        },
-        "narrative": {
-            "off": "#ee1",
-            "on": "#aa0"
-        }
-    },
-    "games": [
-        {
-            "title": "Shards on a Web",
-            "link": "worldbuilding/internet",
-            "shortline": "A detective story about the internet.",
-            "tags": [
-                "game",
-                "puzzle",
-                "narrative"
-            ],
-            "textColor": "#0f0",
-            "bgColor": "#222",
-            "year": 2025,
-            "reccommendationLevel": 3,
-            "release": "Dec 13, 2025"
-        },
-        {
-            "title": "Human Onboarding",
-            "link": "gamejams/human-onboarding",
-            "blurb": "A linear story about what humans really are.",
-            "tags": [
-                "game",
-                "puzzle",
-                "narrative"
-            ],
-            "textColor": "#017",
-            "reccommendationLevel": 1,
-            "bgColor": "#eee",
-            "year": 2025,
-            "release": "Oct 5, 2025"
-        },
-        {
-            "title": "Button-Lights",
-            "link": "math/button-lights",
-            "shortline": "A short puzzle game with no instructions.",
-            "tags": [
-                "game",
-                "puzzle",
-                "math"
-            ],
-            "textColor": "#000",
-            "reccommendationLevel": 2,
-            "bgColor": "#c8c8c8",
-            "year": 2025,
-            "release": "Sep 5, 2025"
-        },
-        {
-            "title": "Circuit Crazy",
-            "link": "math/circuit-crazy",
-            "shortline": "A gaming-style introduction to computational math.",
-            "tags": [
-                "game",
-                "puzzle",
-                "math"
-            ],
-            "textColor": "#c3423b",
-            "reccommendationLevel": 1,
-            "bgColor": "#e6dec2",
-            "year": 2025
-        },
-        {
-            "title": "Commangineer",
-            "link": "commangineer",
-            "shortline": "A promotional site for an ecological real-time strategy game.",
-            "tags": [
-                "game",
-                "real-time-strategy"
-            ],
-            "textColor": "orange",
-            "bgColor": "purple",
-            "year": 2024,
-            "release": "Jan 10, 2024"
-        },
-        {
-            "title": "Three Seconds To Doom",
-            "link": "trijam/three-seconds",
-            "shortline": "A puzzle game with a three-second time limit for every level.",
-            "tags": [
-                "game",
-                "puzzle"
-            ],
-            "textColor": "#108010",
-            "reccommendationLevel": 2,
-            "bgColor": "#ffff00",
-            "year": 2024,
-            "release": "Feb 12, 2024"
-        },
-        {
-            "title": "UNHOLY",
-            "link": "trijam/dealwithdevil",
-            "shortline": "A bullet-hell where you must accept weaknesses to gain strengths.",
-            "tags": [
-                "game",
-                "shooter",
-                "bullet-hell"
-            ],
-            "textColor": "#a02020",
-            "reccommendationLevel": 2,
-            "bgColor": "#403030",
-            "year": 2024,
-            "release": "Jan 20, 2024"
-        },
-        {
-            "title": "Super Chicken 3",
-            "link": "super-chicken/super3.html",
-            "shortline": "A platformer where you can triple-jump and shoot eggs.",
-            "tags": [
-                "game",
-                "platformer",
-                "shooter",
-                "super-chicken"
-            ],
-            "textColor": "#ff1010",
-            "bgColor": "#ffffff",
-            "reccommendationLevel": 2,
-            "year": 2022
-        },
-        {
-            "title": "Alleyway Shootout",
-            "link": "trijam/alleyway-defense",
-            "shortline": "A minigame.",
-            "tags": [
-                "game",
-                "shooter",
-                "arcade"
-            ],
-            "textColor": "#fff",
-            "reccommendationLevel": 1,
-            "bgColor": "#7e7e7e",
-            "year": 2024,
-            "release": "Aug 15, 2024"
-        },
-        {
-            "title": "Set Operations Visualizer",
-            "link": "math/set-operations-visualizer",
-            "shortline": "A tool to visualize set operations.",
-            "tags": [
-                "math",
-                "set-theory"
-            ],
-            "textColor": "#000",
-            "bgColor": "#fcc",
-            "year": 2024
-        },
-        {
-            "title": "Boolean SAT Editor / Reducer",
-            "link": "math/CNF-SAT-solver",
-            "tags": [
-                "math",
-                "computer-science"
-            ],
-            "textColor": "#000",
-            "bgColor": "#ccf",
-            "year": 2024
-        },
-        {
-            "title": "Ragnarok",
-            "link": "arena/ragnarok",
-            "tags": [
-                "game",
-                "arena",
-                "shooter"
-            ],
-            "textColor": "#f06",
-            "reccommendationLevel": 1,
-            "bgColor": "#555",
-            "year": 2022
-        },
-        {
-            "title": "Thorium-Man",
-            "link": "arena/ragnarok",
-            "tags": [
-                "game",
-                "arena",
-                "shooter"
-            ],
-            "textColor": "#2cf",
-            "reccommendationLevel": 1,
-            "bgColor": "#333",
-            "year": 2022
-        },
-        {
-            "title": "Labors of Heracles",
-            "link": "arena/heracles",
-            "tags": [
-                "game",
-                "arena",
-                "bullet-hell"
-            ],
-            "textColor": "#FFD700",
-            "reccommendationLevel": 1,
-            "bgColor": "#666",
-            "year": 2022
-        },
-        {
-            "title": "SpeedTax",
-            "link": "trijam/unfun",
-            "tags": [
-                "game",
-                "paperwork"
-            ],
-            "textColor": "#964b00",
-            "bgColor": "#f5f5dc",
-            "release": "Jan 28, 2024",
-            "year": 2024
-        },
-        {
-            "title": "Good Natured",
-            "link": "trijam/darkness",
-            "tags": [
-                "game",
-                "puzzle"
-            ],
-            "textColor": "#a0a000",
-            "bgColor": "#f0f0a0",
-            "release": "Feb 05, 2024",
-            "year": 2024
-        },
-        {
-            "title": "Super Chicken 2",
-            "link": "super-chicken/super2.html",
-            "tags": [
-                "game",
-                "platformer",
-                "super-chicken"
-            ],
-            "textColor": "#ff1010",
-            "reccommendationLevel": 1,
-            "bgColor": "#ffffff",
-            "year": 2019
-        },
-        {
-            "title": "Super Chicken",
-            "link": "super-chicken/super.html",
-            "tags": [
-                "game",
-                "platformer",
-                "super-chicken"
-            ],
-            "textColor": "#ff1010",
-            "reccommendationLevel": 2,
-            "bgColor": "#ffffff",
-            "year": 2019
-        },
-        {
-            "title": "Wall Ball",
-            "link": "super-chicken/Wall-Ball.html",
-            "tags": [
-                "game",
-                "classic"
-            ],
-            "textColor": "#000000",
-            "bgColor": "#fff",
-            "year": 2019
-        },
-        {
-            "title": "Youtuber Tycoon",
-            "link": "super-chicken/youtubertycoon.html",
-            "tags": [
-                "game",
-                "tycoon",
-                "classic"
-            ],
-            "textColor": "#ffffff",
-            "bgColor": "#ff1010",
-            "year": 2019
-        }
-    ]
+	"tags": {
+		"game": {
+			"off": "#3f3",
+			"on": "#060"
+		},
+		"arena": {
+			"off": "#f33",
+			"on": "#500"
+		},
+		"real-time-strategy": {
+			"off": "#f33",
+			"on": "#500"
+		},
+		"math": {
+			"off": "#bbb",
+			"on": "#555"
+		},
+		"super-chicken": {
+			"off": "#fdd",
+			"on": "#600"
+		},
+		"puzzle": {
+			"off": "#d0d",
+			"on": "#707"
+		},
+		"shooter": {
+			"off": "#0af",
+			"on": "#006"
+		},
+		"computer-science": {
+			"off": "#0ff",
+			"on": "#055"
+		},
+		"bullet-hell": {
+			"off": "#dbb",
+			"on": "#422"
+		},
+		"platformer": {
+			"off": "#ade",
+			"on": "#153"
+		},
+		"paperwork": {
+			"off": "#dda",
+			"on": "#964b00"
+		},
+		"narrative": {
+			"off": "#ee1",
+			"on": "#aa0"
+		}
+	},
+	"games": [
+		{
+			"title": "Shards on a Web",
+			"link": "worldbuilding/internet",
+			"shortline": "A detective story about the internet.",
+			"tags": [
+				"game",
+				"puzzle",
+				"narrative"
+			],
+			"textColor": "#0f0",
+			"bgColor": "#222",
+			"year": 2025,
+			"reccommendationLevel": 3,
+			"release": "Dec 13, 2025"
+		},
+		{
+			"title": "Human Onboarding",
+			"link": "gamejams/human-onboarding",
+			"shortline": "A linear story about what humans really are.",
+			"tags": [
+				"game",
+				"puzzle",
+				"narrative"
+			],
+			"textColor": "#017",
+			"reccommendationLevel": 1,
+			"bgColor": "#eee",
+			"year": 2025,
+			"release": "Oct 5, 2025",
+			"hidden": true
+		},
+		{
+			"title": "Button-Lights",
+			"link": "math/button-lights",
+			"shortline": "A short puzzle game with no instructions.",
+			"tags": [
+				"game",
+				"puzzle",
+				"math"
+			],
+			"textColor": "#000",
+			"reccommendationLevel": 2,
+			"bgColor": "#c8c8c8",
+			"year": 2025,
+			"release": "Sep 5, 2025"
+		},
+		{
+			"title": "Circuit Crazy",
+			"link": "math/circuit-crazy",
+			"shortline": "A gaming-style introduction to computational math.",
+			"tags": [
+				"game",
+				"puzzle",
+				"math"
+			],
+			"textColor": "#c3423b",
+			"reccommendationLevel": 1,
+			"bgColor": "#e6dec2",
+			"year": 2025,
+			"hidden": true
+		},
+		{
+			"title": "Commangineer",
+			"link": "commangineer",
+			"shortline": "A promotional site for an ecological real-time strategy game.",
+			"tags": [
+				"game",
+				"real-time-strategy"
+			],
+			"textColor": "orange",
+			"bgColor": "purple",
+			"year": 2024,
+			"release": "Jan 10, 2024",
+			"hidden": true
+		},
+		{
+			"title": "Three Seconds To Doom",
+			"link": "trijam/three-seconds",
+			"shortline": "A puzzle game with a three-second time limit for every level.",
+			"tags": [
+				"game",
+				"puzzle"
+			],
+			"textColor": "#108010",
+			"reccommendationLevel": 2,
+			"bgColor": "#ffff00",
+			"year": 2024,
+			"release": "Feb 12, 2024",
+			"hidden": true
+		},
+		{
+			"title": "UNHOLY",
+			"link": "trijam/dealwithdevil",
+			"shortline": "A bullet-hell where you must accept weaknesses to gain strengths.",
+			"tags": [
+				"game",
+				"shooter",
+				"bullet-hell"
+			],
+			"textColor": "#a02020",
+			"reccommendationLevel": 2,
+			"bgColor": "#403030",
+			"year": 2024,
+			"release": "Jan 20, 2024",
+			"hidden": true
+		},
+		{
+			"title": "Super Chicken 3",
+			"link": "super-chicken/super3.html",
+			"shortline": "A platformer where you can triple-jump and shoot eggs.",
+			"tags": [
+				"game",
+				"platformer",
+				"shooter",
+				"super-chicken"
+			],
+			"textColor": "#ff1010",
+			"bgColor": "#ffffff",
+			"reccommendationLevel": 2,
+			"year": 2022,
+			"hidden": true
+		},
+		{
+			"title": "Alleyway Shootout",
+			"link": "trijam/alleyway-defense",
+			"shortline": "A minigame where you shoot bad guys in an alley.",
+			"tags": [
+				"game",
+				"shooter",
+				"arcade"
+			],
+			"textColor": "#fff",
+			"reccommendationLevel": 1,
+			"bgColor": "#7e7e7e",
+			"year": 2024,
+			"release": "Aug 15, 2024",
+			"hidden": true
+		},
+		{
+			"title": "Set Operations Visualizer",
+			"link": "math/set-operations-visualizer",
+			"shortline": "A tool to visualize set operations.",
+			"tags": [
+				"math",
+				"set-theory"
+			],
+			"textColor": "#000",
+			"bgColor": "#fcc",
+			"year": 2024,
+			"hidden": true
+		},
+		{
+			"title": "Boolean SAT Editor / Reducer",
+			"link": "math/CNF-SAT-solver",
+			"shortline": "A tool to reduce the complexity of SAT (Satisfiability) problems.",
+			"tags": [
+				"math",
+				"computer-science"
+			],
+			"textColor": "#000",
+			"bgColor": "#ccf",
+			"year": 2024,
+			"hidden": true
+		},
+		{
+			"title": "Ragnarok",
+			"link": "arena/ragnarok",
+			"shortline": "An arena game where you fight enemies with Thor's powers.",
+			"tags": [
+				"game",
+				"arena",
+				"shooter"
+			],
+			"textColor": "#f06",
+			"reccommendationLevel": 1,
+			"bgColor": "#555",
+			"year": 2022,
+			"hidden": true
+		},
+		{
+			"title": "Thorium-Man",
+			"link": "arena/thorium",
+			"tags": [
+				"game",
+				"arena",
+				"shooter"
+			],
+			"textColor": "#2cf",
+			"reccommendationLevel": 1,
+			"bgColor": "#333",
+			"shortline": "An arena game about a superhero with the powers of Thorium.",
+			"year": 2022,
+			"hidden": true
+		},
+		{
+			"title": "Labors of Heracles",
+			"link": "arena/heracles",
+			"tags": [
+				"game",
+				"arena",
+				"bullet-hell"
+			],
+			"textColor": "#FFD700",
+			"reccommendationLevel": 1,
+			"bgColor": "#666",
+			"shortline": "A bullet hell game inspired by the Labors of Heracles.",
+			"year": 2022,
+			"hidden": true
+		},
+		{
+			"title": "SpeedTax",
+			"link": "trijam/unfun",
+			"tags": [
+				"game",
+				"paperwork"
+			],
+			"textColor": "#964b00",
+			"bgColor": "#f5f5dc",
+			"release": "Jan 28, 2024",
+			"shortline": "A menu game about filing taxes.",
+			"year": 2024
+		},
+		{
+			"title": "Good Natured",
+			"link": "trijam/darkness",
+			"tags": [
+				"game",
+				"puzzle"
+			],
+			"textColor": "#a0a000",
+			"bgColor": "#f0f0a0",
+			"release": "Feb 05, 2024",
+			"shortline": "A game about guilt and fighting demons.",
+			"year": 2024,
+			"hidden": true
+		},
+		{
+			"title": "Super Chicken 2",
+			"link": "super-chicken/super2.html",
+			"tags": [
+				"game",
+				"platformer",
+				"super-chicken"
+			],
+			"textColor": "#ff1010",
+			"reccommendationLevel": 1,
+			"bgColor": "#ffffff",
+			"year": 2019,
+			"shortline": "A scrolling platformer with infinite double jumps.",
+			"hidden": true
+		},
+		{
+			"title": "Super Chicken",
+			"link": "super-chicken/super.html",
+			"tags": [
+				"game",
+				"platformer",
+				"super-chicken"
+			],
+			"textColor": "#ff1010",
+			"reccommendationLevel": 2,
+			"bgColor": "#ffffff",
+			"shortline": "A platformer with infinite double jumps.",
+			"year": 2019
+		},
+		{
+			"title": "Wall Ball",
+			"link": "super-chicken/Wall-Ball.html",
+			"tags": [
+				"game",
+				"classic"
+			],
+			"shortline": "A short arcade game where you bounce a ball against a wall.",
+			"textColor": "#000000",
+			"bgColor": "#fff",
+			"year": 2019,
+			"hidden": true
+		},
+		{
+			"title": "Youtuber Tycoon",
+			"link": "super-chicken/youtubertycoon.html",
+			"tags": [
+				"game",
+				"tycoon",
+				"classic"
+			],
+			"textColor": "#ffffff",
+			"shortline": "A platformer with infinite double jumps.",
+			"bgColor": "#ff1010",
+			"year": 2019,
+			"hidden": true
+		}
+	]
 }
