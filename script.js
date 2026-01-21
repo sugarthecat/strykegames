@@ -9,7 +9,7 @@ window.onload = function(){
      */
 async function buildHTML() {
     //add games to list
-    let gameslist = document.getElementById("gamelist");
+    let gameslist = document.getElementById("gamegrid");
     for (let i = 0; i < games.length; i++) {
         games[i].div = getGameDiv(games[i]);
         gameslist.appendChild(games[i].div)
@@ -84,7 +84,7 @@ function updateGames() {
                 break;
             }
         }
-        if (show) {
+        if (show || true) {
             games[i].div.style.display = "block";
         } else {
             games[i].div.style.display = "none";

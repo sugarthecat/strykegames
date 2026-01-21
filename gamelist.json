@@ -1,54 +1,4 @@
 {
-	"tags": {
-		"game": {
-			"off": "#3f3",
-			"on": "#060"
-		},
-		"arena": {
-			"off": "#f33",
-			"on": "#500"
-		},
-		"real-time-strategy": {
-			"off": "#f33",
-			"on": "#500"
-		},
-		"math": {
-			"off": "#bbb",
-			"on": "#555"
-		},
-		"super-chicken": {
-			"off": "#fdd",
-			"on": "#600"
-		},
-		"puzzle": {
-			"off": "#d0d",
-			"on": "#707"
-		},
-		"shooter": {
-			"off": "#0af",
-			"on": "#006"
-		},
-		"computer-science": {
-			"off": "#0ff",
-			"on": "#055"
-		},
-		"bullet-hell": {
-			"off": "#dbb",
-			"on": "#422"
-		},
-		"platformer": {
-			"off": "#ade",
-			"on": "#153"
-		},
-		"paperwork": {
-			"off": "#dda",
-			"on": "#964b00"
-		},
-		"narrative": {
-			"off": "#ee1",
-			"on": "#aa0"
-		}
-	},
 	"games": [
 		{
 			"title": "Shards on a Web",
@@ -137,8 +87,7 @@
 			"reccommendationLevel": 2,
 			"bgColor": "#ffff00",
 			"year": 2024,
-			"release": "Feb 12, 2024",
-			"hidden": true
+			"release": "Feb 12, 2024"
 		},
 		{
 			"title": "UNHOLY",
@@ -153,8 +102,7 @@
 			"reccommendationLevel": 2,
 			"bgColor": "#403030",
 			"year": 2024,
-			"release": "Jan 20, 2024",
-			"hidden": true
+			"release": "Jan 20, 2024"
 		},
 		{
 			"title": "Super Chicken 3",
@@ -169,8 +117,7 @@
 			"textColor": "#ff1010",
 			"bgColor": "#ffffff",
 			"reccommendationLevel": 2,
-			"year": 2022,
-			"hidden": true
+			"year": 2022
 		},
 		{
 			"title": "Alleyway Shootout",
@@ -226,8 +173,7 @@
 			"textColor": "#f06",
 			"reccommendationLevel": 1,
 			"bgColor": "#555",
-			"year": 2022,
-			"hidden": true
+			"year": 2022
 		},
 		{
 			"title": "Thorium-Man",
@@ -241,8 +187,7 @@
 			"reccommendationLevel": 1,
 			"bgColor": "#333",
 			"shortline": "An arena game about a superhero with the powers of Thorium.",
-			"year": 2022,
-			"hidden": true
+			"year": 2022
 		},
 		{
 			"title": "Labors of Heracles",
@@ -253,11 +198,10 @@
 				"bullet-hell"
 			],
 			"textColor": "#FFD700",
-			"reccommendationLevel": 1,
+			"reccommendationLevel": 1.1,
 			"bgColor": "#666",
 			"shortline": "A bullet hell game inspired by the Labors of Heracles.",
-			"year": 2022,
-			"hidden": true
+			"year": 2022
 		},
 		{
 			"title": "SpeedTax",

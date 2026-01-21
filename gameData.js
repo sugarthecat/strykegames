@@ -11,15 +11,22 @@ window.onload = function(){
 //each game:
 //REQUIRED: year (num), title (string), tags, shortline
 //optional: reccomendationLevel, hidden
+
+//reccomendationLevel = 3 (huge display)
+// 3 = big game,  more than 30-40 min of gameplay
+//reccomendationLevel = 2 (pretty big display)
+// 2 = arcade game, about ~20 mins of gameplay
+//reccomendationLevel = 1 (display)
+// 1 = pretty much a minigame, very little content. 5-10 mins gameplay
+//
 let games = [];
 let tags = [];
-let activeTags = [];
 async function loadGames() {
     let json = await (fetch("gamelist.json").then(x => x.json()));
     games = json.games;
     //remove hidden games
-    games = games.filter((val) =>val.hidden !== true)
-    games.toSorted((a, b) => a - b)
+    games = games.filter((val) => val.hidden !== true)
+    games.sort(compareGames)
     //build tags list 
     for (let i = 0; i < games.length; i++) {
         for (let j = 0; j < games[i].tags.length; j++) {
@@ -30,35 +37,37 @@ async function loadGames() {
     }
     for (let i = 0; i < tags.length; i++) {
         tags[i] = { "tag": tags[i] }
-        if (json.tags[tags[i].tag] == null) {
-            tags[i].color = { "off": "#fff", "on": "#222" }
-        } else {
-            tags[i].color = json.tags[tags[i].tag]
-        }
+        tags[i].color = { "off": "#fff", "on": "#222" }
     }
     buildHTML()
 }
 loadGames();
 
-function compareGames(a,b){
-    if(a.reccommendationLevel != b.reccommendationLevel){
-        return a.reccommendationLevel - b.reccommendationLevel
+function compareGames(a, b) {
+    if (a.reccommendationLevel != b.reccommendationLevel) {
+        if (a.reccommendationLevel === undefined) {
+            a.reccommendationLevel = 0
+        }
+        if (b.reccommendationLevel === undefined) {
+            b.reccommendationLevel = 0
+        }
+        return b.reccommendationLevel - a.reccommendationLevel
     }
-    if(a.year != b.year){
-        return a.year - b.year
+    if (a.year != b.year) {
+        return b.year - a.year
     }
     return 0;
 }
 
-function validateGame(game){
-    if(game.hidden){
+function validateGame(game) {
+    if (game.hidden) {
         return false
     }
-    if(!game.title){
+    if (!game.title) {
         console.error("Game has no title")
         return false
     }
-    if(!game.year){
+    if (!game.year) {
         console.error("Game has no year")
         return false
     }
