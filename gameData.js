@@ -19,6 +19,11 @@ window.onload = function(){
 //recommendationLevel = 1 (display)
 // 1 = pretty much a minigame, very little content. 5-10 mins gameplay
 //
+// how much i like them (from 0-9) is the decimal
+// .0 = don't like
+// .1 = like somewhat
+// .2 = like
+// .3 = very proud of
 let games = [];
 let tags = [];
 async function loadGames() {
@@ -44,19 +49,17 @@ async function loadGames() {
 loadGames();
 
 function compareGames(a, b) {
-    if (a.recommendationLevel != b.recommendationLevel) {
-        if (a.recommendationLevel === undefined) {
-            a.recommendationLevel = 0
+        if (a.date !== undefined && b.date !== undefined) {
+            let aDate = new Date(a.date);
+            let bDate = new Date(b.date)
+            if(aDate > bDate){
+                return -1
+            }else{
+                return 1
+            }
+        } else {
+            return b.year - a.year
         }
-        if (b.recommendationLevel === undefined) {
-            b.recommendationLevel = 0
-        }
-        return b.recommendationLevel - a.recommendationLevel
-    }
-    if (a.year != b.year) {
-        return b.year - a.year
-    }
-    return 0;
 }
 
 function validateGame(game) {

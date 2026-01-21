@@ -13,7 +13,7 @@
 			"bgColor": "#222",
 			"year": 2025,
 			"recommendationLevel": 3,
-			"release": "Dec 13, 2025"
+			"date": "Dec 13, 2025"
 		},
 		{
 			"title": "Human Onboarding",
@@ -25,11 +25,10 @@
 				"narrative"
 			],
 			"textColor": "#017",
-			"recommendationLevel": 1,
+			"recommendationLevel": 2.1,
 			"bgColor": "#eee",
 			"year": 2025,
-			"release": "Oct 5, 2025",
-			"hidden": true
+			"date": "Oct 5, 2025"
 		},
 		{
 			"title": "Button-Lights",
@@ -41,10 +40,10 @@
 				"math"
 			],
 			"textColor": "#000",
-			"recommendationLevel": 2,
+			"recommendationLevel": 3,
 			"bgColor": "#c8c8c8",
 			"year": 2025,
-			"release": "Sep 5, 2025"
+			"date": "Sep 5, 2025"
 		},
 		{
 			"title": "Circuit Crazy",
@@ -56,10 +55,9 @@
 				"math"
 			],
 			"textColor": "#c3423b",
-			"recommendationLevel": 1,
+			"recommendationLevel": 1.2,
 			"bgColor": "#e6dec2",
-			"year": 2025,
-			"hidden": true
+			"year": 2025
 		},
 		{
 			"title": "Commangineer",
@@ -72,7 +70,7 @@
 			"textColor": "orange",
 			"bgColor": "purple",
 			"year": 2024,
-			"release": "Jan 10, 2024",
+			"date": "Jan 10, 2024",
 			"hidden": true
 		},
 		{
@@ -87,7 +85,7 @@
 			"recommendationLevel": 2,
 			"bgColor": "#ffff00",
 			"year": 2024,
-			"release": "Feb 12, 2024"
+			"date": "Feb 12, 2024"
 		},
 		{
 			"title": "UNHOLY",
@@ -102,12 +100,12 @@
 			"recommendationLevel": 2,
 			"bgColor": "#403030",
 			"year": 2024,
-			"release": "Jan 20, 2024"
+			"date": "Jan 20, 2024"
 		},
 		{
 			"title": "Super Chicken 3",
 			"link": "super-chicken/super3.html",
-			"shortline": "A platformer where you can triple-jump and shoot eggs.",
+			"shortline": "A platformer where you can triple-jump and shoot eggs using the arrow keys.",
 			"tags": [
 				"game",
 				"platformer",
@@ -120,7 +118,7 @@
 			"year": 2022
 		},
 		{
-			"title": "Alleyway Shootout",
+			"title": "Midnight Shootout",
 			"link": "trijam/alleyway-defense",
 			"shortline": "A minigame where you shoot bad guys in an alley.",
 			"tags": [
@@ -132,8 +130,7 @@
 			"recommendationLevel": 1,
 			"bgColor": "#7e7e7e",
 			"year": 2024,
-			"release": "Aug 15, 2024",
-			"hidden": true
+			"date": "Aug 15, 2024"
 		},
 		{
 			"title": "Set Operations Visualizer",
@@ -164,7 +161,7 @@
 		{
 			"title": "Ragnarok",
 			"link": "arena/ragnarok",
-			"shortline": "An arena game where you fight enemies with Thor's powers.",
+			"shortline": "An arena game where you fight enemies using Thor's powers.",
 			"tags": [
 				"game",
 				"arena",
@@ -186,7 +183,7 @@
 			"textColor": "#2cf",
 			"recommendationLevel": 1,
 			"bgColor": "#333",
-			"shortline": "An arena game where you fight enemies with the powers of Thorium.",
+			"shortline": "An arena game where you fight enemies using the powers of Thorium.",
 			"year": 2022
 		},
 		{
@@ -212,7 +209,7 @@
 			],
 			"textColor": "#964b00",
 			"bgColor": "#f5f5dc",
-			"release": "Jan 28, 2024",
+			"date": "Jan 28, 2024",
 			"shortline": "A menu game about filing taxes.",
 			"year": 2024
 		},
@@ -225,7 +222,7 @@
 			],
 			"textColor": "#a0a000",
 			"bgColor": "#f0f0a0",
-			"release": "Feb 05, 2024",
+			"date": "Feb 05, 2024",
 			"shortline": "A game about guilt and fighting demons.",
 			"year": 2024,
 			"hidden": true
@@ -266,10 +263,9 @@
 				"classic"
 			],
 			"shortline": "A short arcade game where you bounce a ball against a wall.",
-			"textColor": "#000000",
-			"bgColor": "#fff",
-			"year": 2019,
-			"hidden": true
+			"textColor": "#fff",
+			"bgColor": "#000",
+			"year": 2019
 		},
 		{
 			"title": "Youtuber Tycoon",
@@ -279,11 +275,10 @@
 				"tycoon",
 				"classic"
 			],
-			"textColor": "#ffffff",
-			"shortline": "A platformer with infinite double jumps.",
-			"bgColor": "#ff1010",
-			"year": 2019,
-			"hidden": true
+			"textColor": "#fff",
+			"shortline": "A tycoon where you run a social media channel.",
+			"bgColor": "#e00",
+			"year": 2019
 		}
 	]
 }

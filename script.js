@@ -40,7 +40,7 @@ function getGameDiv(game) {
 
     newDiv.style.backgroundColor = game.bgColor;
     newDiv.classList.add("game")
-    console.log(game.title, game.recommendationLevel)
+    console.log(game.title, game.date, game.recommendationLevel)
     if (game.recommendationLevel >= 3) {
         newDiv.classList.add('huge')
     } else if (game.recommendationLevel >= 2) {
