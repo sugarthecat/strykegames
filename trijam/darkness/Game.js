@@ -16,7 +16,7 @@ class Game extends GUI {
         rect(0, 0, 600, 400)
         if (this.introScreen) {
             textFont(Assets.font)
-            let messages = ["Heaven is a nice place.", "I'm a good person.", "I just...", "I let loose sometimes.", "I need to control the darkness inside."]
+            let messages = ["This is a nice place.", "I'm a good person.", "I just...", "let loose sometimes.", "I need to control the darkness inside."]
             let msgProgress = [max(0, this.introProgress), max(0, this.introProgress - 5), max(this.introProgress - 10), max(this.introProgress - 15), max(this.introProgress - 20)]
             textAlign(LEFT)
             textSize(30)
@@ -31,12 +31,6 @@ class Game extends GUI {
             }
             this.introProgress += deltaTime/1000;
         } else {
-            if(this.levelOn == 1){
-                fill(255)
-                rect(0,350,100,50)
-                fill(0)
-                text("Shift to regain control.", 0,350,100,50)
-            }
             push()
             translate(300 - camera.x, 200 - camera.y);
             fill(0)
@@ -56,6 +50,13 @@ class Game extends GUI {
             this.goal.Collide(player)
             player.Draw();
             pop()
+            if(this.levelOn == 1){
+                fill(255)
+                rect(0,350,100,35)
+                fill(0)
+                textAlign(CENTER)
+                text("Shift to regain control.", 0,350,100,50)
+            }
             fill(255, 0, 0)
             noStroke()
             rect(0, 0, 200 * player.supressionLeft, 20)

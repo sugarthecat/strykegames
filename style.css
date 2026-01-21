@@ -55,6 +55,9 @@ div.game.bigc {
     grid-row: span 2;
     grid-column: span 1;
     aspect-ratio:  1 / 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 div.game.bigr {
     grid-row: span 1;

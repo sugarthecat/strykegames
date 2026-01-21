@@ -2,7 +2,7 @@ class DeathScreen extends GUI {
     constructor() {
         super();
         this.elements = [new Button(200, 325, 200, 50, "Return.", function () { screenOn = "game"; game.NewLevel(); }),
-        new GUIText(200, 50, 200, 100, "I wasn't worthy."),
+        new GUIText(200, 50, 200, 100, "I failed."),
         new GUIText(200, 150, 200, 100, "I wasn't worthy.")]
     }
     Draw(x, y) {
