@@ -46,6 +46,21 @@
 			"date": "Sep 5, 2025"
 		},
 		{
+			"title": "Goo Guy Chronicles",
+			"link": "gamejams/googuychronicles",
+			"shortline": "A platformer where you're a guy made of goo.",
+			"tags": [
+				"game",
+				"platformer",
+				"dungeon-crawler"
+			],
+			"textColor": "#5e8952",
+			"recommendationLevel": 2,
+			"bgColor": "#dffdff",
+			"year": 2025,
+			"date": "Feb 23, 2025"
+		},
+		{
 			"title": "Circuit Crazy",
 			"link": "math/circuit-crazy",
 			"shortline": "A gaming-style introduction to computational math.",
@@ -55,7 +70,7 @@
 				"math"
 			],
 			"textColor": "#c3423b",
-			"recommendationLevel": 1.2,
+			"recommendationLevel": 3.2,
 			"bgColor": "#e6dec2",
 			"year": 2025
 		},
