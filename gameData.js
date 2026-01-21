@@ -10,13 +10,13 @@ window.onload = function(){
 
 //each game:
 //REQUIRED: year (num), title (string), tags, shortline
-//optional: reccomendationLevel, hidden
+//optional: recommendationLevel, hidden
 
-//reccomendationLevel = 3 (huge display)
+//recommendationLevel = 3 (huge display)
 // 3 = big game,  more than 30-40 min of gameplay
-//reccomendationLevel = 2 (pretty big display)
+//recommendationLevel = 2 (pretty big display)
 // 2 = arcade game, about ~20 mins of gameplay
-//reccomendationLevel = 1 (display)
+//recommendationLevel = 1 (display)
 // 1 = pretty much a minigame, very little content. 5-10 mins gameplay
 //
 let games = [];
@@ -44,14 +44,14 @@ async function loadGames() {
 loadGames();
 
 function compareGames(a, b) {
-    if (a.reccommendationLevel != b.reccommendationLevel) {
-        if (a.reccommendationLevel === undefined) {
-            a.reccommendationLevel = 0
+    if (a.recommendationLevel != b.recommendationLevel) {
+        if (a.recommendationLevel === undefined) {
+            a.recommendationLevel = 0
         }
-        if (b.reccommendationLevel === undefined) {
-            b.reccommendationLevel = 0
+        if (b.recommendationLevel === undefined) {
+            b.recommendationLevel = 0
         }
-        return b.reccommendationLevel - a.reccommendationLevel
+        return b.recommendationLevel - a.recommendationLevel
     }
     if (a.year != b.year) {
         return b.year - a.year

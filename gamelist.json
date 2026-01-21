@@ -12,7 +12,7 @@
 			"textColor": "#0f0",
 			"bgColor": "#222",
 			"year": 2025,
-			"reccommendationLevel": 3,
+			"recommendationLevel": 3,
 			"release": "Dec 13, 2025"
 		},
 		{
@@ -25,7 +25,7 @@
 				"narrative"
 			],
 			"textColor": "#017",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1,
 			"bgColor": "#eee",
 			"year": 2025,
 			"release": "Oct 5, 2025",
@@ -41,7 +41,7 @@
 				"math"
 			],
 			"textColor": "#000",
-			"reccommendationLevel": 2,
+			"recommendationLevel": 2,
 			"bgColor": "#c8c8c8",
 			"year": 2025,
 			"release": "Sep 5, 2025"
@@ -56,7 +56,7 @@
 				"math"
 			],
 			"textColor": "#c3423b",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1,
 			"bgColor": "#e6dec2",
 			"year": 2025,
 			"hidden": true
@@ -84,7 +84,7 @@
 				"puzzle"
 			],
 			"textColor": "#108010",
-			"reccommendationLevel": 2,
+			"recommendationLevel": 2,
 			"bgColor": "#ffff00",
 			"year": 2024,
 			"release": "Feb 12, 2024"
@@ -99,7 +99,7 @@
 				"bullet-hell"
 			],
 			"textColor": "#a02020",
-			"reccommendationLevel": 2,
+			"recommendationLevel": 2,
 			"bgColor": "#403030",
 			"year": 2024,
 			"release": "Jan 20, 2024"
@@ -116,7 +116,7 @@
 			],
 			"textColor": "#ff1010",
 			"bgColor": "#ffffff",
-			"reccommendationLevel": 2,
+			"recommendationLevel": 2,
 			"year": 2022
 		},
 		{
@@ -129,7 +129,7 @@
 				"arcade"
 			],
 			"textColor": "#fff",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1,
 			"bgColor": "#7e7e7e",
 			"year": 2024,
 			"release": "Aug 15, 2024",
@@ -171,7 +171,7 @@
 				"shooter"
 			],
 			"textColor": "#f06",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1.1,
 			"bgColor": "#555",
 			"year": 2022
 		},
@@ -184,9 +184,9 @@
 				"shooter"
 			],
 			"textColor": "#2cf",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1,
 			"bgColor": "#333",
-			"shortline": "An arena game about a superhero with the powers of Thorium.",
+			"shortline": "An arena game where you fight enemies with the powers of Thorium.",
 			"year": 2022
 		},
 		{
@@ -198,7 +198,7 @@
 				"bullet-hell"
 			],
 			"textColor": "#FFD700",
-			"reccommendationLevel": 1.1,
+			"recommendationLevel": 1.1,
 			"bgColor": "#666",
 			"shortline": "A bullet hell game inspired by the Labors of Heracles.",
 			"year": 2022
@@ -239,11 +239,10 @@
 				"super-chicken"
 			],
 			"textColor": "#ff1010",
-			"reccommendationLevel": 1,
+			"recommendationLevel": 1,
 			"bgColor": "#ffffff",
 			"year": 2019,
-			"shortline": "A scrolling platformer with infinite double jumps.",
-			"hidden": true
+			"shortline": "A scrolling platformer with infinite double jumps."
 		},
 		{
 			"title": "Super Chicken",
@@ -254,7 +253,7 @@
 				"super-chicken"
 			],
 			"textColor": "#ff1010",
-			"reccommendationLevel": 2,
+			"recommendationLevel": 2,
 			"bgColor": "#ffffff",
 			"shortline": "A platformer with infinite double jumps.",
 			"year": 2019
