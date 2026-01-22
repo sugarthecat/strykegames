@@ -264,7 +264,7 @@
 				"super-chicken"
 			],
 			"textColor": "#ff1010",
-			"recommendationLevel": 2,
+			"recommendationLevel": 1,
 			"bgColor": "#ffffff",
 			"shortline": "A platformer with infinite double jumps.",
 			"year": 2019
