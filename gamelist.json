@@ -33,7 +33,7 @@
 		{
 			"title": "Button-Lights",
 			"link": "math/button-lights",
-			"shortline": "A short puzzle game with no instructions.",
+			"shortline": "A puzzle game with no instructions.",
 			"tags": [
 				"game",
 				"puzzle",
@@ -70,7 +70,7 @@
 				"math"
 			],
 			"textColor": "#c3423b",
-			"recommendationLevel": 3.2,
+			"recommendationLevel": 2.2,
 			"bgColor": "#e6dec2",
 			"year": 2025
 		},
@@ -129,7 +129,7 @@
 			],
 			"textColor": "#ff1010",
 			"bgColor": "#ffffff",
-			"recommendationLevel": 2,
+			"recommendationLevel": 3,
 			"year": 2022
 		},
 		{
