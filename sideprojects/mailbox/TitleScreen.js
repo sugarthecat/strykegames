@@ -25,7 +25,7 @@ class TitleScreen extends GUI {
             //    screenOn = "assasingame";
             //    screens.letter.reset();
             //}), 
-            new Button(200, 320, 200, 40, "A Memoir", function () {
+            new Button(50, 320, 200, 40, "A Memoir", function () {
                 screenOn = "memoir";
                 screens.letter.reset();
             })
