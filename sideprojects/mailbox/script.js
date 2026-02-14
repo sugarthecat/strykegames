@@ -22,8 +22,9 @@ function setup() {
     for (const key in screens) {
         screens[key].reset()
     }
-
+    frameRate(60);
 }
+
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
     if (windowWidth / SCREEN_DIMENSIONS.x < windowHeight / SCREEN_DIMENSIONS.y) {
@@ -56,7 +57,10 @@ function mouseClicked() {
 function mousePressed() {
     let mousePosition = getMousePosition()
     screens[screenOn].mousePressed(mousePosition.x, mousePosition.y);
+}
 
+function keyPressed(event){
+    screens[screenOn].keyPressed(event)
 }
 
 function mouseReleased() {

@@ -16,7 +16,7 @@ async function buildHTML() {
     }
 }
 
-    let vert = false;
+let vert = false;
 function getGameDiv(game) {
     let newDiv = document.createElement("div");
 
@@ -44,7 +44,7 @@ function getGameDiv(game) {
     if (game.recommendationLevel >= 3) {
         newDiv.classList.add('huge')
     } else if (game.recommendationLevel >= 2) {
-        
+
         vert = Math.random() < 0.5;
         newDiv.classList.add('big' + (vert ? "c" : "r"));
     }
