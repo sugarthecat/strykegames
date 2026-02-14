@@ -23,7 +23,7 @@ class AssasinGame extends GUI {
         this.currColor = 0;
     }
     Draw(x, y) {
-        this.time += deltaTime / 100;
+        this.time += deltaTime / 1000;
         push()
         noStroke()
         background(255)
