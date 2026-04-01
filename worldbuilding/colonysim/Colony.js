@@ -302,7 +302,7 @@ export default class colony {
         }
     }
     wouldDie() {
-        return this.totalPop * 10 < this.maxTotalPop || this.tiles == 0
+        return (this.totalPop * 10 < this.maxTotalPop) || this.totalTiles == 0
     }
     resetTotalDisplayStats() {
         this.totalPop = 0;
