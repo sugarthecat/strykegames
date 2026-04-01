@@ -1,0 +1,659 @@
+body{
+    background-color: rgb(58, 58, 78);
+}
+input[type="range"].custom_colony_ideology {
+    -webkit-appearance: none;
+    margin-right: 15px;
+    width: 300px;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    background-image: linear-gradient(to right,#ff0000, #ff7d00,#ffffff, #00ffff, #0000ff);
+    background-repeat: no-repeat;
+  }
+.custom_colony_ideology_label{
+    color:white;
+    font-family: Arial;
+    margin: 10px;
+    font-size:30px;
+}
+.canvas_row{
+    padding: 15px 0px;
+    background-color: #d6d6d6;
+    position: relative;
+}
+#custom_colony_canvas{
+    outline:2px solid black;
+    margin:4px;
+    clear:right;
+    width:360px;
+    height:240px;
+}
+.alliance_stub{
+    float:left;
+    padding:10px;
+    color:white;
+    font-weight: bolder;
+    font-family:Arial;
+}
+.alliance_checkbox{
+    width:20px;
+    height:20px;
+}
+.flag_preset_select{
+    padding:16px;
+    font-size: 16px;
+}
+.flag_canvas{
+    outline:2px solid black;
+    margin-right:10px;
+    margin-top:10px;
+    float:left;
+    clear:right;
+    width:60px;
+    height:40px;
+}
+#spritesheets{
+    display:none;
+}
+.colony_name{
+    margin-top:20px;
+    margin-bottom: 15px;
+    height:40px;
+}
+.colony_stats{
+    font-weight: bolder;
+}
+#tile_overlay{
+
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.678);
+    z-index: 3;
+    cursor: pointer;
+}
+
+.canvas_overlay{
+
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.678);
+    z-index: 3;
+    cursor: pointer;
+    overflow: auto;
+}
+
+
+.tile_overlay_text{
+    margin-left: 10%;
+}
+
+#tile_overlay_for_occupied_land{
+
+}
+
+#tile_overlay_for_empty_land{
+    
+}
+
+.tile_overlay_group{
+    font-size: 15px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.colony_overlay_text{
+    margin-left: 10%;
+    font-size: 15px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* File Input buttons */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.8);
+    size: 12px;
+    background-color: black;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+.canvas_overlay_close_btn{
+    position: sticky;
+    bottom: 0%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+.canvas_overlay_close_btn{
+    padding: 12px 16px;
+    border: 0;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.829);
+
+    border: 1px solid rgb(161, 160, 160);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.tile_overlay_population{
+    color: white;
+}
+
+
+.above_canvas{
+    font-family: Arial, Helvetica, sans-serif;
+    height: 10%;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.below_canvas{
+    background-color: #63616d;
+    margin: 10px 10% 0% 10%;
+    border-radius: 1%;
+    padding: 10px 10px 10px 10px;
+}
+
+
+#title{
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+#socialTexts{
+    font-size: 10px;
+}
+
+
+.below_canvas button{
+    padding: 12px 16px;
+    border: 0;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.829);
+
+    border: 1px solid rgb(161, 160, 160);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+
+.below_canvas button:hover{
+    background-color: rgba(255,255,255,0.1);
+}
+
+#main_image_input{
+
+}
+
+#canvas{
+    position: relative;
+    padding: 0;
+    margin: auto;
+    display: block;
+    background-color: white;
+    max-width:100%;
+    max-height:100vh;
+
+    border: none;
+}
+
+span.labels{
+    font-weight: bolder;
+}
+#display_map_btn{
+
+}
+
+.labels, .create_colony_checkboxtext{
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-family:Arial, Helvetica, sans-serif
+}
+.create_colony_checkboxtext{
+    font-size:14px;
+    text-transform: none;
+}
+.labeltitle{
+    font-size:24px;
+}
+.game_setup_group{
+    display: inline-block;
+    padding: 0px 10px 0px 10px;
+}
+
+.game_setup_inputs{
+    margin-top: 5px;
+}
+
+.cross_out{
+    text-decoration: line-through;
+}
+.border_group{
+    border: 1px solid rgb(161, 160, 160);
+}
+#change_map_mode_btn{
+
+}
+
+#play_pause_btn{
+    border: 1px solid rgba(105, 105, 105);
+    background-color: #6E9E5F;
+
+}
+
+#create_random_colonies{
+
+}
+
+.custom_flag_span, .custom_flag_type_span{
+    font-weight: bolder;
+    margin-left:10px;
+    margin-right:10px;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#ffffff;
+}
+.custom_flag_type_span{
+    font-size:24px;
+}
+#flag_editor{
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+.number_input {
+    text-decoration: none;
+
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.753);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.flag_number_input {
+    text-decoration: none;
+    width:50px;
+    padding: 5px 5px 5px 5px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.753);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.text_input{
+    text-decoration: none;
+
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.753);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.interactive_buttons{
+    margin-top: 10px;
+}
+
+
+.terrain_edit_buttons {
+    margin-top: 10px;
+}
+.terrain_edit_buttons button{
+    margin-top: 10px;
+}
+
+#main_terrain_edit_btn{
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.829);
+}
+
+#plains_terrain_edit_btn{
+    background-color: #64aa49;
+}
+#mountains_terrain_edit_btn{
+    background-color: #474747;
+
+}
+
+#forests_terrain_edit_btn{
+    background-color: #2e3f29;
+
+}
+
+#rivers_terrain_edit_btn{
+    background-color: #5c8c9c;
+
+}
+
+#oceans_terrain_edit_btn{
+    background-color: #4A9DEE;
+
+}
+
+.create_custom_colony_group{
+    margin-top: 10px;
+}
+
+.interactive_map_tools{
+    margin-top: 10px;
+}
+
+.label_group{
+    display: inline-block;
+    border: 1px solid rgb(161, 160, 160);
+    padding: 2px 10px 2px 10px;
+    border-radius: 2px;
+}
+
+#stat_holder{
+    margin-top: 10px;
+    background-color: #fffffff1;
+    border-radius: 6px;
+    padding: 5px 5px 5px 5px;
+    border: 1px;
+}
+
+#select_colony_overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#overlay_buttons{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#view_upcoming_updates{
+    font-size: 10px;
+    padding: 5px 5px 5px 5px;
+    margin-left: 15px;
+}
+
+#upcoming_updates_overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.678);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#update_overlay_text {
+    margin-top: 10%;
+    color: white;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#update_overlay_text h1,
+#update_overlay_text p{
+   text-align: center;
+}
+
+#update_overlay_text ul {
+    display: table;
+    margin: 0 auto;
+  }
+
+
+#view_credits{
+    font-size: 10px;
+    padding: 5px 5px 5px 5px;
+    margin-left: 15px;
+}
+
+#credits_overlay{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.678);
+    z-index: 2;
+    cursor: pointer;
+}
+#credits_overlay_text ul {
+    display: table;
+    margin: 0 auto;
+
+  }
+
+#credits_overlay_text{
+    margin-top: 10%;
+    color: white;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+#credits_overlay_text h1,
+#credits_overlay_text p{
+   text-align: center;
+   margin: auto;
+}
+
+
+
+.canvas_overlay_default_btn{
+    padding: 6px 8px;
+    border: 0;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.829);
+
+    border: 1px solid rgb(161, 160, 160);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.8);
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.canvas_overlay_default_btn:hover{
+
+    background-color: rgba(167, 167, 167, 0.829);
+    color: rgba(29, 29, 29, 0.8);
+
+}
+
+#skinny_info_btn{
+    font-size: 10px;
+    padding: 5px 5px 5px 5px;
+    margin-left: 15px;
+    
+}
+
+.colony_overlay_data_btns{
+    position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
+
+
+.colony_overlay_data_btns button{
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+  
+
+.colony_overlay_default_header{
+    color: #ffffff;
+}
+
+#colony_graphs_overlay_back_btn{
+    margin-top: 10px;
+}
+
+#military_graph_canvas{
+    margin-bottom: 10px;
+}
+
+.colony_overlay_default_edit_data_input{
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    background: transparent;
+    color:  white;
+}
+
+.colony_overlay_military_edit_btns *::placeholder{
+    color: white;
+    opacity: 1;
+}
+
+.colony_overlay_default_edit_data_input_label{
+    padding: 10px 10px 10px 10px;
+    margin-top: 10px;
+    background: transparent;
+    color:  white;
+}
+
+.colony_overlay_default_edit_data_input_label :hover{
+   background: white;
+   color: black;
+}
+.default_transparent_overlay_btn{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    color: white;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding: 10px 10px 10px 10px;
+}
+
+.default_transparent_overlay_btn:hover{
+    background:rgb(255, 255, 255);
+    opacity: .7;
+    color: rgb(0, 0, 0);
+    
+}
+
+.default_transparent_overlay_btn_comming_soon{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    color: white;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+    padding: 10px 10px 10px 10px;
+}
+
+
+.inactive_btn_default{
+    color: grey;
+    background-color: #474747;
+}
+@media only screen and (max-width: 1600px) {
+    .canvas_overlay{
+        width:25%;
+    }
+    #colony_overlay_flag_canvas{
+        width: 240px;
+        height:180px;
+    }
+}@media only screen and (max-width: 1200px) {
+    .canvas_overlay{
+        width:30%;
+    }
+    #colony_overlay_flag_canvas{
+        width: 200px;
+        height:150px;
+    }
+}@media only screen and (max-width: 1000px) {
+    .canvas_overlay{
+        width:35%;
+    }
+    #colony_overlay_flag_canvas{
+        width: 160px;
+        height:120px;
+    }
+    .canvas_overlay h1 {
+        font-size: 1em
+    }
+    .canvas_overlay h2 {
+        font-size: 0.75em
+    }
+    .canvas_overlay p {
+        margin:0;
+        font-size: 0.75em
+    }
+}@media only screen and (max-width: 800px) {
+    
+    .canvas_overlay{
+        width:40%;
+    }
+    #colony_overlay_flag_canvas{
+        width: 120px;
+        height:90px;
+    }
+    .canvas_overlay button{
+        padding:1px;
+    }
+}@media only screen and (max-width: 600px) {
+    #colony_overlay_flag_canvas{
+        width: 80px;
+        height:60px;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .below_canvas {
+        margin: 10px 5px 0px 5px;
+        padding: 5px 5px 5px 5px;
+      }
+    .below_canvas button{
+       
+        padding: 8px 10px;
+      }
+}

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="Tile.js" type="module"></script>
+<script src="app.js" type="module"></script>
+<script src="Colony.js" type="module"></script>
+<script src="./TileOverlay.js" type="module"></script>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="./style.css"/>
+
+<head>
+    <link rel="icon" href="img/favicon.ico">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColonySim.io</title>
+</head>
+
+<body oncontextmenu="return false">
+
+    <div class="above_canvas">
+        <h1 id="title">ColonySim.io</h1>
+        <p1 id="socialTexts">For updates and suggestions: @.Belfont on TikTok and @Belfont on YouTube</p1>
+    </div>
+
+    <div class="canvas_row">
+        <div class="overlay_canvas_container">
+
+            <div id="tile_overlay" class="canvas_overlay">
+                <div class="tile_overlay_group" id="tile_overlay_for_occupied_land">
+                    <h1 id="tile_overlay_colony_name" style="text-align: center; color: white;"></h1>
+
+                    <h2>About:</h2>
+                    <br>
+                    <p class="tile_overlay_text" id="tile_overlay_pop_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_colony_control_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_troop_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_attack_and_defense_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_supply_text"></p>
+                </div>
+
+                <div class="tile_overlay_group" id="tile_overlay_for_occupied_water">
+                    <h1 id="tile_overlay_occupied_water_colony_name" style="text-align: center; color: white;"></h1>
+
+                    <h2>About:</h2>
+                    <br>
+                    <p class="tile_overlay_text" id="tile_overlay_occupied_water_pop_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_occupied_water_troop_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_occupied_water_strength_and_health_text"></p>
+                </div>
+
+                <div class="tile_overlay_group" id="tile_overlay_for_empty_land">
+                    <h1 style="text-align: center; color: white;" id="tile_overlay_terrain_name"></h1>
+                    <br>
+                    <p class="tile_overlay_text" id="tile_overlay_empty_land_pop_text"></p>
+                    <p class="tile_overlay_text" id="tile_overlay_empty_land_troop_text"></p>
+
+                </div>
+
+                <div class="tile_overlay_group" id="tile_overlay_for_empty_water">
+                    <h1 style="text-align: center; color: white;" id="tile_overlay_empty_water_header"></h1>
+                    <p class="tile_overlay_text" id="tile_overlay_empty_water_pop_text"></p>
+                </div>
+
+                <button class="canvas_overlay_close_btn" id="tile_overlay_close_btn">Close</button>
+            </div>
+
+            <div id="colony_overlay" class="canvas_overlay">
+
+                <h1 id="colony_overlay_colony_name" style="text-align: center; color: white;"></h1>
+                <hr>
+                <canvas id="colony_overlay_flag_canvas"></canvas>
+
+                <p class="colony_overlay_text" id="colony_overlay_ideology"></p>
+                <p class="colony_overlay_text" id="colony_overlay_alliance"></p>
+                <p class="colony_overlay_text" id="colony_overlay_tiles"></p>
+                <p class="colony_overlay_text" id="colony_overlay_population"></p>
+                <p class="colony_overlay_text" id="colony_overlay_military_strength"></p>
+                <p class="colony_overlay_text" id="colony_overlay_troops"></p>
+                <p class="colony_overlay_text" id="colony_overlay_manpower"></p>
+                <p class="colony_overlay_text" id="colony_overlay_enemies"></p>
+
+                <div class="colony_overlay_data_btns">
+                    <!-- INACTIVE BUTTONS (remove class to reactivate) -->
+                    <button class=" default_transparent_overlay_btn" id="colony_overlay_military_btn">Military</button>
+                    <button class=" default_transparent_overlay_btn"
+                        id="colony_overlay_population_btn">Population</button>
+                    <button class="default_transparent_overlay_btn inactive_btn_default"
+                        id="colony_overlay_politics_btn">Politics</button>
+                    <button class="default_transparent_overlay_btn inactive_btn_default"
+                        id="colony_overlay_econ_btn">Economy</button>
+                    <button class="default_transparent_overlay_btn inactive_btn_default"
+                        id="colony_overlay_diplomacy_btn">Diplomacy</button>
+                </div>
+                <button class="canvas_overlay_close_btn" id="colony_overlay_close_btn">Close</button>
+            </div>
+
+            <div id="colony_graphs_overlay" class="canvas_overlay">
+                <div id="population_graph_overlay">
+
+                    <h1 id="colony_overlay_graph_colony_name" style="text-align: center; color: white;"></h1>
+                    <h1 class="colony_overlay_default_header" style="text-align: center;">Population</h1>
+                    <hr>
+
+                    <canvas id='population_graph_canvas'></canvas>
+                    <hr>
+                    <canvas id='population_culture_graph_canvas'></canvas>
+
+
+                </div>
+
+                <!-- Military Overlay -->
+                <div id="military_graph_overlay" style="display: block;">
+                    <h1 id="colony_overlay_graph_colony_name" style="text-align: center; color: white;"></h1>
+                    <h1 class="colony_overlay_default_header" style="text-align: center;">Military</h1>
+
+                    <hr>
+                    <canvas id='military_graph_canvas'></canvas>
+                    <div class="colony_overlay_military_graph_btns">
+                        <!-- INACTIVE BUTTONS (remove class to reactivate) -->
+                        <button class="default_transparent_overlay_btn"
+                            id="colony_overlay_military_graph_strength_btn">Strength</button>
+                        <button class="default_transparent_overlay_btn"
+                            id="colony_overlay_military_graph_troops_btn">Troops</button>
+                        <button class="default_transparent_overlay_btn"
+                            id="colony_overlay_military_graph_ships_btn">Ships</button>
+                    </div>
+
+
+                    <hr>
+
+                    <h2 style="text-align: center; color: white;">Edit Military</h2>
+                    <div class="colony_overlay_military_edit_btns">
+                        <input class="colony_overlay_default_edit_data_input"
+                            id="colony_overlay_edit_milstrength_count_input" type="number"
+                            placeholder="Add strength...">
+                        <button class="default_transparent_overlay_btn" id="colony_overlay_edit_strength_count_btn"
+                            for="colony_overlay_edit_milstrength_count_input">Add Strength</button>
+
+                        <input class="colony_overlay_default_edit_data_input" id="colony_overlay_edit_troop_count_input"
+                            type="number" placeholder="Add troops...">
+                        <button class="default_transparent_overlay_btn" id="colony_overlay_edit_troop_count_btn"
+                            for="colony_overlay_edit_troop_count_input">Add Troops</button>
+
+                        <input class="colony_overlay_default_edit_data_input" id="colony_overlay_edit_ship_count_input"
+                            type="number" placeholder="Add ships...">
+                        <button class="default_transparent_overlay_btn" id="colony_overlay_edit_ship_count_btn"
+                            for="colony_overlay_edit_ship_count_input">Add Ships</button>
+
+                    </div>
+                </div>
+                <button class="canvas_overlay_close_btn transparent_overlay_navigation_btn"
+                    id="colony_graphs_overlay_close_btn">Close</button>
+                <button class="canvas_overlay_default_btn transparent_overlay_navigation_btn"
+                    id="colony_graphs_overlay_back_btn">Back</button>
+
+            </div>
+            <canvas id="canvas" width="1000" height="700"></canvas>
+        </div>
+    </div>
+
+
+    <div class="below_canvas">
+        <button id="play_pause_btn">Play</button>
+
+        <div class="label_group">
+            <label class="labels" for="speed_slider">Game Speed: </label>
+            <input type="range" min="1" name="speed_slider" max="255" value="245" id="speed_slider">
+            <button id="save_map_btn">Save Map</button>
+        </div>
+
+        <button id="view_upcoming_updates">View upcoming updates</button>
+        <button id="view_credits">Credits</button>
+        <a href='https://www.reddit.com/r/ColonySim_io/comments/tvom5s/uploading_a_custom_map_tutorial/'
+            target="_blank"><button id="skinny_info_btn">Tutorial</button></a>
+        <a href='https://www.reddit.com/r/ColonySim_io/comments/tvpza6/creating_custom_colonies/'
+            target="_blank"><button id="skinny_info_btn">Custom Colony Tutorial</button></a>
+        <a href='https://discord.gg/nus74b5YdD' target="_blank"><button id="skinny_info_btn"> Discord/Maps</button></a>
+
+        <div class="game_setup_inputs">
+            <label class="custom-file-upload"> <input type="file" id="main_image_input">Upload Image</label>
+            <label class="custom-file-upload"> <input id="map_import_input" type="file"
+                    accept="application/txt" />Upload Save</label>
+
+            <div class="game_setup_group border_group">
+                <label class="labels" for="size_input">Tile Size</label>
+                <input class="number_input" type='number' value="3" name="size_input" id="size_input" min="1" max="99">
+
+                <button id="display_map_btn">Create Map</button>
+            </div>
+
+            <div class="game_setup_group border_group">
+                <label class="labels" for="random_colonies_input">Random Colonies: </label>
+                <input class="number_input" type='number' value="2" name="random_colonies_input" min="1" max="100"
+                    id="random_colonies_input">
+                <button id="create_random_colonies">Create Random Colonies</button>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="interactive_buttons">
+
+            <h1 class="labels">Map Tools:</h1>
+
+
+            <button id="show_map_modes_btn">Show Map Modes</button>
+            <button id="show_add_custom_colony_btn">Create Custom Colony</button>
+            <button id="show_edit_terrain_btn">Edit Terrain</button>
+            <button id="show_edit_stats_btn">Edit Stats</button>
+            <button id="show_sorts">Sort Options</button>
+            <button id="show_add_custom_alliance">Create Custom Alliance</button>
+            <button id="show_commands_settings">Show Commands/Gamerules</button>
+
+
+
+            <div class="specific_map_mode_buttons">
+                <hr>
+                <h1 class="labels">Map Modes:</h1>
+                <button id="display_political_map_btn">Political</button>
+                <button id="display_alliance_map_btn">Alliance</button>
+                <button id="display_flags_map_btn">Flags</button>
+                <button id="display_geo_map_btn">Geo</button>
+                <button id="display_pop_map_btn">Pop</button>
+                <button id="display_attack_map_btn">Attack</button>
+                <button id="display_defense_map_btn">Defense</button>
+                <button id="display_troop_map_btn">Troop</button>
+                <!-- <button id="display_growth_map_btn">Growth Map</button> -->
+                <button id="display_frontline_map_btn">Frontline</button>
+                <button id="display_supply_map_btn">Supply</button>
+                <button id="display_colony_control_map_btn">Control</button>
+                <button id="display_alliance_flags_map_btn">Alliance Flags</button>
+                <button id="display_ideology_map_btn">ideology</button>
+            </div>
+            <div class="specific_setting_command_buttons">
+                <hr />
+                <h1 class="labels">Commands:</h1>
+                <button id="clear_alliances">Clear Alliances</button>
+                <button id="end_all_wars">End All Wars</button>
+                <button id="clear_all_colonies">Clear All Colonies</button>
+                <h1 class="labels">Gamerules:</h1>
+                <div>
+                    <input type="checkbox" id="alliances_enabled" checked="true" /> <span class="labels">Alliance Formation - Alliances will form</span>
+                </div>
+                <div>
+                    <input type="checkbox" id="peacetime_enabled" checked="true" /> <span class="labels">Peacetime - Colonies can exist next to each other while not being in an alliance, and not being at war</span>
+                </div>
+                <div>
+                    <input type="checkbox" id="techsharing_enabled" checked="false" /> <span class="labels">Technology Sharing - Alliances share strength increase</span>
+                </div>
+                <br />
+            </div>
+
+
+            <div class="create_custom_alliance_group">
+                <hr>
+                <h1 class="labels">Create Custom Alliance</h1>
+                <button id="create_custom_alliance_btn">Create Alliance</button>
+                <input class="text_input" type='text' placeholder="Name" id="custom_alliance_name_input" />
+                <input type='color' id="custom_alliance_color_input">
+
+                <h1 class="labels">Members</h1>
+                <div id="alliance_members_editor">
+                    <br style="clear:both;" />
+                </div>
+
+                <h1 class="labels">Flag</h1>
+                <div id="alliance_flag_editor">
+
+                </div>
+            </div>
+            <div class="create_custom_colony_group">
+                <hr>
+                <h1 class="labels">Create Custom Colony</h1>
+
+                <input class="text_input" type='text' placeholder="Name" id="custom_colony_name_input">
+                <input type='color' id="custom_colony_color_input">
+                <input class="number_input" type='number' placeholder="Capital Population" min="1"
+                    id="custom_colony_capital_population_input">
+                <input class="number_input" type='number' placeholder="Strength" min="1"
+                    id="custom_colony_strength_input">
+                <input class="number_input" type='number' placeholder="Troops" min="1" id="custom_colony_troops_input">
+
+                <!-- <input class="number_input" type='number'  placeholder="Attack" min="1"  id="custom_colony_attack_input" >
+                <input class="number_input" type='number'  placeholder="Defense" min="1"  id="custom_colony_defense_input" > -->
+                <button id="custom_colony_place_colony_btn">Place Capital</button>
+                <button id="custom_colony_draw_colony_btn">Draw Borders</button>
+                <h1 class="labels">Flag</h1>
+                <div id="colony_flag_editor">
+
+                </div>
+                <h1 class="labels">Unique Traits</h1>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Neutrality Bound:</span> Will not
+                        declare war on others</label>
+                    <input id="neutral_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Landlocked:</span> Will not
+                        produce boats</label>
+                    <input id="landlocked_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Sovereign:</span> Will not join
+                        alliances</label>
+                    <input id="sovereign_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">War-Monger:</span> Far more
+                        likely to go to war</label>
+                    <input id="warmonger_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Stagnant:</span> Will not improve
+                        in Avg. Military Strength</label>
+                    <input id="stagnant_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Static Defender:</span> Will not
+                        attack enemy tiles</label>
+                    <input id="defender_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Demilitarized:</span> Will not
+                        spawn official land troops</label>
+                    <input id="demilitarized_trait_checkbox" type="checkbox">
+                </div>
+                <div class="label_group">
+                    <label class="create_colony_checkboxtext"><span class="labeltitle">Unpopular:</span> Defensive not
+                        assisted by militia troops</label>
+                    <input id="unpopular_trait_checkbox" type="checkbox">
+                </div>
+                <h1 class="labels">ideology</h1>
+
+                <div class="custom_colony_ideology_label">Authoritarianism:</div>
+                <input type="range" id="custom_colony_ideo_auth" class="custom_colony_ideology" />
+                <div class="custom_colony_ideology_label">Radicalism:</div>
+                <input type="range" id="custom_colony_ideo_rad" class="custom_colony_ideology" />
+                <div class="custom_colony_ideology_label">Progressivism:</div>
+                <input type="range" id="custom_colony_ideo_prog" class="custom_colony_ideology" />
+                <br /><br /><br />
+                <div class="custom_colony_ideology_label" id="custom_colony_ideo_name">Moderate Centrism</div>
+            </div>
+
+            <div class="specific_sort_options">
+                <hr>
+                <h1 class="labels">Sort By:</h1>
+                <button id="sort_population">Population</button>
+                <button id="sort_tile">Tile Count</button>
+                <button id="sort_strength">Troop Strength</button>
+                <button id="sort_troops">Troop Count</button>
+                <button id="sort_capability">Total Military Capability</button>
+            </div>
+
+            <div class="specific_edit_terrain_buttons">
+                <hr>
+                <h1 class="labels">Edit Terrain:</h1>
+
+                <button id="plains_terrain_edit_btn">Plains</button>
+                <button id="mountains_terrain_edit_btn">Mountains</button>
+                <button id="forests_terrain_edit_btn">Forests</button>
+                <button id="rivers_terrain_edit_btn">Rivers</button>
+                <button style="background-color: #aaa822" id="deserts_terrain_edit_btn">Deserts</button>
+                <button style="background-color: #9c9c9c" id="tundras_terrain_edit_btn">Tundras</button>
+                <button id="oceans_terrain_edit_btn">Oceans</button>
+
+            </div>
+
+            <div class="specific_edit_stats_buttons">
+                <hr>
+                <h1 class="labels">Edit Stats:</h1>
+
+
+                <div class="edit_population_group">
+                    <button id="edit_population_on_map_btn">Population</button>
+
+                    <div class="edit_population_editor">
+                        <h1 class="labels">Population Editor:</h1>
+                        <div class="label_group">
+                            <label class="labels">Pop to Change by: </label>
+                            <input class="number_input" type='number' placeholder="Pop" min="1" style="width: 20%"
+                                id="edit_pop_input">
+                            <button id="edit_pop_to_map">Change Pop</button>
+                            <button id="update_pop_map">Update Pop Map</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div id="upcoming_updates_overlay">
+            <div id="update_overlay_text">
+                <h1>Upcoming Updates:</h1>
+                <br>
+                <ul>
+                    <li class="cross_out">Saving and sharing custom simulations</li>
+                    <li class="cross_out">Adding Supplies (also tweaking troops)</li>
+                    <li class="cross_out">Flag Map & Editor</li>
+                    <li>Realistic populations (starting and population growth)</li>
+                    <li>Colonial overlay, where you can view and edit each colony's stats</li>
+                    <li>Colonial Ideologies and creating alliances</li>
+                    <li>Improved map editing tools</li>
+                    <li>Simple Economic system (including resources)</li>
+                </ul>
+
+                <p>Click anywhere to close</p>
+            </div>
+
+        </div>
+
+        <div id="credits_overlay">
+            <div id="credits_overlay_text">
+                <br>
+                <ul>
+                    <h2>Developers:</h2>
+                    <li>Jared Wal</li>
+                    <li>Timothy James Nickerson</li>
+                    <h2>Discord Admins:</h2>
+                    <li>EOKPOKE</li>
+                    <li>Brando Maria Pernice</li>
+                    <li>Ligurian man</li>
+                </ul>
+                <br>
+                <br>
+
+                <p>Click anywhere to close</p>
+            </div>
+
+        </div>
+
+
+        <div id="select_colony_overlay">
+            <div id="overlay_buttons">
+            </div>
+        </div>
+
+
+
+
+        <div class="interactive_map_tools">
+            <hr>
+            <h1 class="labels">Mouse Tools:</h1>
+
+            <button id="select_tile_btn">Select Tile</button>
+            <button id="select_colony_btn">Select Colony</button>
+
+
+            <div class="label_group">
+                <label class="labels" for="brush_size">Brush Size: </label>
+                <input type="range" min="1" name="brush_size" max="20" value="2" id="brush_size_slider">
+            </div>
+
+
+            <div class="label_group">
+                <label class="labels">Feather:</label>
+                <input id="feather_brush_checkbox" type="checkbox">
+            </div>
+
+
+
+            <br>
+
+        </div>
+
+        <hr>
+
+        <h1 class="labels" id="colonies_remaining">Colonies remaining: 0</h1>
+
+        <div id="stat_holder">
+
+
+        </div>
+
+        <button id="print_game_board" style="margin-top:10px">Print Board</button>
+    </div>
+    <div id="spritesheets">
+        <img src="img/symbolsheet.png" id="symbolsheet" />
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+
+</body>
+
+</html>
