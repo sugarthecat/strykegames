@@ -9,7 +9,8 @@
 // Everything the UI needs to re-render lives here. `render()` reads this and
 // rebuilds the DOM; any user interaction mutates state and calls render().
 const state = {
-  rows: [],             // all parsed rows across all loaded CSVs
+  rows: [],             // all parsed rows across all loaded CSVs / logs
+  trades: [],           // user's buy/sell fills parsed from .log files
   products: [],         // unique product names, sorted
   days: [],             // unique day numbers, sorted
   selectedProduct: null,
@@ -51,26 +52,66 @@ function parseCSV(text) {
   return rows;
 }
 
+// Parses a Prosperity `.log` submission file. These are JSON documents that
+// bundle the activities CSV (same columns as a standalone CSV) together with
+// the submission's trade history. We only care about rows + user trades.
+//
+// Trades have no `day` field — Prosperity training logs cover a single day, so
+// we tag trades with the unique day found in the activities rows (or the first
+// day if multiple are present) so downstream day-filtering works.
+function parseLog(text) {
+  const obj = JSON.parse(text);
+  const rows = parseCSV(obj.activitiesLog || '');
+
+  const days = [...new Set(rows.map(r => r.day))];
+  const defaultDay = days.length ? days[0] : null;
+
+  // Trades with empty buyer AND seller are market trades from other bots;
+  // keep only fills where SUBMISSION (us) is on one side.
+  const trades = (obj.tradeHistory || [])
+    .filter(t => t.buyer === 'SUBMISSION' || t.seller === 'SUBMISSION')
+    .map(t => ({
+      day: defaultDay,
+      timestamp: t.timestamp,
+      product: t.symbol,
+      price: t.price,
+      quantity: t.quantity,
+      side: t.buyer === 'SUBMISSION' ? 'buy' : 'sell',
+    }));
+
+  return { rows, trades };
+}
+
 // Handles a FileList from the <input type="file"> element. Reads each file,
-// parses it, merges the rows, and refreshes the UI.
+// auto-detects CSV vs JSON .log format, merges rows + trades, refreshes UI.
 async function handleFiles(files) {
   if (!files.length) return;
 
-  const all = [];
+  const allRows = [];
+  const allTrades = [];
+
   for (const f of files) {
     const text = await f.text();
-    const rows = parseCSV(text);
-    all.push(...rows);
+    // Cheap format sniff: a JSON log starts with `{`, a CSV with `day;...`.
+    if (text.trimStart().startsWith('{')) {
+      const { rows, trades } = parseLog(text);
+      allRows.push(...rows);
+      allTrades.push(...trades);
+    } else {
+      allRows.push(...parseCSV(text));
+    }
   }
 
-  state.rows = all;
-  state.products = [...new Set(all.map(r => r.product))].sort();
-  state.days = [...new Set(all.map(r => r.day))].sort((a, b) => a - b);
+  state.rows = allRows;
+  state.trades = allTrades;
+  state.products = [...new Set(allRows.map(r => r.product))].sort();
+  state.days = [...new Set(allRows.map(r => r.day))].sort((a, b) => a - b);
   state.selectedProduct = state.products[0] || null;
   state.selectedDay = 'all';
 
+  const tradeInfo = allTrades.length ? ` · ${allTrades.length} trades` : '';
   $('#fileInfo').textContent =
-    `${all.length.toLocaleString()} rows · ${state.products.length} products · days ${state.days.join(',')}`;
+    `${allRows.length.toLocaleString()} rows · ${state.products.length} products · days ${state.days.join(',')}${tradeInfo}`;
 
   render();
 }
@@ -85,6 +126,14 @@ function filteredRows() {
       (state.selectedDay === 'all' || r.day === state.selectedDay)
     )
     .sort((a, b) => (a.day - b.day) || (a.timestamp - b.timestamp));
+}
+
+// Same filter applied to user trades from a loaded .log file.
+function filteredTrades() {
+  return state.trades.filter(t =>
+    t.product === state.selectedProduct &&
+    (state.selectedDay === 'all' || t.day === state.selectedDay)
+  );
 }
 
 // Chart.js leaks memory if old charts aren't destroyed before new ones are
@@ -206,6 +255,31 @@ function drawAll() {
   const stdMid = Math.sqrt(mids.reduce((a, b) => a + (b - meanMid) ** 2, 0) / mids.length);
   const meanSpread = spreads.reduce((a, b) => a + b, 0) / spreads.length;
 
+  // ---- Trade overlays: align user fills with the row index ----
+  // Price chart datasets are indexed by row position, so we build sparse
+  // arrays of the same length as `rows` where index i is the fill price if a
+  // buy/sell happened at that row's (day, timestamp), otherwise null. Chart.js
+  // skips null points, which gives us the "dot on the line" look for free.
+  const trades = filteredTrades();
+  const rowIdx = new Map();
+  rows.forEach((r, i) => rowIdx.set(`${r.day}:${r.timestamp}`, i));
+
+  const buyOverlay = new Array(rows.length).fill(null);
+  const sellOverlay = new Array(rows.length).fill(null);
+  let buyQty = 0, sellQty = 0, buyNotional = 0, sellNotional = 0;
+
+  for (const t of trades) {
+    const i = rowIdx.get(`${t.day}:${t.timestamp}`);
+    if (i != null) {
+      if (t.side === 'buy') buyOverlay[i] = t.price;
+      else sellOverlay[i] = t.price;
+    }
+    if (t.side === 'buy') { buyQty += t.quantity; buyNotional += t.price * t.quantity; }
+    else { sellQty += t.quantity; sellNotional += t.price * t.quantity; }
+  }
+  const netQty = buyQty - sellQty;
+  const tradeCash = sellNotional - buyNotional; // realized cash flow from fills
+
   $('#stats').innerHTML = `
     ${stat('Rows', rows.length.toLocaleString())}
     ${stat('Final P&L', fmt(lastPnl), lastPnl)}
@@ -213,6 +287,10 @@ function drawAll() {
     ${stat('Std Mid', fmt(stdMid))}
     ${stat('Min / Max', `${fmt(minMid)} / ${fmt(maxMid)}`)}
     ${stat('Mean Spread', fmt(meanSpread))}
+    ${trades.length ? stat('Fills', `${trades.length}`) : ''}
+    ${trades.length ? stat('Buy / Sell Qty', `${buyQty} / ${sellQty}`) : ''}
+    ${trades.length ? stat('Net Position', `${netQty >= 0 ? '+' : ''}${netQty}`, netQty) : ''}
+    ${trades.length ? stat('Trade Cash', fmt(tradeCash), tradeCash) : ''}
   `;
 
   // X-axis labels: if we're looking at a single day, show just the timestamp;
@@ -221,17 +299,25 @@ function drawAll() {
     state.selectedDay === 'all' ? `D${r.day}:${r.timestamp}` : r.timestamp
   );
 
-  // ---- Price chart: mid + best bid + best ask ----
+  // ---- Price chart: mid + best bid + best ask + trade markers ----
+  // Buy markers are up-triangles, sells are down-triangles (via rotation: 180).
+  // `showLine: false` turns the dataset into a scatter overlay on top of the
+  // line chart, so sparse null-filled arrays become isolated dots.
+  const priceDatasets = [
+    { label: 'Mid',      data: rows.map(r => r.mid_price),    borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0 },
+    { label: 'Best Bid', data: rows.map(r => r.bid_price_1),  borderColor: '#3fb950', backgroundColor: 'transparent', borderWidth: 1,   pointRadius: 0, tension: 0 },
+    { label: 'Best Ask', data: rows.map(r => r.ask_price_1),  borderColor: '#f85149', backgroundColor: 'transparent', borderWidth: 1,   pointRadius: 0, tension: 0 },
+  ];
+  if (trades.length) {
+    priceDatasets.push(
+      { label: 'Buy',  data: buyOverlay,  borderColor: '#3fb950', backgroundColor: '#3fb950', pointStyle: 'triangle', pointRadius: 7, pointHoverRadius: 9, showLine: false },
+      { label: 'Sell', data: sellOverlay, borderColor: '#f85149', backgroundColor: '#f85149', pointStyle: 'triangle', pointRadius: 7, pointHoverRadius: 9, rotation: 180, showLine: false },
+    );
+  }
+
   state.charts.price = new Chart($('#priceChart'), {
     type: 'line',
-    data: {
-      labels,
-      datasets: [
-        { label: 'Mid',      data: rows.map(r => r.mid_price),    borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0 },
-        { label: 'Best Bid', data: rows.map(r => r.bid_price_1),  borderColor: '#3fb950', backgroundColor: 'transparent', borderWidth: 1,   pointRadius: 0, tension: 0 },
-        { label: 'Best Ask', data: rows.map(r => r.ask_price_1),  borderColor: '#f85149', backgroundColor: 'transparent', borderWidth: 1,   pointRadius: 0, tension: 0 },
-      ],
-    },
+    data: { labels, datasets: priceDatasets },
     options: chartOpts(),
   });
 
@@ -399,6 +485,7 @@ $('#fileInput').addEventListener('change', e => handleFiles([...e.target.files])
 
 $('#clearBtn').addEventListener('click', () => {
   state.rows = [];
+  state.trades = [];
   state.products = [];
   state.days = [];
   state.selectedProduct = null;

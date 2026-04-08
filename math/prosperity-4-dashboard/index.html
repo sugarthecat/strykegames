@@ -171,8 +171,8 @@
 <header>
   <h1>Prosperity 4 <span>Trading Dashboard</span></h1>
   <div class="controls">
-    <label>CSV(s):</label>
-    <input type="file" id="fileInput" accept=".csv" multiple>
+    <label>CSV / .log:</label>
+    <input type="file" id="fileInput" accept=".csv,.log,.json" multiple>
     <span class="file-info" id="fileInfo">No file loaded</span>
     <button id="clearBtn">Clear</button>
   </div>
@@ -180,8 +180,9 @@
 
 <main id="main">
   <div class="empty full" id="empty">
-    <p>Upload one or more Prosperity 4 price CSV files to begin.</p>
-    <p>Expected columns: <code>day;timestamp;product;bid_price_1;bid_volume_1;...;ask_price_3;ask_volume_3;mid_price;profit_and_loss</code></p>
+    <p>Upload Prosperity 4 price CSVs or <code>.log</code> submission files to begin.</p>
+    <p>CSV columns: <code>day;timestamp;product;bid_price_1;...;mid_price;profit_and_loss</code></p>
+    <p><code>.log</code> files additionally overlay your buy/sell trades on the price chart.</p>
   </div>
 </main>
 
