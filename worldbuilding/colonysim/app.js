@@ -678,6 +678,11 @@ function addTerrainToSelectedTiles(tile) {
         for (let col = tile.x - EDIT_BRUSH_SIZE + 1; col < tile.x + EDIT_BRUSH_SIZE - 1; col++) {
             if (row >= 0 && row < gameBoardHeight && col >= 0 && col < gameBoardWidth) {
 
+                if (tempTile.tileType instanceof LandTile) {
+                    GAME_BOARD[row][col].tileType = new LandTile(PLAIN_TILE);
+                    tempTile.tileType.terrain = terrainType;
+                    ctx.fillRect(tempTile.getDrawX(), tempTile.getDrawY(), tempTile.getDrawSize(), tempTile.getDrawSize());
+                }
                 tempTile = GAME_BOARD[row][col];
                 if (tempTile.tileType instanceof LandTile) {
                     tempTile.tileType.terrain = terrainType;
