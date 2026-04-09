@@ -103,7 +103,6 @@ export default class Alliance{
     removeDeadMembers(){
         for(let i = 0; i<this.members.length; i++){
             if(this.members[i].isDead){
-                this.members[i].clearAllianceStub();
                 this.members.splice(i,1)
                 i--;
             }

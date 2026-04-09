@@ -2190,7 +2190,17 @@ function moveShip(waterTile) {
     var newX = waterTile.tileType.ship.getNewX()
     var newY = waterTile.tileType.ship.getNewY()
     //TODO implement navy Figure out issue
-    const newTile = GAME_BOARD[(waterTile.y + newY + GAME_BOARD.length) % GAME_BOARD.length][(waterTile.x + newX + GAME_BOARD[0].length) % GAME_BOARD[0].length];
+    let newXPos = (waterTile.x + newX + GAME_BOARD[0].length) % GAME_BOARD[0].length;
+    let newYPos = (waterTile.y + newY);
+    if(newYPos < 0){
+        newYPos = 0;
+        waterTile.tileType.ship.changeDirectionRandomly();
+    }else if(newYPos >= GAME_BOARD.length){
+        newYPos = GAME_BOARD.length - 1;
+        waterTile.tileType.ship.changeDirectionRandomly();
+    }
+
+    const newTile = GAME_BOARD[newYPos][newXPos];
     // console.log("NewTile: ",waterTile.y + newY, waterTile.x + newX);
     // console.log("NewTile: ", newTile)
     //check if tile is empty
@@ -2871,6 +2881,7 @@ function checkForDeadColonies() {
                     //console.log(COLONY_ARRAY[i2].enemies)
                 }
             }
+            colony.clearAllianceStub()
             colony.display.remove();
             colony.overlayButton.remove()
 

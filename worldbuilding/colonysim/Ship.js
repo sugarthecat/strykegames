@@ -8,6 +8,10 @@ export default class Ship{
         this.blockDir = blockDir
     }
 
+    changeDirectionRandomly(){
+        const directions = ["l","r","u","d"]
+        this.blockDir = directions[Math.floor(Math.random()*directions.length)]
+    }
 
     // set ship values to colonies
     setShipValuesFromColony(){
