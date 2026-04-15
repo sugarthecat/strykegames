@@ -175,23 +175,28 @@ export default class FlagEditor {
     randomGenericFlag() {
         this.currentFlag = new DemocraticFlag()
         this.displayflag(this.currentFlag)
+        this.shapesdiv.style.display = "block";
     }
     randomCommunistFlag() {
         this.currentFlag = new CommunistFlag()
         this.displayflag(this.currentFlag)
+        this.shapesdiv.style.display = "block";
     }
     randomFascistFlag() {
         this.currentFlag = new FascistFlag()
         this.displayflag(this.currentFlag)
+        this.shapesdiv.style.display = "block";
     }
     randomGenAlliance() {
         this.currentFlag = new demAllianceFlag()
         this.displayflag(this.currentFlag)
+        this.shapesdiv.style.display = "block";
     }
     setFlagToPreset() {
         let flagCode = this.presetSelector.value
         this.currentFlag = new Flag(flagCode.split('x'))
         this.displayflag(this.currentFlag)
+        this.shapesdiv.style.display = "block";
     }
 
     displayflag(flag) {

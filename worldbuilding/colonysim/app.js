@@ -43,8 +43,6 @@ var VERSION = "00.00.03";
 
 const LAND_WAR_CHANCE = 0.0001;
 const NAVAL_WAR_CHANCE = 0.001;
-const PEACETIME_ALLIANCE_LEAVE_CHANCE = 0.001;
-const WARTIME_ALLIANCE_LEAVE_CHANCE = 0.0002;
 var UPDATE_TIME = 10; // 10
 var REDRAW_NEEDED = false;
 
@@ -2851,11 +2849,6 @@ function colonyTurnDuties() {
     for (const colony of COLONY_ARRAY) {
         colony.saveLocalColonyData();
         colony.updateMaxTotalPop();
-        if (colony.alliance &&
-            ((Math.random() * colony.alliance.getMemberCount() < PEACETIME_ALLIANCE_LEAVE_CHANCE && colony.isAtPeace()) 
-        || (!colony.isAtPeace() && Math.random() * colony.alliance.getMemberCount() < WARTIME_ALLIANCE_LEAVE_CHANCE))) {
-            colony.leaveAlliance();
-        }
     }
 }
 
