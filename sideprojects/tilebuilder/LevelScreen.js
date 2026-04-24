@@ -187,12 +187,12 @@ class LevelScreen extends GUI {
         fill(0)
         textAlign(LEFT, CENTER)
         textSize(24)
-        text(`Income (/ Goal): `, 425, 30)
+        text(`Income (Goal): `, 425, 30)
         textSize(15)
         for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
             this.DrawSymbol(currency, 430, 55 + 25 * i, 20)
-            text(`${this.perSecond[currency]} / ${this.goalPerSecond[currency]}`, 450, 55 + 25 * i)
+            text(`${this.perSecond[currency]} (${this.goalPerSecond[currency]})`, 450, 55 + 25 * i)
             if (this.perSecond[currency] >= this.goalPerSecond[currency]) {
                 this.DrawCheck(575, 55 + 25 * i)
             }
