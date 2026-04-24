@@ -16,7 +16,7 @@ class LevelSelectScreen extends GUI {
         const ref = this;
         this.elements = [new Button(350, 250, 150, 50, "Play", () => {
             screenOn = "level";
-            screens.level.Load(this.selectedLevel);
+            screens.level.Load(ref.selectedLevel);
 
         })]
         this.selectedLevel = null

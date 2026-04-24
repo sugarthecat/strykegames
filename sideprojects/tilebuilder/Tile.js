@@ -43,7 +43,7 @@ class Tile {
         let boxWidth = 0
         let boxHeight = textSize() * bubble.value.length;
         for (let i = 0; i < bubble.value.length; i++) {
-            boxWidth = max(boxWidth, textWidth(bubble.value[i].count) + size / 3)
+            boxWidth = max(boxWidth, textWidth(`${bubble.value[i].count}`) + size / 3)
         }
         if (bubble.time < bubble.riseTime) {
             const prog = bubble.time / bubble.riseTime

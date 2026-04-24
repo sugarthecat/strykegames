@@ -50,8 +50,6 @@ function mouseClicked() {
 }
 function getMousePosition() {
     let mousePosition = { x: mouseX, y: mouseY }
-
-
     mousePosition.x -= (windowWidth - scaleFactor * SCREEN_DIMENSIONS.x) / 2;
     mousePosition.y -= (windowHeight - scaleFactor * SCREEN_DIMENSIONS.y) / 2;
     mousePosition.x /= scaleFactor;
@@ -60,6 +58,6 @@ function getMousePosition() {
     return mousePosition
 }
 function mouseInRange(x, y, w, h) {
-    mousePosition = getMousePosition();
+    let mousePosition = getMousePosition();
     return (mousePosition.x >= x && mousePosition.y >= y && mousePosition.x <= x + w && mousePosition.y <= y + h)
 }

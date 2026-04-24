@@ -160,9 +160,7 @@ class LevelScreen extends GUI {
             let size = gridWidth / tileWidth
             for (let i = 0; i < this.tiles.length; i++) {
                 for (let j = 0; j < this.tiles[i].length; j++) {
-                    if (x - xOffset > i * size && x - xOffset < i * size + size
-                        && y - yOffset > j * size && y - yOffset < j * size + size
-                    ) {
+                    if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
                         const oldTile = this.tiles[i][j]
                         this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
                         this.tileShop[this.currShopItem].owned--;
