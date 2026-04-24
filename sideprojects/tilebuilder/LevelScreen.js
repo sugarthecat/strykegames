@@ -125,6 +125,11 @@ class LevelScreen extends GUI {
                 this.balance[currency] = this.maxBalance[currency]
             }
         }
+        for (let i = 0; i < this.tiles.length; i++) {
+            for (let j = 0; j < this.tiles[i].length; j++) {
+                this.tiles[i][j].addIncomeBubble(this.currencies);
+            }
+        }
     }
     updateIncome() {
         this.perSecond = getIncome(this.tiles, this.currLevel)
@@ -175,11 +180,9 @@ class LevelScreen extends GUI {
         const shopItem = this.tileShop[this.currShopItem];
         shopItem.owned += 1;
         shopItem.avail -= 1;
-        console.log(shopItem)
         for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
             this.balance[currency] -= shopItem.price[currency]
-            console.log(this.balance)
         }
     }
     DrawGoal() {
@@ -191,27 +194,13 @@ class LevelScreen extends GUI {
         textSize(15)
         for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
-            this.DrawSymbol(currency, 430, 55 + 25 * i, 20)
+            drawSymbol(currency, 430, 55 + 25 * i, 20)
             text(`${this.perSecond[currency]} (${this.goalPerSecond[currency]})`, 450, 55 + 25 * i)
             if (this.perSecond[currency] >= this.goalPerSecond[currency]) {
                 this.DrawCheck(575, 55 + 25 * i)
             }
         }
         pop()
-    }
-    DrawSymbol(currency, x, y, size) {
-        if (currency == "coins") {
-
-            push()
-            strokeCap(ROUND)
-            stroke(200, 200, 0)
-            strokeWeight(size / 10)
-            fill(255, 255, 0)
-            circle(x, y, size)
-            strokeWeight(size / 6)
-            line(x, y - size / 3, x, y + size / 3)
-            pop()
-        }
     }
     DrawTileShop() {
         push()
@@ -231,7 +220,7 @@ class LevelScreen extends GUI {
             let allValid = true;
             for (let i = 0; i < this.currencies.length; i++) {
                 const currency = this.currencies[i]
-                this.DrawSymbol(currency, 460, 255 + 25 * i, 20)
+                drawSymbol(currency, 460, 255 + 25 * i, 20)
                 text(`${this.balance[currency]} / ${currItem.price[currency]}`, 480, 255 + 25 * i)
                 if (this.balance[currency] >= currItem.price[currency]) {
                     this.DrawCheck(425, 255 + 25 * i)
@@ -298,6 +287,21 @@ class LevelScreen extends GUI {
                 this.tiles[i][j].Draw(i * size, j * size, size)
             }
         }
+        pop()
+    }
+}
+
+function drawSymbol(currency, x, y, size) {
+    if (currency == "coins") {
+
+        push()
+        strokeCap(ROUND)
+        stroke(200, 200, 0)
+        strokeWeight(size / 10)
+        fill(255, 255, 0)
+        circle(x, y, size)
+        strokeWeight(size / 6)
+        line(x, y - size / 3, x, y + size / 3)
         pop()
     }
 }
