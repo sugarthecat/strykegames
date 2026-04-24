@@ -22,28 +22,20 @@ class LevelScreen extends GUI {
     }
     Load(level) {
         this.time = 0;
-        let defaultType = "empty";
+        this.defaultType = "empty"
         this.balance = {}
         this.perSecond = {}
         let tileW = 5;
         let tileH = 5;
 
         if (level.code == "farm") {
-            defaultType = "dirt"
+            this.defaultType = "dirt"
             tileW = 5;
             tileH = 5;
             this.goalPerSecond = { coins: 80 }
-            this.maxBalance = { coins: 200 }
+            this.maxBalance = { coins: 250 }
             this.currShopItem = 0;
             this.tileShop = [
-                {
-                    price: { coins: 2, gems: 0 },
-                    name: "Dirt",
-                    description: "An empty, dusty chunk of dirt. Earns no coins.",
-                    type: "dirt",
-                    avail: 0,
-                    owned: 0
-                },
                 {
                     price: { coins: 5, gems: 0 },
                     name: "Wheat",
@@ -82,7 +74,7 @@ class LevelScreen extends GUI {
         for (let i = 0; i < tileW; i++) {
             this.tiles.push([])
             for (let j = 0; j < tileH; j++) {
-                this.tiles[i].push(new Tile(defaultType))
+                this.tiles[i].push(new Tile(this.defaultType))
             }
         }
         this.currShopTile = new Tile(this.tileShop[this.currShopItem].type)
@@ -94,7 +86,7 @@ class LevelScreen extends GUI {
             this.time -= TICK_SPEED;
             this.giveIncome();
         }
-        if(this.time > TICK_SPEED){
+        if (this.time > TICK_SPEED) {
             this.time = 0;
         }
         this.elements[0].active = this.currShopItem > 0;
@@ -114,7 +106,7 @@ class LevelScreen extends GUI {
         pop()
         textAlign(CENTER, CENTER)
         textSize(12)
-        text("Click to place tiles.", 200, 80)
+        text("Click to place tiles. Right click to delete.", 200, 80)
         textSize(20)
         text(this.levelName, 200, 30)
         pop()
@@ -162,12 +154,16 @@ class LevelScreen extends GUI {
                 for (let j = 0; j < this.tiles[i].length; j++) {
                     if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
                         const oldTile = this.tiles[i][j]
-                        this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
-                        this.tileShop[this.currShopItem].owned--;
                         for (let i = 0; i < this.tileShop.length; i++) {
                             if (this.tileShop[i].type == oldTile.type) {
                                 this.tileShop[i].owned++;
                             }
+                        }
+                        if (mouseButton === LEFT) {
+                            this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
+                            this.tileShop[this.currShopItem].owned--;
+                        } else if(mouseButton === RIGHT) {
+                            this.tiles[i][j] = new Tile(this.defaultType)
                         }
                         this.updateIncome();
 
@@ -200,7 +196,7 @@ class LevelScreen extends GUI {
             text(`${this.goalPerSecond[currency]} (${this.perSecond[currency]})`, 450, 55 + 25 * i)
             if (this.perSecond[currency] >= this.goalPerSecond[currency]) {
                 this.DrawCheck(575, 55 + 25 * i)
-            }else{
+            } else {
                 success = false;
             }
         }
@@ -238,20 +234,16 @@ class LevelScreen extends GUI {
             }
             textSize(12)
             textAlign(LEFT, CENTER)
-            text(`${currItem.owned} owned`, 410, 350)
+            text(`${currItem.owned} stored`, 410, 350)
             textAlign(RIGHT, CENTER)
-            text(`${currItem.avail} available`, 590, 350)
+            text(`${currItem.avail} for sale`, 590, 350)
             this.elements[2].hidden = false;
             this.elements[2].active = allValid;
-        } else if (currItem.owned > 0) {
-            textSize(15)
-            textAlign(CENTER, CENTER)
-            text(`${currItem.owned} owned`, 500, 300)
-            this.elements[2].hidden = true;
         } else {
             textSize(15)
             textAlign(CENTER, CENTER)
-            text(`None left for sale`, 500, 300)
+            text(`${currItem.owned} stored`, 500, 300)
+            text(`None left for sale`, 500, 320)
             this.elements[2].hidden = true;
         }
         pop()

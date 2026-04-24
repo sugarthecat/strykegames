@@ -6,10 +6,12 @@ let scaleFactor = 1;
 let volume = 1;
 let screens;
 function preload() {
-    screens = {"title": new TitleScreen(),
+    screens = {
+        "title": new TitleScreen(),
         "levelSelect": new LevelSelectScreen(),
         "message": new MessageScreen,
-        "level": new LevelScreen()}
+        "level": new LevelScreen()
+    }
     Assets.loadAssets()
 }
 function setup() {
@@ -25,14 +27,14 @@ function draw() {
     }
     let xTranslation = (windowWidth - scaleFactor * SCREEN_DIMENSIONS.x) / 2
     let yTranslation = (windowHeight - scaleFactor * SCREEN_DIMENSIONS.y) / 2
-    push ()
+    push()
     translate(xTranslation, yTranslation)
 
     scale(scaleFactor, scaleFactor)
     background(0);
     let mousePosition = getMousePosition()
-    screens[screenOn].Draw(mousePosition.x,mousePosition.y);
-    pop ()
+    screens[screenOn].Draw(mousePosition.x, mousePosition.y);
+    pop()
     fill(0)
     noStroke()
     if (xTranslation != 0) {
@@ -40,13 +42,16 @@ function draw() {
         rect(windowWidth - xTranslation, 0, xTranslation, windowHeight);
     }
     if (yTranslation != 0) {
-        rect(0,0,windowWidth,yTranslation);
-        rect(0,windowHeight - yTranslation,windowWidth,yTranslation);
+        rect(0, 0, windowWidth, yTranslation);
+        rect(0, windowHeight - yTranslation, windowWidth, yTranslation);
     }
 }
 function mouseClicked() {
     let mousePosition = getMousePosition()
-    screens[screenOn].HandleClick(mousePosition.x,mousePosition.y);
+    screens[screenOn].HandleClick(mousePosition.x, mousePosition.y);
+    if (mouseButton === RIGHT) {
+        return false; 
+    }
 }
 function getMousePosition() {
     let mousePosition = { x: mouseX, y: mouseY }
@@ -61,3 +66,6 @@ function mouseInRange(x, y, w, h) {
     let mousePosition = getMousePosition();
     return (mousePosition.x >= x && mousePosition.y >= y && mousePosition.x <= x + w && mousePosition.y <= y + h)
 }
+
+//because right click to delete
+document.addEventListener('contextmenu', (e) => e.preventDefault());
