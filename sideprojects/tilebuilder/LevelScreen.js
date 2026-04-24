@@ -15,6 +15,9 @@ class LevelScreen extends GUI {
             new Button(485, 341, 30, 18, "Buy", () => {
                 ref.buyItem()
             }),
+            new Button(500 - 30, 120, 60, 21, "Complete", () => {
+                screenOn = "message"
+            }),
         ]
     }
     Load(level) {
@@ -22,7 +25,13 @@ class LevelScreen extends GUI {
         let defaultType = "empty";
         this.balance = {}
         this.perSecond = {}
+        let tileW = 5;
+        let tileH = 5;
+
         if (level.code == "farm") {
+            defaultType = "dirt"
+            tileW = 5;
+            tileH = 5;
             this.goalPerSecond = { coins: 80 }
             this.maxBalance = { coins: 200 }
             this.currShopItem = 0;
@@ -32,16 +41,16 @@ class LevelScreen extends GUI {
                     name: "Dirt",
                     description: "An empty, dusty chunk of dirt. Earns no coins.",
                     type: "dirt",
-                    avail: 12,
-                    owned: 6
+                    avail: 0,
+                    owned: 0
                 },
                 {
                     price: { coins: 5, gems: 0 },
                     name: "Wheat",
                     description: "Earns 1 coin.",
                     type: "wheat",
-                    avail: 20,
-                    owned: 2
+                    avail: 21,
+                    owned: 3
                 },
                 {
                     price: { coins: 20, gems: 0 },
@@ -58,30 +67,21 @@ class LevelScreen extends GUI {
                     type: "strawberry",
                     avail: 8,
                     owned: 0
-                },
-                /*,
-                {
-                    price: { coins: 100, gems: 0 },
-                    name: "Cow",
-                    description: "Earns 1 coin per neighboring dirt, and 5 coins per neighboring cow.",
-                    type: "cow",
-                    avail: 3,
-                    owned: 0
-                },*/
+                }
             ]
             this.currencies = ["coins"]
         }
 
-
+        screens.message.Load(level);
         for (let i = 0; i < this.currencies.length; i++) {
             this.balance[this.currencies[i]] = 0
         }
         this.currLevel = level.code
         this.levelName = level.title
         this.tiles = []
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < tileW; i++) {
             this.tiles.push([])
-            for (let j = 0; j < 5; j++) {
+            for (let j = 0; j < tileH; j++) {
                 this.tiles[i].push(new Tile(defaultType))
             }
         }
@@ -93,6 +93,9 @@ class LevelScreen extends GUI {
         if (this.time > TICK_SPEED) {
             this.time -= TICK_SPEED;
             this.giveIncome();
+        }
+        if(this.time > TICK_SPEED){
+            this.time = 0;
         }
         this.elements[0].active = this.currShopItem > 0;
         this.elements[1].active = this.currShopItem < this.tileShop.length - 1;
@@ -190,16 +193,20 @@ class LevelScreen extends GUI {
         fill(0)
         textAlign(LEFT, CENTER)
         textSize(24)
-        text(`Income (Goal): `, 425, 30)
+        text(`Goal (Income): `, 425, 30)
         textSize(15)
+        let success = true
         for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
             drawSymbol(currency, 430, 55 + 25 * i, 20)
-            text(`${this.perSecond[currency]} (${this.goalPerSecond[currency]})`, 450, 55 + 25 * i)
+            text(`${this.goalPerSecond[currency]} (${this.perSecond[currency]})`, 450, 55 + 25 * i)
             if (this.perSecond[currency] >= this.goalPerSecond[currency]) {
                 this.DrawCheck(575, 55 + 25 * i)
+            }else{
+                success = false;
             }
         }
+        this.elements[3].hidden = !success
         pop()
     }
     DrawTileShop() {
@@ -207,6 +214,9 @@ class LevelScreen extends GUI {
         textAlign(CENTER, CENTER)
         textSize(18)
         const currItem = this.tileShop[this.currShopItem]
+        if (textWidth(currItem.name) > 90) {
+            textSize(textSize() * 90 / textWidth(currItem.name))
+        }
         text(currItem.name, 500, 157)
         this.currShopTile.Draw(415, 180, 60)
         fill(0)
@@ -293,7 +303,6 @@ class LevelScreen extends GUI {
 
 function drawSymbol(currency, x, y, size) {
     if (currency == "coins") {
-
         push()
         strokeCap(ROUND)
         stroke(200, 200, 0)
