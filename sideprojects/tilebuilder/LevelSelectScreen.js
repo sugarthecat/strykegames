@@ -1,9 +1,10 @@
 const levels = [
     {
-        author: "Jester",
+        author: "Unclaimed",
         code: "farm",
         title: "Farmtown",
-        description: "Can you help me grow the vegetables?"
+        description: "Can you help me grow the vegetables?",
+        completionMessage: "It's been a great year working with you."
     },
 ]
 

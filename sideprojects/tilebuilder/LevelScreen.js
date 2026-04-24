@@ -1,4 +1,4 @@
-const TICK_SPEED = 2 //seconds per payout
+const TICK_SPEED = 4 //seconds per payout
 class LevelScreen extends GUI {
     constructor() {
         super();
@@ -23,12 +23,12 @@ class LevelScreen extends GUI {
         this.balance = {}
         this.perSecond = {}
         if (level.code == "farm") {
-            this.goalPerSecond = { coins: 35}
-            this.maxBalance = { coins: 100}
+            this.goalPerSecond = { coins: 80 }
+            this.maxBalance = { coins: 200 }
             this.currShopItem = 0;
             this.tileShop = [
                 {
-                    price: { coins: 3, gems: 0 },
+                    price: { coins: 2, gems: 0 },
                     name: "Dirt",
                     description: "An empty, dusty chunk of dirt. Earns no coins.",
                     type: "dirt",
@@ -41,16 +41,24 @@ class LevelScreen extends GUI {
                     description: "Earns 1 coin.",
                     type: "wheat",
                     avail: 20,
-                    owned: 1
+                    owned: 2
                 },
                 {
                     price: { coins: 20, gems: 0 },
                     name: "Corn",
-                    description: "Earns 2 coins if adjacent to wheat.",
+                    description: "Earns 4 coins if adjacent to wheat.",
                     type: "corn",
                     avail: 12,
                     owned: 0
-                }
+                },
+                {
+                    price: { coins: 50, gems: 0 },
+                    name: "Strawberry Patch",
+                    description: "Earns 8 coins if adjacent to only strawberries.",
+                    type: "strawberry",
+                    avail: 8,
+                    owned: 0
+                },
                 /*,
                 {
                     price: { coins: 100, gems: 0 },
@@ -65,7 +73,7 @@ class LevelScreen extends GUI {
         }
 
 
-        for(let i = 0; i<this.currencies.length; i++){
+        for (let i = 0; i < this.currencies.length; i++) {
             this.balance[this.currencies[i]] = 0
         }
         this.currLevel = level.code
@@ -103,18 +111,18 @@ class LevelScreen extends GUI {
         pop()
         textAlign(CENTER, CENTER)
         textSize(12)
-        text("Click to place tiles.",200,80)
+        text("Click to place tiles.", 200, 80)
         textSize(20)
         text(this.levelName, 200, 30)
         pop()
         super.Draw(x, y)
     }
     giveIncome() {
-        for(let i = 0; i<this.currencies.length; i++){
+        for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
             this.balance[currency] += this.perSecond[currency];
-            if(this.balance[currency] > this.maxBalance[currency]){
-                this.balance = this.maxBalance[currency]
+            if (this.balance[currency] > this.maxBalance[currency]) {
+                this.balance[currency] = this.maxBalance[currency]
             }
         }
     }
@@ -197,7 +205,7 @@ class LevelScreen extends GUI {
             push()
             strokeCap(ROUND)
             stroke(200, 200, 0)
-            strokeWeight(size/10)
+            strokeWeight(size / 10)
             fill(255, 255, 0)
             circle(x, y, size)
             strokeWeight(size / 6)
