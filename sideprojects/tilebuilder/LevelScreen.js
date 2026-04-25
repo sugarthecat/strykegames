@@ -153,19 +153,24 @@ class LevelScreen extends GUI {
             for (let j = 0; j < this.tiles[i].length; j++) {
                 if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
                     const oldTile = this.tiles[i][j]
-                    for (let i = 0; i < this.tileShop.length; i++) {
-                        if (this.tileShop[i].type == oldTile.type) {
-                            this.tileShop[i].owned++;
-                        }
-                    }
                     if (mouseButton === LEFT) {
                         if (this.tileShop[this.currShopItem].owned > 0) {
                             this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
                             this.tileShop[this.currShopItem].owned--;
+                            for (let i = 0; i < this.tileShop.length; i++) {
+                                if (this.tileShop[i].type == oldTile.type) {
+                                    this.tileShop[i].owned++;
+                                }
+                            }
                         }
                     } else if (mouseButton === RIGHT) {
-                        if (tiles[i][j].type !== this.defaultType) {
+                        if (this.tiles[i][j].type !== this.defaultType) {
                             this.tiles[i][j] = new Tile(this.defaultType)
+                            for (let i = 0; i < this.tileShop.length; i++) {
+                                if (this.tileShop[i].type == oldTile.type) {
+                                    this.tileShop[i].owned++;
+                                }
+                            }
                         }
                     }
                     this.updateIncome();
