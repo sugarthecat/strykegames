@@ -49,8 +49,12 @@ function draw() {
 function mouseClicked() {
     let mousePosition = getMousePosition()
     screens[screenOn].HandleClick(mousePosition.x, mousePosition.y);
+}
+function mouseReleased() {
     if (mouseButton === RIGHT) {
-        return false; 
+        let mousePosition = getMousePosition()
+        screens[screenOn].HandleClick(mousePosition.x, mousePosition.y);
+        return false;
     }
 }
 function getMousePosition() {
@@ -66,6 +70,6 @@ function mouseInRange(x, y, w, h) {
     let mousePosition = getMousePosition();
     return (mousePosition.x >= x && mousePosition.y >= y && mousePosition.x <= x + w && mousePosition.y <= y + h)
 }
-
-//because right click to delete
-document.addEventListener('contextmenu', (e) => e.preventDefault());
+document.oncontextmenu = function() {
+        return false;
+    }

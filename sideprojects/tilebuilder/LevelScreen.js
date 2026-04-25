@@ -131,47 +131,50 @@ class LevelScreen extends GUI {
     }
     HandleClick(x, y) {
         super.HandleClick(x, y)
-        if (this.tileShop[this.currShopItem].owned > 0) {
-            //attempt to place tile
-            let xOffset = 10
-            let yOffset = 90
+        //attempt to place tile
+        let xOffset = 10
+        let yOffset = 90
 
-            let gridWidth = 380;
-            let gridHeight = 300;
-            let tileWidth = this.tiles.length;
-            let tileHeight = this.tiles[0].length;
-            if (gridHeight / tileHeight > gridWidth / tileWidth) {
-                let newGridHeight = gridWidth / tileWidth * tileHeight
-                yOffset += (gridHeight - newGridHeight) / 2
-                gridHeight = newGridHeight
-            } else {
-                let newGridWidth = gridHeight / tileHeight * tileWidth
-                xOffset += (gridWidth - newGridWidth) / 2
-                gridWidth = newGridWidth
-            }
-            let size = gridWidth / tileWidth
-            for (let i = 0; i < this.tiles.length; i++) {
-                for (let j = 0; j < this.tiles[i].length; j++) {
-                    if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
-                        const oldTile = this.tiles[i][j]
-                        for (let i = 0; i < this.tileShop.length; i++) {
-                            if (this.tileShop[i].type == oldTile.type) {
-                                this.tileShop[i].owned++;
-                            }
+        let gridWidth = 380;
+        let gridHeight = 300;
+        let tileWidth = this.tiles.length;
+        let tileHeight = this.tiles[0].length;
+        if (gridHeight / tileHeight > gridWidth / tileWidth) {
+            let newGridHeight = gridWidth / tileWidth * tileHeight
+            yOffset += (gridHeight - newGridHeight) / 2
+            gridHeight = newGridHeight
+        } else {
+            let newGridWidth = gridHeight / tileHeight * tileWidth
+            xOffset += (gridWidth - newGridWidth) / 2
+            gridWidth = newGridWidth
+        }
+        let size = gridWidth / tileWidth
+        for (let i = 0; i < this.tiles.length; i++) {
+            for (let j = 0; j < this.tiles[i].length; j++) {
+                if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
+                    const oldTile = this.tiles[i][j]
+                    for (let i = 0; i < this.tileShop.length; i++) {
+                        if (this.tileShop[i].type == oldTile.type) {
+                            this.tileShop[i].owned++;
                         }
-                        if (mouseButton === LEFT) {
+                    }
+                    if (mouseButton === LEFT) {
+                        if (this.tileShop[this.currShopItem].owned > 0) {
                             this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
                             this.tileShop[this.currShopItem].owned--;
-                        } else if(mouseButton === RIGHT) {
+                        }
+                    } else if (mouseButton === RIGHT) {
+                        if (tiles[i][j].type !== this.defaultType) {
                             this.tiles[i][j] = new Tile(this.defaultType)
                         }
-                        this.updateIncome();
-
-                        return;
                     }
+                    this.updateIncome();
+
+                    return;
                 }
             }
         }
+
     }
     buyItem() {
         const shopItem = this.tileShop[this.currShopItem];
