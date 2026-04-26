@@ -30,6 +30,9 @@ function getIncome(tileGrid, code) {
             }
         }
         return income
+    }else if(code == "headquarters"){
+        let income = {bandwidth: 0, manufacturing: 0, ideas: 0}
+        return income
     }
 }
 

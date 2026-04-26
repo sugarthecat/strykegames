@@ -22,19 +22,17 @@ class LevelScreen extends GUI {
     }
     Load(level) {
         this.time = 0;
-        this.defaultType = "empty"
+        this.defaultType = level.defaultType
         this.balance = {}
         this.perSecond = {}
-        let tileW = 5;
-        let tileH = 5;
+        let tileW = level.tileW;
+        let tileH = level.tileH;
+        this.currencies = level.currencies
+        this.maxBalance = level.maxBalance
+        this.currShopItem = 0;
+        this.goalPerSecond = level.goalPerSecond
 
         if (level.code == "farm") {
-            this.defaultType = "dirt"
-            tileW = 5;
-            tileH = 5;
-            this.goalPerSecond = { coins: 80 }
-            this.maxBalance = { coins: 250 }
-            this.currShopItem = 0;
             this.tileShop = [
                 {
                     price: { coins: 5, gems: 0 },
@@ -61,7 +59,27 @@ class LevelScreen extends GUI {
                     owned: 0
                 }
             ]
-            this.currencies = ["coins"]
+
+        } else if (level.code == "headquarters") {
+            this.tileShop = [
+                {
+                    price: { bandwidth: 0, ideas: 0, manufacturing: 0 },
+                    name: "3D Printer",
+                    description: "Earns 1 manufacturing.",
+                    type: "3dprinter",
+                    avail: 2,
+                    owned: 1
+                },
+                {
+                    price: { bandwidth: 1, ideas: 0, manufacturing: 1 },
+                    name: "Server Rack",
+                    description: "Earns 1 bandwidth.",
+                    type: "serverrack",
+                    avail: 4,
+                    owned: 1
+                }
+            ]
+
         }
 
         screens.message.Load(level);

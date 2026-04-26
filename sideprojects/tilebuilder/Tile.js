@@ -53,7 +53,7 @@ class Tile {
         fill(255)
         rect(boxLeft, y, boxWidth, boxHeight)
         textSize(size / 5)
-        fill (0)
+        fill(0)
         textAlign(LEFT, CENTER)
         for (let i = 0; i < bubble.value.length; i++) {
             drawSymbol(bubble.value[i].currency, boxLeft + size / 8, y + size / 8 + i * size / 4, size / 6)
@@ -61,43 +61,33 @@ class Tile {
         }
         pop()
     }
-    Draw(x, y, size) {
-        if (this.type == "empty") {
-            push()
+    DrawTile(x, y, size, type) {
+        push()
+        noStroke()
+        if (type == "empty") {
             fill(0)
             rect(x, y, size, size)
             stroke(255)
             strokeWeight(size / 10)
             line(x + size / 3, y + size / 3, x + size * 2 / 3, y + size * 2 / 3)
-            pop()
         }
-        else if (this.type == "farm") {
-            push()
-            fill(0, 200, 0)
+        else if (type == "floor") {
+            fill(200)
             rect(x, y, size, size)
-            stroke(255, 255, 0)
-            strokeWeight(size / 10)
-            line(x + size / 3, y + size / 3, x + size * 2 / 3, y + size * 2 / 3)
-            pop()
-            return;
         }
-        else if (this.type == "dirt") {
-            push()
+        else if (type == "dirt") {
             fill(100, 50, 0)
             rect(x, y, size, size)
-            pop()
         }
-        else if (this.type == "wheat") {
-            push()
+        else if (type == "wheat") {
             fill(220, 220, 0)
             rect(x, y, size, size)
             fill(150, 150, 0)
             for (let i = 0; i < this.dots.length; i++) {
                 circle(x + this.dots[i].x * size, y + this.dots[i].y * size, size / 10)
             }
-            pop()
         }
-        else if (this.type == "corn") {
+        else if (type == "corn") {
             push()
             fill(0, 160, 0)
             rect(x, y, size, size)
@@ -105,18 +95,28 @@ class Tile {
             for (let i = 0; i < this.dots.length; i++) {
                 circle(x + this.dots[i].x * size, y + this.dots[i].y * size, size / 10)
             }
-            pop()
         }
-        else if (this.type == "strawberry") {
-            push()
+        else if (type == "strawberry") {
             fill(0, 160, 0)
             rect(x, y, size, size)
             fill(255, 0, 0)
             for (let i = 0; i < this.dots.length; i++) {
                 circle(x + this.dots[i].x * size, y + this.dots[i].y * size, size / 10)
             }
-            pop()
+        } else {
+            fill(0)
+            rect(x, y, size, size)
+            
+            textSize(size / 2)
+            textAlign(CENTER, CENTER)
+            fill(255)
+            text("?", x + size / 2, y + size / 2)
         }
+        pop()
+    }
+    Draw(x, y, size) {
+        //magic 1.005 prevents rounding lines in the grid
+        this.DrawTile(x, y, size*1.005, this.type)
         this.DrawIncomeBubble(x, y, size);
     }
 }

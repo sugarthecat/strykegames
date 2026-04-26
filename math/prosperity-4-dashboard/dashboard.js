@@ -10,12 +10,15 @@
 // rebuilds the DOM; any user interaction mutates state and calls render().
 const state = {
   rows: [],             // all parsed rows across all loaded CSVs / logs
+  rowsIndex: new Map(), // product → { byDay: Map<day, rows[]>, all: rows[] }, each pre-sorted
   trades: [],           // user's buy/sell fills parsed from .log files
   products: [],         // unique product names, sorted
   days: [],             // unique day numbers, sorted
   selectedProduct: null,
   selectedDay: 'all',   // 'all' or a specific day number
   charts: {},           // active Chart.js instances, keyed by chart name
+  optionMappings: [],   // user-declared: [{product, underlying, strike, quantity}]
+  mappingsCollapsed: localStorage.getItem('prosperity4.optionMappingsCollapsed') === '1',
 };
 
 // Tiny alias for querySelector — used everywhere.
@@ -104,8 +107,11 @@ async function handleFiles(files) {
 
   state.rows = allRows;
   state.trades = allTrades;
-  state.products = [...new Set(allRows.map(r => r.product))].sort();
-  state.days = [...new Set(allRows.map(r => r.day))].sort((a, b) => a - b);
+  state.rowsIndex = buildRowsIndex(allRows);
+  state.products = [...state.rowsIndex.keys()].sort();
+  const daySet = new Set();
+  for (const r of allRows) daySet.add(r.day);
+  state.days = [...daySet].sort((a, b) => a - b);
   state.selectedProduct = state.products[0] || null;
   state.selectedDay = 'all';
 
@@ -117,15 +123,40 @@ async function handleFiles(files) {
 }
 
 // ---------- Data access helpers ---------------------------------------------
-// Returns rows matching the current product + day filter, sorted so the
-// x-axis is monotonic (day first, then timestamp within a day).
+// Builds a per-product, per-day index of rows pre-sorted by timestamp (and a
+// cross-day flat array sorted by (day, timestamp)). Done once per file load so
+// filteredRows / rowsForProduct become O(1) lookups instead of O(N) filter +
+// O(N log N) sort on every call — and they're called many times per render
+// (once per option mapping for the arb scanner).
+function buildRowsIndex(allRows) {
+  const idx = new Map();
+  for (const r of allRows) {
+    let entry = idx.get(r.product);
+    if (!entry) {
+      entry = { byDay: new Map(), all: [] };
+      idx.set(r.product, entry);
+    }
+    let bucket = entry.byDay.get(r.day);
+    if (!bucket) {
+      bucket = [];
+      entry.byDay.set(r.day, bucket);
+    }
+    bucket.push(r);
+    entry.all.push(r);
+  }
+  for (const entry of idx.values()) {
+    for (const bucket of entry.byDay.values()) {
+      bucket.sort((a, b) => a.timestamp - b.timestamp);
+    }
+    entry.all.sort((a, b) => (a.day - b.day) || (a.timestamp - b.timestamp));
+  }
+  return idx;
+}
+
+// Rows matching the current product + day filter. Returns the index bucket
+// directly — callers must not mutate.
 function filteredRows() {
-  return state.rows
-    .filter(r =>
-      r.product === state.selectedProduct &&
-      (state.selectedDay === 'all' || r.day === state.selectedDay)
-    )
-    .sort((a, b) => (a.day - b.day) || (a.timestamp - b.timestamp));
+  return rowsForProduct(state.selectedProduct);
 }
 
 // Same filter applied to user trades from a loaded .log file.
@@ -134,6 +165,104 @@ function filteredTrades() {
     t.product === state.selectedProduct &&
     (state.selectedDay === 'all' || t.day === state.selectedDay)
   );
+}
+
+// Rows for an arbitrary product, filtered by the current day selection.
+// Backed by the pre-built index — no filter/sort on the hot path.
+function rowsForProduct(product) {
+  const entry = state.rowsIndex.get(product);
+  if (!entry) return [];
+  if (state.selectedDay === 'all') return entry.all;
+  return entry.byDay.get(state.selectedDay) || [];
+}
+
+// ---------- Option ↔ underlying mapping -------------------------------------
+// Mappings are user-declared via the "Option Mappings" panel (each entry
+// specifies which product is an option on which underlying, plus strike and
+// quantity/multiplier). Persisted to localStorage so they survive reloads.
+// Naming conventions vary across rounds (VOLCANIC_ROCK_VOUCHER_10000 vs
+// VEV_5000 → VELVETFRUIT_EXTRACT, etc.) so there's no reliable auto-derivation.
+const LS_KEY_OPTIONS = 'prosperity4.optionMappings';
+const LS_KEY_MAPPINGS_COLLAPSED = 'prosperity4.optionMappingsCollapsed';
+
+function loadOptionMappings() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(LS_KEY_OPTIONS) || '[]');
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveOptionMappings() {
+  localStorage.setItem(LS_KEY_OPTIONS, JSON.stringify(state.optionMappings));
+}
+
+// Returns the mapping for `product` if it has been declared as an option,
+// otherwise null. Quantity defaults to 1 if unset.
+function getOptionMapping(product) {
+  const m = state.optionMappings.find(x => x.product === product);
+  if (!m) return null;
+  return { ...m, quantity: m.quantity ?? 1 };
+}
+
+// All declared options on a given underlying, sorted by strike ascending.
+function optionsOn(underlying) {
+  return state.optionMappings
+    .filter(m => m.underlying === underlying)
+    .map(m => ({ ...m, quantity: m.quantity ?? 1 }))
+    .sort((a, b) => a.strike - b.strike);
+}
+
+// ---------- Arbitrage scanner -----------------------------------------------
+// Scans the filtered range for arbitrage opportunities at the best bid/ask of
+// both option and underlying (so the detected profit is actually tradeable,
+// not just a mid-price illusion). Returns {long, short} where each side is
+// {count, best, latest} or null if no opportunities were found.
+//
+//   Long-option arb (option below intrinsic):
+//     Buy option at opAsk, sell qty × underlying at spotBid.
+//     Locked-in profit = (spotBid − strike) × qty − opAsk
+//     This is the "buy a strike-3000 voucher for 500 and sell underlying at 4000" case.
+//
+//   Short-option arb (option above underlying upper bound):
+//     Sell option at opBid, buy qty × underlying at spotAsk.
+//     Locked-in profit = opBid − spotAsk × qty
+//     Rare — fires only when a call trades above its own underlying per share.
+function scanArbitrage(mapping, undByKey) {
+  const opRows = rowsForProduct(mapping.product);
+  const K = mapping.strike;
+  const Q = mapping.quantity;
+
+  const longOpps = [];
+  const shortOpps = [];
+  for (const o of opRows) {
+    const u = undByKey.get(`${o.day}:${o.timestamp}`);
+    if (!u) continue;
+
+    if (o.ask_price_1 != null && u.bid_price_1 != null) {
+      const profit = (u.bid_price_1 - K) * Q - o.ask_price_1;
+      if (profit > 0) longOpps.push({
+        day: o.day, timestamp: o.timestamp, profit,
+        opPrice: o.ask_price_1, spot: u.bid_price_1,
+      });
+    }
+
+    if (o.bid_price_1 != null && u.ask_price_1 != null) {
+      const profit = o.bid_price_1 - u.ask_price_1 * Q;
+      if (profit > 0) shortOpps.push({
+        day: o.day, timestamp: o.timestamp, profit,
+        opPrice: o.bid_price_1, spot: u.ask_price_1,
+      });
+    }
+  }
+
+  const summarize = (arr) => {
+    if (!arr.length) return null;
+    const best = arr.reduce((a, b) => b.profit > a.profit ? b : a);
+    return { count: arr.length, best, latest: arr[arr.length - 1] };
+  };
+  return { long: summarize(longOpps), short: summarize(shortOpps) };
 }
 
 // Chart.js leaks memory if old charts aren't destroyed before new ones are
@@ -159,7 +288,16 @@ function render() {
 
   destroyCharts();
 
-  // Layout: controls → summary → 1 wide chart → 2x2 grid → order book table.
+  // Determine if the current selection is an option, and what (if any) options
+  // exist on the relevant underlying. These flags drive whether option panels
+  // are inserted into the layout below.
+  const opt = getOptionMapping(state.selectedProduct);
+  const underlyingName = opt ? opt.underlying : state.selectedProduct;
+  const siblings = optionsOn(underlyingName);
+  const showOptionTimeSeries = !!opt;
+  const showArbScanner = siblings.length >= 1;
+
+  // Layout: controls → mappings → summary → 1 wide chart → [option panels] → 2x2 grid → book.
   main.innerHTML = `
     <div class="panel full">
       <div class="product-pills" id="productPills"></div>
@@ -173,6 +311,14 @@ function render() {
     </div>
 
     <div class="panel full">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <h2 style="margin:0;flex:1;">Option Mappings${state.optionMappings.length ? ` (${state.optionMappings.length})` : ''}</h2>
+        <button id="mapToggle" style="padding:2px 10px;">${state.mappingsCollapsed ? '▸ Expand' : '▾ Collapse'}</button>
+      </div>
+      <div id="optionMappings" style="${state.mappingsCollapsed ? 'display:none;' : ''}"></div>
+    </div>
+
+    <div class="panel full">
       <h2>Summary — <span id="sumProd"></span></h2>
       <div class="stats" id="stats"></div>
     </div>
@@ -181,6 +327,18 @@ function render() {
       <h2>Mid Price + Best Bid / Ask</h2>
       <div class="chart-wrap tall"><canvas id="priceChart"></canvas></div>
     </div>
+
+    ${showOptionTimeSeries ? `
+    <div class="panel full">
+      <h2>Option vs Underlying — ${state.selectedProduct} (strike ${opt.strike}, qty ${opt.quantity}) vs ${opt.underlying}</h2>
+      <div class="chart-wrap tall"><canvas id="optionChart"></canvas></div>
+    </div>` : ''}
+
+    ${showArbScanner ? `
+    <div class="panel full">
+      <h2>Arbitrage Scanner — options on ${underlyingName}</h2>
+      <div id="arbTable"></div>
+    </div>` : ''}
 
     <div class="panel">
       <h2>Spread</h2>
@@ -202,10 +360,6 @@ function render() {
       <div class="chart-wrap"><canvas id="histChart"></canvas></div>
     </div>
 
-    <div class="panel full">
-      <h2>Latest Order Book Snapshot</h2>
-      <div id="bookTable"></div>
-    </div>
   `;
 
   // Product pills — click to switch the active product.
@@ -230,7 +384,101 @@ function render() {
 
   $('#sumProd').textContent = state.selectedProduct;
 
+  renderOptionMappings();
+
   drawAll();
+}
+
+// ---------- Option mappings UI ----------------------------------------------
+// Renders the table of declared mappings + a row of inputs to add a new one.
+// Wires up Add and Remove handlers; both mutate state.optionMappings, persist
+// to localStorage, and trigger a full re-render.
+function renderOptionMappings() {
+  // Wire up the collapse toggle regardless of expanded state.
+  const toggle = $('#mapToggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      state.mappingsCollapsed = !state.mappingsCollapsed;
+      localStorage.setItem(LS_KEY_MAPPINGS_COLLAPSED, state.mappingsCollapsed ? '1' : '0');
+      render();
+    });
+  }
+
+  const host = $('#optionMappings');
+  if (!host || state.mappingsCollapsed) return;
+
+  const rows = state.optionMappings.map((m, i) => `
+    <tr>
+      <td style="text-align:left;">${m.product}</td>
+      <td style="text-align:left;">${m.underlying}</td>
+      <td>${m.strike}</td>
+      <td>${m.quantity ?? 1}</td>
+      <td><button data-rm="${i}" style="padding:2px 8px;">×</button></td>
+    </tr>
+  `).join('');
+
+  // Default the Strike input to the trailing digits of the product name (handy
+  // for VEV_5000-style products) but it's freely editable.
+  const productOpts = state.products.map(p => `<option value="${p}">${p}</option>`).join('');
+  const underlyingOpts = state.products.map(p => `<option value="${p}">${p}</option>`).join('');
+  const trailingDigits = (s) => { const m = String(s).match(/_(\d+)$/); return m ? m[1] : ''; };
+  const initialStrike = trailingDigits(state.products[0] || '');
+
+  host.innerHTML = `
+    ${state.optionMappings.length ? `
+      <table style="margin-bottom:10px;">
+        <thead><tr>
+          <th style="text-align:left;">Option</th>
+          <th style="text-align:left;">Underlying</th>
+          <th>Strike</th>
+          <th>Qty</th>
+          <th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    ` : '<p class="file-info" style="margin:0 0 10px;">No mappings declared. Add one below to enable option-vs-underlying charts.</p>'}
+
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+      <label>Option</label>
+      <select id="mapProduct">${productOpts}</select>
+      <label>on</label>
+      <select id="mapUnderlying">${underlyingOpts}</select>
+      <label>Strike</label>
+      <input id="mapStrike" type="number" step="any" value="${initialStrike}" style="width:90px;">
+      <label>Qty</label>
+      <input id="mapQuantity" type="number" step="any" value="1" style="width:60px;">
+      <button id="mapAdd">Add mapping</button>
+    </div>
+  `;
+
+  // When the user picks a different option product, refresh the strike input
+  // from its trailing digits — only if they haven't typed something else.
+  $('#mapProduct').addEventListener('change', () => {
+    const guess = trailingDigits($('#mapProduct').value);
+    if (guess) $('#mapStrike').value = guess;
+  });
+
+  $('#mapAdd').addEventListener('click', () => {
+    const product = $('#mapProduct').value;
+    const underlying = $('#mapUnderlying').value;
+    const strike = Number($('#mapStrike').value);
+    const quantity = Number($('#mapQuantity').value) || 1;
+    if (!product || !underlying || product === underlying || !Number.isFinite(strike)) return;
+    // Replace any existing mapping for this option product (one-to-one).
+    state.optionMappings = state.optionMappings.filter(m => m.product !== product);
+    state.optionMappings.push({ product, underlying, strike, quantity });
+    saveOptionMappings();
+    render();
+  });
+
+  host.querySelectorAll('button[data-rm]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = Number(btn.dataset.rm);
+      state.optionMappings.splice(i, 1);
+      saveOptionMappings();
+      render();
+    });
+  });
 }
 
 // ---------- Chart drawing ---------------------------------------------------
@@ -241,19 +489,33 @@ function drawAll() {
   if (!rows.length) return;
 
   // ---- Aggregate stats ----
-  const mids = rows.map(r => r.mid_price).filter(v => v != null);
-  const pnls = rows.map(r => r.profit_and_loss).filter(v => v != null);
-  const spreads = rows
-    .map(r => (r.ask_price_1 != null && r.bid_price_1 != null) ? r.ask_price_1 - r.bid_price_1 : null)
-    .filter(v => v != null);
-
-  const lastPnl = pnls.length ? pnls[pnls.length - 1] : 0;
-  const minMid = Math.min(...mids);
-  const maxMid = Math.max(...mids);
-  const meanMid = mids.reduce((a, b) => a + b, 0) / mids.length;
+  // Single pass: mid sum/min/max + spread sum + materialize mids for the
+  // histogram below. Avoids Math.min(...mids), which blows the JS arg-list
+  // stack on long arrays and runs ~3× slower than a loop.
+  const mids = [];
+  let midSum = 0, minMid = Infinity, maxMid = -Infinity;
+  let spreadSum = 0, spreadCount = 0;
+  let lastPnl = 0;
+  for (const r of rows) {
+    const m = r.mid_price;
+    if (m != null) {
+      mids.push(m);
+      midSum += m;
+      if (m < minMid) minMid = m;
+      if (m > maxMid) maxMid = m;
+    }
+    if (r.ask_price_1 != null && r.bid_price_1 != null) {
+      spreadSum += r.ask_price_1 - r.bid_price_1;
+      spreadCount++;
+    }
+    if (r.profit_and_loss != null) lastPnl = r.profit_and_loss;
+  }
+  const meanMid = mids.length ? midSum / mids.length : 0;
   // Population standard deviation — we have the whole series, not a sample.
-  const stdMid = Math.sqrt(mids.reduce((a, b) => a + (b - meanMid) ** 2, 0) / mids.length);
-  const meanSpread = spreads.reduce((a, b) => a + b, 0) / spreads.length;
+  let sqSum = 0;
+  for (const m of mids) { const d = m - meanMid; sqSum += d * d; }
+  const stdMid = mids.length ? Math.sqrt(sqSum / mids.length) : 0;
+  const meanSpread = spreadCount ? spreadSum / spreadCount : 0;
 
   // ---- Trade overlays: align user fills with the row index ----
   // Price chart datasets are indexed by row position, so we build sparse
@@ -402,9 +664,66 @@ function drawAll() {
     options: chartOpts(),
   });
 
-  // ---- Latest order book snapshot ----
-  const last = rows[rows.length - 1];
-  $('#bookTable').innerHTML = renderBook(last);
+  // ---- Option vs Underlying overlay ----
+  // Aligns the underlying's mid by exact (day, timestamp) so the two series
+  // sit on the same x-axis. Plots the option mid + intrinsic on the left axis
+  // (option-price scale) and the underlying mid on the right axis (commodity
+  // scale) — they're typically orders of magnitude apart, so dual axes keep
+  // both readable. Intrinsic is computed for a call: max(0, spot − K) × qty.
+  const optMap = getOptionMapping(state.selectedProduct);
+  if (optMap && $('#optionChart')) {
+    const undRows = rowsForProduct(optMap.underlying);
+    const undMidByKey = new Map();
+    for (const r of undRows) undMidByKey.set(`${r.day}:${r.timestamp}`, r.mid_price);
+
+    const spot = rows.map(r => undMidByKey.get(`${r.day}:${r.timestamp}`) ?? null);
+    const intrinsic = spot.map(s => s != null ? Math.max(0, s - optMap.strike) * optMap.quantity : null);
+    const optMid = rows.map(r => r.mid_price);
+
+    // Latest non-null values for stat cards.
+    const lastSpot = [...spot].reverse().find(v => v != null) ?? null;
+    const lastMid  = [...optMid].reverse().find(v => v != null) ?? null;
+    const lastIntrinsic = lastSpot != null ? Math.max(0, lastSpot - optMap.strike) * optMap.quantity : null;
+    const lastExtrinsic = (lastMid != null && lastIntrinsic != null) ? lastMid - lastIntrinsic : null;
+
+    $('#stats').insertAdjacentHTML('beforeend',
+      stat('Strike', String(optMap.strike)) +
+      stat('Qty', String(optMap.quantity)) +
+      stat('Spot', fmt(lastSpot)) +
+      stat('Intrinsic', fmt(lastIntrinsic)) +
+      stat('Extrinsic', fmt(lastExtrinsic), lastExtrinsic)
+    );
+
+    state.charts.option = new Chart($('#optionChart'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Option Mid',                 data: optMid,    borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, tension: 0, yAxisID: 'y' },
+          { label: 'Intrinsic ((S−K)·qty, ≥0)',  data: intrinsic, borderColor: '#d29922', backgroundColor: 'transparent', borderWidth: 1, borderDash: [4, 4], pointRadius: 0, tension: 0, yAxisID: 'y' },
+          { label: `${optMap.underlying} Spot`,  data: spot,      borderColor: '#8b949e', backgroundColor: 'transparent', borderWidth: 1, pointRadius: 0, tension: 0, yAxisID: 'y1' },
+        ],
+      },
+      options: chartOpts({ dualAxis: true }),
+    });
+  }
+
+  // ---- Arbitrage scanner -----------------------------------
+  const skewUnderlying = optMap ? optMap.underlying : state.selectedProduct;
+  const siblings = optionsOn(skewUnderlying);
+
+  // Per-option summary of all snapshots in the filtered range where the
+  // bid/ask permits a locked-in profit. Build the underlying row-by-key map
+  // once and share it across every option scan — otherwise an underlying with
+  // N options pays for N rebuilds of the same map.
+  if (siblings.length >= 1 && $('#arbTable')) {
+    const undByKey = new Map();
+    for (const r of rowsForProduct(skewUnderlying)) {
+      undByKey.set(`${r.day}:${r.timestamp}`, r);
+    }
+    const scans = siblings.map(m => ({ mapping: m, arb: scanArbitrage(m, undByKey) }));
+    $('#arbTable').innerHTML = renderArbTable(scans);
+  }
 }
 
 // ---------- Small utilities -------------------------------------------------
@@ -419,21 +738,42 @@ function sumVol(r, side) {
   return s;
 }
 
-// Renders a 3-level order book table for a single snapshot row.
-// Asks are listed top→bottom in reverse (3, 2, 1) so the best ask sits
-// directly above the best bid, like a real exchange book.
-function renderBook(r) {
-  const rows = [];
-  for (let i = 3; i >= 1; i--) {
-    const p = r[`ask_price_${i}`], v = r[`ask_volume_${i}`];
-    if (p != null) rows.push(`<tr><td class="ask">${p}</td><td class="ask">${v}</td><td>ASK ${i}</td></tr>`);
-  }
-  for (let i = 1; i <= 3; i++) {
-    const p = r[`bid_price_${i}`], v = r[`bid_volume_${i}`];
-    if (p != null) rows.push(`<tr><td class="bid">${p}</td><td class="bid">${v}</td><td>BID ${i}</td></tr>`);
-  }
-  return `<table><thead><tr><th>Price</th><th>Volume</th><th>Level</th></tr></thead><tbody>${rows.join('')}</tbody></table>
-  <p class="file-info" style="margin-top:8px;">Snapshot @ day ${r.day}, t=${r.timestamp} · mid=${r.mid_price}</p>`;
+// Renders the arbitrage scanner table. `scans` is [{mapping, arb}], where arb
+// is the {long, short} structure produced by `scanArbitrage`.
+function renderArbTable(scans) {
+  const cell = (side) => {
+    if (!side) return '<span style="color:var(--muted);">none</span>';
+    const b = side.best;
+    return `<span class="pos">${side.count}× · best <strong>${fmt(b.profit)}</strong> @ d${b.day}/t${b.timestamp} (op ${fmt(b.opPrice)} vs spot ${fmt(b.spot)})</span>`;
+  };
+  const cells = scans.map(({ mapping, arb }) => `
+    <tr>
+      <td style="text-align:left;">${mapping.product}</td>
+      <td>${mapping.strike}</td>
+      <td>${mapping.quantity}</td>
+      <td style="text-align:left;">${cell(arb.long)}</td>
+      <td style="text-align:left;">${cell(arb.short)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <table>
+      <thead><tr>
+        <th style="text-align:left;">Option</th>
+        <th>Strike</th>
+        <th>Qty</th>
+        <th style="text-align:left;">Long-option arb (buy &lt; intrinsic)</th>
+        <th style="text-align:left;">Short-option arb (sell &gt; underlying)</th>
+      </tr></thead>
+      <tbody>${cells}</tbody>
+    </table>
+    <p class="file-info" style="margin-top:8px;">
+      Uses best bid/ask of both option and underlying.
+      <strong>Long-option</strong>: buy option at ask, sell qty&nbsp;×&nbsp;underlying at bid → profit = (spotBid − strike)·qty − opAsk.
+      <strong>Short-option</strong>: sell option at bid, buy qty&nbsp;×&nbsp;underlying at ask → profit = opBid − spotAsk·qty.
+      Profit shown is per option contract, locked in at execution.
+    </p>
+  `;
 }
 
 // Builds a single summary stat card. Pass `signed` to colorize by sign.
@@ -451,10 +791,11 @@ function fmt(n) {
 }
 
 // Shared Chart.js options — dark theme, no aspect ratio lock (we size the
-// wrapper div instead). Accepts an `extra.xTickCallback` for the scatter
-// chart, which needs custom tick label resolution.
+// wrapper div instead). Accepts `extra.xTickCallback` for the scatter chart
+// (custom tick label resolution) and `extra.dualAxis` for the option-vs-
+// underlying chart, which adds a right-side y-axis at scales.y1.
 function chartOpts(extra = {}) {
-  return {
+  const opts = {
     responsive: true,
     maintainAspectRatio: false,
     interaction: { mode: 'index', intersect: false },
@@ -478,13 +819,26 @@ function chartOpts(extra = {}) {
       },
     },
   };
+  if (extra.dualAxis) {
+    opts.scales.y1 = {
+      position: 'right',
+      ticks: { color: '#8b949e', font: { size: 10 } },
+      grid: { drawOnChartArea: false },
+    };
+  }
+  return opts;
 }
 
 // ---------- Wire up controls ------------------------------------------------
+// Restore any previously saved option mappings so they're available the moment
+// data is loaded.
+state.optionMappings = loadOptionMappings();
+
 $('#fileInput').addEventListener('change', e => handleFiles([...e.target.files]));
 
 $('#clearBtn').addEventListener('click', () => {
   state.rows = [];
+  state.rowsIndex = new Map();
   state.trades = [];
   state.products = [];
   state.days = [];
