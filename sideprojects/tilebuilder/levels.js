@@ -48,7 +48,7 @@ const levels = [
         tileW: 8,
         tileH: 6,
         currencies: ["compute", "bandwidth"],
-        goalPerSecond: { bandwidth: 20, compute: 20 },
+        goalPerSecond: { bandwidth: 60, compute: 115 },
         maxBalance: { bandwidth: 1000, compute: 500 },
         tileShop: [
             {
@@ -78,7 +78,7 @@ const levels = [
             {
                 price: { bandwidth: 0, compute: 0 },
                 name: "Terminal",
-                description: "Decided later",
+                description: "Provides 10 compute if adjacent to exactly 2 signal processors.",
                 type: "terminal",
                 avail: 3,
                 owned: 1
@@ -86,7 +86,7 @@ const levels = [
             {
                 price: { bandwidth: 0, compute: 0 },
                 name: "Signal Processor",
-                description: "Decided later",
+                description: "Each edge processor the signal processor is connected to gains 1 more bandwidth.",
                 type: "signalp",
                 avail: 5,
                 owned: 1

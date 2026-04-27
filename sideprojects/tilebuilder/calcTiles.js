@@ -48,6 +48,17 @@ function getIncome(tileGrid, code, currencies) {
                 if (tile.type == "edgerouter") {
                     tile.income.bandwidth = 1
                 }
+                if (tile.type == "terminal") {
+                    let neighboringsingalp = 0
+                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                        if (adjTile.type == "signalp") {
+                            neighboringsingalp++;
+                        }
+                    }
+                    if (neighboringsingalp == 2) {
+                        tile.income.compute = 10
+                    }
+                }
             }
         }
         for (let i = 0; i < tileGrid.length; i++) {
@@ -62,7 +73,7 @@ function getIncome(tileGrid, code, currencies) {
                 }
                 if (tile.type == "signalp") {
                     const added = new Set()
-                    const toCheck = [{ i:i, j:j }]
+                    const toCheck = [{ i: i, j: j }]
                     while (toCheck.length > 0) {
                         const curr = toCheck.pop()
                         for (const adjTile of getAdjacent(tileGrid, curr.i, curr.j)) {
