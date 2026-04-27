@@ -1,11 +1,22 @@
 
-function getIncome(tileGrid, code) {
+function getIncome(tileGrid, code, currencies) {
+    let income = {}
+    for (let i = 0; i < currencies.length; i++) {
+        income[currencies[i]] = 0
+    }
+    for (let i = 0; i < tileGrid.length; i++) {
+        for (let j = 0; j < tileGrid[i].length; j++) {
+            tileGrid[i][j].income = {}
+            for (let k = 0; k < currencies.length; k++) {
+                tileGrid[i][j].income[currencies[k]] = 0
+            }
+        }
+    }
+    //code specific behavior
     if (code == "farm") {
-        let income = { coins: 0 }
         for (let i = 0; i < tileGrid.length; i++) {
             for (let j = 0; j < tileGrid[i].length; j++) {
                 const tile = tileGrid[i][j]
-                tile.income = { coins: 0 }
                 if (tile.type == "wheat") {
                     tile.income.coins = 1
                 }
@@ -18,31 +29,74 @@ function getIncome(tileGrid, code) {
                     }
                 }
                 if (tile.type == "strawberry") {
-                    tile.income = { coins: 8 }
+                    tile.income.coins = 8;
                     for (const adjTile of getAdjacent(tileGrid, i, j)) {
                         if (adjTile.type !== "strawberry") {
                             tile.income.coins = 0;
                         }
                     }
                 }
-                income.coins += tile.income.coins
-
             }
         }
-        return income
-    }else if(code == "headquarters"){
-        let income = {bandwidth: 0, manufacturing: 0, ideas: 0}
-        return income
+    } else if (code == "datacenter") {
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "serverrack") {
+                    tile.income.compute = 1
+                }
+                if (tile.type == "edgerouter") {
+                    tile.income.bandwidth = 1
+                }
+            }
+        }
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "coolanttank") {
+                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                        if (adjTile.type == "serverrack") {
+                            adjTile.income.compute *= 2
+                        }
+                    }
+                }
+                if (tile.type == "signalp") {
+                    const added = new Set()
+                    const toCheck = [{ i:i, j:j }]
+                    while (toCheck.length > 0) {
+                        const curr = toCheck.pop()
+                        for (const adjTile of getAdjacent(tileGrid, curr.i, curr.j)) {
+                            if (!added.has(adjTile) && adjTile.type == "edgerouter") {
+                                toCheck.push({ i: adjTile.x, j: adjTile.y })
+                                adjTile.income.bandwidth += 1
+                                added.add(adjTile)
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    //income congregation
+
+    for (let i = 0; i < tileGrid.length; i++) {
+        for (let j = 0; j < tileGrid[i].length; j++) {
+            for (let k = 0; k < currencies.length; k++) {
+                income[currencies[k]] += tileGrid[i][j].income[currencies[k]]
+            }
+        }
+    }
+    return income;
 }
 
-function getNeighbors(tileGrid, x, y) {
+function getNeighbors(tileGrid, x, y, manhattan = 1) {
     const neighbors = []
-    for (let i = -1; i <= 1; i++) {
+    for (let i = -manhattan; i <= manhattan; i++) {
         if (i + x >= tileGrid.length || i + x < 0) {
             continue;
         }
-        for (let j = -1; j <= 1; j++) {
+        for (let j = -manhattan; j <= manhattan; j++) {
             if (j + y >= tileGrid[i + x].length || j + y < 0) {
                 continue;
             }

@@ -31,56 +31,7 @@ class LevelScreen extends GUI {
         this.maxBalance = level.maxBalance
         this.currShopItem = 0;
         this.goalPerSecond = level.goalPerSecond
-
-        if (level.code == "farm") {
-            this.tileShop = [
-                {
-                    price: { coins: 5, gems: 0 },
-                    name: "Wheat",
-                    description: "Earns 1 coin.",
-                    type: "wheat",
-                    avail: 21,
-                    owned: 3
-                },
-                {
-                    price: { coins: 20, gems: 0 },
-                    name: "Corn",
-                    description: "Earns 4 coins if adjacent to wheat.",
-                    type: "corn",
-                    avail: 12,
-                    owned: 0
-                },
-                {
-                    price: { coins: 50, gems: 0 },
-                    name: "Strawberry Patch",
-                    description: "Earns 8 coins if adjacent to only strawberries.",
-                    type: "strawberry",
-                    avail: 8,
-                    owned: 0
-                }
-            ]
-
-        } else if (level.code == "headquarters") {
-            this.tileShop = [
-                {
-                    price: { bandwidth: 0, ideas: 0, manufacturing: 0 },
-                    name: "3D Printer",
-                    description: "Earns 1 manufacturing.",
-                    type: "3dprinter",
-                    avail: 2,
-                    owned: 1
-                },
-                {
-                    price: { bandwidth: 1, ideas: 0, manufacturing: 1 },
-                    name: "Server Rack",
-                    description: "Earns 1 bandwidth.",
-                    type: "serverrack",
-                    avail: 4,
-                    owned: 1
-                }
-            ]
-
-        }
+        this.tileShop = level.tileShop
 
         screens.message.Load(level);
         for (let i = 0; i < this.currencies.length; i++) {
@@ -92,10 +43,10 @@ class LevelScreen extends GUI {
         for (let i = 0; i < tileW; i++) {
             this.tiles.push([])
             for (let j = 0; j < tileH; j++) {
-                this.tiles[i].push(new Tile(this.defaultType))
+                this.tiles[i].push(new Tile(this.defaultType,i,j))
             }
         }
-        this.currShopTile = new Tile(this.tileShop[this.currShopItem].type)
+        this.currShopTile = new Tile(this.tileShop[this.currShopItem].type,0,0)
         this.updateIncome()
     }
     Draw(x, y) {
@@ -145,7 +96,7 @@ class LevelScreen extends GUI {
         }
     }
     updateIncome() {
-        this.perSecond = getIncome(this.tiles, this.currLevel)
+        this.perSecond = getIncome(this.tiles, this.currLevel, this.currencies)
     }
     HandleClick(x, y) {
         super.HandleClick(x, y)
@@ -173,7 +124,7 @@ class LevelScreen extends GUI {
                     const oldTile = this.tiles[i][j]
                     if (mouseButton === LEFT) {
                         if (this.tileShop[this.currShopItem].owned > 0) {
-                            this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type)
+                            this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type,i,j)
                             this.tileShop[this.currShopItem].owned--;
                             for (let i = 0; i < this.tileShop.length; i++) {
                                 if (this.tileShop[i].type == oldTile.type) {
@@ -318,15 +269,60 @@ class LevelScreen extends GUI {
 }
 
 function drawSymbol(currency, x, y, size) {
+    push()
+    translate(x, y)
     if (currency == "coins") {
-        push()
         strokeCap(ROUND)
         stroke(200, 200, 0)
         strokeWeight(size / 10)
         fill(255, 255, 0)
-        circle(x, y, size)
+        circle(0, 0, size)
         strokeWeight(size / 6)
-        line(x, y - size / 3, x, y + size / 3)
-        pop()
+        line(0, - size / 3, 0, size / 3)
+    } else if (currency == "bandwidth") {
+        strokeWeight(size / 4)
+        translate(-size / 6, -size / 6)
+        stroke(200, 0, 0)
+        line(size / 4, - size / 4, - size / 4, size / 4)
+        translate(size / 6, size / 6)
+        stroke(0, 200, 0)
+        line(size / 4, - size / 4, - size / 4, size / 4)
+        translate(size / 6, size / 6)
+        stroke(0, 0, 200)
+        line(size / 4, - size / 4, - size / 4, + size / 4)
+        strokeWeight(size / 3)
+        translate(-size / 6, -size / 6)
+        stroke(0)
+        line(size / 4 - size / 5, - size / 4 - size / 5,
+            size / 4 + size / 5, - size / 4 + size / 5,
+        )
+    } else if (currency == "memory") {
+        fill(80, 80, 220)
+        beginShape()
+        vertex(- size / 2, - size / 2)
+        vertex(- size / 2, size / 2)
+        vertex(size / 2, size / 2)
+        vertex(size / 2, -size / 4)
+        vertex(size / 4, -size / 2)
+        endShape(CLOSE)
+        fill(200)
+        rect(-size / 4, -size / 2, size / 2, size / 3)
+        fill(80, 80, 220)
+        rect(-size / 5, -size / 2 + size / 24, size / 6, size / 4 * 0.9)
+    } else if (currency == "compute") {
+        fill(0, 180, 0)
+        rect(-size / 2, -size / 2, size, size)
+        fill(255, 255, 0)
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 6; j++) {
+                circle(-size / 2 + size / 12 + size / 6 * i,
+                    -size / 2 + size / 12 + size / 6 * j,
+                    size / 12
+                )
+            }
+        }
+        fill(230)
+        rect(-size / 6, -size / 6, size / 3, size / 3)
     }
+    pop()
 }

@@ -1,31 +1,3 @@
-const levels = [
-    {
-        author: "Unclaimed",
-        code: "farm",
-        title: "Garden",
-        description: "Can you help me grow the vegetables?",
-        completionMessage: "It's been a great year working with you.",
-        defaultType: "dirt",
-        tileW: 5,
-        tileH: 5,
-        currencies: ["coins"],
-        goalPerSecond: { coins: 80 },
-        maxBalance: { coins: 250 }
-    },
-    {
-        author: "Sherman",
-        code: "headquarters",
-        title: "VTHunt HQ",
-        description: "The VTHunt Headquarters is under construction!",
-        completionMessage: "It's been a great year working with you.",
-        defaultType: "floor",
-        tileW: 6,
-        tileH: 5,
-        currencies: ["bandwidth", "manufacturing", "ideas"],
-        goalPerSecond: { ideas: 5, bandwidth: 20, manufacturing: 20 },
-        maxBalance: { bandwidth: 1000, manufacturing: 500, ideas: 200 }
-    },
-]
 
 const completedLevels = []
 
