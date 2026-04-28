@@ -553,7 +553,7 @@ export default class colony {
         this.statspan.className = 'colony_stats'
         this.nameFlagDisplay = document.createElement('div')
         this.nameFlagDisplay.appendChild(this.flagCanvas)
-        this.nameFlagDisplay.appendChild(this.colonyName)
+        this.nameFlagDisplay.appendChild(this.colonyName )
         this.display.appendChild(this.nameFlagDisplay)
         this.colonyName.innerText = this.teamId
         this.flag.displayInCanvas(this.flagCanvas)

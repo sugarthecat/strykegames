@@ -1,8 +1,8 @@
 import Overlay from "./overlays/Overlay.js";
 
 
-export default class ColonyOverlay extends Overlay{
-    constructor(overlay,colonyGraphOverlay){
+export default class ColonyOverlay extends Overlay {
+    constructor(overlay, colonyGraphOverlay) {
         super(overlay)
         this.colonyGraphOverlay = colonyGraphOverlay;
         this.addCloseButton();
@@ -10,22 +10,43 @@ export default class ColonyOverlay extends Overlay{
         this.colony;
     }
 
-    addCloseButton(){
+    addCloseButton() {
         this.overlayButton = document.getElementById("colony_overlay_close_btn")
         this.overlayButton.onclick = () => {
             this.hideOverlay();
         }
     }
 
-    displayColonyOverlay(colony){
+    displayColonyOverlay(colony) {
         this.showOverlay();
         this.colony = colony;
 
 
-        document.getElementById("colony_overlay_colony_name").innerHTML = `${colony.teamId}`
+        const colonyNameElt = document.getElementById("colony_overlay_colony_name");
+        colonyNameElt.innerHTML = `${colony.teamId}`
 
-        let flagWidth =  document.getElementById("colony_overlay").offsetWidth;
-        let flagHeight = flagWidth/300 * 200
+        colonyNameElt.onclick = () => {
+            if (colonyNameElt.children.length > 0) {
+                return;
+            }
+            const textBox = document.createElement('input')
+            colonyNameElt.innerHTML = ""
+            colonyNameElt.appendChild(textBox)
+            textBox.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    // Prevent default behavior (like form submission) if necessary
+                    event.preventDefault();
+                    const newName = textBox.value;
+                    colonyNameElt.innerHTML = ""
+                    colonyNameElt.innerText = newName
+                    colony.teamId = newName
+                    // Trigger your function here
+                }
+            });
+        }
+
+        let flagWidth = document.getElementById("colony_overlay").offsetWidth;
+        let flagHeight = flagWidth / 300 * 200
         document.getElementById("colony_overlay_flag_canvas").width = flagWidth;
         document.getElementById("colony_overlay_flag_canvas").height = flagHeight;
         colony.flag.displayInCanvas(document.getElementById("colony_overlay_flag_canvas"));
@@ -39,7 +60,7 @@ export default class ColonyOverlay extends Overlay{
         document.getElementById("colony_overlay_manpower").innerHTML = `Manpower: ${colony.getManpowerText()}`
         document.getElementById("colony_overlay_enemies").innerHTML = `Enemies: ${colony.getEnemiesString()}`
     }
-    addGraphButtons(){
+    addGraphButtons() {
         document.getElementById("colony_overlay_population_btn").onclick = () => {
             this.hideOverlay();
             this.colonyGraphOverlay.setColony(this.colony);
