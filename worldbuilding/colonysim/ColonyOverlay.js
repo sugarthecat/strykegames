@@ -32,6 +32,7 @@ export default class ColonyOverlay extends Overlay {
             const textBox = document.createElement('input')
             colonyNameElt.innerHTML = ""
             colonyNameElt.appendChild(textBox)
+            textBox.focus()
             textBox.addEventListener("keydown", function (event) {
                 if (event.key === "Enter") {
                     // Prevent default behavior (like form submission) if necessary
@@ -40,6 +41,7 @@ export default class ColonyOverlay extends Overlay {
                     colonyNameElt.innerHTML = ""
                     colonyNameElt.innerText = newName
                     colony.teamId = newName
+                    colony.createNewStatDisplay()
                     // Trigger your function here
                 }
             });

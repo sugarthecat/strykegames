@@ -85,18 +85,18 @@ export default class colony {
             demilitarized: false,
             unpopular: false,
         }
-        
+
         this.alliance = false
         this.politics = new Politics()
-        
-        if(flag === undefined){
+
+        if (flag === undefined) {
             this.flag = new DemocraticFlag();
-            if(this.politics.ideoProgress < 0.3){
+            if (this.politics.ideoProgress < 0.3) {
                 //this.flag = new FascistFlag();                
-            }else if(this.politics.ideoProgress > 0.7){
+            } else if (this.politics.ideoProgress > 0.7) {
                 //this.flag = new CommunistFlag();
             }
-        }else{
+        } else {
             this.flag = flag
         }
         //console.log(this.SELECTOR);
@@ -352,7 +352,7 @@ export default class colony {
         }
     }
 
-    strengthBoost(){
+    strengthBoost() {
         this.milStrength += this.awaitingStrengthBoost;
         this.awaitingStrengthBoost = 0;
     }
@@ -495,7 +495,7 @@ export default class colony {
     getSavedActiveShipsHistory() {
         return this.savedActiveShipsHistory;
     }
-    clearEnemies(){
+    clearEnemies() {
         this.enemies = []
     }
     isAtPeace() {
@@ -542,6 +542,7 @@ export default class colony {
         allianceStubPlace.insertBefore(this.allianceStub, allianceStubPlace.children[allianceStubPlace.children.length - 1])
     }
     createNewStatDisplay() {
+        this.removeOldStatDisplay()
         this.display = document.createElement('div');
         this.flagCanvas = document.createElement('canvas');
         this.flagCanvas.width = 600;
@@ -553,7 +554,7 @@ export default class colony {
         this.statspan.className = 'colony_stats'
         this.nameFlagDisplay = document.createElement('div')
         this.nameFlagDisplay.appendChild(this.flagCanvas)
-        this.nameFlagDisplay.appendChild(this.colonyName )
+        this.nameFlagDisplay.appendChild(this.colonyName)
         this.display.appendChild(this.nameFlagDisplay)
         this.colonyName.innerText = this.teamId
         this.flag.displayInCanvas(this.flagCanvas)
@@ -585,7 +586,9 @@ export default class colony {
     }
 
     removeOldStatDisplay() {
-        document.getElementById(this.teamId).remove();
+        if (document.getElementById(this.teamId)) {
+            document.getElementById(this.teamId).remove();
+        }
     }
 
     displayStats() {
