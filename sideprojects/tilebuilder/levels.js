@@ -39,7 +39,7 @@ const levels = [
         ]
     },
     {
-        author: "TJ",
+        author: "Claimed",
         code: "datacenter",
         title: "Datacenter",
         description: "The Headquarters is under construction!",

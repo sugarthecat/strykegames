@@ -28,6 +28,8 @@ class Assets{
         this.simulator.cake4 = loadImage("Assets/cake4.png")
         this.simulator.cake5 = loadImage("Assets/cake5.png")
         
+        this.simulator.lemonade1 = loadImage("Assets/lemonade1.png")
+        this.simulator.glass = loadImage("Assets/glass.png")
         for(let i = 0; i<6; i++){
             this.memoirPages.push(loadImage(`Assets/memoir/page${i+1}.png`))
         }

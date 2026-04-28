@@ -18,6 +18,7 @@ class Simulator extends GUI {
             { text: "Book!", action: "book" },
             { text: "Cake!", action: "cake" },
             { text: "Kiss!", action: "kiss" },
+            { text: "Lemonade!", action: "lemonade" },
         ]
     }
     Draw(x, y) {
@@ -65,7 +66,6 @@ class Simulator extends GUI {
                     }
 
                     if (this.time < 3) {
-                        image(Assets.simulator.bfserve, 0, 0, 600, 400)
                         image(Assets.simulator.plate, 0, 0, 600, 400);
                     }
                     if (this.time > 4) {
@@ -131,6 +131,24 @@ class Simulator extends GUI {
                         this.bfaction = "cake1"
                     }
                     break;
+                case "lemonade":
+                    if (this.time < 1) {
+                        image(Assets.simulator.bfstand, 0, 0, 600, 400);
+                    } else if (this.time < 2) {
+                        //do nothing
+                    } else if (this.time < 3) {
+                        image(Assets.simulator.bfstand, 0, 0, 600, 400);
+                    } else if (this.time < 4) {
+                        image(Assets.simulator.bfserve, 0, 0, 600, 400);
+                        image(Assets.simulator.lemonade1, 0, 0, 600, 400);
+                    } else if (this.time < 5) {
+                        image(Assets.simulator.bfstand, 0, 0, 600, 400);
+                        image(Assets.simulator.lemonade1, 0, 0, 600, 400);
+                    } else {
+                        image(Assets.simulator.lemonade1, 0, 0, 600, 400);
+                        this.bfaction = "lemonade1"
+                    }
+                    break;
                 case "potato1":
                     image(Assets.simulator.potato1, 0, 0, 600, 400);
                     break;
@@ -154,6 +172,26 @@ class Simulator extends GUI {
                     break;
                 case "cake5":
                     image(Assets.simulator.cake5, 0, 0, 600, 400);
+                    break;
+                case "lemonade1":
+                    image(Assets.simulator.lemonade1, 0, 0, 600, 400);
+                    break;
+                case "glass":
+                    if (this.time < 1) {
+                    } else if (this.time < 2) {
+                        image(Assets.simulator.bfstand, 0, 0, 600, 400)
+                    } else if (this.time < 3) {
+                        image(Assets.simulator.bfserve, 0, 0, 600, 400)
+                    } else if (this.time < 4) {
+                        image(Assets.simulator.bfstand, 0, 0, 600, 400)
+                    }
+
+                    if (this.time < 3) {
+                        image(Assets.simulator.glass, 0, 0, 600, 400);
+                    }
+                    if (this.time > 4) {
+                        this.bfaction = false;
+                    }
                     break;
                 case "summon":
                     if (this.time > 1) {
@@ -248,12 +286,14 @@ class Simulator extends GUI {
             cake3: 'cake4',
             cake4: 'cake5',
             cake5: 'plate',
+
+            lemonade1: 'glass',
         }
         if (this.bfaction) {
             if (this.bfaction in clickAdvance) {
                 this.bfaction = clickAdvance[this.bfaction]
+                this.time = 0
             }
-
             return;
         }
         if (this.askmenu) {
