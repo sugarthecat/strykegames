@@ -9,7 +9,7 @@ function preload() {
     screens = {
         "title": new TitleScreen(),
         "levelSelect": new LevelSelectScreen(),
-        "message": new MessageScreen,
+        "dialog": new DialogScreen,
         "level": new LevelScreen()
     }
     Assets.loadAssets()

@@ -16,7 +16,7 @@ class LevelScreen extends GUI {
                 ref.buyItem()
             }),
             new Button(500 - 30, 120, 60, 21, "Complete", () => {
-                screenOn = "message"
+                screenOn = "dialog"
             }),
         ]
     }
@@ -33,7 +33,7 @@ class LevelScreen extends GUI {
         this.goalPerSecond = level.goalPerSecond
         this.tileShop = level.tileShop
 
-        screens.message.Load(level);
+        screens.dialog.Load(level.completionMessage,level.author);
         for (let i = 0; i < this.currencies.length; i++) {
             this.balance[this.currencies[i]] = 0
         }
