@@ -64,7 +64,6 @@ class Simulator extends GUI {
                     } else if (this.time < 4) {
                         image(Assets.simulator.bfstand, 0, 0, 600, 400)
                     }
-
                     if (this.time < 3) {
                         image(Assets.simulator.plate, 0, 0, 600, 400);
                     }
