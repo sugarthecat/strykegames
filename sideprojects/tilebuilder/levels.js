@@ -39,20 +39,20 @@ const levels = [
         ]
     },
     {
-        author: "Sherman",
+        author: "TJ",
         code: "datacenter",
-        title: "VTHunt Datacenter",
-        description: "The VTHunt Headquarters is under construction!",
-        completionMessage: "It's been a great year working with you.",
+        title: "Datacenter",
+        description: "The Headquarters is under construction!",
+        completionMessage: "Toodles!",
         defaultType: "floor",
         tileW: 8,
         tileH: 6,
         currencies: ["compute", "bandwidth"],
         goalPerSecond: { bandwidth: 60, compute: 115 },
-        maxBalance: { bandwidth: 1000, compute: 500 },
+        maxBalance: { bandwidth: 500, compute: 500 },
         tileShop: [
             {
-                price: { bandwidth: 0, compute: 0 },
+                price: { bandwidth: 0, compute: 10 },
                 name: "Server Rack",
                 description: "Provides 1 compute.",
                 type: "serverrack",
@@ -60,7 +60,7 @@ const levels = [
                 owned: 4
             },
             {
-                price: { bandwidth: 0, compute: 0 },
+                price: { bandwidth: 3, compute: 5 },
                 name: "Edge Router",
                 description: "Provides 1 bandwidth",
                 type: "edgerouter",
@@ -68,28 +68,28 @@ const levels = [
                 owned: 1
             },
             {
-                price: { bandwidth: 0, compute: 0 },
+                price: { bandwidth: 20, compute: 40 },
                 name: "Coolant Tank",
                 description: "Doubles compute of adjacent server racks.",
                 type: "coolanttank",
-                avail: 5,
-                owned: 1
+                avail: 6,
+                owned: 0
             },
             {
-                price: { bandwidth: 0, compute: 0 },
-                name: "Terminal",
-                description: "Provides 10 compute if adjacent to exactly 2 signal processors.",
-                type: "terminal",
-                avail: 3,
-                owned: 1
-            },
-            {
-                price: { bandwidth: 0, compute: 0 },
+                price: { bandwidth: 36, compute: 180 },
                 name: "Signal Processor",
                 description: "Each edge processor the signal processor is connected to gains 1 more bandwidth.",
                 type: "signalp",
-                avail: 5,
-                owned: 1
+                avail: 6,
+                owned: 0
+            },
+            {
+                price: { bandwidth: 125, compute: 300 },
+                name: "Terminal",
+                description: "Provides 10 compute if adjacent to exactly 2 signal processors.",
+                type: "terminal",
+                avail: 4,
+                owned: 0
             }
         ]
     },
