@@ -29,6 +29,7 @@ export default function loadPresetPack(presetPack,endDoc){
             flagPairs.push(['rzffffffz0z0z1z1xrz003884z0z0.67z1z0.33xrzff8400z0z0z1z0.33','Colonial South Africa'])
             flagPairs.push(['rzde0000z0z0z1z1xsz22z0.05z0.05z0.3z0.45','USSR'])
             flagPairs.push(['rzffffffz0z0z1z1xlzdb0101z0.1z0.2z0.1z0.8z0.9xlzdb0101z0.1z0.2z0.9z0.8z0.1','Kingdom of Kongo'])
+            flagPairs.push(['rze30a17z0z0z1z1xczffffffz0.33z0.5z0.22xcze30a17z0.38z0.5z0.19xstzffffffz0.55z0.5z0.14z5','Ottoman Empire'])
         break;
         case 'Divisions':
             flagPairs.push(['rz012169z0z0z1z1xlzffffffz0.2z0z0z1z1xlzffffffz0.2z1z0z0z1','Scotland'])
