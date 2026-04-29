@@ -28,7 +28,7 @@ class TitleScreen extends GUI {
         }
         pop()
         push()
-        textSize(20)
+        textSize(25)
         translate(300, -100)
         rotate(line2spacing / 2 * line2.length)
         for (let i = 0; i < line2.length; i++) {

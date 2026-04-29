@@ -32,8 +32,9 @@ class LevelScreen extends GUI {
         this.currShopItem = 0;
         this.goalPerSecond = level.goalPerSecond
         this.tileShop = level.tileShop
+        this.author = level.author
 
-        screens.dialog.Load(level.completionMessage,level.author);
+        screens.dialog.Load(level.completionMessage, level.author);
         for (let i = 0; i < this.currencies.length; i++) {
             this.balance[this.currencies[i]] = 0
         }
@@ -43,13 +44,14 @@ class LevelScreen extends GUI {
         for (let i = 0; i < tileW; i++) {
             this.tiles.push([])
             for (let j = 0; j < tileH; j++) {
-                this.tiles[i].push(new Tile(this.defaultType,i,j))
+                this.tiles[i].push(new Tile(this.defaultType, i, j))
             }
         }
-        this.currShopTile = new Tile(this.tileShop[this.currShopItem].type,0,0)
+        this.currShopTile = new Tile(this.tileShop[this.currShopItem].type, 0, 0)
         this.updateIncome()
     }
     Draw(x, y) {
+
         this.time += deltaTime / 1000
         if (this.time > TICK_SPEED) {
             this.time -= TICK_SPEED;
@@ -61,7 +63,15 @@ class LevelScreen extends GUI {
         this.elements[0].active = this.currShopItem > 0;
         this.elements[1].active = this.currShopItem < this.tileShop.length - 1;
         push()
-        background(255)
+        drawStripes(this.author)
+        fill(255)
+        rect(400, 0, 200, 400)
+        textSize(12)
+        let rectWidth = textWidth("Click to place tiles. Right click to delete.") + 20
+        rect(200 - rectWidth / 2, 70, rectWidth, 20, 20)
+        textSize(20)
+        rectWidth = textWidth(this.levelName) + 30
+        rect(200 - rectWidth / 2, 15, rectWidth, 30, 30)
         fill(0)
         this.DrawTileGrid(x, y)
         this.DrawGoal()
@@ -71,7 +81,6 @@ class LevelScreen extends GUI {
         stroke(0)
         strokeWeight(10)
         line(400, 0, 400, 400)
-        line(0, 60, 400, 60)
         pop()
         textAlign(CENTER, CENTER)
         textSize(12)
@@ -127,7 +136,7 @@ class LevelScreen extends GUI {
                     const oldTile = this.tiles[i][j]
                     if (mouseButton === LEFT) {
                         if (this.tileShop[this.currShopItem].owned > 0) {
-                            this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type,i,j)
+                            this.tiles[i][j] = new Tile(this.tileShop[this.currShopItem].type, i, j)
                             this.tileShop[this.currShopItem].owned--;
                             for (let i = 0; i < this.tileShop.length; i++) {
                                 if (this.tileShop[i].type == oldTile.type) {
@@ -253,63 +262,4 @@ class LevelScreen extends GUI {
         }
         pop()
     }
-}
-
-function drawSymbol(currency, x, y, size) {
-    push()
-    translate(x, y)
-    if (currency == "coins") {
-        strokeCap(ROUND)
-        stroke(200, 200, 0)
-        strokeWeight(size / 10)
-        fill(255, 255, 0)
-        circle(0, 0, size)
-        strokeWeight(size / 6)
-        line(0, - size / 3, 0, size / 3)
-    } else if (currency == "bandwidth") {
-        strokeWeight(size / 4)
-        translate(-size / 6, -size / 6)
-        stroke(200, 0, 0)
-        line(size / 4, - size / 4, - size / 4, size / 4)
-        translate(size / 6, size / 6)
-        stroke(0, 200, 0)
-        line(size / 4, - size / 4, - size / 4, size / 4)
-        translate(size / 6, size / 6)
-        stroke(0, 0, 200)
-        line(size / 4, - size / 4, - size / 4, + size / 4)
-        strokeWeight(size / 3)
-        translate(-size / 6, -size / 6)
-        stroke(0)
-        line(size / 4 - size / 5, - size / 4 - size / 5,
-            size / 4 + size / 5, - size / 4 + size / 5,
-        )
-    } else if (currency == "memory") {
-        fill(80, 80, 220)
-        beginShape()
-        vertex(- size / 2, - size / 2)
-        vertex(- size / 2, size / 2)
-        vertex(size / 2, size / 2)
-        vertex(size / 2, -size / 4)
-        vertex(size / 4, -size / 2)
-        endShape(CLOSE)
-        fill(200)
-        rect(-size / 4, -size / 2, size / 2, size / 3)
-        fill(80, 80, 220)
-        rect(-size / 5, -size / 2 + size / 24, size / 6, size / 4 * 0.9)
-    } else if (currency == "compute") {
-        fill(0, 180, 0)
-        rect(-size / 2, -size / 2, size, size)
-        fill(255, 255, 0)
-        for (let i = 0; i < 6; i++) {
-            for (let j = 0; j < 6; j++) {
-                circle(-size / 2 + size / 12 + size / 6 * i,
-                    -size / 2 + size / 12 + size / 6 * j,
-                    size / 12
-                )
-            }
-        }
-        fill(230)
-        rect(-size / 6, -size / 6, size / 3, size / 3)
-    }
-    pop()
 }
