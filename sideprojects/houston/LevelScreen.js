@@ -134,7 +134,7 @@ class LevelScreen extends GUI {
                         }
                     } else if (mouseButton === RIGHT) {
                         if (this.tiles[i][j].type !== this.defaultType) {
-                            this.tiles[i][j] = new Tile(this.defaultType)
+                            this.tiles[i][j] = new Tile(this.defaultType, i, j)
                             for (let i = 0; i < this.tileShop.length; i++) {
                                 if (this.tileShop[i].type == oldTile.type) {
                                     this.tileShop[i].owned++;
@@ -189,7 +189,10 @@ class LevelScreen extends GUI {
             textSize(textSize() * 90 / textWidth(currItem.name))
         }
         text(currItem.name, 500, 157)
-        this.currShopTile.Draw(415, 180, 60)
+        push()
+        translate(415, 180)
+        this.currShopTile.Draw(60)
+        pop()
         fill(0)
         textSize(10)
         textAlign(LEFT, TOP)
@@ -242,7 +245,7 @@ class LevelScreen extends GUI {
         let xOffset = 10
         let yOffset = 90
 
-        let gridWidth = 380;
+        let gridWidth = 380-5; // -5 for stroke width
         let gridHeight = 300;
         let tileWidth = this.tiles.length;
         let tileHeight = this.tiles[0].length;
@@ -261,7 +264,7 @@ class LevelScreen extends GUI {
         fill(255, 0, 0)
         for (let i = 0; i < this.tiles.length; i++) {
             for (let j = 0; j < this.tiles[i].length; j++) {
-                this.tiles[i][j].Draw(i * size, j * size, size)
+                this.tiles[i][j].Draw(size)
             }
         }
         pop()

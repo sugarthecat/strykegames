@@ -10,7 +10,7 @@ const TILE_BACKGROUNDS = {
 }
 
 class Tile {
-    constructor(type,x,y) {
+    constructor(type, x = 0, y = 0) {
         this.x = x;
         this.y = y;
         this.time = 0;
@@ -203,10 +203,10 @@ class Tile {
         }
         pop()
     }
-    Draw(x, y, size) {
+    Draw(size) {
         this.time += deltaTime / 1000
         push()
-        translate(x, y)
+        translate(this.x * size, this.y * size)
         scale(size / 100)
         this.DrawTile(this.type)
         this.DrawIncomeBubble();
