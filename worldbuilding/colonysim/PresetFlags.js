@@ -69,6 +69,11 @@ export default function loadPresetPack(presetPack, endDoc) {
         case 'CentralAsia':
             flagPairs.push(['rz007016z0z0z1z1xrzb80000z0.1z0z0.2z1xczffffffz0.47z0.23z0.08xcz027016z0.45z0.2z0.08xstzffffffz0.41z0.23z0.03z5xstzffffffz0.42z0.14z0.03z5xstzffffffz0.43z0.05z0.03z5xstzffffffz0.48z0.13z0.03z5xstzffffffz0.36z0.15z0.03z5', 'Turkmenistan'])
             flagPairs.push(['rz00afcaz0z0z1z1xrzfec50cz0.03z0.04z0.1z0.92xczfec50cz0.56z0.39z0.20xrz00afcaz0.2z0z1z0.39xcz00afcaz0.56z0.39z0.15xstzfec50cz0.56z0.39z0.22z30xcz00afffz.56z0.39z0.1xczfec50cz0.56z0.39z0.09', 'Kazakhstan'])
+            flagPairs.push(['rzffffffz0z0z1z1xrz3081f7z0z0z1z0.33xrz308738z0z0.67z1z0.33xrzee162ez0z0.32z1z0.02xrzee162ez0z0.66z1z0.02xczffffffz0.15z0.16z0.08xcz3081f7z0.18z0.16z0.08xstzffffffz0.21z0.26z0.03z5xstzffffffz0.29z0.26z0.03z5xstzffffffz0.29z0.16z0.03z5xstzffffffz0.37z0.16z0.03z5xstzffffffz0.37z0.26z0.03z5xstzffffffz0.37z0.06z0.03z5xstzffffffz0.45z0.06z0.03z5xstzffffffz0.45z0.16z0.03z5xstzffffffz0.45z0.26z0.03z5xstzffffffz0.53z0.26z0.03z5xstzffffffz0.53z0.16z0.03z5xstzffffffz0.53z0.06z0.03z5', 'Uzbekistan'])
+            break;
+        case 'MiddleEast':
+            flagPairs.push(['rz000000z0z0z1z1xrzffffffz0z0.33z1z1xrz007a3dz0z0.67z1z1xtzce1126z0z1z0.5z0.5z0z0xstzffffffz0.16z0.5z0.12z7', 'Jordan'])
+            flagPairs.push(['rz000000z0z0z1z1xrzffffffz0z0.33z1z1xrz007a3dz0z0.67z1z1xtzce1126z0z1z0.5z0.5z0z0', 'Palestine'])
             break;
         case 'SouthAsia':
             flagPairs.push(['rz115740z0z0z1z1xrzffffffz0z0z0.3z1xczffffffz0.63z0.5z0.22xcz115740z0.69z0.44z0.21xstzffffffz0.76z0.37z0.14z5', 'Pakistan'])
@@ -111,6 +116,8 @@ export default function loadPresetPack(presetPack, endDoc) {
             flagPairs.push(['rz6cace4z0z0z1z1xrzffffffz0z0.33z1z0.34xczffb81cz0.5z0.5z0.1', 'Argentina'])
             flagPairs.push(['rz009739z0z0z1z1xtzfedd00z0.5z0.1z0.5z0.9z0.1z0.5xtzfedd00z0.5z0.1z0.5z0.9z0.9z0.5xcz012169z0.5z0.5z0.2xlzffffffz0.07z0.67z0.67z0.32z0.32', 'Brazil'])
             flagPairs.push(['rz009739z0z0z1z1xtzffffffz0z0z0z1z1z0.5xtzffd100z-0.1z0z-0.1z1z0.9z0.5xtz000000z0z0z0z1z0.5z0.5xtzef3340z-0.1z0z-0.1z1z0.4z0.5', 'Guyana'])
+            flagPairs.push(['rzffffffz0z0z1z0.12xrz0035a9z0z0.12z1z0.11xrzffffffz0z0.23z1z0.11xrz0035a9z0z0.34z1z0.11xrzffffffz0z0.45z1z0.11xrz0035a9z0z0.56z1z0.11xrzffffffz0z0.67z1z0.11xrz0035a9z0z0.78z1z0.11xrzffffffz0z0.89z1z0.11xrzffffffz0z0z0.4z0.56xstzfcd20fz0.19z0.28z0.2z16', 'Uruguay'])
+            flagPairs.push(['rz347f3dz0z0z1z1xrzffffffz0z0.2z1z0.6xrzb50329z0z0.3z1z0.4xstzecc917z0.5z0.515z0.2z5', 'Suriname'])
             break;
         case 'Africa':
             flagPairs.push(['rzffffffz0z0z1z1xrz003082z0z0z1z0.25xrz289728z0z0.5z1z0.25xrzffce00z0z0.75z1z0.25xrzd21034z0.4z0z0.2z1xstzffce00z0.1z0.125z0.1z5', 'Central African Republic'])
@@ -121,6 +128,19 @@ export default function loadPresetPack(presetPack, endDoc) {
             flagPairs.push(['rzef3340z0z0z1z1xrz009739z0z0.5z1z0.5xstzffcd00z0.5z0.5z0.23z5', 'Burkina Faso'])
             flagPairs.push(['rzabcae9z0z0z1z1xrzffffffz0z0.35z1z0.3xrz000000z0z0.4z1z0.2', 'Botswana'])
             flagPairs.push(['rze03c31z0z0z1z1xrz001489z0z0.5z1z0.5xlzffffffz0.2z0z0.5z1z0.5xlzffffffz0.2z0z0z0.5z0.5xlzffffffz0.2z0z1z0.5z0.5xlz007749z0.12z0z0.5z1z0.5xtz007749z0z-0.1z0z1.1z0.6z0.5xtzffb81cz0z0.1z0z0.9z0.4z0.5xtz000000z0z0.2z0z0.8z0.3z0.5', 'South Africa'])
+            flagPairs.push(['rz00a4dez0z0z1z1xtz18b637z0z0z1z0z0z1xlzfcd20fz0.27z1z0z0z1xlz000000z0.20z1z0z0z1', 'Tanzania'])
+            flagPairs.push(['rz009b42z0z0z1z1xtz002b6cz0z0z1z0z0z1xlzffffffz0.26z1z0z0z1xlzc9072az0.20z1z0z0z1xstzffce00z0.17z0.25z0.2z12xcz002b6cz0.17z0.25z0.065xczffce00z0.17z0.25z0.052', 'Namibia'])
+            flagPairs.push(['rz198a19z0z0z1z1xrz198a19z0z0z1z0.2xrzebee11z0z0.2z1z0.2xrz198a19z0z0.4z1z0.2xrzebee11z0z0.6z1z0.2xrzcd1818z0z0z0.5z0.6xstzffffffz0.25z0.3z0.2z5', 'Togo'])
+            flagPairs.push(['rz41b125z0z0z1z1xrz3f90dfz0z0.5z1z0.5xtze50027z0z0z0z1z1z0.5xstzffc828z0.25z0.5z0.2z5', 'Eritrea'])
+            flagPairs.push(['rz078930z0z0z1z1xrzfcdd09z0z0.33z1z1xrzda121az0z0.67z1z1xsz8z0.3z0.25z0.35z0.5', 'Ethiopia'])
+            flagPairs.push(['rz007b5ez0z0z1z1xrzcf0921z0.33z0z1z1xrzfcd20fz0.67z0z1z1xstzfcd20fz0.5z0.5z0.15z5', 'Cameroon'])
+            flagPairs.push(['rz002664z0z0z1z1xrzfecb00z0.33z0z1z1xrzc60c30z0.67z0z1z1', 'Chad'])
+            flagPairs.push(['rz0cb637z0z0z1z1xrzfcd20fz0.33z0z1z1xrzcf0921z0.67z0z1z1', 'Mali'])
+            flagPairs.push(['rz3c9b00z0z0z1z1xrzffffffz0z0.33z1z1xrze41b11z0z0.67z1z1xtz0074cfz0z0z0z1z0.3z0.5', 'Equatorial Guinea'])
+            break;
+        case 'NorthAfrica':
+            flagPairs.push(['rze8000bz0z0z1z1xrz000000z0z0.25z1z1xrz1d9f44z0z0.75z1z1xczffffffz0.45z0.5z0.1xcz000000z0.48z0.5z0.08xstzffffffz0.55z0.5z0.1z5', 'Libya'])
+            flagPairs.push(['rzd30731z0z0z1z1xrzffffffz0z0.33z1z1xrz000000z0z0.67z1z1xtz007324z0z1z0.5z0.5z0z0', 'Sudan'])
             break;
         case 'Organizations':
             flagPairs.push(['rz001489z0z0z1z1xstzffdd00z0.5z0.82z0.06z5xstzffdd00z0.73z0.5z0.06z5xstzffdd00z0.27z0.5z0.06z5xstzffdd00z0.5z0.18z0.06z5xstzffdd00z0.68z0.37z0.06z5xstzffdd00z0.60z0.25z0.06z5xstzffdd00z0.68z0.63z0.06z5xstzffdd00z0.60z0.75z0.06z5xstzffdd00z0.32z0.37z0.06z5xstzffdd00z0.4z0.25z0.06z5xstzffdd00z0.32z0.63z0.06z5xstzffdd00z0.4z0.75z0.06z5', 'European Union'])
