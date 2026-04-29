@@ -40,8 +40,7 @@ export default class ColonyOverlay extends Overlay {
                     const newName = textBox.value;
                     colonyNameElt.innerHTML = ""
                     colonyNameElt.innerText = newName
-                    colony.teamId = newName
-                    colony.createNewStatDisplay()
+                    colony.setName(newName)
                     // Trigger your function here
                 }
             });

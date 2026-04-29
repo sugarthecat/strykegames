@@ -541,8 +541,11 @@ export default class colony {
         let allianceStubPlace = document.getElementById('alliance_members_editor')
         allianceStubPlace.insertBefore(this.allianceStub, allianceStubPlace.children[allianceStubPlace.children.length - 1])
     }
+    setName(newName){
+        this.colonyName.innerText = newName;
+        this.teamId = newName
+    }
     createNewStatDisplay() {
-        this.removeOldStatDisplay()
         this.display = document.createElement('div');
         this.flagCanvas = document.createElement('canvas');
         this.flagCanvas.width = 600;
