@@ -5,7 +5,7 @@ class LevelSelectScreen extends GUI {
     constructor() {
         super();
         const ref = this;
-        this.elements = [new Button(350, 250, 150, 50, "Play", () => {
+        this.elements = [new Button(350, 300, 150, 50, "Play", () => {
             screenOn = "level";
             screens.level.Load(ref.selectedLevel);
 
@@ -14,6 +14,11 @@ class LevelSelectScreen extends GUI {
     }
     Draw(x, y) {
         background(255)
+        if (this.selectedLevel) {
+            drawStripes(this.selectedLevel.author)
+            fill(255)
+            rect(0, 0, 250, 400)
+        }
         noStroke()
         fill(0)
         textAlign(LEFT)
@@ -45,6 +50,16 @@ class LevelSelectScreen extends GUI {
         pop()
         this.elements[0].hidden = (this.selectedLevel == null)
         if (this.selectedLevel) {
+            fill(255)
+            let topcardWidth = 0
+            textSize(22)
+            topcardWidth = max(textWidth(this.selectedLevel.title), topcardWidth)
+            textSize(18)
+            topcardWidth = max(textWidth("By " + this.selectedLevel.author), topcardWidth)
+            topcardWidth *= 1.2
+            rect(425 - topcardWidth / 2, 20, topcardWidth, 80, 20)
+            rect(275, 125, 300, 150, 25)
+            fill(0)
             //bounds: 0<y<400
             // 250<x<600, midx = 850/2 = 425
             textSize(22)
@@ -55,7 +70,7 @@ class LevelSelectScreen extends GUI {
             text(`By ${this.selectedLevel.author}`, 425, 80)
             textSize(12)
             textAlign(LEFT)
-            text(this.selectedLevel.description, 275, 150, 300, 100)
+            text(this.selectedLevel.description, 300, 150, 250, 100)
         }
         super.Draw(x, y)
     }
@@ -63,11 +78,7 @@ class LevelSelectScreen extends GUI {
 
         for (let i = 0; i < Math.min(levels.length, 5); i++) {
             if (0 < x && x < 250 && y > i * 80 && y < i * 80 + 80) {
-                if (levels[i] == this.selectedLevel) {
-                    this.selectedLevel = null
-                } else {
-                    this.selectedLevel = levels[i]
-                }
+                this.selectedLevel = levels[i]
             }
         }
         super.HandleClick(x, y)

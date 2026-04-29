@@ -21,7 +21,6 @@ export default class ColonyOverlay extends Overlay {
         this.showOverlay();
         this.colony = colony;
 
-
         const colonyNameElt = document.getElementById("colony_overlay_colony_name");
         colonyNameElt.innerHTML = `${colony.teamId}`
 
