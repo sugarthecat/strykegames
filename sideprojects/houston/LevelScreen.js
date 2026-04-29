@@ -98,13 +98,10 @@ class LevelScreen extends GUI {
     updateIncome() {
         this.perSecond = getIncome(this.tiles, this.currLevel, this.currencies)
     }
-    HandleClick(x, y) {
-        super.HandleClick(x, y)
-        //attempt to place tile
+    getGridLayout() {
         let xOffset = 10
         let yOffset = 90
-
-        let gridWidth = 380;
+        let gridWidth = 380 - 5; // -5 for stroke width
         let gridHeight = 300;
         let tileWidth = this.tiles.length;
         let tileHeight = this.tiles[0].length;
@@ -118,6 +115,12 @@ class LevelScreen extends GUI {
             gridWidth = newGridWidth
         }
         let size = gridWidth / tileWidth
+        return { xOffset, yOffset, size }
+    }
+    HandleClick(x, y) {
+        super.HandleClick(x, y)
+        //attempt to place tile
+        const { xOffset, yOffset, size } = this.getGridLayout()
         for (let i = 0; i < this.tiles.length; i++) {
             for (let j = 0; j < this.tiles[i].length; j++) {
                 if (mouseInRange(xOffset + i * size, yOffset + j * size, size, size)) {
@@ -239,28 +242,9 @@ class LevelScreen extends GUI {
         pop()
     }
     DrawTileGrid(x, y) {
+        const { xOffset, yOffset, size } = this.getGridLayout()
         push()
-        translate(10, 90)
-
-        let xOffset = 10
-        let yOffset = 90
-
-        let gridWidth = 380-5; // -5 for stroke width
-        let gridHeight = 300;
-        let tileWidth = this.tiles.length;
-        let tileHeight = this.tiles[0].length;
-        if (gridHeight / tileHeight > gridWidth / tileWidth) {
-            let newGridHeight = gridWidth / tileWidth * tileHeight
-            translate(0, (gridHeight - newGridHeight) / 2)
-            yOffset += (gridHeight - newGridHeight) / 2
-            gridHeight = newGridHeight
-        } else {
-            let newGridWidth = gridHeight / tileHeight * tileWidth
-            translate((gridWidth - newGridWidth) / 2, 0)
-            xOffset += (gridWidth - newGridWidth) / 2
-            gridWidth = newGridWidth
-        }
-        let size = gridWidth / tileWidth
+        translate(xOffset, yOffset)
         fill(255, 0, 0)
         for (let i = 0; i < this.tiles.length; i++) {
             for (let j = 0; j < this.tiles[i].length; j++) {
