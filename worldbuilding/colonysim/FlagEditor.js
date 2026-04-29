@@ -146,7 +146,13 @@ export default class FlagEditor {
 
         this.parentDiv.appendChild(this.flagPart)
         this.packSelector = document.createElement('select')
-        this.packSelector.innerHTML += "<option value=\"ModernEurope\">Europe</option>"
+        this.packSelector.innerHTML += "<option value=\"WesternEurope\">Western Europe</option>"
+        this.packSelector.innerHTML += "<option value=\"NorthernEurope\">Northern Europe</option>"
+        this.packSelector.innerHTML += "<option value=\"SouthernEurope\">Southern Europe</option>"
+        this.packSelector.innerHTML += "<option value=\"EasternEurope\">Eastern Europe</option>"
+        this.packSelector.innerHTML += "<option value=\"NorthAmerica\">North America</option>"
+        this.packSelector.innerHTML += "<option value=\"CentralAmerica\">Central America</option>"
+        this.packSelector.innerHTML += "<option value=\"Caribbean\">Caribbean</option>"
         this.packSelector.innerHTML += "<option value=\"EastAsia\">East Asia</option>"
         this.packSelector.innerHTML += "<option value=\"SouthAmerica\">South America</option>"
         this.packSelector.innerHTML += "<option value=\"Africa\">Africa</option>"
