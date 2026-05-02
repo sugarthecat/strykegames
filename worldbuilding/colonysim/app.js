@@ -243,7 +243,7 @@ function createMainImageInput() {
     const imageInput = document.querySelector("#main_image_input");
     var uploadedImage = "";
     console.log(imageInput)
-    imageInput.addEventListener("change", function () { 
+    imageInput.addEventListener("change", function () {
         const reader = new FileReader();
 
         // gets the image's width and height and changes canvas and board sizes
@@ -676,14 +676,14 @@ function addTerrainToSelectedTiles(tile) {
         for (let col = tile.x - EDIT_BRUSH_SIZE + 1; col < tile.x + EDIT_BRUSH_SIZE - 1; col++) {
             if (row >= 0 && row < gameBoardHeight && col >= 0 && col < gameBoardWidth) {
 
-                if (tempTile.tileType instanceof LandTile) {
-                    GAME_BOARD[row][col].tileType = new LandTile(PLAIN_TILE);
-                    tempTile.tileType.terrain = terrainType;
-                    ctx.fillRect(tempTile.getDrawX(), tempTile.getDrawY(), tempTile.getDrawSize(), tempTile.getDrawSize());
-                }
                 tempTile = GAME_BOARD[row][col];
                 if (tempTile.tileType instanceof LandTile) {
                     tempTile.tileType.terrain = terrainType;
+                    ctx.fillRect(tempTile.getDrawX(), tempTile.getDrawY(), tempTile.getDrawSize(), tempTile.getDrawSize());
+                } else if(false) {
+                    //draw land
+                    tempTile.tileType = new LandTile(terrainType);
+                    tempTile.tileType.population = new Population(Math.floor(Math.random() * 20 + 5), null);
                     ctx.fillRect(tempTile.getDrawX(), tempTile.getDrawY(), tempTile.getDrawSize(), tempTile.getDrawSize());
                 }
             }
@@ -725,10 +725,10 @@ function getMousePosition(c, e) {
         y: (e.clientY - boundary.top) / boundary.height
     };
 }
-function parseIntWithDefault(number,defaultNumber){
-    if(isNaN(parseInt(number))){
+function parseIntWithDefault(number, defaultNumber) {
+    if (isNaN(parseInt(number))) {
         return defaultNumber;
-    }else{
+    } else {
         return parseInt(number);
     }
 }
@@ -740,17 +740,17 @@ function placeCustomColonyMain(tile) {
         // parseInt(document.getElementById("custom_colony_attack_input").value),
         // parseInt(document.getElementById("custom_colony_defense_input").value),
         BASE_RECRUIT_PERC, BASE_POP_GROWTH, BASE_EXPAND_RATE,
-        parseIntWithDefault(document.getElementById("custom_colony_strength_input").value,0),
+        parseIntWithDefault(document.getElementById("custom_colony_strength_input").value, 0),
         COLONY_FLAG_EDITOR.currentFlag
     );
     addCustomColonyTraits(newColony)
 
-    newColony.reserveTroops =  parseIntWithDefault(document.getElementById("custom_colony_troops_input").value,20);
+    newColony.reserveTroops = parseIntWithDefault(document.getElementById("custom_colony_troops_input").value, 20);
     COLONY_ARRAY.push(newColony);
 
-    placeCustomColonyOnBoard(tile, newColony,  parseIntWithDefault(document.getElementById("custom_colony_capital_population_input").value,500));
+    placeCustomColonyOnBoard(tile, newColony, parseIntWithDefault(document.getElementById("custom_colony_capital_population_input").value, 500));
     //TODO make sure clicked tile is land
-    tile.tileType.population.tilePopCap =  parseIntWithDefault(document.getElementById("custom_colony_capital_population_input").value,500);
+    tile.tileType.population.tilePopCap = parseIntWithDefault(document.getElementById("custom_colony_capital_population_input").value, 500);
     drawTile(tile)
     newColony.politics.ideoAuthority = document.getElementById('custom_colony_ideo_auth').value / 101
     newColony.politics.ideoRadicalism = document.getElementById('custom_colony_ideo_rad').value / 101
@@ -2103,7 +2103,7 @@ function attackNewTileMain(attackingTile, defendingTile) {
     // attack new tile
     if (!gameruleInterFace.peacetime()
         || ((Math.random() < LAND_WAR_CHANCE
-            || (defendingTile.tileType.population.colony.totalTiles < 0.01 * attackingTile.tileType.population.colony.totalTiles &&defendingTile.tileType.population.colony.totalTiles != 0 ))
+            || (defendingTile.tileType.population.colony.totalTiles < 0.01 * attackingTile.tileType.population.colony.totalTiles && defendingTile.tileType.population.colony.totalTiles != 0))
             && attackingTile.tileType.population.colony.willDoWar(defendingTile.tileType.population.colony)
             && !attackingTile.tileType.population.colony.isAtWar(defendingTile.tileType.population.colony))) {
         //console.log('land war')
@@ -2190,10 +2190,10 @@ function moveShip(waterTile) {
     //TODO implement navy Figure out issue
     let newXPos = (waterTile.x + newX + GAME_BOARD[0].length) % GAME_BOARD[0].length;
     let newYPos = (waterTile.y + newY);
-    if(newYPos < 0){
+    if (newYPos < 0) {
         newYPos = 0;
         waterTile.tileType.ship.changeDirectionRandomly();
-    }else if(newYPos >= GAME_BOARD.length){
+    } else if (newYPos >= GAME_BOARD.length) {
         newYPos = GAME_BOARD.length - 1;
         waterTile.tileType.ship.changeDirectionRandomly();
     }
@@ -2895,13 +2895,13 @@ function redrawColoniesThatNeedRedraw() {
 function loopColonies() {
     for (let i = 0; i < COLONY_ARRAY.length; i++) {
 
-        if(gameruleInterFace.technologySharing()){
+        if (gameruleInterFace.technologySharing()) {
             if (COLONY_ARRAY[i].alliance) {
                 COLONY_ARRAY[i].alliance.collectiveStrengthBoost()
-            }else{
+            } else {
                 COLONY_ARRAY[i].strengthBoost();
             }
-        }else{
+        } else {
             COLONY_ARRAY[i].strengthBoost();
         }
         if (COLONY_ARRAY[i].needsRedraw && (MAP_DISPLAY_STYLE == 'alliance' || MAP_DISPLAY_STYLE == "allianceFlags")) {
@@ -2960,9 +2960,9 @@ var MAIN_INTERVAL = setInterval(function () { update() }, UPDATE_TIME);
 
 
 window.addEventListener('beforeunload', (event) => {
-  // Standard way to trigger the browser's confirmation dialog
-  event.preventDefault();
-  
-  // Required for Chrome and some other browsers
-  event.returnValue = ''; 
+    // Standard way to trigger the browser's confirmation dialog
+    event.preventDefault();
+
+    // Required for Chrome and some other browsers
+    event.returnValue = '';
 });
