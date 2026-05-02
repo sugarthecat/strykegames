@@ -39,6 +39,29 @@ const levels = [
         ]
     },
     {
+        author: "Jester & Zephyr",
+        code: "sunmoon",
+        title: "Sun & Moon",
+        description: "Can you help me grow the vegetables?",
+        completionMessage: "It's been a great year working with you.",
+        defaultType: "sky",
+        tileW: 6,
+        tileH: 5,
+        currencies: ["solar"],
+        goalPerSecond: { solar: 80 },
+        maxBalance: { solar: 250 },
+            tileShop: [
+                {
+                    price: { solar: 5 },
+                    name: "Star",
+                    description: "Earns 1 solar energy.",
+                    type: "star",
+                    avail: 21,
+                    owned: 3
+                }
+            ]
+    },
+    {
         author: "Sherman",
         code: "datacenter",
         title: "Datacenter",
