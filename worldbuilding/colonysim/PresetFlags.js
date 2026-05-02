@@ -64,6 +64,7 @@ export default function loadPresetPack(presetPack, endDoc) {
             flagPairs.push(['rz012169z0z0z1z1xlzffffffz0.2z0z0z1z1xlzffffffz0.2z1z0z0z1', 'Scotland'])
             flagPairs.push(['rzffffffz0z0z1z1xlzc8102ez0.2z0z0.5z1z0.5xlzc8102ez0.2z0.5z0z0.5z1', 'England'])
             flagPairs.push(['rzffffffz0z0z1z1xrzbf0d3ez0z0.5z1z0.5xrz00205bz0z0z0.35z1xstzffffffz0.175z0.5z0.25z5', 'Texas'])
+            flagPairs.push(['rzc0032cz0z0z1z1xrzffffffz0z0.142z1z1xrzc0032cz0z0.857z1z1xrzc0032cz0z0.426z1z0.142xtz001a5bz0z0z0.6z0.5z0z1xczffffffz0.20z0.5z0.12xczc0032cz0.20z0.5z0.08xstzffffffz0.48z0.5z0.04z5xstzffffffz0.36z0.5z0.04z5xstzffffffz0.42z0.43z0.04z5xstzffffffz0.42z0.56z0.04z5xstzffffffz0.28z0.3z0.04z5xstzffffffz0.28z0.7z0.04z5xstzffffffz0.2z0.27z0.04z5xstzffffffz0.2z0.73z0.04z5xstzffffffz0.12z0.3z0.04z5xstzffffffz0.12z0.7z0.04z5xstzffffffz0.065z0.38z0.04z5xstzffffffz0.065z0.62z0.04z5xstzffffffz0.04z0.5z0.04z5xstzffffffz0.11z0.16z0.04z5xstzffffffz0.11z0.84z0.04z5xstzffffffz0.04z0.23z0.04z5xstzffffffz0.04z0.77z0.04z5', 'OhioF'])
             flagPairs.push(['rzffffffz0z0z1z1xlze81b39z0.1z0z0.5z1z0.5xlze81b39z0.1z0z0.8z1z0.8xstze81b39z0.2z0.175z0.15z5xstze81b39z0.5z0.175z0.15z5xstze81b39z0.8z0.175z0.15z5', 'Washington D.C.'])
             break;
         case 'CentralAsia':
