@@ -2959,3 +2959,10 @@ startGame();
 var MAIN_INTERVAL = setInterval(function () { update() }, UPDATE_TIME);
 
 
+window.addEventListener('beforeunload', (event) => {
+  // Standard way to trigger the browser's confirmation dialog
+  event.preventDefault();
+  
+  // Required for Chrome and some other browsers
+  event.returnValue = ''; 
+});
