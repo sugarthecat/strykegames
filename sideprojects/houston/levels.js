@@ -42,13 +42,13 @@ const levels = [
         author: "Jester & Zephyr",
         code: "sunmoon",
         title: "Sun & Moon",
-        description: "Can you help me grow the vegetables?",
+        description: "The Sun & The Moon.",
         completionMessage: "It's been a great year working with you.",
         defaultType: "sky",
         tileW: 5,
         tileH: 5,
         currencies: ["coins"],
-        goalPerSecond: { coins: 80 },
+        goalPerSecond: { coins: 25 },
         maxBalance: { coins: 250 },
             tileShop: [
                 {
@@ -56,8 +56,8 @@ const levels = [
                     name: "Cloud",
                     description: "Makes the sky look nice. ",
                     type: "cloud",
-                    avail: 10,
-                    owned: 2
+                    avail: 15,
+                    owned: 5
                 },
                 {
                     price: { coins: 10 },
@@ -88,7 +88,7 @@ const levels = [
         tileH: 6,
         currencies: ["compute", "bandwidth"],
         goalPerSecond: { bandwidth: 60, compute: 115 },
-        maxBalance: { bandwidth: 500, compute: 500 },
+        maxBalance: { bandwidth: 500, compute: 1000 },
         tileShop: [
             {
                 price: { bandwidth: 0, compute: 10 },
