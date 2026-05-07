@@ -6,6 +6,10 @@ function drawStripes(author) {
         case "sherman":
             bgcolor = color(0, 0, 200)
             stripecolor = color(50, 50, 250)
+            break;
+        case "jester & zephyr":
+            bgcolor = color(25)
+            stripecolor = color(200,0,200)
     }
     background(bgcolor)
     stroke(stripecolor)

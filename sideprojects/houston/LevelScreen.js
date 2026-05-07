@@ -206,7 +206,7 @@ class LevelScreen extends GUI {
         this.currShopTile.Draw(60)
         pop()
         fill(0)
-        textSize(10)
+        textSize(9)
         textAlign(LEFT, TOP)
         text(currItem.description, 485, 180, 100, 100)
         if (currItem.avail > 0) {

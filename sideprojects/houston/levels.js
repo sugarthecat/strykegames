@@ -45,19 +45,35 @@ const levels = [
         description: "Can you help me grow the vegetables?",
         completionMessage: "It's been a great year working with you.",
         defaultType: "sky",
-        tileW: 6,
+        tileW: 5,
         tileH: 5,
-        currencies: ["solar"],
-        goalPerSecond: { solar: 80 },
-        maxBalance: { solar: 250 },
+        currencies: ["coins"],
+        goalPerSecond: { coins: 80 },
+        maxBalance: { coins: 250 },
             tileShop: [
                 {
-                    price: { solar: 5 },
-                    name: "Star",
-                    description: "Earns 1 solar energy.",
-                    type: "star",
-                    avail: 21,
-                    owned: 3
+                    price: { coins: 5 },
+                    name: "Cloud",
+                    description: "Makes the sky look nice. ",
+                    type: "cloud",
+                    avail: 10,
+                    owned: 2
+                },
+                {
+                    price: { coins: 10 },
+                    name: "Sun",
+                    description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another sun.",
+                    type: "sun",
+                    avail: 4,
+                    owned: 1
+                },
+                {
+                    price: { coins: 15 },
+                    name: "Moon",
+                    description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another moon.",
+                    type: "moon",
+                    avail: 4,
+                    owned: 1
                 }
             ]
     },
@@ -101,7 +117,7 @@ const levels = [
             {
                 price: { bandwidth: 36, compute: 180 },
                 name: "Signal Processor",
-                description: "Each edge processor the signal processor is connected to gains 1 more bandwidth.",
+                description: "Each edge router the signal processor is connected to gains 1 more bandwidth.",
                 type: "signalp",
                 avail: 6,
                 owned: 0

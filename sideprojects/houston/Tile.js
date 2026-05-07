@@ -7,6 +7,10 @@ const TILE_BACKGROUNDS = {
     strawberry: { r: 0, g: 160, b: 0 },
     terminal: { r: 120, g: 120, b: 120 },
     signalp: { r: 120, g: 120, b: 120 },
+    sky: { r: 40, g: 130, b: 220 },
+    cloud: { r: 40, g: 130, b: 220 },
+    sun: { r: 40, g: 130, b: 220 },
+    moon: { r: 40, g: 130, b: 220 },
 }
 
 class Tile {
@@ -31,6 +35,14 @@ class Tile {
         if (type == "terminal") {
             this.message = random(["Hello World", "claude please fix", "TODO: implement",
                 "Enter Password", "Welcome Houston", "sudo rm -rf", "Welcome Sherman", "Enter Username"])
+        }
+        if (type == "moon") {
+            const rad = random (5,20)
+            const theta = random (0,2 * PI)
+            this.crater = {
+                x: rad * cos(theta),
+                y: rad * sin(theta),
+            }
         }
         if (type == "edgerouter") {
             const leftSpots = []
@@ -169,7 +181,7 @@ class Tile {
                 vertex(lerp(12, 82, i / 20),
                     50 +
                     sin(i + this.time) * 5 +
-                    sin(i * 0.5 + this.time * 1.2 + 3) * 7+
+                    sin(i * 0.5 + this.time * 1.2 + 3) * 7 +
                     sin(i * 2 + this.time * 3.7 + 3) * 3
                 )
             }
@@ -194,6 +206,33 @@ class Tile {
                 text("> " + this.message.substring(0, floor(this.message.length * (10 - (this.time % period)) / 3)), 10, 20, 80, 60)
                 //do nothing: no print yet
             }
+        } else if (type == "cloud") {
+            fill(255)
+            circle(noise(this.time * 0.5) * 20 + 40, noise(this.time * 0.5 + 80) * 20 + 35, 60)
+            circle(25 + noise(this.time * 0.5 + 20) * 10, 55 + noise(this.time * 0.5 + 250) * 10, 35)
+            circle(65 + noise(this.time * 0.5 + 210) * 10, 55 + noise(this.time * 0.5 + 220) * 10, 35)
+        } else if (type == "sun") {
+            fill(255, 180, 0)
+            const diameter = cos(this.time * 0.5) * 10 + 50
+            circle(50, 50, diameter)
+            const radius = diameter / 2;
+            stroke(255, 180, 0)
+            strokeWeight(5)
+            for (let i = 0; i < 10; i++) {
+                line(
+                    50 + cos(i / 10 * 2 * PI) * radius * 1.2,
+                    50 + sin(i / 10 * 2 * PI) * radius * 1.2,
+                    50 + cos(i / 10 * 2 * PI) * 45 ,
+                    50 + sin(i / 10 * 2 * PI) * 45
+                )
+            }
+        }else if (type == "moon") {
+            fill(220,250,255)
+            circle (50,50,80)
+            fill (20,50,60)
+            circle (this.crater.x + 50,this.crater.y + 50,30)
+            fill (40,130,220)
+            arc (100,0,150,150,PI/2,PI)
         }
         else if (!(type in TILE_BACKGROUNDS)) {
             textSize(50)

@@ -87,6 +87,28 @@ function getIncome(tileGrid, code, currencies) {
                 }
             }
         }
+    } else if (code == "sunmoon") {
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "sun" || tile.type == "moon") {
+                    let neighboringsingalp = 0
+                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                        if (adjTile.type == "cloud") {
+                            tile.income.coins += 1
+                        }
+                    }
+                    for (let k = 0; k < tileGrid.length; k++) {
+                        if (k !== j && tileGrid[i][k] == tile.type){
+                            tile.income.coins = 0
+                        }
+                        if (k !== i && tileGrid[k][j] == tile.type){
+                            tile.income.coins = 0
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //income congregation
