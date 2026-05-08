@@ -1,7 +1,7 @@
 const levels = [
     {
         author: "Unclaimed",
-        code: "farm",
+        code: "garden",
         title: "Garden",
         description: "Can you help me grow the vegetables?",
         completionMessage: "It's been a great year working with you.",
@@ -39,16 +39,55 @@ const levels = [
         ]
     },
     {
+        author: "Oculus",
+        code: "farm",
+        title: "The Farm",
+        description: "The Farm",
+        completionMessage: "It's been a great year working with you.",
+        defaultType: "dirt",
+        tileW: 6,
+        tileH: 6,
+        currencies: ["coins"],
+        goalPerSecond: { coins: 132 },
+        maxBalance: { coins: 250 },
+            tileShop: [
+                {
+                    price: { coins: 5 },
+                    name: "Wheat",
+                    description: "Gains 1 coin.",
+                    type: "wheat",
+                    avail: 25,
+                    owned: 5
+                },
+                {
+                    price: { coins: 12 },
+                    name: "Grain Silo",
+                    description: "Gains 1 coin per adjacent wheat.",
+                    type: "silo",
+                    avail: 15,
+                    owned: 0
+                },
+                {
+                    price: { coins: 25 },
+                    name: "Dirt Road",
+                    description: "Extends Adjacency.",
+                    type: "dirtroad",
+                    avail: 20,
+                    owned: 0
+                },
+            ]
+    },
+    {
         author: "Jester & Zephyr",
         code: "sunmoon",
         title: "Sun & Moon",
-        description: "The Sun & The Moon.",
-        completionMessage: "It's been a great year working with you.",
+        description: "The Sun & The Moon. Level by Sherman.",
+        completionMessage: "We just wanted to say how much we appreciate you Houston. Your guidance, your company, your patience, and your eye for design. You always made working with the HUNT a fantastic place to make memories. We will miss brain storming the large scale operation with you, but we definitely look forward to picking your brain at play testing. See you at trivia night. Loves, ",
         defaultType: "sky",
         tileW: 5,
         tileH: 5,
         currencies: ["coins"],
-        goalPerSecond: { coins: 25 },
+        goalPerSecond: { coins: 27 },
         maxBalance: { coins: 250 },
             tileShop: [
                 {
@@ -76,7 +115,22 @@ const levels = [
                     owned: 1
                 }
             ]
-    },
+    },/*
+    {
+        author: "Voltaire",
+        code: "brat",
+        title: "Getting BRAT-ty",
+        description: "Voltaire please write this",
+        completionMessage: "It's been a great year working with you.",
+        defaultType: "floor",
+        tileW: 6,
+        tileH: 6,
+        currencies: ["records"],
+        goalPerSecond: { records: 25 },
+        maxBalance: { records: 250 },
+            tileShop: [
+            ]
+    },*/
     {
         author: "Sherman",
         code: "datacenter",

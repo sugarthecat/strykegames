@@ -10,6 +10,15 @@ function drawStripes(author) {
         case "jester & zephyr":
             bgcolor = color(25)
             stripecolor = color(200,0,200)
+            break;
+        case "oculus":
+            bgcolor = color(0)
+            stripecolor = color(255)
+            break;
+        case "voltaire":
+            bgcolor = color('#8ACE00')
+            stripecolor = color('#B4DD1E')
+            break;
     }
     background(bgcolor)
     stroke(stripecolor)

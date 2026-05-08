@@ -11,6 +11,8 @@ const TILE_BACKGROUNDS = {
     cloud: { r: 40, g: 130, b: 220 },
     sun: { r: 40, g: 130, b: 220 },
     moon: { r: 40, g: 130, b: 220 },
+    silo: { r: 100, g: 50, b: 0 },
+    dirtroad: { r: 100, g: 50, b: 0 },
 }
 
 class Tile {
@@ -37,8 +39,8 @@ class Tile {
                 "Enter Password", "Welcome Houston", "sudo rm -rf", "Welcome Sherman", "Enter Username"])
         }
         if (type == "moon") {
-            const rad = random (5,20)
-            const theta = random (0,2 * PI)
+            const rad = random(5, 20)
+            const theta = random(0, 2 * PI)
             this.crater = {
                 x: rad * cos(theta),
                 y: rad * sin(theta),
@@ -55,6 +57,26 @@ class Tile {
                 leftSpots.splice(leftSpots.indexOf(leftSpot), 1)
                 this.wires.push({ y1: leftSpot, y2: i * 10 + 10, color: random([color(255, 0, 0), color(0, 255, 0), color(0, 0, 255), color(255, 255, 0)]) })
             }
+        }
+        if (type == "silo") {
+            const rIntensity = random(180, 255)
+            const gbIntensity = random(0, 100)
+            this.paintColor = color(rIntensity, gbIntensity, gbIntensity)
+            this.roofColor = color(random(0, 100))
+        }
+        if (type == "dirtroad") {
+            this.midpoint = { x: random(30, 70), y: random(30, 70) }
+            this.edgepoints = [
+                { edgex: 2, edgey: 50 },
+                { edgex: 98, edgey: 50 },
+                { edgex: 50, edgey: 2 },
+                { edgex: 50, edgey: 98 },
+            ]
+            for (let i = 0; i < this.edgepoints.length; i++) {
+                this.edgepoints[i].x = random(this.edgepoints[i].edgex, this.midpoint.x)
+                this.edgepoints[i].y = random(this.edgepoints[i].edgey, this.midpoint.y)
+            }
+
         }
         this.income = {}
         this.incomeBubble = {
@@ -222,17 +244,29 @@ class Tile {
                 line(
                     50 + cos(i / 10 * 2 * PI) * radius * 1.2,
                     50 + sin(i / 10 * 2 * PI) * radius * 1.2,
-                    50 + cos(i / 10 * 2 * PI) * 45 ,
+                    50 + cos(i / 10 * 2 * PI) * 45,
                     50 + sin(i / 10 * 2 * PI) * 45
                 )
             }
-        }else if (type == "moon") {
-            fill(220,250,255)
-            circle (50,50,80)
-            fill (20,50,60)
-            circle (this.crater.x + 50,this.crater.y + 50,30)
-            fill (40,130,220)
-            arc (100,0,150,150,PI/2,PI)
+        } else if (type == "moon") {
+            fill(220, 250, 255)
+            circle(50, 50, 80)
+            fill(20, 50, 60)
+            circle(this.crater.x + 50, this.crater.y + 50, 30)
+            fill(40, 130, 220)
+            arc(100, 0, 150, 150, PI / 2, PI)
+        } else if (type == "silo") {
+            fill(this.paintColor)
+            rect(30, 30, 40, 60)
+            fill(this.roofColor)
+            arc(50, 30, 40, 40, PI, 0)
+        } else if (type == "dirtroad") {
+            stroke(160,90,10)
+            strokeWeight(8)
+            for (let i = 0; i < this.edgepoints.length; i++) {
+                line(this.midpoint.x, this.midpoint.y, this.edgepoints[i].x, this.edgepoints[i].y)
+                line(this.edgepoints[i].x, this.edgepoints[i].y, this.edgepoints[i].edgex, this.edgepoints[i].edgey)
+            }
         }
         else if (!(type in TILE_BACKGROUNDS)) {
             textSize(50)

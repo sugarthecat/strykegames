@@ -13,7 +13,7 @@ function getIncome(tileGrid, code, currencies) {
         }
     }
     //code specific behavior
-    if (code == "farm") {
+    if (code == "garden") {
         for (let i = 0; i < tileGrid.length; i++) {
             for (let j = 0; j < tileGrid[i].length; j++) {
                 const tile = tileGrid[i][j]
@@ -33,6 +33,34 @@ function getIncome(tileGrid, code, currencies) {
                     for (const adjTile of getAdjacent(tileGrid, i, j)) {
                         if (adjTile.type !== "strawberry") {
                             tile.income.coins = 0;
+                        }
+                    }
+                }
+            }
+        }
+    } else if (code == "farm") {
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "wheat") {
+                    tile.income.coins = 1
+                }
+                if (tile.type == "silo") {
+                    const added = new Set()
+                    const toCheck = [{ i: i, j: j }]
+                    while (toCheck.length > 0) {
+                        const curr = toCheck.pop()
+                        for (const adjTile of getAdjacent(tileGrid, curr.i, curr.j)) {
+                            if(added.has(adjTile)){
+                                continue;
+                            }
+                            added.add(adjTile)
+                            if (adjTile.type == "dirtroad") {
+                                toCheck.push({ i: adjTile.x, j: adjTile.y })
+                            }
+                            if (adjTile.type == "wheat"){
+                                tile.income.coins += 1
+                            }
                         }
                     }
                 }

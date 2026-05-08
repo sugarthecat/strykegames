@@ -20,7 +20,7 @@ class DialogScreen extends GUI {
         fill(0)
         textAlign(LEFT)
         textSize(13)
-        text(this.message, 125, 125, 350, 100)
+        text(this.message, 125, 125, 350, 150)
         textSize(16)
         if (this.author.length > 0) {
             text(`- ${this.author}`, 200, 275)
