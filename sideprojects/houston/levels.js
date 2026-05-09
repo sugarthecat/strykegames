@@ -115,6 +115,53 @@ const levels = [
                 owned: 1
             }
         ]
+    },
+    {
+        author: "Magus",
+        code: "wizard",
+        title: "Wizard",
+        description: "Jacob please write this (Unplayable at the moment, WIP)",
+        completionMessage: "It's been a great year working with you.",
+        defaultType: "floor",
+        tileW: 3,
+        tileH: 3,
+        currencies: ["coins"],
+        goalPerSecond: { coins: 25 },
+        maxBalance: { coins: 250 },
+        tileShop: [
+            {
+                price: { coins: 5 },
+                name: "Pawn",
+                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
+                type: "pawn",
+                avail: 18,
+                owned: 2
+            },
+            {
+                price: { coins: 5 },
+                name: "Pawn",
+                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
+                type: "pawn",
+                avail: 18,
+                owned: 2
+            },
+            {
+                price: { coins: 5 },
+                name: "Pawn",
+                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
+                type: "pawn",
+                avail: 18,
+                owned: 2
+            },
+            {
+                price: { coins: 5 },
+                name: "Pawn",
+                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
+                type: "pawn",
+                avail: 18,
+                owned: 2
+            },
+        ]
     },/*
     {
         author: "Voltaire",
@@ -147,9 +194,9 @@ const levels = [
             {
                 price: { coins: 5 },
                 name: "Pawn",
-                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
+                description: "Earns 1 coin. Fails if there are more than 8 pawns of either color.",
                 type: "pawn",
-                avail: 18,
+                avail: 16,
                 owned: 2
             },
             {
@@ -177,7 +224,7 @@ const levels = [
                 owned: 0
             },
             {
-                price: { coins: 15 },
+                price: { coins: 50 },
                 name: "King",
                 description: "Earns 5 coins if not in check. Fails if there is more than 1 king of either color.",
                 type: "king",
@@ -185,7 +232,7 @@ const levels = [
                 owned: 0
             },
             {
-                price: { coins: 15 },
+                price: { coins: 50 },
                 name: "Queen",
                 description: "Earns 5 coins unless threatened by a knight. Fails if there is more than 1 queen of either color.",
                 type: "queen",

@@ -27,6 +27,10 @@ function drawStripes(author) {
             bgcolor = color(163, 22, 33)
             stripecolor = color(191, 219, 247)
             break;
+        case "magus":
+            bgcolor = color(147, 33, 145)
+            stripecolor = color(255, 147, 0)
+            break;
     }
     background(bgcolor)
     stroke(stripecolor)

@@ -219,7 +219,7 @@ function getIncome(tileGrid, code, currencies) {
                 }
             }
         }
-        const failLimits = { pawn: 10, rook: 2, bishop: 2, knight: 2, king: 1, queen: 1 }
+        const failLimits = { pawn: 8, rook: 2, bishop: 2, knight: 2, king: 1, queen: 1 }
         const counts = {}
         for (let i = 0; i < tileGrid.length; i++) {
             for (let j = 0; j < tileGrid[i].length; j++) {
