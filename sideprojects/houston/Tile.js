@@ -22,6 +22,13 @@ class Tile {
         this.time = 0;
         this.type = type;
         this.backgroundColor = TILE_BACKGROUNDS[type] ?? { r: 0, g: 0, b: 0 };
+        if (type == "chessboard" || type == "pawn" || type == "knight" || type == "rook"
+            || type == "bishop" || type == "king" || type == "queen") {
+            this.backgroundColor = { r: 255, g: 255, b: 255 }
+            if ((this.x + this.y) % 2 == 1) {
+                this.backgroundColor = { r: 93, g: 93, b: 93 }
+            }
+        }
         if (type == "wheat" || type == "corn" || type == "strawberry") {
             this.dots = []
             for (let i = 0; i < 10; i++) {
@@ -261,11 +268,22 @@ class Tile {
             fill(this.roofColor)
             arc(50, 30, 40, 40, PI, 0)
         } else if (type == "dirtroad") {
-            stroke(160,90,10)
+            stroke(160, 90, 10)
             strokeWeight(8)
             for (let i = 0; i < this.edgepoints.length; i++) {
                 line(this.midpoint.x, this.midpoint.y, this.edgepoints[i].x, this.edgepoints[i].y)
                 line(this.edgepoints[i].x, this.edgepoints[i].y, this.edgepoints[i].edgex, this.edgepoints[i].edgey)
+            }
+        } else if (type == "chessboard") {
+
+        } else if (type == "pawn" || type == "knight" || type == "rook"
+            || type == "bishop" || type == "king" || type == "queen") {
+            if (type in Assets.chess) {
+                if ((this.x + this.y) % 2 == 1) {
+                    image(Assets.chess[type].white, 0, 0, 100, 100)
+                } else {
+                    image(Assets.chess[type].black, 0, 0, 100, 100)
+                }
             }
         }
         else if (!(type in TILE_BACKGROUNDS)) {
