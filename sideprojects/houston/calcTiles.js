@@ -126,17 +126,15 @@ function getIncome(tileGrid, code, currencies) {
                             tile.income.coins += 1
                         }
                         if (adjTile.type == tile.type) {
-                            hasFailed = true
+                            tile.income.coins = 0;
+                            break;
                         }
-                    }
-                    if (hasFailed) {
-                        tile.income.coins = 0;
                     }
                     for (let k = 0; k < tileGrid.length; k++) {
-                        if (k !== j && tileGrid[i][k] == tile.type) {
+                        if (k !== j && tileGrid[i][k].type == tile.type) {
                             tile.income.coins = 0
                         }
-                        if (k !== i && tileGrid[k][j] == tile.type) {
+                        if (k !== i && tileGrid[k][j].type == tile.type) {
                             tile.income.coins = 0
                         }
                     }
@@ -207,7 +205,7 @@ function getIncome(tileGrid, code, currencies) {
                         while (rX >= 0 && rX < tileGrid.length && rY >= 0 && rY < tileGrid[0].length) {
                             const blocker = tileGrid[rX][rY]
                             if (blocker.type !== "chessboard") {
-                                if ( (blocker.type == "rook" || blocker.type == "queen") && (rX + rY + i + j) % 2 == 1){
+                                if ((blocker.type == "rook" || blocker.type == "queen") && (rX + rY + i + j) % 2 == 1) {
                                     tile.income.coins = 0
                                 }
                                 break;
