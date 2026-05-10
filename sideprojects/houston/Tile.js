@@ -13,6 +13,9 @@ const TILE_BACKGROUNDS = {
     moon: { r: 40, g: 130, b: 220 },
     silo: { r: 100, g: 50, b: 0 },
     dirtroad: { r: 100, g: 50, b: 0 },
+    spellbook: { r: 200, g: 200, b: 200 },
+    dungeon: { r: 150, g: 150, b: 150 },
+    crystal: { r: 200, g: 200, b: 200 },
 }
 
 class Tile {
@@ -83,7 +86,19 @@ class Tile {
                 this.edgepoints[i].x = random(this.edgepoints[i].edgex, this.midpoint.x)
                 this.edgepoints[i].y = random(this.edgepoints[i].edgey, this.midpoint.y)
             }
+        }
 
+        if (type == "bookshelf") {
+            this.books = []
+            for (let i = 0; i < 16; i++) {
+                const brightPart = random(150, 255)
+                const dimPart = random(0, 50)
+                const colors = [color(brightPart, dimPart, dimPart), color(dimPart, brightPart, dimPart), color(dimPart, dimPart, brightPart), color(brightPart, dimPart, brightPart)]
+                this.books.push({
+                    height: random(20, 30),
+                    color: random(colors)
+                })
+            }
         }
         this.income = {}
         this.incomeBubble = {
@@ -285,6 +300,57 @@ class Tile {
                     image(Assets.chess[type].black, 0, 0, 100, 100)
                 }
             }
+        } else if (type == "crystal") {
+            colorMode(HSB)
+            fill((this.time * 20) % 100, 100, 100)
+            stroke((this.time * 20) % 100, 100, 80)
+            strokeWeight(5)
+            beginShape()
+            vertex(50, 10)
+            vertex(30, 50)
+            vertex(50, 90)
+            vertex(70, 50)
+            endShape(CLOSE)
+        } else if (type == "spellbook") {
+            fill(86, 52, 42)
+            rect(20, 10, 60, 80)
+            const nToDraw = abs((this.time % 10) - 5) * 100
+            stroke(180, 0, 180)
+            strokeWeight(5)
+            noFill()
+            beginShape()
+            vertex(50, 50)
+            for (let i = 0; i < nToDraw; i++) {
+                vertex(50 + sqrt(i) * cos(i * 0.03), 50 + sqrt(i) * sin(i * 0.03))
+            }
+            endShape()
+        } else if (type == "skull") {
+
+        } else if (type == "bookshelf") {
+            fill(152, 107, 65)
+            rect(0, 0, 10, 100)
+            rect(0, 0, 100, 10)
+            rect(0, 45, 100, 10)
+            rect(90, 0, 10, 100)
+            rect(0, 90, 100, 10)
+            for (let i = 0; i < this.books.length; i++) {
+                fill(this.books[i].color)
+                rect(10 + (i % 8) * 10, 45 - this.books[i].height + 45 * floor(i / 8), 10, this.books[i].height)
+            }
+        } else if (type == "dungeon") {
+            fill(0)
+            rect(10, 10, 80, 80)
+            for (let i = 0; i < 5; i++) {
+                fill(255, i * 40, 0)
+                circle(50, 50, (10 - i) * 6 + 6 * cos(this.time + i / 3))
+            }
+            //todo: interesting stuff
+            fill(150)
+            rect(20, 0, 10, 100)
+            rect(45, 0, 10, 100)
+            rect(70, 0, 10, 100)
+        } else if (type == "conduit") {
+
         }
         else if (!(type in TILE_BACKGROUNDS)) {
             textSize(20)

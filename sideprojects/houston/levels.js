@@ -3,7 +3,7 @@ const levels = [
         author: "Starling",
         code: "garden",
         title: "Garden",
-        description: "Can you help me grow the vegetables?",
+        description: "Uh oh! It's crunch week, and the vegetable garden isn't growing right. Somebody has to help us fix this garden, so the septists can get proper nutrition! \n\nLevel by Sherman",
         completionMessage: "It's been a great year working with you.",
         defaultType: "dirt",
         tileW: 5,
@@ -42,7 +42,7 @@ const levels = [
         author: "Oculus",
         code: "farm",
         title: "The Farm",
-        description: "The Farm",
+        description: "We found the best location for a metapuzzle this year! It's just down the road in Christiansburg. Can you help us secure a location for this year's meta?",
         completionMessage: "It's been a great year working with you.",
         defaultType: "dirt",
         tileW: 6,
@@ -78,50 +78,12 @@ const levels = [
         ]
     },
     {
-        author: "Jester & Zephyr",
-        code: "sunmoon",
-        title: "Sun & Moon",
-        description: "The Sun & The Moon. \nLevel by Sherman.",
-        completionMessage: "We just wanted to say how much we appreciate you Houston. Your guidance, your company, your patience, and your eye for design. You always made working with the HUNT a fantastic place to make memories. We will miss brain storming the large scale operation with you, but we definitely look forward to picking your brain at play testing. See you at trivia night. Loves, ",
-        defaultType: "sky",
-        tileW: 5,
-        tileH: 5,
-        currencies: ["coins"],
-        goalPerSecond: { coins: 27 },
-        maxBalance: { coins: 250 },
-        tileShop: [
-            {
-                price: { coins: 5 },
-                name: "Cloud",
-                description: "Makes the sky look nice. ",
-                type: "cloud",
-                avail: 15,
-                owned: 5
-            },
-            {
-                price: { coins: 10 },
-                name: "Sun",
-                description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another sun.",
-                type: "sun",
-                avail: 4,
-                owned: 1
-            },
-            {
-                price: { coins: 15 },
-                name: "Moon",
-                description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another moon.",
-                type: "moon",
-                avail: 4,
-                owned: 1
-            }
-        ]
-    },
-    {
         author: "Magus",
         code: "wizard",
-        title: "Wizard",
-        description: "Jacob please write this (Unplayable at the moment, WIP)",
-        completionMessage: "It's been a great year working with you.",
+        title: "Magus's Magic MacGuffins",
+        description: "Mad Magus is running amuck once more. More dungeons! More squares! More madness!",
+        completionMessage: "Throughout my year as a Septist, and even some of my time as a Hunter, your positivity and attitude have been inspirational. Furthermore, you've been a true joy to work with and get to know. I'll miss you loads, Houston. <3\n\n"
+            + "Sincerely,",
         defaultType: "floor",
         tileW: 3,
         tileH: 3,
@@ -148,13 +110,13 @@ const levels = [
         if(production <= 20)5
             Produces 5 secondary currency.
         */
-       
+
         goalPerSecond: { coins: 20, gems: 5 },
         maxBalance: { coins: 500, gems: 100 },
         tileShop: [
             {
                 price: { coins: 5, gems: 0 },
-                name: "Crystal Growth",
+                name: "Power Crystal",
                 description: "Earns 2 coin",
                 type: "crystal",
                 avail: 18,
@@ -281,10 +243,49 @@ const levels = [
         ]
     },
     {
+        author: "Jester & Zephyr",
+        code: "sunmoon",
+        title: "Sun & Moon",
+        description: "It's almost launch night, and with how times of day are changing- we don't know when to start. Help us align the skies, and plan accordingly! \n\nLevel by Sherman.",
+        completionMessage: "We just wanted to say how much we appreciate you Houston. Your guidance, your company, your patience, and your eye for design. You always made working with the HUNT a fantastic place to make memories. We will miss brain storming the large scale operation with you, but we definitely look forward to picking your brain at play testing. See you at trivia night. Loves, ",
+        defaultType: "sky",
+        tileW: 5,
+        tileH: 5,
+        currencies: ["coins"],
+        goalPerSecond: { coins: 27 },
+        maxBalance: { coins: 250 },
+        tileShop: [
+            {
+                price: { coins: 5 },
+                name: "Cloud",
+                description: "Makes the sky look nice. ",
+                type: "cloud",
+                avail: 15,
+                owned: 5
+            },
+            {
+                price: { coins: 10 },
+                name: "Sun",
+                description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another sun.",
+                type: "sun",
+                avail: 4,
+                owned: 1
+            },
+            {
+                price: { coins: 15 },
+                name: "Moon",
+                description: "Earns 1 coin per adjacent cloud. Has no income if it shares a row, column, or corner with another moon.",
+                type: "moon",
+                avail: 4,
+                owned: 1
+            }
+        ]
+    },
+    {
         author: "Sherman",
         code: "datacenter",
         title: "Datacenter",
-        description: "Houston! Those online hunters have been going crazy. We're getting super heavy network traffic. Can you help me set up our datacenter?",
+        description: "Houston! Those online hunters have been going crazy over our chatOHO model. We're getting super heavy network traffic. Can you help me set up our datacenter?",
         completionMessage: "It's been a great year working with you. I've learned a lot about working with systems I don't understand, and seen how our shared craft of web design makes the world go 'round.\n "
             + "",
         defaultType: "floor",

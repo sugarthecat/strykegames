@@ -25,6 +25,7 @@ class Assets {
             "black": loadImage("assets/blackking.png"),
             "white": loadImage("assets/whiteking.png"),
         }
+        this.logo = loadImage("assets/logo.webp")
     }
     static setVolume(volume) {
 

@@ -75,7 +75,7 @@ class LevelSelectScreen extends GUI {
             text(this.selectedLevel.description, 300, 150, 250, 100)
         }
 
-        if (0 < x < 250) {
+        if (0 < x && x < 250) {
             if (y < 75) {
                 this.scrolly += (75 - constrain(y, 0, 75)) * deltaTime / 1000 * 2
             } else if (325 < y) {
