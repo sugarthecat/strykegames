@@ -18,6 +18,10 @@ class LevelScreen extends GUI {
             new Button(500 - 30, 120, 60, 21, "Complete", () => {
                 screenOn = "dialog"
             }),
+            new Button(15, 20, 55, 20, "Exit", () => {
+                screenOn = "levelSelect"
+                this.ClearBoard();
+            }),
         ]
     }
     Load(level) {
@@ -150,6 +154,20 @@ class LevelScreen extends GUI {
         let size = gridWidth / tileWidth
         return { xOffset, yOffset, size }
     }
+    ClearBoard() {
+        for (let i = 0; i < this.tiles.length; i++) {
+            for (let j = 0; j < this.tiles[i].length; j++) {
+                if (this.tiles[i][j].type !== this.defaultType) {
+                    this.tiles[i][j] = new Tile(this.defaultType, i, j)
+                    for (let i = 0; i < this.tileShop.length; i++) {
+                        if (this.tileShop[i].type == oldTile.type) {
+                            this.tileShop[i].owned++;
+                        }
+                    }
+                }
+            }
+        }
+    }
     HandleClick(x, y) {
         super.HandleClick(x, y)
         //attempt to place tile
@@ -168,7 +186,7 @@ class LevelScreen extends GUI {
                                 }
                             }
                         } else {
-                            this.alert = { x: x, y: y, time: 1.5, maxTime: 1.5, text: "None in storage."}
+                            this.alert = { x: x, y: y, time: 1.5, maxTime: 1.5, text: "None in storage." }
                         }
                     } else if (mouseButton === RIGHT) {
                         if (this.tiles[i][j].type !== this.defaultType) {
@@ -178,7 +196,7 @@ class LevelScreen extends GUI {
                                     this.tileShop[i].owned++;
                                 }
                             }
-                        } 
+                        }
                     }
                     this.updateIncome();
 

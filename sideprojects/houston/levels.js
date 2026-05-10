@@ -129,25 +129,26 @@ const levels = [
 
         /*
         Conductor Towers:
-if(orthogonally aligned with another non-adjacent cond. tower && nothing is between this and that cond. tower)
-       Produces +7
+        if(orthogonally aligned with another non-adjacent cond. tower && nothing is between this and that cond. tower)
+            Produces +7
 
-Skulls:
-Produces -1
+        Skulls:
+        Produces -1
 
-Crystals:
-Produces +2
+        Crystals:
+        Produces +2
 
-Bookshelf:
-Produces +[Row number]
+        Bookshelf:
+        Produces +[Row number]
 
-Dungeon:
-Produces -[Column number]
+        Dungeon:
+        Produces -[Column number]
 
-Spell Book:
-if(production <= 20)5
-      Produces 5 secondary currency.
-*/
+        Spell Book:
+        if(production <= 20)5
+            Produces 5 secondary currency.
+        */
+       
         goalPerSecond: { coins: 20, gems: 5 },
         maxBalance: { coins: 500, gems: 100 },
         tileShop: [

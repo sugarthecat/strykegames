@@ -11,6 +11,7 @@ class LevelSelectScreen extends GUI {
 
         })]
         this.selectedLevel = null
+        this.scrolly = 0;
     }
     Draw(x, y) {
         background(255)
@@ -22,12 +23,14 @@ class LevelSelectScreen extends GUI {
         noStroke()
         fill(0)
         textAlign(LEFT)
-        for (let i = 0; i < Math.min(levels.length, 5); i++) {
+        push()
+        translate(0, this.scrolly)
+        for (let i = 0; i < levels.length; i++) {
             fill(255)
             if (this.selectedLevel == levels[i]) {
                 fill(200, 200, 225)
             }
-            if (0 < x && x < 250 && y > i * 80 && y < i * 80 + 80) {
+            if (0 < x && x < 250 && y - this.scrolly > i * 80 && y - this.scrolly < i * 80 + 80) {
                 fill(175)
             }
             rect(0, 80 * i, 250, 80)
@@ -37,7 +40,6 @@ class LevelSelectScreen extends GUI {
             textSize(12)
             text(`By ${levels[i].author}`, 20, 55 + i * 80)
         }
-        push()
         stroke(0)
         strokeWeight(12)
         line(250, 0, 250, 600)
@@ -72,12 +74,25 @@ class LevelSelectScreen extends GUI {
             textAlign(LEFT)
             text(this.selectedLevel.description, 300, 150, 250, 100)
         }
+
+        if (0 < x < 250) {
+            if (y < 75) {
+                this.scrolly += (75 - constrain(y, 0, 75)) * deltaTime / 1000 * 2
+            } else if (325 < y) {
+                this.scrolly -= (constrain(y, 325, 400) - 325) * deltaTime / 1000 * 2
+            }
+            if (this.scrolly > 0) {
+                this.scrolly = 0
+            }
+            if (this.scrolly < 400 - levels.length * 80) {
+                this.scrolly = 400 - levels.length * 80
+            }
+        }
         super.Draw(x, y)
     }
     HandleClick(x, y) {
-
-        for (let i = 0; i < Math.min(levels.length, 5); i++) {
-            if (0 < x && x < 250 && y > i * 80 && y < i * 80 + 80) {
+        for (let i = 0; i < levels.length; i++) {
+            if (0 < x && x < 250 && y - this.scrolly > i * 80 && y - this.scrolly < i * 80 + 80) {
                 this.selectedLevel = levels[i]
             }
         }
