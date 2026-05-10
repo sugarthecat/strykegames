@@ -121,7 +121,7 @@ function getIncome(tileGrid, code, currencies) {
                 const tile = tileGrid[i][j]
                 if (tile.type == "sun" || tile.type == "moon") {
                     let hasFailed = false
-                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                    for (const adjTile of getNeighbors(tileGrid, i, j)) {
                         if (adjTile.type == "cloud") {
                             tile.income.coins += 1
                         }
