@@ -17,6 +17,7 @@ class LevelScreen extends GUI {
             }),
             new Button(500 - 30, 120, 60, 21, "Complete", () => {
                 screenOn = "dialog"
+                this.ClearBoard();
             }),
             new Button(15, 20, 55, 20, "Exit", () => {
                 screenOn = "levelSelect"
