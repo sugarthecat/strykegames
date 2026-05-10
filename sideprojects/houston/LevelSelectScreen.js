@@ -46,7 +46,7 @@ class LevelSelectScreen extends GUI {
         if (levels.length > 0) {
             line(0, 0, 250, 0)
         }
-        for (let i = 0; i < Math.min(levels.length, 5); i++) {
+        for (let i = 0; i < levels.length; i++) {
             line(0, i * 80 + 80, 250, i * 80 + 80)
         }
         pop()
@@ -72,7 +72,7 @@ class LevelSelectScreen extends GUI {
             text(`By ${this.selectedLevel.author}`, 425, 80)
             textSize(12)
             textAlign(LEFT)
-            text(this.selectedLevel.description, 300, 150, 250, 100)
+            text(this.selectedLevel.description, 300, 140, 250, 150)
         }
 
         if (0 < x && x < 250) {

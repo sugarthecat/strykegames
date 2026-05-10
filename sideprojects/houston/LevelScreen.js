@@ -157,7 +157,8 @@ class LevelScreen extends GUI {
     ClearBoard() {
         for (let i = 0; i < this.tiles.length; i++) {
             for (let j = 0; j < this.tiles[i].length; j++) {
-                if (this.tiles[i][j].type !== this.defaultType) {
+                const oldTile = this.tiles[i][j]
+                if (oldTile.type !== this.defaultType) {
                     this.tiles[i][j] = new Tile(this.defaultType, i, j)
                     for (let i = 0; i < this.tileShop.length; i++) {
                         if (this.tileShop[i].type == oldTile.type) {

@@ -4,7 +4,7 @@ const levels = [
         code: "garden",
         title: "Garden",
         description: "Uh oh! It's crunch week, and the vegetable garden isn't growing right. Somebody has to help us fix this garden, so the septists can get proper nutrition! \n\nLevel by Sherman",
-        completionMessage: "It's been a great year working with you.",
+        completionMessage: "Houston— I'm so proud of you and everything you've accomplished during your time in the Hunt. You are the most hard working and dedicated person I know. I'm so lucky to know and love you. Congratulations on retirement!",
         defaultType: "dirt",
         tileW: 5,
         tileH: 5,
@@ -43,7 +43,7 @@ const levels = [
         code: "farm",
         title: "The Farm",
         description: "We found the best location for a metapuzzle this year! It's just down the road in Christiansburg. Can you help us secure a location for this year's meta?",
-        completionMessage: "It's been a great year working with you.",
+        completionMessage: "I could never find the words to properly thank you for everything you have done for the team this year. Your mentorship and guidance will forever be remembered and missed. I can't wait to see what you do next!",
         defaultType: "dirt",
         tileW: 6,
         tileH: 6,
@@ -163,22 +163,62 @@ const levels = [
                 owned: 0
             },
         ]
-    },/*
+    },
     {
-        author: "Voltaire",
-        code: "brat",
-        title: "Getting BRAT-ty",
-        description: "Voltaire please write this",
-        completionMessage: "It's been a great year working with you.",
-        defaultType: "floor",
+        author: "Creature & The Stranger",
+        code: "arcade",
+        title: "Game Time",
+        description: "Houston, we went a little overboard with our hosting duties and we may have told everyone we would turn our apartment into an arcade...oopsies. Could you help us keep our fellow septists happy and gain some revenue for puzzle assets? We can pay you in tokens and pizza :)\n Level by Sherman.",
+        completionMessage: "You did it, Houston! Thank you so much for your many many contributions over the years. You are actually the best and it can sometimes be intimidating, but we all love you and appreciate your help. Be warned, however, that we may still message you for assistance out of habit. Don't be a stranger! We kinda already have one of those.",
+        defaultType: "carpet",
         tileW: 6,
         tileH: 6,
-        currencies: ["records"],
-        goalPerSecond: { records: 25 },
-        maxBalance: { records: 250 },
-            tileShop: [
-            ]
-    },*/
+        currencies: ["coins","pizza"],
+        goalPerSecond: { coins: 50, pizza: 10 },
+        maxBalance: { coins: 250, pizza: 100 },
+        tileShop: [
+            {
+                price: { coins: 5, pizza: 1 },
+                name: "Arcade Machine",
+                description: "Earns 1 coin per adjacent arcade machine.",
+                type: "arcade",
+                avail: 4,
+                owned: 2
+            },
+            {
+                price: { coins: 5, pizza: 2 },
+                name: "Chair",
+                description: "Earns 1 pizza if adjacent to a table.",
+                type: "chair",
+                avail: 7,
+                owned: 1
+            },
+            {
+                price: { coins: 5, pizza: 3 },
+                name: "Table",
+                description: "Lets adjacent chairs earn pizza.",
+                type: "table",
+                avail: 3,
+                owned: 1
+            },
+            {
+                price: { coins: 30, pizza: 8 },
+                name: "Prize Booth",
+                description: "Earns 1 coin per arcade machine connected by carpet. Must be on the left or right edge of the map.",
+                type: "prizebooth",
+                avail: 2,
+                owned: 0
+            },
+            {
+                price: { coins: 40, pizza: 15 },
+                name: "Pizza Shop",
+                description: "Earns 1 pizza per chair connected by carpet that is next to a table. Must be on the edge of the map.",
+                type: "pizzashop",
+                avail: 2,
+                owned: 0
+            },
+        ]
+    },
     {
         author: "Zeitgeist",
         code: "chess",
@@ -287,7 +327,7 @@ const levels = [
         title: "Datacenter",
         description: "Houston! Those online hunters have been going crazy over our chatOHO model. We're getting super heavy network traffic. Can you help me set up our datacenter?",
         completionMessage: "It's been a great year working with you. I've learned a lot about working with systems I don't understand, and seen how our shared craft of web design makes the world go 'round.\n "
-            + "",
+            + "Thank you for inspiring it all,",
         defaultType: "floor",
         tileW: 8,
         tileH: 6,

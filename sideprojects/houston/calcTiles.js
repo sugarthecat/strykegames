@@ -294,6 +294,92 @@ function getIncome(tileGrid, code, currencies) {
             }
         }
 
+    } else if (code == "arcade") {
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "arcade") {
+                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                        if (adjTile.type == "arcade") {
+                            tile.income.coins += 1
+                        }
+                        if (adjTile.type == "carpet") {
+                            if (adjTile.x < tile.x) {
+                                tile.rdir = 0
+                            } else if (adjTile.x > tile.x) {
+                                tile.rdir = PI 
+                            }else if (adjTile.y > tile.y) {
+                                tile.rdir = -PI / 2
+                            }else if (adjTile.y < tile.y) {
+                                tile.rdir = PI / 2
+                            }
+                        }
+                    }
+                }
+                if (tile.type == "chair") {
+                    for (const adjTile of getAdjacent(tileGrid, i, j)) {
+                        if (adjTile.type == "table") {
+                            tile.income.pizza = 1
+                            if (adjTile.x < tile.x) {
+                                tile.rdir = 0
+                            } else if (adjTile.x > tile.x) {
+                                tile.rdir = PI 
+                            }else if (adjTile.y > tile.y) {
+                                tile.rdir = -PI / 2
+                            }else if (adjTile.y < tile.y) {
+                                tile.rdir = PI / 2
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (tile.type == "prizebooth"
+                    && (i == 0 || i == tileGrid.length - 1)) {
+                    const added = new Set()
+                    const toCheck = [{ i: i, j: j }]
+                    while (toCheck.length > 0) {
+                        const curr = toCheck.pop()
+                        for (const adjTile of getAdjacent(tileGrid, curr.i, curr.j)) {
+                            if (added.has(adjTile)) {
+                                continue;
+                            }
+                            added.add(adjTile)
+                            if (adjTile.type == "carpet") {
+                                toCheck.push({ i: adjTile.x, j: adjTile.y })
+                            }
+                            if (adjTile.type == "arcade") {
+                                tile.income.coins += 1
+                            }
+                        }
+                    }
+                }
+                if (tile.type == "pizzashop"
+                    && (i == 0 || j == 0 || i == tileGrid.length - 1 || j == tileGrid[i].length - 1)) {
+                    const added = new Set()
+                    const toCheck = [{ i: i, j: j }]
+                    while (toCheck.length > 0) {
+                        const curr = toCheck.pop()
+                        for (const adjTile of getAdjacent(tileGrid, curr.i, curr.j)) {
+                            if (added.has(adjTile)) {
+                                continue;
+                            }
+                            added.add(adjTile)
+                            if (adjTile.type == "carpet") {
+                                toCheck.push({ i: adjTile.x, j: adjTile.y })
+                            }
+                            if (adjTile.type == "chair") {
+                                for (const chairAdj of getAdjacent(tileGrid, adjTile.x, adjTile.y)) {
+                                    if (chairAdj.type == "table") {
+                                        tile.income.pizza += 1
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //income congregation

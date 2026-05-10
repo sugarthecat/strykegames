@@ -31,6 +31,9 @@ function drawStripes(author) {
             bgcolor = color(147, 33, 145)
             stripecolor = color(255, 147, 0)
             break;
+        case "creature & the stranger":
+            bgcolor = color(12, 10, 56)
+            stripecolor = color(34, 255, 71)
     }
     background(bgcolor)
     stroke(stripecolor)

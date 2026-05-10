@@ -89,6 +89,9 @@ class Tile {
                 this.edgepoints[i].y = random(this.edgepoints[i].edgey, this.midpoint.y)
             }
         }
+        if (type == "chair" || type == "arcade") {
+            this.rdir = 0;
+        }
 
         if (type == "bookshelf") {
             this.books = []
@@ -362,7 +365,7 @@ class Tile {
             strokeWeight(5)
             if (this.income.coins > 0) {
                 fill(0, 255, 255)
-                stroke(0,255, 255)
+                stroke(0, 255, 255)
             }
             line(50, 20, 20, 50)
             line(50, 80, 80, 50)
@@ -371,6 +374,30 @@ class Tile {
             noStroke()
             rect(-10, -10, 20, 20)
             pop()
+        } else if (type == "carpet") {
+            image(Assets.arcade.carpet, 0, 0, 100, 100, this.x * 200, this.y * 200, 200, 200)
+        } else if (type == "table") {
+            image(Assets.arcade.table, 0, 0, 100, 100)
+        } else if (type == "pizzashop") {
+            image(Assets.arcade.pizzashop, 0, 0, 100, 100)
+        } else if (type == "chair" || type == "arcade") {
+            push()
+            translate(50, 50)
+            rotate(this.rdir)
+            if (type == "chair") {
+                image(Assets.arcade.chair, -50, -50, 100, 100)
+            } else if (type == "arcade") {
+                image(Assets.arcade.arcade, -50, -50, 100, 100)
+            }
+            pop()
+        } else if (type == "prizebooth") {
+            push ()
+            translate(50,50)
+            if(this.x == 0){
+                scale (-1, 1)
+            }
+            image(Assets.arcade.prizebooth, -50, -50, 100, 100)
+            pop ()
         }
         else if (!(type in TILE_BACKGROUNDS)) {
             textSize(20)
