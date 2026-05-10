@@ -101,7 +101,7 @@ class Tile {
             value: []
         }
         for (const currency of currencies) {
-            if (currency in this.income && this.income[currency] > 0) {
+            if (currency in this.income && this.income[currency] !== 0) {
                 this.incomeBubble.value.push({
                     currency: currency, count: this.income[currency]
                 })

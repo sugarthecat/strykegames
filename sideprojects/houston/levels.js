@@ -149,7 +149,7 @@ if(production <= 20)5
       Produces 5 secondary currency.
 */
         goalPerSecond: { coins: 20, gems: 5 },
-        maxBalance: { coins: 250, gems: 100 },
+        maxBalance: { coins: 500, gems: 100 },
         tileShop: [
             {
                 price: { coins: 5, gems: 0 },
@@ -178,7 +178,7 @@ if(production <= 20)5
             {
                 price: { coins: 5, gems: 5 },
                 name: "Bookshelf",
-                description: "Earns as many coins as rows there are from the bookshelf to the top (including the bookshelf's row)",
+                description: "Earns coins equal to its row number.",
                 type: "bookshelf",
                 avail: 18,
                 owned: 2
@@ -186,7 +186,7 @@ if(production <= 20)5
             {
                 price: { coins: 5, gems: 5 },
                 name: "Dungeon",
-                description: "Costs as many coins as there are columns to the left of the dungeon (including the dungeon's column)",
+                description: "Loses coins equal to its column number.",
                 type: "dungeon",
                 avail: 18,
                 owned: 2

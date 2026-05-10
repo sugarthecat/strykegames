@@ -22,6 +22,7 @@ class LevelScreen extends GUI {
     }
     Load(level) {
         this.time = 0;
+        this.alert = { time: 0, maxTime: 5, x: 100, y: 100, text: "This is an alert!" }
         this.defaultType = level.defaultType
         this.balance = {}
         this.perSecond = {}
@@ -76,6 +77,8 @@ class LevelScreen extends GUI {
         this.DrawTileGrid(x, y)
         this.DrawGoal()
         this.DrawTileShop()
+        this.drawAlert()
+
         //draw lines
         push()
         stroke(0)
@@ -88,15 +91,36 @@ class LevelScreen extends GUI {
         textSize(20)
         text(this.levelName, 200, 30)
         pop()
+
         super.Draw(x, y)
     }
+
+    drawAlert() {
+        if (this.alert.time <= 0) {
+            return;
+        }
+        const progress = 1 - (this.alert.time / this.alert.maxTime)
+        const sizePortion = 1 - progress ** 3
+
+        push()
+        translate(this.alert.x, this.alert.y)
+        textSize(15 * sizePortion)
+        const w = textWidth(this.alert.text) * 1.1
+        const h = 15 * sizePortion * 1.2
+        fill(255)
+        rect(- w / 2, -h / 2, w, h, min(w * 0.2, h * 0.4))
+        fill(0)
+        textAlign(CENTER, CENTER)
+        text(this.alert.text, 0, 0)
+        pop()
+        this.alert.time -= deltaTime / 1000
+    }
+
     giveIncome() {
         for (let i = 0; i < this.currencies.length; i++) {
             const currency = this.currencies[i]
             this.balance[currency] += this.perSecond[currency];
-            if (this.balance[currency] > this.maxBalance[currency]) {
-                this.balance[currency] = this.maxBalance[currency]
-            }
+            this.balance[currency] = constrain(this.balance[currency], 0, this.maxBalance[currency])
         }
         for (let i = 0; i < this.tiles.length; i++) {
             for (let j = 0; j < this.tiles[i].length; j++) {
@@ -143,6 +167,8 @@ class LevelScreen extends GUI {
                                     this.tileShop[i].owned++;
                                 }
                             }
+                        } else {
+                            this.alert = { x: x, y: y, time: 1.5, maxTime: 1.5, text: "None in storage."}
                         }
                     } else if (mouseButton === RIGHT) {
                         if (this.tiles[i][j].type !== this.defaultType) {
@@ -152,7 +178,7 @@ class LevelScreen extends GUI {
                                     this.tileShop[i].owned++;
                                 }
                             }
-                        }
+                        } 
                     }
                     this.updateIncome();
 
