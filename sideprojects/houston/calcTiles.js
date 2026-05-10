@@ -131,10 +131,12 @@ function getIncome(tileGrid, code, currencies) {
                             break;
                         }
                     }
-                    for (let k = 0; k < tileGrid.length; k++) {
+                    for (let k = 0; k < tileGrid[i].length; k++) {
                         if (k !== j && tileGrid[i][k].type == tile.type) {
                             tile.income.coins = 0
                         }
+                    }
+                    for (let k = 0; k < tileGrid.length; k++) {
                         if (k !== i && tileGrid[k][j].type == tile.type) {
                             tile.income.coins = 0
                         }
@@ -160,7 +162,7 @@ function getIncome(tileGrid, code, currencies) {
                     for (const offset of offsets) {
                         let cX = i + offset[0];
                         let cY = j + offset[1];
-                        while (cX >= 0 && cY >= 0 && cX < tileGrid.length - 1 && cY < tileGrid[0].length) {
+                        while (cX >= 0 && cY >= 0 && cX < tileGrid.length && cY < tileGrid[cX].length) {
                             if (tileGrid[cX][cY].type == "bishop") {
                                 tile.income.coins = 0;
                             }
@@ -301,7 +303,7 @@ function getIncome(tileGrid, code, currencies) {
                 if (tile.type == "arcade") {
                     for (const adjTile of getAdjacent(tileGrid, i, j)) {
                         if (adjTile.type == "arcade") {
-                            tile.income.coins += 1
+                            tile.income.tokens += 1
                         }
                         if (adjTile.type == "carpet") {
                             if (adjTile.x < tile.x) {
@@ -348,7 +350,7 @@ function getIncome(tileGrid, code, currencies) {
                                 toCheck.push({ i: adjTile.x, j: adjTile.y })
                             }
                             if (adjTile.type == "arcade") {
-                                tile.income.coins += 1
+                                tile.income.tokens += 1
                             }
                         }
                     }

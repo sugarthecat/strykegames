@@ -89,28 +89,6 @@ const levels = [
         tileH: 3,
         currencies: ["coins", "gems"],
 
-        /*
-        Conductor Towers:
-        if(orthogonally aligned with another non-adjacent cond. tower && nothing is between this and that cond. tower)
-            Produces +7
-
-        Skulls:
-        Produces -1
-
-        Crystals:
-        Produces +2
-
-        Bookshelf:
-        Produces +[Row number]
-
-        Dungeon:
-        Produces -[Column number]
-
-        Spell Book:
-        if(production <= 20)5
-            Produces 5 secondary currency.
-        */
-
         goalPerSecond: { coins: 60, gems: 10 },
         maxBalance: { coins: 500, gems: 100 },
         tileShop: [
@@ -173,20 +151,20 @@ const levels = [
         defaultType: "carpet",
         tileW: 6,
         tileH: 6,
-        currencies: ["coins","pizza"],
-        goalPerSecond: { coins: 50, pizza: 10 },
-        maxBalance: { coins: 250, pizza: 100 },
+        currencies: ["tokens","pizza"],
+        goalPerSecond: { tokens: 25, pizza: 22 },
+        maxBalance: { tokens: 250, pizza: 100 },
         tileShop: [
             {
-                price: { coins: 5, pizza: 1 },
+                price: { tokens: 5, pizza: 1 },
                 name: "Arcade Machine",
-                description: "Earns 1 coin per adjacent arcade machine.",
+                description: "Earns 1 token per adjacent arcade machine.",
                 type: "arcade",
                 avail: 4,
                 owned: 2
             },
             {
-                price: { coins: 5, pizza: 2 },
+                price: { tokens: 5, pizza: 2 },
                 name: "Chair",
                 description: "Earns 1 pizza if adjacent to a table.",
                 type: "chair",
@@ -194,7 +172,7 @@ const levels = [
                 owned: 1
             },
             {
-                price: { coins: 5, pizza: 3 },
+                price: { tokens: 5, pizza: 3 },
                 name: "Table",
                 description: "Lets adjacent chairs earn pizza.",
                 type: "table",
@@ -202,15 +180,15 @@ const levels = [
                 owned: 1
             },
             {
-                price: { coins: 30, pizza: 8 },
+                price: { tokens: 30, pizza: 8 },
                 name: "Prize Booth",
-                description: "Earns 1 coin per arcade machine connected by carpet. Must be on the left or right edge of the map.",
+                description: "Earns 1 token per arcade machine connected by carpet. Must be on the left or right edge of the map.",
                 type: "prizebooth",
                 avail: 2,
                 owned: 0
             },
             {
-                price: { coins: 40, pizza: 15 },
+                price: { tokens: 40, pizza: 15 },
                 name: "Pizza Shop",
                 description: "Earns 1 pizza per chair connected by carpet that is next to a table. Must be on the edge of the map.",
                 type: "pizzashop",
