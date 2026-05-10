@@ -194,9 +194,9 @@ function getIncome(tileGrid, code, currencies) {
                         }
                     }
                 }
-                if(tile.type == "king"){
-                    for(const nTile of getNeighbors(tileGrid,i,j)){
-                        if(nTile.type == "king"){
+                if (tile.type == "king") {
+                    for (const nTile of getNeighbors(tileGrid, i, j)) {
+                        if (nTile.type == "king") {
                             tile.income.coins = 0
                         }
                     }
@@ -207,7 +207,7 @@ function getIncome(tileGrid, code, currencies) {
                         while (rX >= 0 && rX < tileGrid.length && rY >= 0 && rY < tileGrid[0].length) {
                             const blocker = tileGrid[rX][rY]
                             if (blocker.type !== "chessboard") {
-                                if (blocker.type == "rook") {
+                                if ( (blocker.type == "rook" || blocker.type == "queen") && (rX + rY + i + j) % 2 == 1){
                                     tile.income.coins = 0
                                 }
                                 break;
@@ -245,6 +245,56 @@ function getIncome(tileGrid, code, currencies) {
                 }
             }
         }
+    } else if (code == "wizard") {
+        let coins = 0
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "conduit") {
+                    const cardinals = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+                    for (const c of cardinals) {
+                        let rX = i + c[0]
+                        let rY = j + c[1]
+                        while (rX >= 0 && rX < tileGrid.length && rY >= 0 && rY < tileGrid[0].length) {
+                            const blocker = tileGrid[rX][rY]
+                            if (blocker.type !== "floor") {
+                                if (blocker.type == "conduit" && (rX !== i + c[0] || rY !== j + c[1])) {
+                                    tile.income.coins = 7
+                                }
+                                break;
+                            }
+                            rX += c[0]
+                            rY += c[1]
+                        }
+                    }
+                }
+                if (tile.type == "skull") {
+                    tile.income.coins = -1
+                }
+                if (tile.type == "crystal") {
+                    tile.income.coins = 2
+                }
+                if (tile.type == "bookshelf") {
+                    tile.income.coins = j + 1
+                }
+                if (tile.type == "dungeon") {
+                    tile.income.coins = -(i + 1)
+                }
+                coins += tile.income.coins
+            }
+        }
+        for (let i = 0; i < tileGrid.length; i++) {
+            for (let j = 0; j < tileGrid[i].length; j++) {
+                const tile = tileGrid[i][j]
+                if (tile.type == "spellbook") {
+                    tile.income.gems = 5
+                    if (coins > 20) {
+                        tile.income.gems = 0
+                    }
+                }
+            }
+        }
+
     }
 
     //income congregation

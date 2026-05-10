@@ -287,10 +287,10 @@ class Tile {
             }
         }
         else if (!(type in TILE_BACKGROUNDS)) {
-            textSize(50)
+            textSize(20)
             textAlign(CENTER, CENTER)
             fill(255)
-            text("?", 50, 50)
+            text(type, 50, 50)
         }
         pop()
     }

@@ -125,39 +125,77 @@ const levels = [
         defaultType: "floor",
         tileW: 3,
         tileH: 3,
-        currencies: ["coins"],
-        goalPerSecond: { coins: 25 },
-        maxBalance: { coins: 250 },
+        currencies: ["coins", "gems"],
+
+        /*
+        Conductor Towers:
+if(orthogonally aligned with another non-adjacent cond. tower && nothing is between this and that cond. tower)
+       Produces +7
+
+Skulls:
+Produces -1
+
+Crystals:
+Produces +2
+
+Bookshelf:
+Produces +[Row number]
+
+Dungeon:
+Produces -[Column number]
+
+Spell Book:
+if(production <= 20)5
+      Produces 5 secondary currency.
+*/
+        goalPerSecond: { coins: 20, gems: 5 },
+        maxBalance: { coins: 250, gems: 100 },
         tileShop: [
             {
-                price: { coins: 5 },
-                name: "Pawn",
-                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
-                type: "pawn",
+                price: { coins: 5, gems: 0 },
+                name: "Crystal Growth",
+                description: "Earns 2 coin",
+                type: "crystal",
                 avail: 18,
                 owned: 2
             },
             {
-                price: { coins: 5 },
-                name: "Pawn",
-                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
-                type: "pawn",
+                price: { coins: 5, gems: 0 },
+                name: "Spellbook",
+                description: "Earns 5 gems if coin income is at most 20.",
+                type: "spellbook",
                 avail: 18,
                 owned: 2
             },
             {
-                price: { coins: 5 },
-                name: "Pawn",
-                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
-                type: "pawn",
+                price: { coins: 5, gems: 5 },
+                name: "Skull",
+                description: "Loses 1 coin.",
+                type: "skull",
                 avail: 18,
                 owned: 2
             },
             {
-                price: { coins: 5 },
-                name: "Pawn",
-                description: "Earns 1 coin. Fails if there are more than 10 pawns of either color.",
-                type: "pawn",
+                price: { coins: 5, gems: 5 },
+                name: "Bookshelf",
+                description: "Earns as many coins as rows there are from the bookshelf to the top (including the bookshelf's row)",
+                type: "bookshelf",
+                avail: 18,
+                owned: 2
+            },
+            {
+                price: { coins: 5, gems: 5 },
+                name: "Dungeon",
+                description: "Costs as many coins as there are columns to the left of the dungeon (including the dungeon's column)",
+                type: "dungeon",
+                avail: 18,
+                owned: 2
+            },
+            {
+                price: { coins: 50, gems: 20 },
+                name: "Conduit Tower",
+                description: "Produces 7 coins if in the same row or column as another conduit tower, but not adjacent, without any non-floor tiles inbetween.",
+                type: "conduit",
                 avail: 18,
                 owned: 2
             },
