@@ -258,7 +258,7 @@ function getIncome(tileGrid, code, currencies) {
                             const blocker = tileGrid[rX][rY]
                             if (blocker.type !== "floor") {
                                 if (blocker.type == "conduit" && (rX !== i + c[0] || rY !== j + c[1])) {
-                                    tile.income.coins = 7
+                                    tile.income.coins = 17
                                 }
                                 break;
                             }
@@ -268,10 +268,10 @@ function getIncome(tileGrid, code, currencies) {
                     }
                 }
                 if (tile.type == "skull") {
-                    tile.income.coins = -1
+                    tile.income.coins = -4
                 }
                 if (tile.type == "crystal") {
-                    tile.income.coins = 2
+                    tile.income.coins = 3
                 }
                 if (tile.type == "bookshelf") {
                     tile.income.coins = j + 1
@@ -286,8 +286,8 @@ function getIncome(tileGrid, code, currencies) {
             for (let j = 0; j < tileGrid[i].length; j++) {
                 const tile = tileGrid[i][j]
                 if (tile.type == "spellbook") {
-                    tile.income.gems = 5
-                    if (coins > 20) {
+                    tile.income.gems = 10
+                    if (coins > 60) {
                         tile.income.gems = 0
                     }
                 }

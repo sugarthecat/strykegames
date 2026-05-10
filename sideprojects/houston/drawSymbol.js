@@ -9,6 +9,16 @@ function drawSymbol(currency, x, y, size) {
         circle(0, 0, size)
         strokeWeight(size / 6)
         line(0, - size / 3, 0, size / 3)
+    } else if (currency == "gems") {
+        fill(50, 255, 50)
+        stroke(0, 200, 0)
+        strokeWeight(size/12)
+        beginShape()
+        vertex(0, -size / 2)
+        vertex(-size / 4,0)
+        vertex(0, size / 2)
+        vertex(size / 4, 0)
+        endShape(CLOSE)
     } else if (currency == "bandwidth") {
         strokeWeight(size / 4)
         translate(-size / 6, -size / 6)

@@ -111,56 +111,56 @@ const levels = [
             Produces 5 secondary currency.
         */
 
-        goalPerSecond: { coins: 20, gems: 5 },
+        goalPerSecond: { coins: 60, gems: 10 },
         maxBalance: { coins: 500, gems: 100 },
         tileShop: [
             {
                 price: { coins: 5, gems: 0 },
                 name: "Power Crystal",
-                description: "Earns 2 coin",
+                description: "Earns 3 coin.",
                 type: "crystal",
-                avail: 18,
+                avail: 0,
                 owned: 2
             },
             {
                 price: { coins: 5, gems: 0 },
                 name: "Spellbook",
-                description: "Earns 5 gems if coin income is at most 20.",
+                description: "Earns 10 gems if coin income is at most 60.",
                 type: "spellbook",
-                avail: 18,
-                owned: 2
+                avail: 2,
+                owned: 0
             },
             {
                 price: { coins: 5, gems: 5 },
                 name: "Skull",
-                description: "Loses 1 coin.",
+                description: "Loses 4 coin.",
                 type: "skull",
-                avail: 18,
-                owned: 2
+                avail: 3,
+                owned: 0
             },
             {
                 price: { coins: 5, gems: 5 },
                 name: "Bookshelf",
                 description: "Earns coins equal to its row number.",
                 type: "bookshelf",
-                avail: 18,
-                owned: 2
+                avail: 2,
+                owned: 0
             },
             {
                 price: { coins: 5, gems: 5 },
                 name: "Dungeon",
                 description: "Loses coins equal to its column number.",
                 type: "dungeon",
-                avail: 18,
-                owned: 2
+                avail: 2,
+                owned: 0
             },
             {
                 price: { coins: 50, gems: 20 },
                 name: "Conduit Tower",
-                description: "Produces 7 coins if in the same row or column as another conduit tower, but not adjacent, without any non-floor tiles inbetween.",
+                description: "Produces 17 coins if in the same row or column as another conduit tower, but not adjacent, without any non-floor tiles inbetween.",
                 type: "conduit",
-                avail: 18,
-                owned: 2
+                avail: 4,
+                owned: 0
             },
         ]
     },/*

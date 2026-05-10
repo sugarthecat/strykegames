@@ -16,6 +16,8 @@ const TILE_BACKGROUNDS = {
     spellbook: { r: 200, g: 200, b: 200 },
     dungeon: { r: 150, g: 150, b: 150 },
     crystal: { r: 200, g: 200, b: 200 },
+    skull: { r: 200, g: 200, b: 200 },
+    conduit: { r: 150, g: 150, b: 150 },
 }
 
 class Tile {
@@ -302,8 +304,8 @@ class Tile {
             }
         } else if (type == "crystal") {
             colorMode(HSB)
-            fill((this.time * 20) % 100, 100, 100)
-            stroke((this.time * 20) % 100, 100, 80)
+            fill((this.time * 20) % 360, 100, 100)
+            stroke((this.time * 20) % 360, 100, 80)
             strokeWeight(5)
             beginShape()
             vertex(50, 10)
@@ -325,7 +327,11 @@ class Tile {
             }
             endShape()
         } else if (type == "skull") {
-
+            fill(255)
+            ellipse(50, 50, 60, 80)
+            fill(0)
+            circle(35, 30, 15)
+            circle(65, 30, 15)
         } else if (type == "bookshelf") {
             fill(152, 107, 65)
             rect(0, 0, 10, 100)
@@ -350,7 +356,21 @@ class Tile {
             rect(45, 0, 10, 100)
             rect(70, 0, 10, 100)
         } else if (type == "conduit") {
-
+            push()
+            fill(0)
+            stroke(0)
+            strokeWeight(5)
+            if (this.income.coins > 0) {
+                fill(0, 255, 255)
+                stroke(0,255, 255)
+            }
+            line(50, 20, 20, 50)
+            line(50, 80, 80, 50)
+            translate(50, 50)
+            rotate(this.time)
+            noStroke()
+            rect(-10, -10, 20, 20)
+            pop()
         }
         else if (!(type in TILE_BACKGROUNDS)) {
             textSize(20)
