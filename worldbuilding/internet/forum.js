@@ -59,6 +59,23 @@ const skokalPosts = [
     },
 
     {
+        author: "australia_isnt_real",
+        content: "Waking up at the crack of dawn, for my 12 hour shift.",
+        replies: [
+            {
+                author: "circuitbiter",
+                content: "Tom, you're unemployed",
+                replies: [
+                    {
+                        author: "australia_isnt_real",
+                        content: "12 hour shift = petting my cat",
+                        replies: []
+                    }
+                ]
+            }
+        ]
+    },
+    {
         author: "calc_u_later",
         content: "Trying to think of binary jokes, you guys know any good ones?",
         replies: [
@@ -214,6 +231,16 @@ const skokalPosts = [
                     {
                         author: "cronk",
                         content: "That's not even fair, you unemployed do-nothing.",
+                        replies: []
+                    }]
+            },
+            {
+                author: "discotechnical",
+                content: "MY BOYFRIEND!!!",
+                replies: [
+                    {
+                        author: "australia_isnt_real",
+                        content: "ME!!!!",
                         replies: []
                     }]
             }]

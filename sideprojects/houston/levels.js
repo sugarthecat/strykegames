@@ -310,7 +310,7 @@ const levels = [
         tileW: 8,
         tileH: 6,
         currencies: ["compute", "bandwidth"],
-        goalPerSecond: { bandwidth: 60, compute: 115 }, //60, 115
+        goalPerSecond: { bandwidth: 60, compute: 115 }, 
         maxBalance: { bandwidth: 500, compute: 1000 },
         tileShop: [
             {
