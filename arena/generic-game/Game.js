@@ -14,7 +14,7 @@ class GameScreen extends GUI {
         this.playerBullets = []
         this.enemies = [
             new Landmine(200,200),
-            new Artillery(5, 3)
+            new Artillery(2, 2)
         ]
         this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
     }

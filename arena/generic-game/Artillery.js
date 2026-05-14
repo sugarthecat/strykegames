@@ -3,7 +3,7 @@ class Artillery {
         this.reloadTime = reloadTime;
         this.fireTime = fireTime;
         this.time = 0;
-        this.explodeTime = 0;
+        this.explodeTime = 9999;
         this.diameter = diameter;
         this.targetx = 0;
         this.targety = 0;
@@ -33,16 +33,23 @@ class Artillery {
     }
     DrawUpper() {
         if (this.explodeTime > 0 && this.explodeTime < 2) {
-            const explodeRad = abs(1 - this.explodeTime) ** 2 * this.diameter
+            const explodeRad = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
             for (let i = 0; i < 5; i++) {
                 const c = color(250, i * 50, 0)
                 c.setAlpha(100 + i * 20)
                 fill(c)
-                circle(this.x, this.y, 5 + (5 - i) * explodeRad / 5)
+                circle(this.targetx, this.targety, 5 + (5 - i) * explodeRad / 5)
             }
         }
     }
     Update(player) {
+        if (this.explodeTime > 0 && this.explodeTime < 2) {
+            const explodeRad = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
+            if (dist(this.targetx, this.targety, player.x, player.y) < this.diameter / 2 + 20) {
+                player.kill()
+            }
+        }
+
         this.explodeTime += deltaTime / 1000
         if (this.time < this.reloadTime) {
             this.time += deltaTime / 1000
