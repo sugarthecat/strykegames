@@ -6,7 +6,10 @@ let scaleFactor = 1;
 let volume = 1;
 let screens;
 function preload() {
-    screens = { "title": new TitleScreen() }
+    screens = { "title": new TitleScreen() ,
+        "game": new GameScreen(),
+        "death": new DeathScreen()
+    }
     Assets.loadAssets()
 }
 function setup() {
