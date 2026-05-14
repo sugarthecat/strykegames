@@ -2,13 +2,15 @@ class Player {
     constructor() {
         this.x = 0;
         this.y = 0;
-        this.speed = 60; 
+        this.speed = 60;
         this.canReload = true;
         this.reloadTime = 0;
         this.alive = true;
         this.disabled = false;
         this.facing = 0;
         this.dyingTime = -1;
+        this.dx = 0;
+        this.dy = 0;
     }
     isAlive() {
         return this.alive;
@@ -41,13 +43,16 @@ class Player {
             delta.x++;
             //d
         }
+
         if (delta.y == 0 || delta.x == 0) {
-            this.y += delta.y * this.speed * deltaTime / 1000;
-            this.x += delta.x * this.speed * deltaTime / 1000;
+            this.dy = delta.y * this.speed;
+            this.dx = delta.x * this.speed;
         } else {
-            this.y += delta.y / sqrt(2) * this.speed * deltaTime / 1000;
-            this.x += delta.x / sqrt(2) * this.speed * deltaTime / 1000;
+            this.dy = delta.y / sqrt(2) * this.speed;
+            this.dx = delta.x / sqrt(2) * this.speed;
         }
+        this.x += this.dx * deltaTime / 1000;
+        this.y += this.dy * deltaTime / 1000;
     }
 
     Draw(targetx, targety) {
