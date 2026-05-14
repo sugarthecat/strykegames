@@ -13,8 +13,8 @@ class GameScreen extends GUI {
         }
         this.playerBullets = []
         this.enemies = [
-            new Landmine(200,200),
-            new Artillery(2, 2)
+            new Landmine(200, 200),
+            new Artillery(2, 2, 150, "speed")
         ]
         this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
     }
@@ -39,31 +39,31 @@ class GameScreen extends GUI {
             screenOn = "death";
         }
     }
-    UpdateBullets(){
-        for(let i = 0; i<this.playerBullets.length; i++){
+    UpdateBullets() {
+        for (let i = 0; i < this.playerBullets.length; i++) {
             const b = this.playerBullets[i];
             b.Update();
             b.Draw();
         }
     }
-    DrawLowerEnemies(){
-        for(let i = 0 ; i<this.enemies.length; i++){
+    DrawLowerEnemies() {
+        for (let i = 0; i < this.enemies.length; i++) {
             this.enemies[i].DrawLower();
         }
     }
-    DrawUpperEnemies(){
-        for(let i = 0 ; i<this.enemies.length; i++){
+    DrawUpperEnemies() {
+        for (let i = 0; i < this.enemies.length; i++) {
             this.enemies[i].DrawUpper();
         }
     }
-    UpdateEnemies(){
-        for(let i = 0; i<this.enemies.length; i++){
-            this.enemies[i].Update(this.player)
+    UpdateEnemies() {
+        for (let i = 0; i < this.enemies.length; i++) {
+            this.enemies[i].Update(this.player, this.background)
         }
     }
     HandleClick(x, y) {
         let bullet = this.player.attemptShoot(x - 300 + this.camera.x, y - 200 + this.camera.y)
-        if(bullet){
+        if (bullet) {
             this.playerBullets.push(bullet)
         }
     }

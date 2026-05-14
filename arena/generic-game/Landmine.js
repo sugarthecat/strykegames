@@ -29,7 +29,7 @@ class Landmine {
             }
         }
     }
-    Update(player) {
+    Update(player, background) {
         if (dist(player.x, player.y, this.x, this.y) < 40) {
             this.exploding = true;
             player.kill()

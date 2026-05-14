@@ -1,5 +1,5 @@
 class Artillery {
-    constructor(reloadTime = 15, fireTime = 5, diameter = 150) {
+    constructor(reloadTime = 15, fireTime = 5, diameter = 150, strategy = "spot") {
         this.reloadTime = reloadTime;
         this.fireTime = fireTime;
         this.time = 0;
@@ -7,6 +7,7 @@ class Artillery {
         this.diameter = diameter;
         this.targetx = 0;
         this.targety = 0;
+        this.strategy = strategy;
     }
 
     DrawLower() {
@@ -31,21 +32,36 @@ class Artillery {
             pop()
         }
     }
+
+    UpdateTarget(player){
+        switch(this.strategy){
+            case "speed":
+                this.targetx = player.x + player.dx * this.fireTime; 
+                this.targety = player.y + player.dy * this.fireTime;
+                break;
+            default:
+                this.targetx = player.x;
+                this.targety = player.y; 
+                break;
+        }
+    }
+
     DrawUpper() {
         if (this.explodeTime > 0 && this.explodeTime < 2) {
-            const explodeRad = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
+
+            const explodeDia = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
             for (let i = 0; i < 5; i++) {
                 const c = color(250, i * 50, 0)
                 c.setAlpha(100 + i * 20)
                 fill(c)
-                circle(this.targetx, this.targety, 5 + (5 - i) * explodeRad / 5)
+                circle(this.targetx, this.targety,  (5 - i) * explodeDia / 5)
             }
         }
     }
-    Update(player) {
+    Update(player, background) {
         if (this.explodeTime > 0 && this.explodeTime < 2) {
-            const explodeRad = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
-            if (dist(this.targetx, this.targety, player.x, player.y) < this.diameter / 2 + 20) {
+            const explodeDia = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
+            if (dist(this.targetx, this.targety, player.x, player.y) < explodeDia / 2  + 15) {
                 player.kill()
             }
         }
@@ -54,14 +70,14 @@ class Artillery {
         if (this.time < this.reloadTime) {
             this.time += deltaTime / 1000
             if (this.time >= this.reloadTime) {
-                this.targetx = player.x
-                this.targety = player.y
+                this.UpdateTarget(player)
             }
         } else if (this.time < this.reloadTime + this.fireTime) {
             this.time += deltaTime / 1000
             //firetime
         } else {
             //fire
+            background.entities.push(new Crater(this.targetx, this.targety, this.diameter));
             this.explodeTime = 0;
             this.time = 0;
         }
