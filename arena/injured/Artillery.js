@@ -1,13 +1,14 @@
 class Artillery {
-    constructor(reloadTime = 15, fireTime = 5, diameter = 150, strategy = "spot") {
+    constructor(startTime = 0, reloadTime = 15, fireTime = 5, diameter = 150, trackScale = 0, trackSpin = 0) {
         this.reloadTime = reloadTime;
         this.fireTime = fireTime;
-        this.time = 0;
+        this.time = startTime;
         this.explodeTime = 9999;
         this.diameter = diameter;
         this.targetx = 0;
         this.targety = 0;
-        this.strategy = strategy;
+        this.trackScale = trackScale;
+        this.trackSpin = trackSpin;
     }
 
     DrawLower() {
@@ -33,17 +34,13 @@ class Artillery {
         }
     }
 
-    UpdateTarget(player){
-        switch(this.strategy){
-            case "speed":
-                this.targetx = player.x + player.dx * this.fireTime; 
-                this.targety = player.y + player.dy * this.fireTime;
-                break;
-            default:
-                this.targetx = player.x;
-                this.targety = player.y; 
-                break;
-        }
+    UpdateTarget(player) {
+        this.targetx = player.x
+        this.targetx += player.trackdx * this.fireTime * this.trackScale;
+        this.targetx -= player.trackdy * this.fireTime * this.trackSpin;
+        this.targety = player.y
+        this.targety += player.trackdy * this.fireTime * this.trackScale;
+        this.targety += player.trackdx * this.fireTime * this.trackSpin;
     }
 
     DrawUpper() {
@@ -54,14 +51,14 @@ class Artillery {
                 const c = color(250, i * 50, 0)
                 c.setAlpha(100 + i * 20)
                 fill(c)
-                circle(this.targetx, this.targety,  (5 - i) * explodeDia / 5)
+                circle(this.targetx, this.targety, (5 - i) * explodeDia / 5)
             }
         }
     }
     Update(player, background) {
         if (this.explodeTime > 0 && this.explodeTime < 2) {
             const explodeDia = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
-            if (dist(this.targetx, this.targety, player.x, player.y) < explodeDia / 2  + 15) {
+            if (dist(this.targetx, this.targety, player.x, player.y) < explodeDia / 2 + 15) {
                 player.kill()
             }
         }

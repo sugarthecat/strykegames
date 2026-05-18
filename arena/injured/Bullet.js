@@ -4,6 +4,7 @@ class Bullet {
         this.y = y;
         this.dx = dx;
         this.dy = dy;
+        this.landed = false;
     }
     Update() {
         this.x += this.dx * deltaTime / 1000;
@@ -13,7 +14,7 @@ class Bullet {
         push();
         stroke(255, 220, 0);
         strokeWeight(5)
-        line(this.x, this.y, this.x + this.dx * 0.02, this.y + this.dy * 0.02)
+        line(this.x, this.y, this.x - this.dx * 0.02, this.y - this.dy * 0.02)
         pop();
     }
 }

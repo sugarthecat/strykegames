@@ -1,7 +1,7 @@
 class Player {
-    constructor() {
-        this.x = 0;
-        this.y = 0;
+    constructor(x = 0, y = 0) {
+        this.x = x;
+        this.y = y;
         this.speed = 60;
         this.canReload = true;
         this.reloadTime = 0;
@@ -11,6 +11,10 @@ class Player {
         this.dyingTime = -1;
         this.dx = 0;
         this.dy = 0;
+        this.trackdx = 0;
+        this.trackdy = 0;
+        this.bullets = [];
+        this.radius = 20;
     }
     isAlive() {
         return this.alive;
@@ -53,6 +57,10 @@ class Player {
         }
         this.x += this.dx * deltaTime / 1000;
         this.y += this.dy * deltaTime / 1000;
+        if (this.dx != 0 || this.dy != 0) {
+            this.trackdx = this.dx;
+            this.trackdy = this.dy;
+        }
     }
 
     Draw(targetx, targety) {
@@ -70,7 +78,7 @@ class Player {
             this.facing = atan2(targety - this.y, targetx - this.x);
         }
         rotate(this.facing)
-        circle(0, 0, 40)
+        circle(0, 0, this.radius * 2)
         scale(1.5, 1.5)
         image(Assets.player, -50, -50, 100, 100)
         pop()
@@ -90,8 +98,10 @@ class Player {
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
-        return new Bullet(this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
+        this.bullets.push(new Bullet(
+            this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
             this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff,
-            cos(angle) * speed, sin(angle) * speed);
+            cos(angle) * speed, sin(angle) * speed)
+        );
     }
 }
