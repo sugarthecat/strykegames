@@ -30,8 +30,8 @@ class Barricade {
     }
     DrawUpper() {
     }
-    Update(player, background) {
-        for (const b of player.bullets) {
+    Update(player, background, bullets) {
+        for (const b of bullets) {
             const d = dist(b.x, b.y, this.x, this.y)
             if (d > 43 || d < 30) {
                 continue;

@@ -1,9 +1,14 @@
 class EnemySniper {
-    constructor(x, y, fireSpeed) {
-        this.x = 0;
-        this.y = 0;
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 1, turnRange = 100) {
+        this.x = x;
+        this.y = y;
         this.alive = true;
         this.angle = 0;
+        this.reloadTime = 0;
+        this.timeBetweenFire = timeBetweenFire;
+        this.radius = 20;
+        this.turnRange = turnRange;
+        this.turnSpeed = turnSpeed;
     }
     isAlive() {
         return this.alive;
@@ -19,10 +24,39 @@ class EnemySniper {
         image(Assets.enemy, -50, -50, 100, 100)
         pop()
     }
-    Update(player, background) {
+    Update(player, background, bullets) {
+        this.reloadTime += deltaTime / 1000
+        for (const bullet of bullets) {
+            if (dist(this.x, this.y, bullet.x, bullet.y) < this.radius) {
+                this.alive = false;
+                bullet.landed = true;
+            }
+        }
+        let deltaX = player.x - this.x;
+        let deltaY = player.y - this.y;
+        let pAngle = atan2(deltaY, deltaX)
+        let turnSpeedFactor = max(1, this.turnRange / dist(0, 0, deltaX, deltaY))
+        let turnSpeed = this.turnSpeed * turnSpeedFactor
+        if (abs(pAngle - this.angle) < PI) {
+            if (this.angle > pAngle) {
+                this.angle = max(pAngle, this.angle - deltaTime / 1000 * turnSpeed)
+            }
+            if (this.angle < pAngle) {
+                this.angle = min(pAngle, this.angle + deltaTime / 1000 * turnSpeed)
+            }
+        } else {
+            if (this.angle < pAngle) {
+                this.angle += 2 * PI
+            } else {
+                this.angle -= 2 * PI
+            }
+        }
 
     }
     attemptShoot() {
+        if (this.reloadTime < this.timeBetweenFire) {
+            return;
+        }
         const angle = this.angle;
         this.reloadTime = 0;
         const speed = 400;

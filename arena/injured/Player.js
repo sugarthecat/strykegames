@@ -13,7 +13,6 @@ class Player {
         this.dy = 0;
         this.trackdx = 0;
         this.trackdy = 0;
-        this.bullets = [];
         this.radius = 20;
     }
     isAlive() {
@@ -90,18 +89,18 @@ class Player {
         return true;
     }
     attemptShoot(targetx, targety) {
-        const angle = atan2(targety - this.y, targetx - this.x)
         if (!this.canFire()) {
-            return false;
+            return null;
         }
+        const angle = atan2(targety - this.y, targetx - this.x)
         this.reloadTime = 0;
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
-        this.bullets.push(new Bullet(
+        return new Bullet(
             this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
             this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff,
-            cos(angle) * speed, sin(angle) * speed)
+            cos(angle) * speed, sin(angle) * speed
         );
     }
 }

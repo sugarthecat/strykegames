@@ -6,9 +6,13 @@ class Bullet {
         this.dy = dy;
         this.landed = false;
     }
-    Update() {
+    Update(player) {
         this.x += this.dx * deltaTime / 1000;
         this.y += this.dy * deltaTime / 1000;
+        if (dist(this.x, this.y, player.x, player.y) < player.radius) {
+            player.kill()
+            this.landed = true;
+        }
     }
     Draw() {
         push();

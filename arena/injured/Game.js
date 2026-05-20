@@ -1,5 +1,6 @@
 const CAM_ADJUST_SPEED = 0.05;
 class GameScreen extends GUI {
+    static scaleFactor =1;
     constructor() {
         super();
         this.player = new Player()
@@ -14,19 +15,23 @@ class GameScreen extends GUI {
         this.enemies = [
             // new Artillery(0, 2, 2, 150, 0, 1),
             new Landmine(200, 200),
-            new Barricade(200, 0,0,PI)
+            new Barricade(200, 200, PI / 2, PI * 3 / 2),
+            new EnemySniper(200, 200, 2),
         ]
+        this.bullets = []
         this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
     }
     Draw(x, y) {
-        if(deltaTime/ 1000 > 0.3){
+        if (deltaTime / 1000 > 0.3) {
             return;
         }
         background(0, 200, 0)
         push()
         this.camera.x -= CAM_ADJUST_SPEED * (this.camera.x - this.player.x);
         this.camera.y -= CAM_ADJUST_SPEED * (this.camera.y - this.player.y);
-        translate(300 - this.camera.x, 200 - this.camera.y)
+        translate(300, 200)
+        scale(1 / GameScreen.scaleFactor)
+        translate(- this.camera.x, - this.camera.y)
         this.background.Draw(this.camera.x, this.camera.y)
         this.DrawLowerEnemies()
         this.UpdateEnemies()
@@ -76,18 +81,18 @@ class GameScreen extends GUI {
         pop()
     }
     UpdateBullets() {
-        for (let i = 0; i < this.player.bullets.length; i++) {
-            const b = this.player.bullets[i];
+        for (let i = 0; i < this.bullets.length; i++) {
+            const b = this.bullets[i];
             if (b.landed
                 || b.x < this.bounds.x.min - 300
                 || b.x > this.bounds.x.max + 300
                 || b.y < this.bounds.y.min - 200
                 || b.y > this.bounds.y.max + 200) {
-                this.player.bullets.splice(i, 1);
+                this.bullets.splice(i, 1);
                 i--;
                 continue;
             }
-            b.Update();
+            b.Update(this.player);
             b.Draw();
         }
     }
@@ -103,10 +108,23 @@ class GameScreen extends GUI {
     }
     UpdateEnemies() {
         for (let i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].Update(this.player, this.background)
+            this.enemies[i].Update(this.player, this.background, this.bullets)
+            if (this.enemies[i] instanceof EnemySniper) {
+                const bullet = this.enemies[i].attemptShoot();
+                if (bullet) {
+                    this.bullets.push(bullet);
+                }
+            }
+            if (!this.enemies[i].alive) {
+                this.enemies.splice(i, 1)
+                i--;
+            }
         }
     }
     HandleClick(x, y) {
-        this.player.attemptShoot(x - 300 + this.camera.x, y - 200 + this.camera.y)
+        const bullet = this.player.attemptShoot(x - 300 + this.camera.x, y - 200 + this.camera.y)
+        if (bullet) {
+            this.bullets.push(bullet);
+        }
     }
 }

@@ -58,7 +58,7 @@ class Artillery {
     Update(player, background) {
         if (this.explodeTime > 0 && this.explodeTime < 2) {
             const explodeDia = (1 - abs(1 - this.explodeTime)) ** 2 * this.diameter
-            if (dist(this.targetx, this.targety, player.x, player.y) < explodeDia / 2 + 15) {
+            if (dist(this.targetx, this.targety, player.x, player.y) < explodeDia / 2 + player.radius * 0.75) {
                 player.kill()
             }
         }
