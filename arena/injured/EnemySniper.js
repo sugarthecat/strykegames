@@ -9,6 +9,7 @@ class EnemySniper {
         this.radius = 20;
         this.turnRange = turnRange;
         this.turnSpeed = turnSpeed;
+        this.wantsToFire = false;
     }
     isAlive() {
         return this.alive;
@@ -35,7 +36,7 @@ class EnemySniper {
         let deltaX = player.x - this.x;
         let deltaY = player.y - this.y;
         let pAngle = atan2(deltaY, deltaX)
-        let turnSpeedFactor = max(1, this.turnRange / dist(0, 0, deltaX, deltaY))
+        let turnSpeedFactor = min(1, this.turnRange / dist(0, 0, deltaX, deltaY))
         let turnSpeed = this.turnSpeed * turnSpeedFactor
         if (abs(pAngle - this.angle) < PI) {
             if (this.angle > pAngle) {
@@ -51,10 +52,11 @@ class EnemySniper {
                 this.angle -= 2 * PI
             }
         }
+        this.wantsToFire= abs(pAngle - this.angle) < PI/4
 
     }
     attemptShoot() {
-        if (this.reloadTime < this.timeBetweenFire) {
+        if (this.reloadTime < this.timeBetweenFire || !this.wantsToFire) {
             return;
         }
         const angle = this.angle;

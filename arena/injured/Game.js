@@ -1,6 +1,6 @@
 const CAM_ADJUST_SPEED = 0.05;
 class GameScreen extends GUI {
-    static scaleFactor =1;
+    static scaleFactor = 2;
     constructor() {
         super();
         this.player = new Player()
@@ -36,7 +36,7 @@ class GameScreen extends GUI {
         this.DrawLowerEnemies()
         this.UpdateEnemies()
         this.UpdateBullets()
-        this.player.Draw(x - 300 + this.camera.x, y - 200 + this.camera.y)
+        this.player.Draw((x - 300) * GameScreen.scaleFactor + this.camera.x, (y - 200) * GameScreen.scaleFactor + this.camera.y)
         this.DrawUpperEnemies()
         this.player.Move()
         this.player.x = constrain(this.player.x, this.bounds.x.min + this.player.radius, this.bounds.x.max - this.player.radius);
@@ -49,45 +49,47 @@ class GameScreen extends GUI {
         }
     }
     DrawBoundaries() {
+        const sf = GameScreen.scaleFactor;
         push()
         stroke(255)
-        strokeWeight(5)
+        strokeWeight(8)
         push()
         translate(0, this.camera.y)
-        if (this.camera.x < this.bounds.x.min + 300) {
-            for (let i = - 500; i <= 300; i += 20) {
-                line(this.bounds.x.min, i, this.bounds.x.min - 300, i + 300)
+        if (this.camera.x < this.bounds.x.min + 300 * sf) {
+            for (let i = -500 * sf; i <= 300 * sf; i += 50) {
+                line(this.bounds.x.min, i, this.bounds.x.min - 300 * sf, i + 300 * sf)
             }
         }
-        if (this.camera.x > this.bounds.x.max - 300) {
-            for (let i = - 300; i <= 500; i += 20) {
-                line(this.bounds.x.max, i, this.bounds.x.max + 300, i - 300)
+        if (this.camera.x > this.bounds.x.max - 300 * sf) {
+            for (let i = -300 * sf; i <= 500 * sf; i += 50) {
+                line(this.bounds.x.max, i, this.bounds.x.max + 300 * sf, i - 300 * sf)
             }
         }
         pop()
         push()
         translate(this.camera.x, 0)
-        if (this.camera.y < this.bounds.y.min + 200) {
-            for (let i = - 400; i <= 800; i += 20) {
-                line(i, this.bounds.y.min, i - 200, this.bounds.y.min - 200)
+        if (this.camera.y < this.bounds.y.min + 200 * sf) {
+            for (let i = -400 * sf; i <= 800 * sf; i += 50) {
+                line(i, this.bounds.y.min, i - 200 * sf, this.bounds.y.min - 200 * sf)
             }
         }
-        if (this.camera.y > this.bounds.y.max - 200) {
-            for (let i = - 400; i <= 800; i += 20) {
-                line(i, this.bounds.y.max + 200, i - 200, this.bounds.y.max)
+        if (this.camera.y > this.bounds.y.max - 200 * sf) {
+            for (let i = -400 * sf; i <= 800 * sf; i += 50) {
+                line(i, this.bounds.y.max + 200 * sf, i - 200 * sf, this.bounds.y.max)
             }
         }
         pop()
         pop()
     }
     UpdateBullets() {
+        const sf = GameScreen.scaleFactor;
         for (let i = 0; i < this.bullets.length; i++) {
             const b = this.bullets[i];
             if (b.landed
-                || b.x < this.bounds.x.min - 300
-                || b.x > this.bounds.x.max + 300
-                || b.y < this.bounds.y.min - 200
-                || b.y > this.bounds.y.max + 200) {
+                || b.x < this.bounds.x.min - 300 * sf
+                || b.x > this.bounds.x.max + 300 * sf
+                || b.y < this.bounds.y.min - 200 * sf
+                || b.y > this.bounds.y.max + 200 * sf) {
                 this.bullets.splice(i, 1);
                 i--;
                 continue;
@@ -122,7 +124,10 @@ class GameScreen extends GUI {
         }
     }
     HandleClick(x, y) {
-        const bullet = this.player.attemptShoot(x - 300 + this.camera.x, y - 200 + this.camera.y)
+        const bullet = this.player.attemptShoot(
+            (x - 300) * GameScreen.scaleFactor + this.camera.x,
+            (y - 200) * GameScreen.scaleFactor + this.camera.y
+        )
         if (bullet) {
             this.bullets.push(bullet);
         }

@@ -15,10 +15,11 @@ class Grass {
         ]
     }
     Draw(cx, cy) {
-        if (this.x < cx - 400 || this.x > cx + 400) {
+        const sf = GameScreen.scaleFactor;
+        if (this.x < cx - 400 * sf || this.x > cx + 400 * sf) {
             return;
         }
-        if (this.y < cy - 250 || this.y > cy + 250) {
+        if (this.y < cy - 250 * sf || this.y > cy + 250 * sf) {
             return
         }
         stroke(0, 150, 0)
@@ -48,10 +49,11 @@ class Crater {
     }
     Draw(cx, cy) {
         this.time += deltaTime / 1000;
-        if (this.x < cx - 400 || this.x > cx + 400) {
+        const sf = GameScreen.scaleFactor;
+        if (this.x < cx - 400 * sf || this.x > cx + 400 * sf) {
             return;
         }
-        if (this.y < cy - 250 || this.y > cy + 250) {
+        if (this.y < cy - 250 * sf || this.y > cy + 250 * sf) {
             return;
         }
 
