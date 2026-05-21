@@ -21,6 +21,9 @@ class GameScreen extends GUI {
         this.bullets = []
         this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
     }
+    Load(level){
+        //TODO add
+    }
     Draw(x, y) {
         if (deltaTime / 1000 > 0.3) {
             return;

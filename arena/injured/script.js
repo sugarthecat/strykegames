@@ -8,12 +8,15 @@ let screens;
 function preload() {
     screens = { "title": new TitleScreen() ,
         "game": new GameScreen(),
-        "death": new DeathScreen()
+        "death": new DeathScreen(),
+        "dialogue": new DialogueScreen()
     }
+    screens.dialogue.Load()
     Assets.loadAssets()
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    noSmooth()
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);

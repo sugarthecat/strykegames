@@ -1,5 +1,5 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 1, turnRange = 100) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 1, turnRange = 100, maxRange = 500) {
         this.x = x;
         this.y = y;
         this.alive = true;
@@ -9,6 +9,7 @@ class EnemySniper {
         this.radius = 20;
         this.turnRange = turnRange;
         this.turnSpeed = turnSpeed;
+        this.maxRange = maxRange;
         this.wantsToFire = false;
     }
     isAlive() {
@@ -52,7 +53,7 @@ class EnemySniper {
                 this.angle -= 2 * PI
             }
         }
-        this.wantsToFire= abs(pAngle - this.angle) < PI/4
+        this.wantsToFire= abs(pAngle - this.angle) < PI/4 && dist (0,0,deltaX,deltaY) < this.maxRange
 
     }
     attemptShoot() {
