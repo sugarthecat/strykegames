@@ -3,10 +3,13 @@ class DeathScreen extends GUI {
         super();
         this.elements = [
             new GUIText(100, 100, 400, 60, "You Died"),
-            new Button(100, 200, 400, 50, "Retry", function () {
+            new Button(200, 300, 200, 50, "Retry", function () {
                 screens.game = new GameScreen();
                 screenOn = "game";
             })
         ];
+    }
+    Draw(x, y) {
+        super.Draw(x, y)
     }
 }

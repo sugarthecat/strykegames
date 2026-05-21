@@ -8,25 +8,30 @@ class DialogueScreen extends GUI {
     Load(level) {
         this.idx = 0;
         this.level = level;
+
         this.phases = [
             {
                 character: "radio",
-                message: "Naprzód, do Mińska!",
+                message: "You are not supposed to be here.",
                 time: 3
             },
-            {
-                character: "soldier",
-                message: "Я не говорю по-русски.",
-                messageEng: "[English Text Here.]",
-                time: 3
-            },
-            {
-                character: "soldier",
-                message: "Я не говорю по-русски.\nЯ не говорю по-русски.",
-                messageEng: "[English Text Here.\n Second line.]",
-                time: 3
-            }
         ]
+        if (level == 1) {
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "Я не говорю по-русски.",
+                    messageEng: "[English Text Here.]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[TODO: add]",
+                    messageEng: "[English Text Here.\n Second line.]",
+                    time: 3
+                }
+            ]
+        }
     }
     HandleClick(x, y) {
         if (this.idx >= this.phases.length) {
@@ -69,9 +74,9 @@ class DialogueScreen extends GUI {
                 noStroke()
                 fill(0)
                 textSize(12)
-                textAlign(CENTER)
+                textAlign(CENTER, CENTER)
                 text(currPhase.message.substring(0, floor(this.time / currPhase.time * currPhase.message.length)),
-                    150, 175 + cos(this.time / 3) * 25)
+                    150, 200 + cos(this.time / 3) * 25)
                 break;
             case "soldier":
                 image(Assets.characters.soldier, 0, -50 + sin(this.time / 3) * 50, 600, 400)
@@ -82,11 +87,11 @@ class DialogueScreen extends GUI {
                 noStroke()
                 fill(0)
                 textSize(12)
-                textAlign(CENTER)
+                textAlign(CENTER, CENTER)
                 text(currPhase.message.substring(0, floor(this.time / currPhase.time * currPhase.message.length)),
-                    450, 170 + cos(this.time / 3) * 25)
+                    450, 175 + cos(this.time / 3) * 25)
                 text(currPhase.messageEng.substring(0, floor(this.time / currPhase.time * currPhase.messageEng.length)),
-                    450, 220 + cos(this.time / 3) * 25)
+                    450, 225 + cos(this.time / 3) * 25)
                 break;
         }
         pop()

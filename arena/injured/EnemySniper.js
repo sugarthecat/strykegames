@@ -3,7 +3,7 @@ class EnemySniper {
         this.x = x;
         this.y = y;
         this.alive = true;
-        this.angle = 0;
+        this.angle = random (0,2 * PI);
         this.reloadTime = 0;
         this.timeBetweenFire = timeBetweenFire;
         this.radius = 20;

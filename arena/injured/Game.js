@@ -14,21 +14,22 @@ class GameScreen extends GUI {
         }
         this.enemies = [
             // new Artillery(0, 2, 2, 150, 0, 1),
-            new Landmine(200, 200),
+            new Landmine(200, 400),
             new Barricade(200, 200, PI / 2, PI * 3 / 2),
             new EnemySniper(200, 200, 2),
+           new Tree(200, 0,50)
         ]
         this.bullets = []
         this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
     }
-    Load(level){
+    Load(level) {
         //TODO add
     }
     Draw(x, y) {
         if (deltaTime / 1000 > 0.3) {
             return;
         }
-        background(0, 200, 0)
+        background(0, 150, 0)
         push()
         this.camera.x -= CAM_ADJUST_SPEED * (this.camera.x - this.player.x);
         this.camera.y -= CAM_ADJUST_SPEED * (this.camera.y - this.player.y);
@@ -54,7 +55,7 @@ class GameScreen extends GUI {
     DrawBoundaries() {
         const sf = GameScreen.scaleFactor;
         push()
-        stroke(255)
+        stroke(180)
         strokeWeight(8)
         push()
         translate(0, this.camera.y)
@@ -120,7 +121,7 @@ class GameScreen extends GUI {
                     this.bullets.push(bullet);
                 }
             }
-            if (!this.enemies[i].alive) {
+            if (!this.enemies[i].isAlive()) {
                 this.enemies.splice(i, 1)
                 i--;
             }

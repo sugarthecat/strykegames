@@ -22,7 +22,7 @@ class Grass {
         if (this.y < cy - 250 * sf || this.y > cy + 250 * sf) {
             return
         }
-        stroke(0, 150, 0)
+        stroke(0, 120, 0)
         strokeWeight(5)
         translate(this.x, this.y)
         for (let i = 0; i < this.angles.length; i++) {

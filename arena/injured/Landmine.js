@@ -39,7 +39,7 @@ class Landmine {
             this.explodeTime += deltaTime / 1000
         }
     }
-    isDead() {
-        return false;
+    isAlive() {
+        return true;
     }
 }

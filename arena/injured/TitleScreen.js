@@ -43,15 +43,9 @@ class TitleScreen extends GUI {
         for (let i = 0; i < this.explosions.length; i++) {
             this.explosions[i].time += deltaTime / 1000
             if (this.explosions[i].time > 23) {
-                this.explosions.splice(i, 1)
-                i--;
+                this.explosions[i].time -= 23;
+                this.explosions[i].x = random(0,600)
             }
-        }
-        if (this.explosions.length < TitleScreen.nExplostions) {
-            this.explosions.push({
-                x: random(0, 600),
-                time: 0
-            })
         }
         image(Assets.titleCard, 0, 0, 600, 400)
         super.Draw(x, y)
