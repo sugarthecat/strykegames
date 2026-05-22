@@ -4,7 +4,7 @@ class DeathScreen extends GUI {
         this.elements = [
             new GUIText(100, 100, 400, 60, "You Died"),
             new Button(200, 300, 200, 50, "Retry", function () {
-                screens.game = new GameScreen();
+                screens.game.ReloadLevel()
                 screenOn = "game";
             })
         ];

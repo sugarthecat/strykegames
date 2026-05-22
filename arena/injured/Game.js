@@ -17,13 +17,10 @@ class GameScreen extends GUI {
             new Landmine(200, 400),
             new Barricade(200, 200, PI / 2, PI * 3 / 2),
             new EnemySniper(200, 200, 2),
-           new Tree(200, 0,50)
+            new Tree(200, 0, 50)
         ]
         this.bullets = []
-        this.background = new Background(this.bounds.x.min, this.bounds.x.max, this.bounds.y.min, this.bounds.y.max);
-    }
-    Load(level) {
-        //TODO add
+        this.background = new Background(this.bounds);
     }
     Draw(x, y) {
         if (deltaTime / 1000 > 0.3) {
@@ -135,5 +132,48 @@ class GameScreen extends GUI {
         if (bullet) {
             this.bullets.push(bullet);
         }
+    }
+
+    Load(level) {
+        this.player = new Player(0, 0)
+        this.bullets = []
+        this.level = level;
+        switch (level) {
+            case 1:
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -300, max: 800 },
+                    y: { min: -200, max: 200 }
+                }
+                this.enemies = [
+                    new Landmine(100, -100),
+                    new Landmine(125, 20),
+                    new Landmine(200, 0),
+                    new Landmine(200, 100),
+                    new Landmine(225, -175),
+                    new Landmine(350, -50),
+                    new Landmine(340, 95),
+                    new Landmine(400, 45),
+                    new Landmine(500, -25),
+                    new Barricade(230, -70, PI * 3/4, PI *7/4),
+                    new Tree(-153, 86, 55),
+                    new Tree(-80, -30, 35),
+                    new Tree(-15, 60, 35),
+                    new Tree(250, 150, 50),
+                    new Tree(300, -120, 40),
+                    new Tree(425, -80, 45),
+                ]
+                break;
+        }
+        
+        this.camera = {
+            x: this.player.x,
+            y: this.player.y
+        }
+        this.background = new Background(this.bounds);
+    }
+
+    ReloadLevel(){
+        this.Load(this.level);
     }
 }

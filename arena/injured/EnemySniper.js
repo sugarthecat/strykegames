@@ -3,7 +3,7 @@ class EnemySniper {
         this.x = x;
         this.y = y;
         this.alive = true;
-        this.angle = random (0,2 * PI);
+        this.angle = random(0, 2 * PI);
         this.reloadTime = 0;
         this.timeBetweenFire = timeBetweenFire;
         this.radius = 20;
@@ -53,7 +53,7 @@ class EnemySniper {
                 this.angle -= 2 * PI
             }
         }
-        this.wantsToFire= abs(pAngle - this.angle) < PI/4 && dist (0,0,deltaX,deltaY) < this.maxRange
+        this.wantsToFire = abs(pAngle - this.angle) < PI / 4 && dist(0, 0, deltaX, deltaY) < this.maxRange
 
     }
     attemptShoot() {
@@ -65,8 +65,9 @@ class EnemySniper {
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
+        const angleOffset = random(-0.1, 0.1)
         return new Bullet(this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
             this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff,
-            cos(angle) * speed, sin(angle) * speed);
+            cos(angle + angleOffset) * speed, sin(angle + angleOffset) * speed);
     }
 }

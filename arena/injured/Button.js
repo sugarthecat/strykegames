@@ -19,7 +19,7 @@ class Button {
     }
     //mouseX and Y
     Draw(x, y) {
-        if(this.hidden){
+        if (this.hidden) {
             return;
         }
         push()
@@ -32,7 +32,7 @@ class Button {
         fill(255)
         if (!this.active) {
             fill(180)
-        } else if (this.contains(x,y)) {
+        } else if (this.contains(x, y)) {
             fill(180)
         }
         stroke(0)
@@ -40,7 +40,7 @@ class Button {
             stroke(100)
         }
         strokeWeight(3)
-        rect(this.x, this.y, this.w, this.h, min (this.w,this.h)/10)
+        rect(this.x, this.y, this.w, this.h, min(this.w, this.h) / 10)
         noStroke()
         if (!this.active) {
             fill(100)
@@ -48,7 +48,7 @@ class Button {
             fill(0)
         }
         textFont("trebuchet MT")
-        textAlign(CENTER,CENTER)
+        textAlign(CENTER, CENTER)
         text(this.text, this.x + this.w / 2, this.y + this.h / 2)
         pop()
     }

@@ -70,7 +70,8 @@ class Crater {
     }
 }
 class Background {
-    constructor(minx, maxx, miny, maxy) {
+    constructor(bounds) {
+        const { x: { min: minx, max: maxx }, y: { min: miny, max: maxy } } = bounds;
         this.entities = []
         for (let i = minx; i <= maxx; i += 150) {
             for (let j = miny; j <= maxy; j += 150) {
