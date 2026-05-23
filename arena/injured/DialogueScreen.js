@@ -67,10 +67,10 @@ class DialogueScreen extends GUI {
             case "soldier":
             case "officer":
                 if (currPhase.character == "soldier") {
-                    image(Assets.characters.soldier, 0, -50 + sin(this.time / 3) * 50, 600, 400)
+                    image(Assets.characters.soldier, 0, -10 + sin(this.time / 3) * 20, 600, 400)
                 }
                 if (currPhase.character == "officer") {
-                    image(Assets.characters.officer, 0, -50 + sin(this.time / 3) * 50, 600, 400)
+                    image(Assets.characters.officer, 0, -10 + sin(this.time / 3) * 20, 600, 400)
                 }
                 stroke(0)
                 strokeWeight(5)

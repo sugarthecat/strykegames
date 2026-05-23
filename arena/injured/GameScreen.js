@@ -47,6 +47,9 @@ class GameScreen extends GUI {
         super.Draw(x, y);
         if (!this.player.isAlive()) {
             screenOn = "death";
+        }else if(this.player.goalTime > 5){
+            screenOn = "dialogue";
+            screens.dialogue.Load(this.level+1)
         }
     }
     DrawBoundaries() {
@@ -162,6 +165,7 @@ class GameScreen extends GUI {
                     new Tree(250, 150, 50),
                     new Tree(300, -120, 40),
                     new Tree(425, -80, 45),
+                    new Goal (600,0)
                 ]
                 break;
         }

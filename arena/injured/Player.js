@@ -14,6 +14,7 @@ class Player {
         this.trackdx = 0;
         this.trackdy = 0;
         this.radius = 20;
+        this.goalTime = 0;
     }
     isAlive() {
         return this.alive;
@@ -80,6 +81,12 @@ class Player {
         circle(0, 0, this.radius * 2)
         scale(1.5, 1.5)
         image(Assets.player, -50, -50, 100, 100)
+        pop()
+        push()
+        stroke(255, 255, 0)
+        strokeWeight(5)
+        noFill()
+        arc(this.x, this.y - 50, 40, 40, 0, 2 * PI * min (1,this.goalTime / 5))
         pop()
     }
     canFire() {
