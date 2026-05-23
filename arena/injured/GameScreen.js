@@ -215,6 +215,8 @@ class GameScreen extends GUI {
                     new Artillery(0, 4, 4, 150, 0, 0),
                     new Artillery(0, 3, 5, 145, 0.9, -1 / 2),
                     new Artillery(0, 2, 6, 125, 0.9, 1 / 2),
+                    new Artillery(1, 2, 2, 75, 0, 0),
+                    new Artillery(1, 2, 3, 75, -1, 0),
                     new Tree(100, -227, 40),
                     new Tree(200, -44, 33),
                     new Tree(300, 20, 45),

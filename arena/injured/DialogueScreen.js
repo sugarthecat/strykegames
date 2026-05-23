@@ -96,7 +96,7 @@ class DialogueScreen extends GUI {
         this.phases = [
             {
                 character: "radio",
-                message: "You are not supposed to be here.",
+                message: "You have completed the demo of the game.",
                 time: 3
             },
         ]
