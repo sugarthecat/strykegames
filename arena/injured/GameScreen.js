@@ -20,13 +20,14 @@ class GameScreen extends GUI {
             new Tree(200, 0, 50)
         ]
         this.bullets = []
+        this.bgcolor = color(0, 150, 0)
         this.background = new Background(this.bounds);
     }
     Draw(x, y) {
         if (deltaTime / 1000 > 0.3) {
             return;
         }
-        background(0, 150, 0)
+        background(this.bgcolor)
         push()
         this.camera.x -= CAM_ADJUST_SPEED * (this.camera.x - this.player.x);
         this.camera.y -= CAM_ADJUST_SPEED * (this.camera.y - this.player.y);
@@ -47,9 +48,9 @@ class GameScreen extends GUI {
         super.Draw(x, y);
         if (!this.player.isAlive()) {
             screenOn = "death";
-        }else if(this.player.goalTime > 5){
+        } else if (this.player.goalTime > 5) {
             screenOn = "dialogue";
-            screens.dialogue.Load(this.level+1)
+            screens.dialogue.Load(this.level + 1)
         }
     }
     DrawBoundaries() {
@@ -143,6 +144,7 @@ class GameScreen extends GUI {
         this.level = level;
         switch (level) {
             case 1:
+                this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.5
                 this.bounds = {
                     x: { min: -300, max: 800 },
@@ -156,20 +158,88 @@ class GameScreen extends GUI {
                     new Landmine(225, -175),
                     new Landmine(350, -50),
                     new Landmine(340, 95),
-                    new Landmine(400, 45),
+                    new Landmine(380, 50),
+                    new Landmine(415, 95),
                     new Landmine(500, -25),
-                    new Barricade(230, -70, PI * 3/4, PI *7/4),
+                    new Barricade(230, -70, PI * 3 / 4, PI * 7 / 4),
                     new Tree(-153, 86, 55),
                     new Tree(-80, -30, 35),
                     new Tree(-15, 60, 35),
                     new Tree(250, 150, 50),
                     new Tree(300, -120, 40),
                     new Tree(425, -80, 45),
-                    new Goal (600,0)
+                    new Tree(525, 50, 50),
+                    new Tree(680, 125, 55),
+                    new Tree(700, -120, 70),
+                    new Goal(650, 0)
+                ]
+                break;
+            case 2:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -200, max: 1000 },
+                    y: { min: -300, max: 300 }
+                }
+                this.enemies = [
+                    new Barricade(350, -75, PI * 3 / 4, PI * 7 / 4),
+                    new Barricade(350, 0, PI * 1 / 4, PI * 7 / 4),
+                    new Barricade(350, 75, PI * 1 / 4, PI * 5 / 4),
+                    new EnemySniper(350, -75, 3),
+                    new EnemySniper(350, 75, 3),
+                    new EnemySniper(600, -95, 2),
+                    new Tree(-125, -120, 55),
+                    new Tree(100, 0, 45),
+                    new Tree(135, 65, 30),
+                    new Tree(250, -120, 52),
+                    new Tree(290, 190, 42),
+                    new Tree(355, 175, 29),
+                    new Tree(536, -123, 42),
+                    new Tree(566, -30, 48),
+                    new Tree(575, -186, 40),
+                    new Tree(600, -254, 34),
+                    new Landmine(325, -250),
+                    new Landmine(300, -205),
+                    new Goal(850, 0)
+                ]
+                break;
+            case 3:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -200, max: 2400 },
+                    y: { min: -250, max: 250 }
+                }
+                this.enemies = [
+                    new Artillery(0, 5, 3, 175, 1, 0),
+                    new Artillery(0, 4, 4, 150, 0, 0),
+                    new Artillery(0, 3, 5, 145, 0.9, -1 / 2),
+                    new Artillery(0, 2, 6, 125, 0.9, 1 / 2),
+                    new Tree(100, -227, 40),
+                    new Tree(200, -44, 33),
+                    new Tree(300, 20, 45),
+                    new Tree(400, 164, 50),
+                    new Tree(500, -156, 37),
+                    new Tree(600, -201, 39),
+                    new Tree(700, -114, 43),
+                    new Tree(800, 216, 47),
+                    new Tree(900, 177, 39),
+                    new Tree(1300, -141, 35),
+                    new Tree(1400, 21, 47),
+                    new Tree(1500, -85, 44),
+                    new Tree(1600, 15, 44),
+                    new Tree(1700, 131, 45),
+                    new Tree(1800, 153, 40),
+                    new Tree(1900, 60, 40),
+                    new Tree(2000, -240, 33),
+                    new Tree(2100, -155, 32),
+                    new Tree(2200, -118, 40),
+                    new Tree(2400, -235, 50),
+                    new Goal(2300, 0, 50),
                 ]
                 break;
         }
-        
+
         this.camera = {
             x: this.player.x,
             y: this.player.y
@@ -177,7 +247,7 @@ class GameScreen extends GUI {
         this.background = new Background(this.bounds);
     }
 
-    ReloadLevel(){
+    ReloadLevel() {
         this.Load(this.level);
     }
 }

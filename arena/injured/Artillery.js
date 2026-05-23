@@ -79,7 +79,7 @@ class Artillery {
             this.time = 0;
         }
     }
-    isDead() {
-        return false;
+    isAlive() {
+        return true;
     }
 }

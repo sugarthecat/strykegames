@@ -20,6 +20,8 @@ class Player {
         return this.alive;
     }
     kill() {
+        return;
+        //temporarily immune for testing
         if (this.dyingTime >= 0) {
             return;
         }

@@ -55,6 +55,7 @@ class DialogueScreen extends GUI {
             case "explosion":
                 stroke(0)
                 strokeWeight(5)
+                image(Assets.characters.explosion, 0, -10 + sin(this.time / 3) * 20, 600, 400)
                 fill(255)
                 rect(325, 150 + cos(this.time / 3) * 25, 250, 100, 50, 50)
                 noStroke()
@@ -139,7 +140,7 @@ class DialogueScreen extends GUI {
                     time: 4
                 },
             ]
-        }else if(level == 2){
+        } else if (level == 2) {
             //first enemy
             this.phases = [
                 {
@@ -157,7 +158,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[Heads up! An enemy!]",
+                    messageEng: "[Heads up! Enemies!]",
                     time: 3
                 },
                 {
@@ -169,7 +170,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[There's time later for explaining.\n Quick, clear them out and let's get home. ]",
+                    messageEng: "[There's time later for explaining.\nQuick, clear them out and let's get home.]",
                     time: 3
                 },
                 {
@@ -179,7 +180,7 @@ class DialogueScreen extends GUI {
                     time: 4
                 },
             ]
-        }else if(level == 3){
+        } else if (level == 3) {
             //artillery
             this.phases = [
                 {
@@ -197,13 +198,13 @@ class DialogueScreen extends GUI {
                 {
                     character: "explosion",
                     message: "[BOOM]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "soldier",
                     message: "[Translate]",
-                    messageEng: "[He's dead!]",
-                    time: 2
+                    messageEng: "[He's dead!\n They killed him!]",
+                    time: 5
                 },
             ]
         }

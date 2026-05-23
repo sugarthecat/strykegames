@@ -1,10 +1,10 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 1, turnRange = 100, maxRange = 500) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500) {
         this.x = x;
         this.y = y;
         this.alive = true;
         this.angle = random(0, 2 * PI);
-        this.reloadTime = 0;
+        this.reloadTime = random(0,timeBetweenFire);
         this.timeBetweenFire = timeBetweenFire;
         this.radius = 20;
         this.turnRange = turnRange;
