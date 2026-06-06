@@ -1,5 +1,5 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = 0) {
         this.x = x;
         this.y = y;
         this.alive = true;
@@ -11,6 +11,7 @@ class EnemySniper {
         this.turnSpeed = turnSpeed;
         this.maxRange = maxRange;
         this.wantsToFire = false;
+        this.enemyType = enemyType;
     }
     isAlive() {
         return this.alive;
@@ -23,7 +24,7 @@ class EnemySniper {
         rotate(this.angle)
         circle(0, 0, 40)
         scale(1.5, 1.5)
-        image(Assets.enemy, -50, -50, 100, 100)
+        image(Assets.enemies[this.enemyType], -50, -50, 100, 100)
         pop()
     }
     Update(player, background, bullets) {

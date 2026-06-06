@@ -2,7 +2,7 @@
 
     static loadAssets(){
         this.player = loadImage("assets/player.png")
-        this.enemy = loadImage("assets/enemy.png")
+        this.enemies = [loadImage("assets/enemy.png"),loadImage("assets/enemy2.png")]
         this.titleCard = loadImage("assets/titlecard.png")
         this.backgrounds = {
             ussr: loadImage("assets/ussrbackground.png"),

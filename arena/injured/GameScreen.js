@@ -45,6 +45,7 @@ class GameScreen extends GUI {
         this.player.y = constrain(this.player.y, this.bounds.y.min + this.player.radius, this.bounds.y.max - this.player.radius);
         this.DrawBoundaries()
         pop()
+        this.player.DrawGUI()
         super.Draw(x, y);
         if (!this.player.isAlive()) {
             screenOn = "death";
@@ -238,6 +239,49 @@ class GameScreen extends GUI {
                     new Tree(2200, -118, 40),
                     new Tree(2400, -235, 50),
                     new Goal(2300, 0, 50),
+                ]
+                break;
+            case 4:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -200, max: 1200 },
+                    y: { min: -250, max: 250 }
+                }
+                this.enemies = [
+                    new EnemySniper(200, 100, 2, 2, 100, 500, 1),
+                    new EnemySniper(600, 150, 2, 2, 100, 500, 1),
+                    new EnemySniper(800, 150, 2, 2, 100, 500, 1),
+                    new EnemySniper(1000, 0, 2, 2, 100, 500, 1),
+                    new Barricade(1000, 0, PI * 1 / 2, PI *3 / 2),
+                    new Barricade(0, 0, -PI * 1 / 2, PI *1 / 2),
+                    new Tree(-130.53797468354432, -189.873417721519, 48),
+                    new Tree(-120.09493670886076, 110.12658227848098, 49),
+                    new Tree(439.67567128683277, 182.329783310397, 47),
+                    new Tree(545.1659531359188, -185.00404543395828, 38),
+                    new Tree(270.0589647267667, -187.09329733344478, 35),
+                    new Tree(512.0558041671904, -38.010038416522775, 43),
+                    new Tree(859.419588514434, -163.92877523124602, 45),
+                    new Tree(1110.0502418657888, 200.49218006815127, 49),
+                    new Tree(1150.873005951125, -192.5470429146406, 49),
+                    new Tree(648.0224566573916, 130.5246330515591, 43),
+                    new Goal(1150, 0, 50),
+                ]
+                break;
+            case 5:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -200, max: 1200 },
+                    y: { min: -250, max: 250 }
+                }
+                this.player.moveReshuffle = {
+                    keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }],
+                    shuffleTime: 5,
+                    time: 0
+                }
+                this.enemies = [
+
                 ]
                 break;
         }

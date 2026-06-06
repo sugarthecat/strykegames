@@ -207,6 +207,72 @@ class DialogueScreen extends GUI {
                     time: 5
                 },
             ]
+        } else if (level == 4) {
+            //artillery
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[That squad over there!\n They have a radio.]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I need it to find my way home.]",
+                    time: 5
+                }
+            ]
+        } else if (level == 5) {
+            //artillery
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Dear radio, please work.]",
+                    time: 2
+                },
+                {
+                    character: "radio",
+                    message: "[Polish text here]",
+                    time: 3
+                },
+                
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I don't speak Polish.]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I have to keep wandering.]",
+                    time: 3
+                },
+            ]
+        } else if (level == 6) {
+            //artillery
+            this.phases = [
+                {
+                    character: "radio",
+                    message: "[Polish text here]",
+                    time: 3
+                },
+                
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I don't speak Polish.]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I have to keep wandering.]",
+                    time: 3
+                },
+            ]
         }
     }
 }
