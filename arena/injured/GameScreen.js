@@ -250,11 +250,11 @@ class GameScreen extends GUI {
                 }
                 this.enemies = [
                     new EnemySniper(200, 100, 2, 2, 100, 500, 1),
-                    new EnemySniper(600, 150, 2, 2, 100, 500, 1),
+                    new EnemySniper(500, 150, 2, 2, 100, 500, 1),
                     new EnemySniper(800, 150, 2, 2, 100, 500, 1),
                     new EnemySniper(1000, 0, 2, 2, 100, 500, 1),
                     new Barricade(1000, 0, PI * 1 / 2, PI *3 / 2),
-                    new Barricade(0, 0, -PI * 1 / 2, PI *1 / 2),
+                    new Tree(69.52513514137252, 64.66626682682629, 43),
                     new Tree(-130.53797468354432, -189.873417721519, 48),
                     new Tree(-120.09493670886076, 110.12658227848098, 49),
                     new Tree(439.67567128683277, 182.329783310397, 47),

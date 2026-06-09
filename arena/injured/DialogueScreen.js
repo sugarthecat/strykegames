@@ -272,6 +272,12 @@ class DialogueScreen extends GUI {
                     messageEng: "[I have to keep wandering.]",
                     time: 3
                 },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I feel sick. I can't tell my left from my right.]",
+                    time: 3
+                },
             ]
         }
     }
