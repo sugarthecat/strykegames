@@ -52,12 +52,58 @@ function getLevel(level) {
                 for (let i = 1; i < 5; i++) {
                     let tmp = indicators[i].active
                     indicators[i].active = indicators[9 - i].active
-                    indicators[9-i].active = tmp
+                    indicators[9 - i].active = tmp
                 }
             }))
             break;
         case 1:
-            
+
+            for (let i = 0; i < 10; i++) {
+                const rad = sqrt(i * 1200)
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * rad,
+                    200 + sin(i * TWO_PI / 9) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+            for (let i = 0; i < 10; i++) {
+                const rad = 150
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 10) * rad,
+                    200 + sin(i * TWO_PI / 10) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+
+            buttons.push(new GameButton(75, 200, 40, function () {
+                for (let i = 0; i < 10; i++) {
+                    if(indicators[i].active){
+                        return;
+                    }
+                }
+                indicators[0].active = true;
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let failed = false;
+                let i10Status = indicators[10].active
+                for (let i = 10; i < 20 - 1; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[19].active = i10Status
+                if (indicators[9].active) {
+                    if (indicators[10].active) {
+                        for (let i = 0; i < 20; i++) {
+                            indicators[i].active = false;
+                        }
+                        //fail
+                        return;
+                    }
+                    indicators[10].active = true;
+                    indicators[9].active = false;
+                }
+                for (let i = 9; i > 0; i--) {
+                    indicators[i].active = indicators[i - 1].active
+                }
+                indicators[0].active = false;
+
+            }))
             break;
         case 2:
             break;
