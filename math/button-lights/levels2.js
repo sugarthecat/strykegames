@@ -64,10 +64,10 @@ function getLevel(level) {
                     200 + sin(i * TWO_PI / 9) * rad, 30)
                 indicators.push(tgtIndicator)
             }
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 12; i++) {
                 const rad = 150
-                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 10) * rad,
-                    200 + sin(i * TWO_PI / 10) * rad, 30)
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 12) * rad,
+                    200 + sin(i * TWO_PI / 12) * rad, 30)
                 indicators.push(tgtIndicator)
             }
 
@@ -83,13 +83,13 @@ function getLevel(level) {
             buttons.push(new GameButton(75, 150, 40, function () {
                 let failed = false;
                 let i10Status = indicators[10].active
-                for (let i = 10; i < 20 - 1; i++) {
+                for (let i = 10; i < 22 - 1; i++) {
                     indicators[i].active = indicators[i + 1].active
                 }
-                indicators[19].active = i10Status
+                indicators[21].active = i10Status
                 if (indicators[9].active) {
                     if (indicators[10].active) {
-                        for (let i = 0; i < 20; i++) {
+                        for (let i = 0; i < 22; i++) {
                             indicators[i].active = false;
                         }
                         //fail
@@ -103,6 +103,18 @@ function getLevel(level) {
                 }
                 indicators[0].active = false;
 
+            }))
+
+            buttons.push(new GameButton(75, 250, 40, function () {
+                if(indicators[0].active && indicators[1].active){
+                    for (let i = 0; i < 22; i++) {
+                        indicators[i].active = false;
+                    }
+                }else{
+                    for(let i = 0; i<10; i++){
+                        indicators[i].active = true;
+                    }
+                }
             }))
             break;
         case 2:
