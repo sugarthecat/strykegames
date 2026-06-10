@@ -3,6 +3,106 @@ function getLevel(level) {
     let buttons = []
     switch (level) {
         case 0:
+            addLightsRow(indicators, 300, 75, 6)
+            addLightsRow(indicators, 300, 125, 6)
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            addLightsRow(indicators, 300, 325, 6)
+            buttons.push(new GameButton(75, 200, 40, function () {
+
+                for (let i = 0; i < 3; i++) {
+                    indicators[i * 6 + 2].Toggle();
+                    indicators[i * 6 + 3].Toggle();
+                }
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let nextStatus = []
+                for (let i = 0; i < 6; i++) {
+                    nextStatus.push([])
+                    for (let j = 0; j < 6; j++) {
+                        if (j <= i && i < 5 - j) {
+                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
+                        } else if (j < i) {
+                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
+                        } else if (5 - i >= j) {
+                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
+                        } else {
+                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        indicators[j * 6 + i].active = nextStatus[i][j]
+                    }
+                }
+            }))
+            break;
+        case 1:
+
+            for (let i = 0; i < 10; i++) {
+                const rad = sqrt(i * 1200)
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * rad,
+                    200 + sin(i * TWO_PI / 9) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+            for (let i = 0; i < 12; i++) {
+                const rad = 150
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 12) * rad,
+                    200 + sin(i * TWO_PI / 12) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+
+            buttons.push(new GameButton(75, 200, 40, function () {
+                for (let i = 0; i < 10; i++) {
+                    if (indicators[i].active) {
+                        return;
+                    }
+                }
+                indicators[0].active = true;
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let failed = false;
+                let i10Status = indicators[10].active
+                for (let i = 10; i < 22 - 1; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[21].active = i10Status
+                if (indicators[9].active) {
+                    if (indicators[10].active) {
+                        for (let i = 0; i < 22; i++) {
+                            indicators[i].active = false;
+                        }
+                        //fail
+                        return;
+                    }
+                    indicators[10].active = true;
+                    indicators[9].active = false;
+                }
+                for (let i = 9; i > 0; i--) {
+                    indicators[i].active = indicators[i - 1].active
+                }
+                indicators[0].active = false;
+
+            }))
+
+            buttons.push(new GameButton(75, 250, 40, function () {
+                if (indicators[0].active && indicators[1].active) {
+                    for (let i = 0; i < 22; i++) {
+                        indicators[i].active = false;
+                    }
+                } else {
+                    for (let i = 0; i < 10; i++) {
+                        indicators[i].active = true;
+                    }
+                }
+            }))
+            break;
+        case 2:
             //dihedral group of order 18
             for (let i = 0; i < 9; i++) {
                 let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * 100,
@@ -55,69 +155,6 @@ function getLevel(level) {
                     indicators[9 - i].active = tmp
                 }
             }))
-            break;
-        case 1:
-
-            for (let i = 0; i < 10; i++) {
-                const rad = sqrt(i * 1200)
-                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * rad,
-                    200 + sin(i * TWO_PI / 9) * rad, 30)
-                indicators.push(tgtIndicator)
-            }
-            for (let i = 0; i < 12; i++) {
-                const rad = 150
-                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 12) * rad,
-                    200 + sin(i * TWO_PI / 12) * rad, 30)
-                indicators.push(tgtIndicator)
-            }
-
-            buttons.push(new GameButton(75, 200, 40, function () {
-                for (let i = 0; i < 10; i++) {
-                    if(indicators[i].active){
-                        return;
-                    }
-                }
-                indicators[0].active = true;
-
-            }))
-            buttons.push(new GameButton(75, 150, 40, function () {
-                let failed = false;
-                let i10Status = indicators[10].active
-                for (let i = 10; i < 22 - 1; i++) {
-                    indicators[i].active = indicators[i + 1].active
-                }
-                indicators[21].active = i10Status
-                if (indicators[9].active) {
-                    if (indicators[10].active) {
-                        for (let i = 0; i < 22; i++) {
-                            indicators[i].active = false;
-                        }
-                        //fail
-                        return;
-                    }
-                    indicators[10].active = true;
-                    indicators[9].active = false;
-                }
-                for (let i = 9; i > 0; i--) {
-                    indicators[i].active = indicators[i - 1].active
-                }
-                indicators[0].active = false;
-
-            }))
-
-            buttons.push(new GameButton(75, 250, 40, function () {
-                if(indicators[0].active && indicators[1].active){
-                    for (let i = 0; i < 22; i++) {
-                        indicators[i].active = false;
-                    }
-                }else{
-                    for(let i = 0; i<10; i++){
-                        indicators[i].active = true;
-                    }
-                }
-            }))
-            break;
-        case 2:
             break;
         case 3:
             break;
