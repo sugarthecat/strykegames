@@ -159,6 +159,60 @@ function getLevel(level) {
         case 3:
             break;
         case 4:
+            indicators.push(new GameIndicator(200, 100, 30)) // 2 
+            indicators.push(new GameIndicator(300, 100, 30)) // 2 
+            indicators.push(new GameIndicator(200, 200, 30)) // 3    
+            indicators.push(new GameIndicator(300, 200, 30)) // 3    
+            indicators.push(new GameIndicator(200, 300, 30)) // 5   
+            const vals = [2, 2, 3, 3, 5] 
+            function get_displayed_num() {
+                let val = 1;
+                for(let i = 0; i < 5; i++) {
+                    if(indicators[i].active) {
+                        val *= vals[i]
+                    }
+                }
+                return val;
+            }
+            function display_num(num) {
+                let cval = num;
+                for(let i = 0; i < 5; i++) {
+                    if(cval % vals[i] == 0) {
+                        indicators[i].active = true;
+                        cval /= vals[i]
+                    } else {
+                        indicators[i].active = false;
+                    }
+                }
+            }
+            buttons.push(new GameButton(200, 150, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 2);
+            }))
+            buttons.push(new GameButton(300, 150, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 4);
+            }))
+            buttons.push(new GameButton(400, 150, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 8);
+            }))
+            buttons.push(new GameButton(200, 250, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 3);
+            }))
+            buttons.push(new GameButton(300, 250, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 9);
+            }))
+            buttons.push(new GameButton(400, 250, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 27);
+            }))
+            buttons.push(new GameButton(150, 300, 40, function () {
+                let num = get_displayed_num();
+                display_num(num * 5);
+            }))
             break;
         case 5:
             break;
