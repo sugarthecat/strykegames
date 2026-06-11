@@ -159,6 +159,8 @@ function getLevel(level) {
         case 3:
             break;
         case 4:
+            break;
+        case 5:
             indicators.push(new GameIndicator(200, 100, 30)) // 2 
             indicators.push(new GameIndicator(300, 100, 30)) // 2 
             indicators.push(new GameIndicator(200, 200, 30)) // 3    
@@ -213,8 +215,6 @@ function getLevel(level) {
                 let num = get_displayed_num();
                 display_num(num * 5);
             }))
-            break;
-        case 5:
             break;
     }
     return { indicators: indicators, buttons: buttons }
