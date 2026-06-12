@@ -161,11 +161,11 @@ function getLevel(level) {
         case 4:
             break;
         case 5:
-            indicators.push(new GameIndicator(200, 100, 30)) // 2 
             indicators.push(new GameIndicator(300, 100, 30)) // 2 
-            indicators.push(new GameIndicator(200, 200, 30)) // 3    
+            indicators.push(new GameIndicator(350, 100, 30)) // 2 
             indicators.push(new GameIndicator(300, 200, 30)) // 3    
-            indicators.push(new GameIndicator(200, 300, 30)) // 5   
+            indicators.push(new GameIndicator(350, 200, 30)) // 3    
+            indicators.push(new GameIndicator(300, 300, 30)) // 5   
             const vals = [2, 2, 3, 3, 5] 
             function get_displayed_num() {
                 let val = 1;
@@ -187,11 +187,11 @@ function getLevel(level) {
                     }
                 }
             }
-            buttons.push(new GameButton(200, 150, 40, function () {
+            buttons.push(new GameButton(300, 150, 40, function () {
                 let num = get_displayed_num();
                 display_num(num + 2);
             }))
-            buttons.push(new GameButton(300, 150, 40, function () {
+            buttons.push(new GameButton(350, 150, 40, function () {
                 let num = get_displayed_num();
                 display_num(num + 4);
             }))
@@ -199,11 +199,11 @@ function getLevel(level) {
                 let num = get_displayed_num();
                 display_num(num + 8);
             }))
-            buttons.push(new GameButton(200, 250, 40, function () {
+            buttons.push(new GameButton(300, 250, 40, function () {
                 let num = get_displayed_num();
                 display_num(num + 3);
             }))
-            buttons.push(new GameButton(300, 250, 40, function () {
+            buttons.push(new GameButton(350, 250, 40, function () {
                 let num = get_displayed_num();
                 display_num(num + 9);
             }))
