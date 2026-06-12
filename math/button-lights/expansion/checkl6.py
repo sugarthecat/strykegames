@@ -1,9 +1,10 @@
+import math
 primes = [
-    2,2,
-    3,
-    5,
+    2,2,2,
+    3,3,
+    5,5,
 ]
-addable = [2,4,8,3,9,27]
+addable = [2,4,3,9,27]
 multipliable = [5]
 def compress_num(n):
     curr_n = n
@@ -15,20 +16,24 @@ def compress_num(n):
     return out
 
 toSearch = [1]
-found = set()
+depth = dict()
+depth[1] = 0
 while len(toSearch) > 0:
     curr = toSearch.pop()
     for a in addable:
         newNum = compress_num(curr + a)
-        if newNum not in found and newNum not in toSearch:
+        if newNum not in depth  or (depth[newNum] > depth[curr] + 1):
+            depth[newNum] = depth[curr] + 1
             toSearch.append(newNum)
-            found.add(newNum)
             print(f"{newNum} can be made by adding {a} to {curr}")
     for m in multipliable:
         newNum = compress_num(curr * m)
-        if newNum not in found and newNum not in toSearch:
+        if newNum not in depth or (depth[newNum] > depth[curr] + 1):
+            depth[newNum] = depth[curr] + 1
             toSearch.append(newNum)
-            found.add(newNum)
             print(f"{newNum} can be made by multiplying {m} with {curr}")
 
-print(sorted(found))
+for i in depth:
+    print(f"{i}: {depth[i]}")
+
+print(f"Valid? {math.prod(primes) in depth} ")
