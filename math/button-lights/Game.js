@@ -39,10 +39,11 @@ class GameScreen extends GUI {
             text(`Solved in ${this.playTime.toFixed(2)}s`, 300, 150)
             this.elements[0].x = 250
             this.elements[0].y = 200
+            /*
             this.elements[1].x = 250
-            this.elements[1].y = 250
+            this.elements[1].y = 250*/
             this.elements[0].Draw(x, y)
-            this.elements[1].Draw(x, y)
+            //this.elements[1].Draw(x, y)
             highestLevel = max(highestLevel, level + 1)
             pop()
         } else {
