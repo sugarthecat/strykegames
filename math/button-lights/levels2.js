@@ -3,46 +3,6 @@ function getLevel(level) {
     let buttons = []
     switch (level) {
         case 0:
-            addLightsRow(indicators, 300, 75, 6)
-            addLightsRow(indicators, 300, 125, 6)
-            addLightsRow(indicators, 300, 175, 6)
-            addLightsRow(indicators, 300, 225, 6)
-            addLightsRow(indicators, 300, 275, 6)
-            addLightsRow(indicators, 300, 325, 6)
-            buttons.push(new GameButton(75, 200, 40, function () {
-
-                for (let i = 0; i < 3; i++) {
-                    indicators[i * 6 + 2].Toggle();
-                    indicators[i * 6 + 3].Toggle();
-                }
-
-            }))
-            buttons.push(new GameButton(75, 150, 40, function () {
-                let nextStatus = []
-                for (let i = 0; i < 6; i++) {
-                    nextStatus.push([])
-                    for (let j = 0; j < 6; j++) {
-                        if (j <= i && i < 5 - j) {
-                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
-                        } else if (j < i) {
-                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
-                        } else if (5 - i >= j) {
-                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
-                        } else {
-                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
-                        }
-                    }
-                }
-
-                for (let i = 0; i < 6; i++) {
-                    for (let j = 0; j < 6; j++) {
-                        indicators[j * 6 + i].active = nextStatus[i][j]
-                    }
-                }
-            }))
-            break;
-        case 1:
-
             for (let i = 0; i < 10; i++) {
                 const rad = sqrt(i * 1200)
                 let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * rad,
@@ -102,6 +62,45 @@ function getLevel(level) {
                 }
             }))
             break;
+        case 1:
+            addLightsRow(indicators, 300, 75, 6)
+            addLightsRow(indicators, 300, 125, 6)
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            addLightsRow(indicators, 300, 325, 6)
+            buttons.push(new GameButton(75, 200, 40, function () {
+
+                for (let i = 0; i < 3; i++) {
+                    indicators[i * 6 + 2].Toggle();
+                    indicators[i * 6 + 3].Toggle();
+                }
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let nextStatus = []
+                for (let i = 0; i < 6; i++) {
+                    nextStatus.push([])
+                    for (let j = 0; j < 6; j++) {
+                        if (j <= i && i < 5 - j) {
+                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
+                        } else if (j < i) {
+                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
+                        } else if (5 - i >= j) {
+                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
+                        } else {
+                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        indicators[j * 6 + i].active = nextStatus[i][j]
+                    }
+                }
+            }))
+            break;
         case 2:
             //dihedral group of order 18
             for (let i = 0; i < 9; i++) {
@@ -157,6 +156,109 @@ function getLevel(level) {
             }))
             break;
         case 3:
+            addLightsRow(indicators, 300, 75, 6)
+            addLightsRow(indicators, 300, 125, 6)
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            addLightsRow(indicators, 300, 325, 6)
+            buttons.push(new GameButton(75, 225, 40, function () {
+                for (let i = 0; i < 6; i++) {
+                    let first = indicators[i * 6].active;
+                    for (let j = 0; j < 5; j++) {
+                        indicators[i * 6 + j].active = indicators[i * 6 + j + 1].active
+                    }
+                    indicators[i * 6 + 5].active = first;
+                }
+
+            }))
+            buttons.push(new GameButton(75, 175, 40, function () {
+                let nextStatus = []
+                for (let i = 0; i < 6; i++) {
+                    nextStatus.push([])
+                    for (let j = 0; j < 6; j++) {
+                        if (j <= i && i < 5 - j) {
+                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
+                        } else if (j < i) {
+                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
+                        } else if (5 - i >= j) {
+                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
+                        } else {
+                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        indicators[j * 6 + i].active = nextStatus[i][j]
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 125, 30))
+            indicators.push(new GameIndicator(575, 125, 30))
+            buttons.push(new GameButton(475, 125, 40, function () {
+                if (!indicators[36].active) {
+                    indicators[36].active = true;
+                } else if (!indicators[37].active) {
+                    indicators[37].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        indicators[i * 6 + j].Toggle();
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 175, 30))
+            indicators.push(new GameIndicator(575, 175, 30))
+            indicators.push(new GameIndicator(550, 200, 30))
+            buttons.push(new GameButton(475, 175, 40, function () {
+                if (!indicators[38].active) {
+                    indicators[38].active = true;
+                } else if (!indicators[39].active) {
+                    indicators[39].active = true;
+                } else if (!indicators[40].active) {
+                    indicators[40].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                for (let i = 0; i < 2; i++) {
+                    for (let j = 0; j < 2; j++) {
+                        indicators[i * 6 + j].Toggle();
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 250, 30))
+            indicators.push(new GameIndicator(575, 250, 30))
+            indicators.push(new GameIndicator(550, 275, 30))
+            indicators.push(new GameIndicator(525, 300, 30))
+            indicators.push(new GameIndicator(575, 300, 30))
+            indicators.push(new GameIndicator(550, 325, 30))
+            buttons.push(new GameButton(475, 250, 40, function () {
+                if (!indicators[41].active) {
+                    indicators[41].active = true;
+                } else if (!indicators[42].active) {
+                    indicators[42].active = true;
+                } else if (!indicators[43].active) {
+                    indicators[43].active = true;
+                } else if (!indicators[44].active) {
+                    indicators[44].active = true;
+                } else if (!indicators[45].active) {
+                    indicators[45].active = true;
+                }else if (!indicators[46].active) {
+                    indicators[46].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                indicators[0].Toggle();
+            }))
+            break;
+        case 4:
             //permutation solver
             const perm1 = [1, 2, 3, 4, 5, 0]
             const perm2 = [3, 2, 5, 0, 4, 1]
@@ -176,36 +278,36 @@ function getLevel(level) {
             indicators.push(new GameIndicator(80, 200, 30))
             indicators.push(new GameIndicator(80, 250, 30))
             buttons.push(new GameButton(475, 200, 40, function () {
-                if(indicators[18].active && indicators[19].active){
+                if (indicators[18].active && indicators[19].active) {
                     turnOff(indicators)
                     return;
                 }
-                if(indicators[18].active){
+                if (indicators[18].active) {
                     indicators[19].active = true;
                 }
                 indicators[18].active = true;
 
-                for(let i = 0; i<6; i++){
-                    if(indicators[i].active){
+                for (let i = 0; i < 6; i++) {
+                    if (indicators[i].active) {
                         indicators[perm1[i] + 6].Toggle();
                     }
                 }
 
             }))
             buttons.push(new GameButton(475, 250, 40, function () {
-                if(indicators[20].active ){
+                if (indicators[20].active) {
                     turnOff(indicators)
                     return;
                 }
                 indicators[20].active = true;
-                for(let i = 0; i<6; i++){
-                    if(indicators[i + 6].active){
+                for (let i = 0; i < 6; i++) {
+                    if (indicators[i + 6].active) {
                         indicators[perm2[i] + 12].Toggle();
                     }
                 }
             }))
             buttons.push(new GameButton(125, 200, 40, function () {
-                if(indicators[21].active ){
+                if (indicators[21].active) {
                     turnOff(indicators)
                     return;
                 }
@@ -214,7 +316,7 @@ function getLevel(level) {
                 indicators[11].Toggle();
             }))
             buttons.push(new GameButton(125, 250, 40, function () {
-                if(indicators[22].active ){
+                if (indicators[22].active) {
                     turnOff(indicators)
                     return;
                 }
@@ -223,9 +325,6 @@ function getLevel(level) {
                 indicators[16].Toggle();
                 indicators[15].Toggle();
             }))
-
-            break;
-        case 4:
 
             break;
         case 5:

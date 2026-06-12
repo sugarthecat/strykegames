@@ -5,7 +5,7 @@ let screenOn = "title"
 let scaleFactor = 1;
 let screens;
 let level = undefined;
-let highestLevel = 7;
+let highestLevel = 0;
 function preload() {
     screens = {
         "title": new TitleScreen(),

@@ -7,6 +7,7 @@ class GameScreen extends GUI {
         this.backgroundColor = color(100)
         this.buttons = []
         this.indicators = []
+        this.playTime = 0;
     }
     isSolved() {
         let isSolved = true;
@@ -30,12 +31,12 @@ class GameScreen extends GUI {
             stroke(0)
             strokeWeight(5)
             fill(255)
-            rect(200, 100, 200, 200)
+            rect(100, 100, 400, 200)
             noStroke()
             fill(0)
             textSize(30)
             textAlign(CENTER)
-            text("Solved!", 300, 150)
+            text(`Solved in ${this.playTime.toFixed(2)}s`, 300, 150)
             this.elements[0].x = 250
             this.elements[0].y = 200
             this.elements[1].x = 250
@@ -44,6 +45,8 @@ class GameScreen extends GUI {
             this.elements[1].Draw(x, y)
             highestLevel = max(highestLevel, level + 1)
             pop()
+        } else {
+            this.playTime += deltaTime / 1000
         }
     }
     HandleClick(x, y) {
@@ -60,11 +63,12 @@ class GameScreen extends GUI {
         let ref = this;
         this.elements = [
             new Button(50, 10, 100, 30, "Levels", function () { screenOn = "levelSelect" }),
-            new Button(450, 10, 100, 30, "Reset", function () { ref.NewLevel() })
+            //new Button(450, 10, 100, 30, "Reset", function () { ref.NewLevel() })
         ]
         const levelElts = getLevel(level)
         this.indicators = levelElts.indicators
         this.buttons = levelElts.buttons
+        this.playTime = 0;
     }
 
 }
