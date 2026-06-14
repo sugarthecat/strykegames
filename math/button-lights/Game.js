@@ -36,14 +36,14 @@ class GameScreen extends GUI {
             fill(0)
             textSize(30)
             textAlign(CENTER)
-            text(`Solved in ${this.playTime.toFixed(2)}s`, 300, 150)
+            text(`Solved!`, 300, 150)
             this.elements[0].x = 250
             this.elements[0].y = 200
-            /*
+            
             this.elements[1].x = 250
-            this.elements[1].y = 250*/
+            this.elements[1].y = 250
             this.elements[0].Draw(x, y)
-            //this.elements[1].Draw(x, y)
+            this.elements[1].Draw(x, y)
             highestLevel = max(highestLevel, level + 1)
             pop()
         } else {
@@ -64,7 +64,7 @@ class GameScreen extends GUI {
         let ref = this;
         this.elements = [
             new Button(50, 10, 100, 30, "Levels", function () { screenOn = "levelSelect" }),
-            //new Button(450, 10, 100, 30, "Reset", function () { ref.NewLevel() })
+            new Button(450, 10, 100, 30, "Reset", function () { ref.NewLevel() })
         ]
         const levelElts = getLevel(level)
         this.indicators = levelElts.indicators

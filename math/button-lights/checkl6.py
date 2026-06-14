@@ -1,11 +1,13 @@
 import math
 primes = [
-    2,2,2,
-    3,3,
+    2,2,2,2,2,2,2,2,
+    3,3,3,3,
     5,5,
+    7,7,
+    11,13,17
 ]
-addable = [2,4,3,9,27]
-multipliable = [5]
+addable = [1]
+multipliable = [3,5,7,11,13]
 def compress_num(n):
     curr_n = n
     out = 1
@@ -33,7 +35,7 @@ while len(toSearch) > 0:
             toSearch.append(newNum)
             print(f"{newNum} can be made by multiplying {m} with {curr}")
 
-for i in depth:
+for i in sorted(depth):
     print(f"{i}: {depth[i]}")
 
 print(f"Valid? {math.prod(primes) in depth} ")

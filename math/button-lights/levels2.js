@@ -249,7 +249,7 @@ function getLevel(level) {
                     indicators[44].active = true;
                 } else if (!indicators[45].active) {
                     indicators[45].active = true;
-                }else if (!indicators[46].active) {
+                } else if (!indicators[46].active) {
                     indicators[46].active = true;
                 } else {
                     turnOff(indicators);
@@ -328,14 +328,25 @@ function getLevel(level) {
 
             break;
         case 5:
-            indicators.push(new GameIndicator(300, 100, 30)) // 2 
-            indicators.push(new GameIndicator(350, 100, 30)) // 2 
-            indicators.push(new GameIndicator(400, 100, 30)) // 2 
-            indicators.push(new GameIndicator(300, 200, 30)) // 3    
-            indicators.push(new GameIndicator(350, 200, 30)) // 3    
-            indicators.push(new GameIndicator(300, 300, 30)) // 5   
-            indicators.push(new GameIndicator(350, 300, 30)) // 5   
-            const vals = [2, 2, 2, 3, 3, 5, 5]
+            const vals = [2, 2, 2, 2, 2, 2, 2, 2,
+                3, 3, 3, 3, 5, 5, 7, 11, 13, 17]
+            let xVal = 200;
+            let yVal = 80;
+            for (let i = 0; i < vals.length; i++) {
+                const val = vals[i]
+                if (i > 0 && vals[i - 1] != val) {
+                    if (val != 2) {
+                        buttons.push(new GameButton(150, yVal + 40, 40, function () {
+                            let num = get_displayed_num();
+                            display_num(num * val);
+                        }))
+                    }
+                    xVal = 200;
+                    yVal += 40
+                }
+                indicators.push(new GameIndicator(xVal, yVal, 30))
+                xVal += 50
+            }
             function get_displayed_num() {
                 let val = 1;
                 for (let i = 0; i < vals.length; i++) {
@@ -356,29 +367,9 @@ function getLevel(level) {
                     }
                 }
             }
-            buttons.push(new GameButton(300, 150, 40, function () {
+            buttons.push(new GameButton(60, 200, 40, function () {
                 let num = get_displayed_num();
-                display_num(num + 2);
-            }))
-            buttons.push(new GameButton(350, 150, 40, function () {
-                let num = get_displayed_num();
-                display_num(num + 4);
-            }))
-            buttons.push(new GameButton(300, 250, 40, function () {
-                let num = get_displayed_num();
-                display_num(num + 3);
-            }))
-            buttons.push(new GameButton(350, 250, 40, function () {
-                let num = get_displayed_num();
-                display_num(num + 9);
-            }))
-            buttons.push(new GameButton(400, 250, 40, function () {
-                let num = get_displayed_num();
-                display_num(num + 27);
-            }))
-            buttons.push(new GameButton(150, 300, 40, function () {
-                let num = get_displayed_num();
-                display_num(num * 5);
+                display_num(num + 1);
             }))
             break;
     }
