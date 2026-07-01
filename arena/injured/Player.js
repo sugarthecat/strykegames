@@ -16,6 +16,8 @@ class Player {
         this.dy = 0;
         this.trackdx = 0;
         this.trackdy = 0;
+        this.misfireTime = 10;
+        this.fireFailChance = 0;
         this.radius = 20;
         this.goalTime = 0;
     }
@@ -94,7 +96,12 @@ class Player {
         translate(this.x, this.y);
         fill(0)
         if (!this.disabled) {
-            this.facing = atan2(targety - this.y, targetx - this.x);
+            if (this.backwardsRotation) {
+
+                this.facing = -atan2(targety - this.y, targetx - this.x);
+            } else {
+                this.facing = atan2(targety - this.y, targetx - this.x);
+            }
         }
         rotate(this.facing)
         circle(0, 0, this.radius * 2)
@@ -102,10 +109,20 @@ class Player {
         image(Assets.player, -50, -50, 100, 100)
         pop()
         push()
-        stroke(255, 255, 0)
-        strokeWeight(5)
-        noFill()
-        arc(this.x, this.y - 50, 40, 40, 0, 2 * PI * min(1, this.goalTime / 5))
+        noStroke()
+        if (this.misfireTime < 2) {
+            this.misfireTime += deltaTime / 1000
+            let c = color(255, 255, 0)
+            c.setAlpha(max(0, 255 * (2 - this.misfireTime)))
+            fill(c)
+            textFont("trebuchet MT")
+            text("Misfire", this.x + 20, this.y - 20 - this.misfireTime * 10)
+        } else {
+            stroke(255, 255, 0)
+            strokeWeight(5)
+            noFill()
+            arc(this.x, this.y - 50, 40, 40, 0, 2 * PI * min(1, this.goalTime / 5))
+        }
         pop()
     }
     DrawGUI() {
@@ -132,11 +149,14 @@ class Player {
             text(this.moveKeys[2].symbol, 40, 100)
             text(this.moveKeys[1].symbol, 100, 100)
             text(this.moveKeys[3].symbol, 160, 100)
-            stroke(255,255,0)
+            stroke(255, 255, 0)
             strokeWeight(8)
             noFill()
-            arc (40, 40, 40, 40, 0, 2 * PI * this.moveReshuffle.time / this.moveReshuffle.shuffleTime)
+            arc(40, 40, 40, 40, 0, 2 * PI * this.moveReshuffle.time / this.moveReshuffle.shuffleTime)
             pop()
+        }
+        if (this.backwardsRotation) {
+            image(Assets.symbols.norotate, 500, 0, 100, 100)
         }
     }
     canFire() {
@@ -154,10 +174,14 @@ class Player {
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
-        return new Bullet(
-            this.x + cos(this.facing) * muzzleRad + sin(this.facing) * muzzleOff,
-            this.y + sin(this.facing) * muzzleRad - cos(this.facing) * muzzleOff,
-            cos(this.facing) * speed, sin(this.facing) * speed
-        );
+        if (random() <= this.fireFailChance) {
+            return new Bullet(
+                this.x + cos(this.facing) * muzzleRad + sin(this.facing) * muzzleOff,
+                this.y + sin(this.facing) * muzzleRad - cos(this.facing) * muzzleOff,
+                cos(this.facing) * speed, sin(this.facing) * speed
+            );
+        } else {
+            this.misfireTime = 0;
+        }
     }
 }

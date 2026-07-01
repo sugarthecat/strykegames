@@ -1,10 +1,10 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = 0) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = random([0, 1])) {
         this.x = x;
         this.y = y;
         this.alive = true;
         this.angle = random(0, 2 * PI);
-        this.reloadTime = random(0,timeBetweenFire);
+        this.reloadTime = random(0, timeBetweenFire);
         this.timeBetweenFire = timeBetweenFire;
         this.radius = 20;
         this.turnRange = turnRange;
@@ -67,8 +67,9 @@ class EnemySniper {
         const muzzleRad = 48;
         const muzzleOff = -5;
         const angleOffset = random(-0.1, 0.1)
-        return new Bullet(this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
-            this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff,
+        return new Bullet(
+            this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff + random(-2, 2),
+            this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff + random(-2, 2),
             cos(angle + angleOffset) * speed, sin(angle + angleOffset) * speed);
     }
 }

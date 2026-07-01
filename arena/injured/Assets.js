@@ -14,6 +14,9 @@
             officer: loadImage("assets/officer.png"),
             explosion: loadImage("assets/explosion.png"),
         }
+        this.symbols = {
+            norotate: loadImage("assets/norotate.png")
+        }
     }
     static setVolume(volume){
     }

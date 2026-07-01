@@ -253,7 +253,7 @@ class GameScreen extends GUI {
                     new EnemySniper(500, 150, 2, 2, 100, 500, 1),
                     new EnemySniper(800, 150, 2, 2, 100, 500, 1),
                     new EnemySniper(1000, 0, 2, 2, 100, 500, 1),
-                    new Barricade(1000, 0, PI * 1 / 2, PI *3 / 2),
+                    new Barricade(1000, 0, PI * 1 / 2, PI * 3 / 2),
                     new Tree(69.52513514137252, 64.66626682682629, 43),
                     new Tree(-130.53797468354432, -189.873417721519, 48),
                     new Tree(-120.09493670886076, 110.12658227848098, 49),
@@ -270,18 +270,157 @@ class GameScreen extends GUI {
                 break;
             case 5:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.5
+                GameScreen.scaleFactor = 1.65
                 this.bounds = {
                     x: { min: -200, max: 1200 },
+                    y: { min: -600, max: 600 }
+                }
+
+                this.player.backwardsRotation = true
+                this.enemies = [
+                    new Artillery(0, 9, 4, 175, 1, 0),
+                    new Goal(1100, 450, 50),
+                    new Tree(-77, -295, 49.050119095607876),
+                    new Tree(-122, -76, 48.61206553919236),
+                    new Tree(-95, 81, 35.428636985436654),
+                    new Tree(-69, 328, 44.24592076692028),
+                    new Tree(-113, 524, 37.04260221873511),
+                    new EnemySniper(134, -486, 1.5557052263943771),
+                    new Tree(97, -307, 41.23322370015704),
+                    new Tree(104, -128, 37.707750051672406),
+                    new EnemySniper(137, 62, 2.227569142191752),
+                    new Tree(63, 276, 40.09723192728348),
+                    new Tree(73, 480, 42.806334399183086),
+                    new Tree(306, -484, 47.73552118385909),
+                    new Tree(332, -303, 38.360732170850554),
+                    new Tree(273, -93, 36.12241625691574),
+                    new Tree(311, 67, 37.224783724826956),
+                    new Tree(283, 291, 48.74595451786214),
+                    new Tree(260, 460, 39.53902667917458),
+                    new Tree(499, -487, 46.06408366758535),
+                    new Tree(477, -293, 43.70387141996657),
+                    new Tree(512, -82, 37.84315243282931),
+                    new Tree(510, 134, 46.6593811557867),
+                    new Tree(504, 335, 39.00463128180059),
+                    new Tree(528, 518, 39.32370223079728),
+                    new EnemySniper(735, -526, 2.145624194263992),
+                    new Tree(664, -335, 46.365065474745585),
+                    new Tree(677, -130, 41.20137049593399),
+                    new EnemySniper(729, 68, 2.4649978604352674),
+                    new Tree(739, 260, 39.92569576306444),
+                    new Tree(675, 488, 35.92336629781643),
+                    new Tree(877, -469, 46.4388314461531),
+                    new Tree(919, -337, 37.58934937207756),
+                    new Tree(886, -88, 44.343827942130986),
+                    new Tree(931, 108, 38.98699179025588),
+                    new Tree(890, 261, 43.369035781308455),
+                    new Tree(864, 490, 35.75554166675154),
+                    new Tree(1060, -526, 43.6850582604847),
+                    new Tree(1072, -324, 42.000689753543526),
+                    new Tree(1089, -63, 35.794152907943534),
+                    new Tree(1090, 123, 45.30603076234662),
+                    new Tree(1128, 319, 36.812202819134725),
+                    new Tree(1082, 516, 38.686470651759606),
+                ]
+                break;
+            case 6:
+                this.bgcolor = color(95, 65, 35)
+                GameScreen.scaleFactor = 1.65
+                this.bounds = {
+                    x: { min: -200, max: 1200 },
+                    y: { min: -300, max: 300 }
+                }
+                this.player.backwardsRotation = true
+                this.player.fireFailChance = 0.5
+                
+                this.enemies = [
+                    new Goal(1100, 0, 50), new Tree(245, -240, 49),
+                    new Tree(-61, -346, 47), new Tree(453, -58, 40), new Tree(177, -110, 44), new Tree(-123, -191, 35),
+                    new Tree(-71, -49, 45), new Tree(-128, 90, 45), new Tree(-99, 254, 39), new Tree(65, -351, 47),
+                    new Tree(87, -244, 46), new Tree(106, -37, 48), new Tree(91, 133, 41), new Tree(63, 260, 41), new Tree(220, -338, 35),
+                    new Tree(236, 35, 46), new Tree(256, 137, 41), new Tree(265, 311, 46), new Tree(455, -383, 35), new Tree(247, -173, 36),
+                    new Tree(473, -152, 39), new Tree(428, 40, 41), new Tree(455, 130, 45), new Tree(406, 302, 41),
+                    new Tree(641, -330, 47), new Tree(628, -185, 42), new Tree(614, 72, 36), new Tree(629, 191, 37),
+                    new Tree(586, 324, 42), new Tree(822, -377, 40), new Tree(801, -143, 42), new Tree(785, 40, 38), new Tree(809, 138, 41), new Tree(805, 242, 40),
+                    new Tree(969, -389, 49), new Tree(967, -117, 40), new Tree(946, 26, 45), new Tree(947, 144, 42), new Tree(949, 348, 39),
+                    new Tree(1122, -332, 40), new Tree(1184, -152, 39),new Tree(1167, 181, 42), new Tree(1166, 285, 42),
+                    new EnemySniper(165, 223),
+                    new EnemySniper(184, -33),
+                    new EnemySniper(308, -193),
+                    new EnemySniper(495, 43),
+                    new EnemySniper(636, 254),
+                    new EnemySniper(844, 42),
+                    new EnemySniper(1001, 197),
+                ]
+                break;
+            case 7:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.65
+                this.bounds = {
+                    x: { min: -200, max: 2400 },
                     y: { min: -250, max: 250 }
                 }
                 this.player.moveReshuffle = {
-                    keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }],
+                    keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }, { keyCode: 81, symbol: "Q" }, { keyCode: 69, symbol: "E" }],
                     shuffleTime: 5,
                     time: 0
                 }
+                this.player.backwardsRotation = true
+                this.player.fireFailChance = 0.3
                 this.enemies = [
-
+                    //12 second cycle each direction
+                    new Artillery(0, 9, 3, 175, 1, 0),
+                    new Artillery(3, 9, 3, 175, -1, 0),
+                    new Artillery(6, 9, 3, 175, 0, 1),
+                    new Artillery(9, 9, 3, 175, 0, -1),
+                    //8 second cycle
+                    new Artillery(0, 6, 2, 125, 1, 0),
+                    new Artillery(2, 6, 2, 125, 0, 0),
+                    new Artillery(4, 6, 2, 125, 1, 0),
+                    new Artillery(6, 6, 2, 125, 0, 0),
+                    new Tree(100, 116, 44),
+                    new Tree(200, 119, 49),
+                    new Tree(300, -111, 43),
+                    new Tree(400, 66, 52),
+                    new Tree(500, -104, 42),
+                    new Tree(600, -147, 44),
+                    new Tree(700, -198, 45),
+                    new Tree(800, -141, 52),
+                    new Tree(900, -4, 45),
+                    new Tree(1000, 194, 50),
+                    new Tree(1100, -47, 43),
+                    new Tree(1200, 95, 42),
+                    new Tree(1300, 138, 50),
+                    new Tree(1400, 6, 43),
+                    new Tree(1500, -71, 37),
+                    new Tree(1600, 24, 50),
+                    new Tree(1700, 227, 42),
+                    new Tree(1800, -11, 45),
+                    new Tree(1900, -44, 45),
+                    new Tree(2000, -116, 46),
+                    new Tree(2100, 110, 46),
+                    new Tree(2200, -18, 43),
+                    new Tree(2300, -94, 41),
+                    new Tree(2400, 224, 48),
+                    new Goal(2300, 0, 50),
+                ]
+                break;
+            case 8:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.65
+                this.bounds = {
+                    x: { min: -200, max: 2400 },
+                    y: { min: -250, max: 250 }
+                }
+                this.player.moveReshuffle = {
+                    keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }, { keyCode: 81, symbol: "Q" }, { keyCode: 69, symbol: "E" }],
+                    shuffleTime: 5,
+                    time: 0
+                }
+                this.player.backwardsRotation = true
+                this.player.fireFailChance = 0.2
+                this.enemies = [
+                    new Goal(2300, 0, 50),
                 ]
                 break;
         }
