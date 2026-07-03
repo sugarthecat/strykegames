@@ -1,8 +1,12 @@
- class Assets{
+class Assets {
 
-    static loadAssets(){
+    static loadAssets() {
         this.player = loadImage("assets/player.png")
-        this.enemies = [loadImage("assets/enemy.png"),loadImage("assets/enemy2.png")]
+        this.enemies = [
+            loadImage("assets/enemy.png"),
+            loadImage("assets/enemy2.png"),
+            loadImage("assets/enemy3.png"),
+            loadImage("assets/enemy4.png")]
         this.titleCard = loadImage("assets/titlecard.png")
         this.backgrounds = {
             ussr: loadImage("assets/ussrbackground.png"),
@@ -18,6 +22,6 @@
             norotate: loadImage("assets/norotate.png")
         }
     }
-    static setVolume(volume){
+    static setVolume(volume) {
     }
 }

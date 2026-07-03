@@ -332,21 +332,21 @@ class GameScreen extends GUI {
                 }
                 this.player.backwardsRotation = true
                 this.player.fireFailChance = 0.5
-                
+
                 this.enemies = [
                     new Goal(1100, 0, 50), new Tree(245, -240, 49),
-                    new Tree(-61, -346, 47), new Tree(453, -58, 40), new Tree(177, -110, 44), new Tree(-123, -191, 35),
-                    new Tree(-71, -49, 45), new Tree(-128, 90, 45), new Tree(-99, 254, 39), new Tree(65, -351, 47),
-                    new Tree(87, -244, 46), new Tree(106, -37, 48), new Tree(91, 133, 41), new Tree(63, 260, 41), new Tree(220, -338, 35),
-                    new Tree(236, 35, 46), new Tree(256, 137, 41), new Tree(265, 311, 46), new Tree(455, -383, 35), new Tree(247, -173, 36),
-                    new Tree(473, -152, 39), new Tree(428, 40, 41), new Tree(455, 130, 45), new Tree(406, 302, 41),
-                    new Tree(641, -330, 47), new Tree(628, -185, 42), new Tree(614, 72, 36), new Tree(629, 191, 37),
-                    new Tree(586, 324, 42), new Tree(822, -377, 40), new Tree(801, -143, 42), new Tree(785, 40, 38), new Tree(809, 138, 41), new Tree(805, 242, 40),
-                    new Tree(969, -389, 49), new Tree(967, -117, 40), new Tree(946, 26, 45), new Tree(947, 144, 42), new Tree(949, 348, 39),
-                    new Tree(1122, -332, 40), new Tree(1184, -152, 39),new Tree(1167, 181, 42), new Tree(1166, 285, 42),
+                    new Tree(-61, -346, 47), new Tree(453, -58, 40), new Tree(177, -110, 44), new Tree(-123, -191, 35), new Tree(-71, -49, 45),
+                    new Tree(-128, 90, 45), new Tree(-99, 254, 39), new Tree(65, -351, 47), new Tree(87, -244, 46), new Tree(106, -37, 48),
+                    new Tree(91, 133, 41), new Tree(63, 260, 41), new Tree(220, -338, 35), new Tree(236, 35, 46), new Tree(256, 137, 41),
+                    new Tree(265, 311, 46), new Tree(455, -383, 35), new Tree(247, -173, 36), new Tree(473, -152, 39), new Tree(428, 40, 41),
+                    new Tree(455, 130, 45), new Tree(406, 302, 41), new Tree(641, -330, 47), new Tree(628, -185, 42), new Tree(614, 72, 36),
+                    new Tree(629, 191, 37), new Tree(586, 324, 42), new Tree(822, -377, 40), new Tree(801, -143, 42), new Tree(785, 40, 38),
+                    new Tree(809, 138, 41), new Tree(805, 242, 40), new Tree(969, -389, 49), new Tree(967, -117, 40), new Tree(946, 26, 45),
+                    new Tree(947, 144, 42), new Tree(949, 348, 39), new Tree(1122, -332, 40), new Tree(1184, -152, 39), new Tree(1167, 181, 42),
+                    new Tree(1166, 285, 42),new Tree(96, -120, 35),
                     new EnemySniper(165, 223),
                     new EnemySniper(184, -33),
-                    new EnemySniper(308, -193),
+                    new EnemySniper(325, -193),
                     new EnemySniper(495, 43),
                     new EnemySniper(636, 254),
                     new EnemySniper(844, 42),

@@ -1,5 +1,5 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = random([0, 1])) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = floor(random(3))) {
         this.x = x;
         this.y = y;
         this.alive = true;
