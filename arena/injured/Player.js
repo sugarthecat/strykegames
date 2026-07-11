@@ -20,6 +20,8 @@ class Player {
         this.fireFailChance = 0;
         this.radius = 20;
         this.goalTime = 0;
+        this.momx = 0;
+        this.momy = 0;
     }
     isAlive() {
         return this.alive;
@@ -58,8 +60,11 @@ class Player {
         let deltaMag = max(1, sqrt(delta.x ** 2 + delta.y ** 2))
         this.dy = delta.y * this.speed / deltaMag;
         this.dx = delta.x * this.speed / deltaMag;
-        this.x += this.dx * deltaTime / 1000;
-        this.y += this.dy * deltaTime / 1000;
+        const SPEED_DECAY = 0.9
+        this.momx = this.momx * SPEED_DECAY + this.dx * (1 - SPEED_DECAY)
+        this.momy = this.momy * SPEED_DECAY + this.dy * (1 - SPEED_DECAY)
+        this.x += this.momx * deltaTime / 1000;
+        this.y += this.momy * deltaTime / 1000;
         if (this.dx != 0 || this.dy != 0) {
             this.trackdx = this.dx;
             this.trackdy = this.dy;
@@ -175,13 +180,13 @@ class Player {
         const muzzleRad = 48;
         const muzzleOff = -5;
         if (random() <= this.fireFailChance) {
+            this.misfireTime = 0;
+        } else {
             return new Bullet(
                 this.x + cos(this.facing) * muzzleRad + sin(this.facing) * muzzleOff,
                 this.y + sin(this.facing) * muzzleRad - cos(this.facing) * muzzleOff,
                 cos(this.facing) * speed, sin(this.facing) * speed
             );
-        } else {
-            this.misfireTime = 0;
         }
     }
 }

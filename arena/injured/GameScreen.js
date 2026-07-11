@@ -31,6 +31,18 @@ class GameScreen extends GUI {
         push()
         this.camera.x -= CAM_ADJUST_SPEED * (this.camera.x - this.player.x);
         this.camera.y -= CAM_ADJUST_SPEED * (this.camera.y - this.player.y);
+        if (this.camera.x < this.bounds.x.min + GameScreen.scaleFactor * 300) {
+            this.camera.x = this.bounds.x.min + GameScreen.scaleFactor * 300
+        }
+        if (this.camera.y < this.bounds.y.min + GameScreen.scaleFactor * 200) {
+            this.camera.y = this.bounds.y.min + GameScreen.scaleFactor * 200
+        }
+        if (this.camera.x > this.bounds.x.max - GameScreen.scaleFactor * 300) {
+            this.camera.x = this.bounds.x.max - GameScreen.scaleFactor * 300
+        }
+        if (this.camera.y > this.bounds.y.max - GameScreen.scaleFactor * 200) {
+            this.camera.y = this.bounds.y.max - GameScreen.scaleFactor * 200
+        }
         translate(300, 200)
         scale(1 / GameScreen.scaleFactor)
         translate(- this.camera.x, - this.camera.y)
@@ -43,7 +55,6 @@ class GameScreen extends GUI {
         this.player.Move()
         this.player.x = constrain(this.player.x, this.bounds.x.min + this.player.radius, this.bounds.x.max - this.player.radius);
         this.player.y = constrain(this.player.y, this.bounds.y.min + this.player.radius, this.bounds.y.max - this.player.radius);
-        this.DrawBoundaries()
         pop()
         this.player.DrawGUI()
         super.Draw(x, y);
@@ -53,39 +64,6 @@ class GameScreen extends GUI {
             screenOn = "dialogue";
             screens.dialogue.Load(this.level + 1)
         }
-    }
-    DrawBoundaries() {
-        const sf = GameScreen.scaleFactor;
-        push()
-        stroke(180)
-        strokeWeight(8)
-        push()
-        translate(0, this.camera.y)
-        if (this.camera.x < this.bounds.x.min + 300 * sf) {
-            for (let i = -500 * sf; i <= 300 * sf; i += 50) {
-                line(this.bounds.x.min, i, this.bounds.x.min - 300 * sf, i + 300 * sf)
-            }
-        }
-        if (this.camera.x > this.bounds.x.max - 300 * sf) {
-            for (let i = -300 * sf; i <= 500 * sf; i += 50) {
-                line(this.bounds.x.max, i, this.bounds.x.max + 300 * sf, i - 300 * sf)
-            }
-        }
-        pop()
-        push()
-        translate(this.camera.x, 0)
-        if (this.camera.y < this.bounds.y.min + 200 * sf) {
-            for (let i = -400 * sf; i <= 800 * sf; i += 50) {
-                line(i, this.bounds.y.min, i - 200 * sf, this.bounds.y.min - 200 * sf)
-            }
-        }
-        if (this.camera.y > this.bounds.y.max - 200 * sf) {
-            for (let i = -400 * sf; i <= 800 * sf; i += 50) {
-                line(i, this.bounds.y.max + 200 * sf, i - 200 * sf, this.bounds.y.max)
-            }
-        }
-        pop()
-        pop()
     }
     UpdateBullets() {
         const sf = GameScreen.scaleFactor;
@@ -146,7 +124,7 @@ class GameScreen extends GUI {
         switch (level) {
             case 1:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.5
+                GameScreen.scaleFactor = 1
                 this.bounds = {
                     x: { min: -300, max: 800 },
                     y: { min: -200, max: 200 }
@@ -206,7 +184,7 @@ class GameScreen extends GUI {
                 break;
             case 3:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.5
+                GameScreen.scaleFactor = 1.25
                 this.bounds = {
                     x: { min: -200, max: 2400 },
                     y: { min: -250, max: 250 }
@@ -243,7 +221,7 @@ class GameScreen extends GUI {
                 break;
             case 4:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.5
+                GameScreen.scaleFactor = 1.25
                 this.bounds = {
                     x: { min: -200, max: 1200 },
                     y: { min: -250, max: 250 }
@@ -270,7 +248,7 @@ class GameScreen extends GUI {
                 break;
             case 5:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.65
+                GameScreen.scaleFactor = 1.5
                 this.bounds = {
                     x: { min: -200, max: 1200 },
                     y: { min: -600, max: 600 }
@@ -325,7 +303,7 @@ class GameScreen extends GUI {
                 break;
             case 6:
                 this.bgcolor = color(95, 65, 35)
-                GameScreen.scaleFactor = 1.65
+                GameScreen.scaleFactor = 1.5
                 this.bounds = {
                     x: { min: -200, max: 1200 },
                     y: { min: -300, max: 300 }
@@ -343,7 +321,7 @@ class GameScreen extends GUI {
                     new Tree(629, 191, 37), new Tree(586, 324, 42), new Tree(822, -377, 40), new Tree(801, -143, 42), new Tree(785, 40, 38),
                     new Tree(809, 138, 41), new Tree(805, 242, 40), new Tree(969, -389, 49), new Tree(967, -117, 40), new Tree(946, 26, 45),
                     new Tree(947, 144, 42), new Tree(949, 348, 39), new Tree(1122, -332, 40), new Tree(1184, -152, 39), new Tree(1167, 181, 42),
-                    new Tree(1166, 285, 42),new Tree(96, -120, 35),
+                    new Tree(1166, 285, 42), new Tree(96, -120, 35),
                     new EnemySniper(165, 223),
                     new EnemySniper(184, -33),
                     new EnemySniper(325, -193),
@@ -355,7 +333,7 @@ class GameScreen extends GUI {
                 break;
             case 7:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.65
+                GameScreen.scaleFactor = 1.25
                 this.bounds = {
                     x: { min: -200, max: 2400 },
                     y: { min: -250, max: 250 }
@@ -407,7 +385,7 @@ class GameScreen extends GUI {
                 break;
             case 8:
                 this.bgcolor = color(0, 150, 0)
-                GameScreen.scaleFactor = 1.65
+                GameScreen.scaleFactor = 1.25
                 this.bounds = {
                     x: { min: -200, max: 2400 },
                     y: { min: -250, max: 250 }

@@ -27,7 +27,7 @@ class Goal {
         if (dist(player.x, player.y, this.x, this.y) < this.radius) {
             player.goalTime += deltaTime / 1000;
         } else {
-            player.goalTime = max(0, player.goalTime - deltaTime / 1000);
+            player.goalTime = max(0, player.goalTime - deltaTime / 1000 / 3 );
         }
     }
 }

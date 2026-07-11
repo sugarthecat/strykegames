@@ -48,7 +48,7 @@ class TitleScreen extends GUI {
                 this.explosions[i].x = random(0,600)
             }
         }
-        image(Assets.titleCard, 0, 0, 600, 400)
+        image(Assets.gui.titleCard, 0, 0, 600, 400)
         super.Draw(x, y)
     }
 }
