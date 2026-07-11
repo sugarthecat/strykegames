@@ -161,6 +161,25 @@ class GameScreen extends GUI {
                     y: { min: -300, max: 300 }
                 }
                 this.enemies = [
+                    new Tree(295, 150, 45),
+                    new Tree(305, 250, 45),new Tree(383.38607594936707, 89.24050632911394, 48),new Tree(570.4113924050633, 112.97468354430379, 40),
+                    new Tree(212, 213, 41), 
+                    new Tree(632, 30, 43), 
+                    new Tree(486, 48, 47),
+                     new Tree(346, -226, 46),
+                    new Tree(100, -120, 40),
+                    new EnemySniper(400, 200, 4, 3, 1000, 1000, 1),
+                    new Goal(850, 150)
+                ]
+                break;
+            case 3:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.5
+                this.bounds = {
+                    x: { min: -200, max: 1000 },
+                    y: { min: -300, max: 300 }
+                }
+                this.enemies = [
                     new Barricade(350, -75, PI * 3 / 4, PI * 7 / 4),
                     new Barricade(350, 0, PI * 1 / 4, PI * 7 / 4),
                     new Barricade(350, 75, PI * 1 / 4, PI * 5 / 4),
@@ -182,7 +201,7 @@ class GameScreen extends GUI {
                     new Goal(850, 0)
                 ]
                 break;
-            case 3:
+            case 4:
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.25
                 this.bounds = {
@@ -219,7 +238,7 @@ class GameScreen extends GUI {
                     new Goal(2300, 0, 50),
                 ]
                 break;
-            case 4:
+            case 5:
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.25
                 this.bounds = {
@@ -246,7 +265,7 @@ class GameScreen extends GUI {
                     new Goal(1150, 0, 50),
                 ]
                 break;
-            case 5:
+            case 6:
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.5
                 this.bounds = {
@@ -301,7 +320,7 @@ class GameScreen extends GUI {
                     new Tree(1082, 516, 38.686470651759606),
                 ]
                 break;
-            case 6:
+            case 7:
                 this.bgcolor = color(95, 65, 35)
                 GameScreen.scaleFactor = 1.5
                 this.bounds = {
@@ -331,7 +350,7 @@ class GameScreen extends GUI {
                     new EnemySniper(1001, 197),
                 ]
                 break;
-            case 7:
+            case 8:
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.25
                 this.bounds = {
@@ -383,7 +402,7 @@ class GameScreen extends GUI {
                     new Goal(2300, 0, 50),
                 ]
                 break;
-            case 8:
+            case 9:
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.25
                 this.bounds = {

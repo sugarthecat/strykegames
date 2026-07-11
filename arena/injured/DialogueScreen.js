@@ -20,8 +20,12 @@ class DialogueScreen extends GUI {
     }
     Draw(x, y) {
         if (this.idx >= this.phases.length) {
-            screens.game.Load(this.level);
-            screenOn = "game"
+            if (this.level < 11) {
+                screens.game.Load(this.level);
+                screenOn = "game"
+            } else {
+                screenOn = "title"
+            }
             return;
         }
         push()
@@ -112,7 +116,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "soldier",
                     message: "[Translate]",
-                    messageEng: "[Mikhail, you're not so bad for a\n fresh university graduate.]",
+                    messageEng: "[Ivan, you're not so bad for a\n fresh university graduate.]",
                     time: 4
                 },
                 {
@@ -141,6 +145,28 @@ class DialogueScreen extends GUI {
                 },
             ]
         } else if (level == 2) {
+            //landmines
+            this.phases = [
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[Be careful around those!]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Quiet! There are soldiers ahead.]",
+                    time: 4
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[It's only one enemy.\nYou can handle this.]",
+                    time: 5
+                }
+            ]
+        } else if (level == 3) {
             //first enemy
             this.phases = [
                 {
@@ -180,7 +206,7 @@ class DialogueScreen extends GUI {
                     time: 4
                 },
             ]
-        } else if (level == 3) {
+        } else if (level == 4) {
             //artillery
             this.phases = [
                 {
@@ -207,7 +233,7 @@ class DialogueScreen extends GUI {
                     time: 5
                 },
             ]
-        } else if (level == 4) {
+        } else if (level == 5) {
             //artillery
             this.phases = [
                 {
@@ -223,7 +249,7 @@ class DialogueScreen extends GUI {
                     time: 5
                 }
             ]
-        } else if (level == 5) {
+        } else if (level == 6) {
             //artillery
             this.phases = [
                 {
@@ -237,29 +263,7 @@ class DialogueScreen extends GUI {
                     message: "[Polish text here]",
                     time: 3
                 },
-                
-                {
-                    character: "soldier",
-                    message: "[Translate]",
-                    messageEng: "[I don't speak Polish.]",
-                    time: 5
-                },
-                {
-                    character: "soldier",
-                    message: "[Translate]",
-                    messageEng: "[I have to keep wandering.]",
-                    time: 3
-                },
-            ]
-        } else if (level == 6) {
-            //artillery
-            this.phases = [
-                {
-                    character: "radio",
-                    message: "[Polish text here]",
-                    time: 3
-                },
-                
+
                 {
                     character: "soldier",
                     message: "[Translate]",
@@ -278,6 +282,102 @@ class DialogueScreen extends GUI {
                     messageEng: "[I feel sick. I can't tell my left from my right.]",
                     time: 3
                 },
+            ]
+        } else if (level == 7) {
+            //artillery
+            this.phases = [
+                {
+                    character: "radio",
+                    message: "[Polish text here]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Hello? Can you hear me?]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[This rain. I've got mud in my rifle.]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I need to be careful,\n it could misfire.]",
+                    time: 3
+                },
+            ]
+        } else if (level == 8) {
+            //artillery
+            this.phases = [
+                {
+                    character: "radio",
+                    message: "[Polish text here]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[That sounds like my location.]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I need to get out of here!]",
+                    time: 3
+                }
+            ]
+        } else if (level == 9) {
+            //artillery
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Is that an enemy fort?]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Well, no way out but through.]",
+                    time: 3
+                }
+            ]
+        } else if (level == 10) {
+            //artillery
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Is that an enemy tank?]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Oh, shit. I'm dead, aren't I?]",
+                    time: 3
+                }
+            ]
+        } else if (level == 11) {
+            //artillery
+            this.phases = [
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I give up! I give up!\n I surrender! Please!]",
+                    time: 5
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[I don't care.\n I don't want to fight anymore.]",
+                    time: 3
+                }
             ]
         }
     }
