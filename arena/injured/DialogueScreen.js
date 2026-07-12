@@ -468,7 +468,7 @@ class DialogueScreen extends GUI {
                     character: "injured",
                     language: "russian",
                     message: "После штурма форта я ранен ещё сильнее..",
-                    messageEng: "[I'm even more injured after that fort raid..]",
+                    messageEng: "[I'm even more injured after \nthat fort raid..]",
                     time: 2
                 },
                 {
@@ -498,7 +498,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "german",
                     language: "german",
-                    message: "Ich verstehe Sie kaum. Beruhigen Sie sich.",
+                    message: "Ich verstehe Sie kaum. \nBeruhigen Sie sich.",
                     messageEng: "[I can't understand you. Calm down.]",
                     time: 2
                 },
@@ -519,8 +519,8 @@ class DialogueScreen extends GUI {
                 {
                     character: "german",
                     language: "german",
-                    message: "Sie werden als Kriegsgefangener festgehalten,\n obwohl Deutschland in diesem Krieg neutral ist.",
-                    messageEng: "[You will be held as a prisoner of war,\n though Germany is neutral in this war.]",
+                    message: "Sie werden als Kriegsgefangener \nfestgehalten, obwohl Deutschland \nin diesem Krieg neutral ist.",
+                    messageEng: "[You will be held as a \nprisoner of war, though Germany \nis neutral in this war.]",
                     time: 2
                 },
                 {

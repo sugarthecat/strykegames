@@ -439,7 +439,7 @@ class GameScreen extends GUI {
                 }
                 this.player.moveReshuffle = {
                     keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }, { keyCode: 81, symbol: "Q" }, { keyCode: 69, symbol: "E" }],
-                    shuffleTime: 1.5,
+                    shuffleTime: 1.25,
                     time: 0
                 }
                 this.player.isSurrendering = true
