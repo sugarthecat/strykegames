@@ -2,11 +2,13 @@ class Assets {
 
     static loadAssets() {
         this.player = loadImage("assets/player.png")
+        this.playerSurrendering = loadImage("assets/player2.png")
         this.enemies = [
             loadImage("assets/enemy.png"),
             loadImage("assets/enemy2.png"),
             loadImage("assets/enemy3.png"),
-            loadImage("assets/enemy4.png")]
+            loadImage("assets/enemy4.png"),
+            loadImage("assets/enemy5.png")]
         this.backgrounds = {
             ussr: loadImage("assets/ussrbackground.png"),
             germany: loadImage("assets/germanybackground.png"),

@@ -1,7 +1,8 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = floor(random(3))) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = floor(random(3)), willEverFire = true) {
         this.x = x;
         this.y = y;
+        this.willEverFire = willEverFire;
         this.alive = true;
         this.angle = random(0, 2 * PI);
         this.reloadTime = random(0, timeBetweenFire);
@@ -58,7 +59,7 @@ class EnemySniper {
 
     }
     attemptShoot() {
-        if (this.reloadTime < this.timeBetweenFire || !this.wantsToFire) {
+        if (!this.willEverFire || this.reloadTime < this.timeBetweenFire || !this.wantsToFire) {
             return;
         }
         const angle = this.angle;

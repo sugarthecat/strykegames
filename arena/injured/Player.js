@@ -8,6 +8,7 @@ class Player {
         this.alive = true;
         this.disabled = false;
         this.moveReshuffle = false;
+        this.isSurrendering = false;
         this.backwardsRotation = false;
         this.moveKeys = [{ keyCode: 87, symbol: "W" }, { keyCode: 83, symbol: "S" }, { keyCode: 65, symbol: "A" }, { keyCode: 68, symbol: "D" }];
         this.facing = 0;
@@ -27,8 +28,6 @@ class Player {
         return this.alive;
     }
     kill() {
-        return;
-        //temporarily immune for testing
         if (this.dyingTime >= 0) {
             return;
         }
@@ -111,7 +110,11 @@ class Player {
         rotate(this.facing)
         circle(0, 0, this.radius * 2)
         scale(1.5, 1.5)
-        image(Assets.player, -50, -50, 100, 100)
+        if (this.isSurrendering) {
+            image(Assets.playerSurrendering, -50, -50, 100, 100)
+        } else {
+            image(Assets.player, -50, -50, 100, 100)
+        }
         pop()
         push()
         noStroke()
@@ -165,13 +168,12 @@ class Player {
         }
     }
     canFire() {
-        if (this.reloadTime < 1) {
+        if (this.reloadTime < 1 || this.isSurrendering) {
             return false;
         }
         return true;
     }
     attemptShoot(targetx, targety) {
-        print(`new Tree(${targetx}, ${targety}, ${Math.floor(random(35, 50))})`)
         if (!this.canFire()) {
             return null;
         }

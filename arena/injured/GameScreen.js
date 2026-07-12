@@ -428,11 +428,50 @@ class GameScreen extends GUI {
                     this.enemies.push(new Barricade(i * 200 + 200, -200, 0, 2 * PI))
                     this.enemies.push(new Barricade(i * 200 + 200, 200, 0, 2 * PI))
                     this.enemies.push(new EnemySniper(i * 200 + 200, -200, 5.5, 1, 1200, 1000))
-                    this.enemies.push(new EnemySniper(i * 200 + 200, 200, 5.5, 1,1200, 1000))
+                    this.enemies.push(new EnemySniper(i * 200 + 200, 200, 5.5, 1, 1200, 1000))
                 }
                 for (let i = 0; i < 4; i++) {
                     this.enemies.push(new Barricade(1100, i * 400 / 3 - 200, PI / 2, (3 / 2) * PI))
-                    this.enemies.push(new EnemySniper(1100, i * 400 / 3 - 200, 7, 1, 2000,700))
+                    this.enemies.push(new EnemySniper(1100, i * 400 / 3 - 200, 7, 1, 2000, 700))
+                }
+                break;
+            case 10:
+                this.bgcolor = color(0, 150, 0)
+                GameScreen.scaleFactor = 1.25
+                this.bounds = {
+                    x: { min: -200, max: 1200 },
+                    y: { min: -250, max: 250 }
+                }
+                this.player.moveReshuffle = {
+                    keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }, { keyCode: 81, symbol: "Q" }, { keyCode: 69, symbol: "E" }],
+                    shuffleTime: 2,
+                    time: 0
+                }
+                this.player.isSurrendering = true
+                this.player.speed = 60
+                this.enemies = [
+                    new Goal(1000, 0, 50),
+                    new Tree(100,200, 35),
+                    new Tree(24,-100, 35),
+                    new Tree(900,-80, 35),
+                    new Tree(100,50, 35),
+                    new Landmine(0,150, 35),
+                    new Landmine(350,-40, 35),
+                    new Landmine(170,-150, 35),
+                    new Landmine(523,-30, 35),
+                    new Landmine(262,-200, 35),
+                    new Landmine(190,6, 35),
+                    new Landmine(208,-50, 35),
+                    new Landmine(237,25, 35),
+                    new Landmine(350,-120, 35),
+                    new Landmine(412,102, 35),
+                    new Landmine(502,183, 35),
+                    new Landmine(402,183, 35),
+                    new Landmine(451,25, 35),
+                ]
+                for (let i = 0; i < 3; i++) {
+                    this.enemies.push(new Barricade(800, i * 400 / 2 - 200, PI / 2, (3 / 2) * PI))
+                    this.enemies.push(new EnemySniper(800, i * 400 / 2 - 200, 7, 1, 300, 200, 4, false))
                 }
                 break;
         }

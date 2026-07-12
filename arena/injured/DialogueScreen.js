@@ -405,13 +405,25 @@ class DialogueScreen extends GUI {
                 {
                     character: "injured",
                     message: "[Translate]",
-                    messageEng: "[Is that an enemy tank?]",
+                    messageEng: "[That's not a polish fort anymore.\n That's the border!]",
                     time: 2
                 },
                 {
                     character: "injured",
                     message: "[Translate]",
-                    messageEng: "[I'm dead, aren't I?]",
+                    messageEng: "[Is it really over?]",
+                    time: 2
+                },
+                {
+                    character: "injured",
+                    message: "[Translate]",
+                    messageEng: "[I'm even more injured after that fort raid..]",
+                    time: 2
+                },
+                {
+                    character: "surrender",
+                    message: "[Translate]",
+                    messageEng: "[Just a few steps to safety...]",
                     time: 2
                 }
             ]
@@ -433,7 +445,13 @@ class DialogueScreen extends GUI {
                 {
                     character: "german",
                     message: "[Translate]",
-                    messageEng: "[I can barely understand you. Calm down.]",
+                    messageEng: "[I can't understand you. Calm down.]",
+                    time: 2
+                },
+                {
+                    character: "surrender",
+                    message: "[Translate]",
+                    messageEng: "[Wait, I can speak german.\n Please, take my surrender.]",
                     time: 2
                 },
                 {
