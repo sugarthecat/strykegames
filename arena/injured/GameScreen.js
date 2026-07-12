@@ -52,7 +52,6 @@ class GameScreen extends GUI {
         this.UpdateBullets()
         this.player.Draw((x - 300) * GameScreen.scaleFactor + this.camera.x, (y - 200) * GameScreen.scaleFactor + this.camera.y)
         this.DrawUpperEnemies()
-        this.player.Move()
         this.player.x = constrain(this.player.x, this.bounds.x.min + this.player.radius, this.bounds.x.max - this.player.radius);
         this.player.y = constrain(this.player.y, this.bounds.y.min + this.player.radius, this.bounds.y.max - this.player.radius);
         pop()
@@ -121,6 +120,7 @@ class GameScreen extends GUI {
         this.player = new Player(0, 0)
         this.bullets = []
         this.level = level;
+        let backgroundOverridden = false;
         switch (level) {
             case 1:
                 this.bgcolor = color(0, 150, 0)
@@ -162,11 +162,11 @@ class GameScreen extends GUI {
                 }
                 this.enemies = [
                     new Tree(295, 150, 45),
-                    new Tree(305, 250, 45),new Tree(383.38607594936707, 89.24050632911394, 48),new Tree(570.4113924050633, 112.97468354430379, 40),
-                    new Tree(212, 213, 41), 
-                    new Tree(632, 30, 43), 
+                    new Tree(305, 250, 45), new Tree(383.38607594936707, 89.24050632911394, 48), new Tree(570.4113924050633, 112.97468354430379, 40),
+                    new Tree(212, 213, 41),
+                    new Tree(632, 30, 43),
                     new Tree(486, 48, 47),
-                     new Tree(346, -226, 46),
+                    new Tree(346, -226, 46),
                     new Tree(100, -120, 40),
                     new EnemySniper(400, 200, 4, 3, 1000, 1000, 1),
                     new Goal(850, 150)
@@ -406,19 +406,34 @@ class GameScreen extends GUI {
                 this.bgcolor = color(0, 150, 0)
                 GameScreen.scaleFactor = 1.25
                 this.bounds = {
-                    x: { min: -200, max: 2400 },
+                    x: { min: -200, max: 1500 },
                     y: { min: -250, max: 250 }
                 }
                 this.player.moveReshuffle = {
                     keys: [{ keyCode: 65, symbol: "A" }, { keyCode: 87, symbol: "W" }, { keyCode: 68, symbol: "D" }, { keyCode: 83, symbol: "S" }, { keyCode: 81, symbol: "Q" }, { keyCode: 69, symbol: "E" }],
-                    shuffleTime: 5,
+                    shuffleTime: 12,
                     time: 0
                 }
-                this.player.backwardsRotation = true
-                this.player.fireFailChance = 0.2
                 this.enemies = [
-                    new Goal(2300, 0, 50),
+                    new Goal(1400, 0, 50),
+                    new Tree(60, -33, 41),
+                    new Tree(45, 54, 41),
+                    new Tree(324, 10, 41),
+                    new Tree(900, -10, 41),
+                    new Tree(875, 70, 35),
+                    new Tree(955, -120, 35),
+                    new Tree(920, 120, 35)
                 ]
+                for (let i = 0; i < 3; i++) {
+                    this.enemies.push(new Barricade(i * 200 + 200, -200, 0, 2 * PI))
+                    this.enemies.push(new Barricade(i * 200 + 200, 200, 0, 2 * PI))
+                    this.enemies.push(new EnemySniper(i * 200 + 200, -200, 5.5, 1, 1200, 1000))
+                    this.enemies.push(new EnemySniper(i * 200 + 200, 200, 5.5, 1,1200, 1000))
+                }
+                for (let i = 0; i < 4; i++) {
+                    this.enemies.push(new Barricade(1100, i * 400 / 3 - 200, PI / 2, (3 / 2) * PI))
+                    this.enemies.push(new EnemySniper(1100, i * 400 / 3 - 200, 7, 1, 2000,700))
+                }
                 break;
         }
 
@@ -426,7 +441,9 @@ class GameScreen extends GUI {
             x: this.player.x,
             y: this.player.y
         }
-        this.background = new Background(this.bounds);
+        if (!backgroundOverridden) {
+            this.background = new Background(this.bounds);
+        }
     }
 
     ReloadLevel() {

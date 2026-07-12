@@ -4,7 +4,7 @@ class TitleScreen extends GUI {
         super();
         this.elements = [new Button(200, 300, 200, 50, "Play", function () {
             screenOn = "dialogue"
-            screens.dialogue.Load(2)
+            screens.dialogue.Load(11)
         })]
         this.explosions = []
 

@@ -9,12 +9,16 @@ class Assets {
             loadImage("assets/enemy4.png")]
         this.backgrounds = {
             ussr: loadImage("assets/ussrbackground.png"),
+            germany: loadImage("assets/germanybackground.png"),
             poland: loadImage("assets/polandbackground.png"),
         }
         this.characters = {
             radio: loadImage("assets/radio.png"),
             soldier: loadImage("assets/soldier.png"),
+            injured: loadImage("assets/soldierInjured.png"),
+            surrender: loadImage("assets/soldiersurrender.png"),
             officer: loadImage("assets/officer.png"),
+            german: loadImage("assets/german.png"),
             explosion: loadImage("assets/explosion.png"),
         }
         this.gui = {

@@ -2,7 +2,7 @@ class Player {
     constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
-        this.speed = 60;
+        this.speed = 100;
         this.canReload = true;
         this.reloadTime = 0;
         this.alive = true;
@@ -27,7 +27,7 @@ class Player {
         return this.alive;
     }
     kill() {
-        //return;
+        return;
         //temporarily immune for testing
         if (this.dyingTime >= 0) {
             return;
@@ -161,7 +161,7 @@ class Player {
             pop()
         }
         if (this.backwardsRotation) {
-            image(Assets.symbols.norotate, 500, 0, 100, 100)
+            image(Assets.gui.norotate, 500, 0, 100, 100)
         }
     }
     canFire() {

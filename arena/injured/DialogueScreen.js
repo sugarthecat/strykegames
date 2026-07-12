@@ -35,14 +35,32 @@ class DialogueScreen extends GUI {
             case "radio":
                 image(Assets.backgrounds.poland, 0, 0, 600, 400)
                 break;
+            case "german":
+                image(Assets.backgrounds.germany, 0, 0, 600, 400)
+                break;
             case "officer":
             case "soldier":
+            case "surrender":
+            case "injured":
             case "explosion":
                 image(Assets.backgrounds.ussr, 0, 0, 600, 400)
                 break;
         }
         textFont("trebuchet MT")
         switch (currPhase.character) {
+            case "german":
+                image(Assets.characters.german, 0, -10 + sin(this.time / 3) * 20, 600, 400)
+                stroke(0)
+                strokeWeight(5)
+                fill(255)
+                rect(25, 150 + cos(this.time / 3) * 25, 250, 100, 50, 50)
+                noStroke()
+                fill(0)
+                textSize(12)
+                textAlign(CENTER, CENTER)
+                text(currPhase.message.substring(0, floor(this.time / currPhase.time * currPhase.message.length)),
+                    150, 200 + cos(this.time / 3) * 25)
+                break;
             case "radio":
                 image(Assets.characters.radio, 300, 100 + sin(this.time / 3) * 50, 300, 200)
                 stroke(0)
@@ -70,8 +88,13 @@ class DialogueScreen extends GUI {
                     450, 200 + cos(this.time / 3) * 25)
                 break;
             case "soldier":
+            case "injured":
+            case "surrender":
             case "officer":
                 if (currPhase.character == "soldier") {
+                    image(Assets.characters.soldier, 0, -10 + sin(this.time / 3) * 20, 600, 400)
+                }
+                if (currPhase.character == "injured") {
                     image(Assets.characters.soldier, 0, -10 + sin(this.time / 3) * 20, 600, 400)
                 }
                 if (currPhase.character == "officer") {
@@ -111,37 +134,37 @@ class DialogueScreen extends GUI {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[Okay, it's just us, but I think we're okay.]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "soldier",
                     message: "[Translate]",
                     messageEng: "[Ivan, you're not so bad for a\n fresh university graduate.]",
-                    time: 4
-                },
-                {
-                    character: "officer",
-                    message: "[Translate]",
-                    messageEng: "[Anything to get home.\n It's just the two of us, we need\n to look out for each other.]",
-                    time: 5
-                },
-                {
-                    character: "officer",
-                    message: "[Translate]",
-                    messageEng: "[I'll plan a route home, if\n you can protect me along the way.]",
-                    time: 4
-                },
-                {
-                    character: "soldier",
-                    message: "[Translate]",
-                    messageEng: "[Very well, sir.]",
                     time: 3
                 },
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[First, we just need to get through this\n minefield. Go ahead and lead.]",
+                    messageEng: "[Anything to get home.\n It's just the two of us, we need\n to look out for each other.]",
                     time: 4
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[I'll plan a route home, if\n you can protect me along the way.]",
+                    time: 3
+                },
+                {
+                    character: "soldier",
+                    message: "[Translate]",
+                    messageEng: "[Very well, sir.]",
+                    time: 2
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[First, we just need to get through this\n minefield. Go ahead and lead.]",
+                    time: 3
                 },
             ]
         } else if (level == 2) {
@@ -151,19 +174,19 @@ class DialogueScreen extends GUI {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[Be careful around those!]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "soldier",
                     message: "[Translate]",
                     messageEng: "[Quiet! There are soldiers ahead.]",
-                    time: 4
+                    time: 3
                 },
                 {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[It's only one enemy.\nYou can handle this.]",
-                    time: 5
+                    time: 3
                 }
             ]
         } else if (level == 3) {
@@ -173,25 +196,25 @@ class DialogueScreen extends GUI {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[That was a close call!]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "soldier",
                     message: "[Translate]",
                     messageEng: "[Indeed.]",
-                    time: 2
+                    time: 1
                 },
                 {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[Heads up! Enemies!]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "soldier",
                     message: "[Translate]",
                     messageEng: "[Why are they blue?]",
-                    time: 4
+                    time: 2
                 },
                 {
                     character: "officer",
@@ -213,13 +236,13 @@ class DialogueScreen extends GUI {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[Watch out! I heard there's artillery ahead.]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "officer",
                     message: "[Translate]",
                     messageEng: "[Mind the-]",
-                    time: 3
+                    time: 2
                 },
                 {
                     character: "explosion",
@@ -227,33 +250,33 @@ class DialogueScreen extends GUI {
                     time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[He's dead!\n They killed him!]",
-                    time: 5
+                    time: 4
                 },
             ]
         } else if (level == 5) {
             //artillery
             this.phases = [
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[That squad over there!\n They have a radio.]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[I need it to find my way home.]",
-                    time: 5
+                    time: 2
                 }
             ]
         } else if (level == 6) {
             //artillery
             this.phases = [
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[Dear radio, please work.]",
                     time: 2
@@ -265,19 +288,19 @@ class DialogueScreen extends GUI {
                 },
 
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[I don't speak Polish.]",
-                    time: 5
-                },
-                {
-                    character: "soldier",
-                    message: "[Translate]",
-                    messageEng: "[I have to keep wandering.]",
                     time: 3
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
+                    message: "[Translate]",
+                    messageEng: "[I have to keep wandering.]",
+                    time: 2
+                },
+                {
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[I feel sick. I can't tell my left from my right.]",
                     time: 3
@@ -292,22 +315,22 @@ class DialogueScreen extends GUI {
                     time: 3
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[Hello? Can you hear me?]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[This rain. I've got mud in my rifle.]",
-                    time: 3
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[I need to be careful,\n it could misfire.]",
-                    time: 3
+                    time: 2
                 },
             ]
         } else if (level == 8) {
@@ -316,67 +339,89 @@ class DialogueScreen extends GUI {
                 {
                     character: "radio",
                     message: "[Polish text here]",
-                    time: 3
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[That sounds like my location.]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[I need to get out of here!]",
-                    time: 3
+                    time: 2
                 }
             ]
         } else if (level == 9) {
             //artillery
             this.phases = [
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[Is that an enemy fort?]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[Well, no way out but through.]",
-                    time: 3
+                    time: 2
+                },
+                {
+                    character: "injured",
+                    message: "[Translate]",
+                    messageEng: "[Maybe if I get close enough,\n I can shoot over the barricades.]",
+                    time: 2
                 }
             ]
         } else if (level == 10) {
             //artillery
             this.phases = [
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
                     messageEng: "[Is that an enemy tank?]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "injured",
                     message: "[Translate]",
-                    messageEng: "[Oh, shit. I'm dead, aren't I?]",
-                    time: 3
+                    messageEng: "[I'm dead, aren't I?]",
+                    time: 2
                 }
             ]
         } else if (level == 11) {
             //artillery
             this.phases = [
                 {
-                    character: "soldier",
+                    character: "surrender",
                     message: "[Translate]",
                     messageEng: "[I give up! I give up!\n I surrender! Please!]",
-                    time: 5
+                    time: 2
                 },
                 {
-                    character: "soldier",
+                    character: "surrender",
                     message: "[Translate]",
                     messageEng: "[I don't care.\n I don't want to fight anymore.]",
-                    time: 3
+                    time: 2
+                },
+                {
+                    character: "german",
+                    message: "[Translate]",
+                    time: 2
+                },
+                {
+                    character: "german",
+                    message: "[Translate]",
+                    time: 2
+                },
+                {
+                    character: "surrender",
+                    message: "[Translate]",
+                    messageEng: "[I don't care.\n I don't want to fight anymore.]",
+                    time: 2
                 }
             ]
         }
