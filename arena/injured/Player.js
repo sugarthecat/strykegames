@@ -13,6 +13,7 @@ class Player {
         this.moveKeys = [{ keyCode: 87, symbol: "W" }, { keyCode: 83, symbol: "S" }, { keyCode: 65, symbol: "A" }, { keyCode: 68, symbol: "D" }];
         this.facing = 0;
         this.dyingTime = -1;
+        this.misfiresInARow = 0;
         this.dx = 0;
         this.dy = 0;
         this.trackdx = 0;
@@ -181,9 +182,12 @@ class Player {
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
-        if (random() <= this.fireFailChance) {
+        if (random() <= this.fireFailChance && this.misfiresInARow < 5) {
             this.misfireTime = 0;
+            this.misfiresInARow++;
+            return null;
         } else {
+            this.misfiresInARow = 0;
             return new Bullet(
                 this.x + cos(this.facing) * muzzleRad + sin(this.facing) * muzzleOff,
                 this.y + sin(this.facing) * muzzleRad - cos(this.facing) * muzzleOff,
