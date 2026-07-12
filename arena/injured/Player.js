@@ -182,7 +182,7 @@ class Player {
         const speed = 400;
         const muzzleRad = 48;
         const muzzleOff = -5;
-        if (random() <= this.fireFailChance && this.misfiresInARow < 5) {
+        if (random() <= this.fireFailChance && this.misfiresInARow < 3) {
             this.misfireTime = 0;
             this.misfiresInARow++;
             return null;

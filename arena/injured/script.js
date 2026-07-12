@@ -6,7 +6,8 @@ let scaleFactor = 1;
 let volume = 1;
 let screens;
 function preload() {
-    screens = { "title": new TitleScreen() ,
+    screens = {
+        "title": new TitleScreen(),
         "game": new GameScreen(),
         "death": new DeathScreen(),
         "dialogue": new DialogueScreen()
@@ -19,6 +20,10 @@ function setup() {
     noSmooth()
 }
 function draw() {
+    if (deltaTime / 1000 > 0.5) {
+        //if less than 2 fps, drop frames
+        return;
+    }
     resizeCanvas(windowWidth, windowHeight);
 
     if (windowWidth / SCREEN_DIMENSIONS.x < windowHeight / SCREEN_DIMENSIONS.y) {
