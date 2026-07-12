@@ -59,7 +59,9 @@ class DialogueScreen extends GUI {
                 textSize(12)
                 textAlign(CENTER, CENTER)
                 text(currPhase.message.substring(0, floor(this.time / currPhase.time * currPhase.message.length)),
-                    150, 200 + cos(this.time / 3) * 25)
+                    150, 175 + cos(this.time / 3) * 25)
+                text(currPhase.messageEng.substring(0, floor(this.time / currPhase.time * currPhase.messageEng.length)),
+                    150, 225 + cos(this.time / 3) * 25)
                 break;
             case "radio":
                 image(Assets.characters.radio, 300, 100 + sin(this.time / 3) * 50, 300, 200)
@@ -91,6 +93,9 @@ class DialogueScreen extends GUI {
             case "injured":
             case "surrender":
             case "officer":
+                if (currPhase.character == "surrender") {
+                    image(Assets.characters.surrender, 0, -10 + sin(this.time / 3) * 20, 600, 400)
+                }
                 if (currPhase.character == "soldier") {
                     image(Assets.characters.soldier, 0, -10 + sin(this.time / 3) * 20, 600, 400)
                 }
@@ -133,7 +138,25 @@ class DialogueScreen extends GUI {
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[Okay, it's just us, but I think we're okay.]",
+                    messageEng: "[Okay, it's just us, left\n but I think we're okay.]",
+                    time: 2
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[Oh no.\n We're behind Rozwadowski's lines.]",
+                    time: 2
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[I can figure out the \n way back home.]",
+                    time: 2
+                },
+                {
+                    character: "officer",
+                    message: "[Translate]",
+                    messageEng: "[You can fight and scout\n for me, yes?]",
                     time: 2
                 },
                 {
@@ -143,16 +166,16 @@ class DialogueScreen extends GUI {
                     time: 3
                 },
                 {
-                    character: "officer",
+                    character: "soldier",
                     message: "[Translate]",
-                    messageEng: "[Anything to get home.\n It's just the two of us, we need\n to look out for each other.]",
-                    time: 4
+                    messageEng: "[Of course I can]",
+                    time: 3
                 },
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[I'll plan a route home, if\n you can protect me along the way.]",
-                    time: 3
+                    messageEng: "[Anything to get home.\n It's just the two of us, we need\n to look out for each other.]",
+                    time: 4
                 },
                 {
                     character: "soldier",
@@ -173,7 +196,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "officer",
                     message: "[Translate]",
-                    messageEng: "[Be careful around those!]",
+                    messageEng: "[I didn't expect a minefield back there.]",
                     time: 2
                 },
                 {
@@ -213,7 +236,7 @@ class DialogueScreen extends GUI {
                 {
                     character: "soldier",
                     message: "[Translate]",
-                    messageEng: "[Why are they blue?]",
+                    messageEng: "[Why are they wearing blue?]",
                     time: 2
                 },
                 {
@@ -221,13 +244,7 @@ class DialogueScreen extends GUI {
                     message: "[Translate]",
                     messageEng: "[There's time later for explaining.\nQuick, clear them out and let's get home.]",
                     time: 3
-                },
-                {
-                    character: "officer",
-                    message: "[Translate]",
-                    messageEng: "[First, we just need to get through this\n minefield. Go ahead and lead.]",
-                    time: 4
-                },
+                }
             ]
         } else if (level == 4) {
             //artillery
@@ -259,6 +276,12 @@ class DialogueScreen extends GUI {
         } else if (level == 5) {
             //artillery
             this.phases = [
+                {
+                    character: "injured",
+                    message: "[Translate]",
+                    messageEng: "[They killed Maxim!\n I have no way home without him.]",
+                    time: 2
+                },
                 {
                     character: "injured",
                     message: "[Translate]",
@@ -410,17 +433,31 @@ class DialogueScreen extends GUI {
                 {
                     character: "german",
                     message: "[Translate]",
+                    messageEng: "[I can barely understand you. Calm down.]",
                     time: 2
                 },
                 {
                     character: "german",
                     message: "[Translate]",
+                    messageEng: "[I accept your surrender.]",
+                    time: 2
+                },
+                {
+                    character: "german",
+                    message: "[Translate]",
+                    messageEng: "[You will be held as a prisoner of war,\n though Germany is neutral in this war.]",
                     time: 2
                 },
                 {
                     character: "surrender",
                     message: "[Translate]",
-                    messageEng: "[I don't care.\n I don't want to fight anymore.]",
+                    messageEng: "[So it's all over?]",
+                    time: 2
+                },
+                {
+                    character: "german",
+                    message: "[Translate]",
+                    messageEng: "[It's over for now. No promises.]",
                     time: 2
                 }
             ]
