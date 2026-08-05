@@ -11,7 +11,7 @@ async function loadData() {
     words = lines
 }
 
-const SECRET_WORD = "intelligent"
+let SECRET_WORD = "intelligent"
 let siteSetup = false;
 
 async function setupSite() {
