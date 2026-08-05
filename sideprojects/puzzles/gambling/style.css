@@ -1,0 +1,12 @@
+#word{
+    font-weight: bolder;
+}
+.badge{
+    padding: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    margin: 15px;
+}
+.badge p, .badge h3{
+    margin: 0px;
+}
