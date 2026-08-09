@@ -1,0 +1,599 @@
+function getLevel(level) {
+    let indicators = []
+    let buttons = []
+    switch (level) {
+        case 0:
+            for (let i = 0; i < 10; i++) {
+                let tgtIndicator = new GameIndicator(75 + i * 50, 175, 30)
+                indicators.push(tgtIndicator)
+                buttons.push(new GameButton(75 + i * 50, 125, 40, function () {
+                    tgtIndicator.Toggle();
+                }))
+            }
+            for (let i = 0; i < 10; i++) {
+                let tgtIndicator = new GameIndicator(75 + i * 50, 225, 30)
+                indicators.push(tgtIndicator)
+                buttons.push(new GameButton(75 + i * 50, 275, 40, function () {
+                    tgtIndicator.Toggle();
+                }))
+            }
+            break;
+        case 1:
+            for (let i = 0; i < 4; i++) {
+                for (let j = 0; j < 2 ** (3 - i); j++) {
+                    let tgtIndicator = new GameIndicator(j * 50 * 2 ** (i) + 100 + 25 * (2 ** i), i * 50 + 150, 30)
+                    indicators.push(tgtIndicator)
+                }
+            }
+            for (let i = 0; i < 8; i++) {
+                let index = i;
+                buttons.push(new GameButton(i * 50 + 125, 100, 40, function () {
+
+                    let listprog = 0;
+                    for (let i = 0; i < 4; i++) {
+                        if (!indicators[listprog + Math.floor(index / (2 ** i))].active) {
+                            //stuff happens here
+                            if (i == 0) {
+                                //first row, ez
+                                indicators[listprog + Math.floor(index / (2 ** i))].active = true
+                                return
+                            } else {
+                                if (indicators[listprog - 2 ** (4 - i) + 2 * Math.floor(index / (2 ** i))].active
+                                    && indicators[listprog - 2 ** (4 - i) + 2 * Math.floor(index / (2 ** i)) + 1].active) {
+                                    indicators[listprog + Math.floor(index / (2 ** i))].active = true
+                                } else {
+                                    let upperBound = listprog + Math.floor(index / (2 ** i))
+                                    let lowerBound = upperBound;
+                                    for (let j = 0; j <= i; j++) {
+                                        for (let k = lowerBound; k <= upperBound; k++) {
+                                            indicators[k].active = false;
+                                        }
+                                        upperBound -= 2 ** (4 + j - i) - Math.floor(index / (2 ** i)) * 2 ** (j) - 2 ** j
+                                        lowerBound -= 2 ** (4 + j - i) - Math.floor(index / (2 ** i)) * 2 ** (j)
+                                    }
+                                }
+                            }
+                            return;
+                        }
+                        listprog += 2 ** (3 - i)
+                    }
+
+                }))
+            }
+            break;
+        case 2:
+            addLightsRow(indicators, 300, 175, 6, 40)
+            //password: 231443
+            //btn 1
+            buttons.push(new GameButton(225, 225, 40, function () {
+                if (indicators[1].active && !indicators[2].active) {
+                    indicators[2].active = true
+                } else {
+                    for (let i = 0; i < 6; i++) {
+                        indicators[i].active = false;
+                    }
+                }
+            }))
+            //btn 2
+            buttons.push(new GameButton(275, 225, 40, function () {
+                if (!indicators[0].active) {
+                    indicators[0].active = true
+                } else {
+                    for (let i = 0; i < 6; i++) {
+                        indicators[i].active = false;
+                    }
+                }
+            }))
+            //btn 3
+            buttons.push(new GameButton(325, 225, 40, function () {
+                if (indicators[0].active && !indicators[1].active) {
+                    indicators[1].active = true
+                } else if (indicators[4].active && !indicators[5].active) {
+                    indicators[5].active = true
+                } else {
+                    for (let i = 0; i < 6; i++) {
+                        indicators[i].active = false;
+                    }
+                }
+            }))
+            buttons.push(new GameButton(375, 225, 40, function () {
+                if (indicators[3].active && !indicators[4].active) {
+                    indicators[4].active = true
+                } else if (indicators[2].active && !indicators[3].active) {
+                    indicators[3].active = true
+                } else {
+                    for (let i = 0; i < 6; i++) {
+                        indicators[i].active = false;
+                    }
+                }
+            }))
+            break;
+        case 3:
+            for (let i = 0; i < 10; i++) {
+                let index = i;
+                let tgtIndicator = new GameIndicator(300 + 100 * cos(i * PI * 2 / 10), 200 + 100 * sin(i * PI * 2 / 10), 30)
+                indicators.push(tgtIndicator)
+                let buttonFlipper = new GameButton(300 + 150 * cos(i * PI * 2 / 10), 200 + 150 * sin(i * PI * 2 / 10), 40
+                    , function () {
+                        indicators[(index + 9) % 10].Toggle();
+                        indicators[index].Toggle();
+                        indicators[(index + 1) % 10].Toggle();
+                        indicators[10].Toggle();
+                    })
+                buttons.push(buttonFlipper)
+            }
+            indicators.push(new GameIndicator(300, 200, 30))
+            buttons.push(new GameButton(50, 200, 40, function () {
+                indicators[10].Toggle();
+                indicators[5].Toggle();
+                indicators[0].Toggle();
+            }))
+            break;
+        case 4:
+            addLightsRow(indicators, 300, 175, 3)
+            addLightsRow(indicators, 300, 225, 5)
+            addLightsRow(indicators, 300, 275, 7)
+            buttons.push(new GameButton(300, 125, 40, function () {
+                //toggle middle row
+                let ind1 = indicators[1]
+                let ind2 = indicators[5]
+                let ind3 = indicators[11]
+                if (ind1.active == ind2.active) {
+                    ind1.Toggle();
+                    ind2.Toggle();
+                    ind3.active = false;
+                }
+            }))
+            buttons.push(new GameButton(400, 175, 40, function () {
+                //toggle middle row
+                let ind1 = indicators[7]
+                let ind2 = indicators[13]
+                ind1.Toggle();
+                ind2.Toggle();
+
+            }))
+            buttons.push(new GameButton(100, 225, 40, function () {
+                //swap forward
+                let hold = indicators[0].active;
+                for (let i = 0; i + 1 < 3; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[2].active = hold
+                //swap forward - row 2
+                hold = indicators[3].active;
+                for (let i = 3; i + 1 < 8; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[7].active = hold
+                //swap forward - row 3
+                hold = indicators[8].active;
+                for (let i = 8; i + 1 < 15; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[14].active = hold
+            }))
+            break;
+        case 5:
+            for (let i = 0; i < 6; i++) {
+                addLightsRow(indicators, 300, 100 + 40 * i, 6, 40)
+            }
+
+            buttons.push(new GameButton(450, 200, 40, function () {
+                for (let j = 0; j < 6; j++) {
+                    let hold = indicators[j * 6].active;
+                    for (let i = j * 6; i + 1 < 6 + j * 6; i++) {
+                        indicators[i].active = indicators[i + 1].active
+                        if (i == 13 || i == 19 || i == 15 || i == 21) {
+                            indicators[i].Toggle();
+                        }
+                    }
+                    indicators[j * 6 + 5].active = hold
+                }
+            }))
+            buttons.push(new GameButton(150, 100, 40, function () {
+                indicators[0].Toggle();
+                indicators[1].Toggle();
+                indicators[6].Toggle();
+                indicators[7].Toggle();
+
+            }))
+            buttons.push(new GameButton(300, 350, 40, function () {
+                for (let j = 0; j < 6; j++) {
+                    let hold = indicators[j].active;
+                    for (let i = 0; i + 1 < 6; i++) {
+                        indicators[j + i * 6].active = indicators[i * 6 + j + 6].active
+                        if ((i == 3 || i == 1) && j >= 2 && j <= 3) {
+                            indicators[j + i * 6].Toggle();
+                        }
+                    }
+                    indicators[j + 5 * 6].active = hold
+                }
+            }))
+            break;
+        case 6:
+            for (let i = 0; i < 10; i++) {
+                const rad = sqrt(i * 1200)
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * rad,
+                    200 + sin(i * TWO_PI / 9) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+            for (let i = 0; i < 12; i++) {
+                const rad = 150
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 12) * rad,
+                    200 + sin(i * TWO_PI / 12) * rad, 30)
+                indicators.push(tgtIndicator)
+            }
+
+            buttons.push(new GameButton(75, 200, 40, function () {
+                for (let i = 0; i < 10; i++) {
+                    if (indicators[i].active) {
+                        return;
+                    }
+                }
+                indicators[0].active = true;
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let failed = false;
+                let i10Status = indicators[10].active
+                for (let i = 10; i < 22 - 1; i++) {
+                    indicators[i].active = indicators[i + 1].active
+                }
+                indicators[21].active = i10Status
+                if (indicators[9].active) {
+                    if (indicators[10].active) {
+                        for (let i = 0; i < 22; i++) {
+                            indicators[i].active = false;
+                        }
+                        //fail
+                        return;
+                    }
+                    indicators[10].active = true;
+                    indicators[9].active = false;
+                }
+                for (let i = 9; i > 0; i--) {
+                    indicators[i].active = indicators[i - 1].active
+                }
+                indicators[0].active = false;
+
+            }))
+
+            buttons.push(new GameButton(75, 250, 40, function () {
+                if (indicators[0].active && indicators[1].active) {
+                    for (let i = 0; i < 22; i++) {
+                        indicators[i].active = false;
+                    }
+                } else {
+                    for (let i = 0; i < 10; i++) {
+                        indicators[i].active = true;
+                    }
+                }
+            }))
+            break;
+        case 7:
+            addLightsRow(indicators, 300, 75, 6)
+            addLightsRow(indicators, 300, 125, 6)
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            addLightsRow(indicators, 300, 325, 6)
+            buttons.push(new GameButton(75, 200, 40, function () {
+
+                for (let i = 0; i < 3; i++) {
+                    indicators[i * 6 + 2].Toggle();
+                    indicators[i * 6 + 3].Toggle();
+                }
+
+            }))
+            buttons.push(new GameButton(75, 150, 40, function () {
+                let nextStatus = []
+                for (let i = 0; i < 6; i++) {
+                    nextStatus.push([])
+                    for (let j = 0; j < 6; j++) {
+                        if (j <= i && i < 5 - j) {
+                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
+                        } else if (j < i) {
+                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
+                        } else if (5 - i >= j) {
+                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
+                        } else {
+                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        indicators[j * 6 + i].active = nextStatus[i][j]
+                    }
+                }
+            }))
+            break;
+        case 8:
+            //dihedral group of order 18
+            for (let i = 0; i < 9; i++) {
+                let tgtIndicator = new GameIndicator(300 + cos(i * TWO_PI / 9) * 100,
+                    200 + sin(i * TWO_PI / 9) * 100, 30)
+                indicators.push(tgtIndicator)
+            }
+            indicators.push(new GameIndicator(100, 200, 30)) // has part 1 been activated?
+            buttons.push(new GameButton(50, 200, 40, function () {
+                if (indicators[9].active) {
+                    for (let i = 0; i < indicators.length; i++) {
+                        indicators[i].active = false;
+                    }
+                } else {
+                    indicators[1].Toggle();
+                    indicators[2].Toggle();
+                    indicators[3].Toggle();
+                    indicators[5].Toggle();
+                    indicators[6].Toggle();
+                    indicators[8].Toggle();
+
+                    indicators[9].Toggle();
+                }
+
+            }))
+            indicators.push(new GameIndicator(100, 250, 30)) // has part 2 been activated?
+            buttons.push(new GameButton(50, 250, 40, function () {
+                if (indicators[10].active) {
+                    for (let i = 0; i < indicators.length; i++) {
+                        indicators[i].active = false;
+                    }
+                } else {
+                    indicators[0].Toggle();
+                    indicators[4].Toggle();
+                    indicators[6].Toggle();
+
+                    indicators[10].Toggle();
+                }
+            }))
+            buttons.push(new GameButton(550, 200, 40, function () {
+                let ind9Status = indicators[8].active
+                for (let i = 8; i > 0; i--) {
+                    indicators[i].active = indicators[i - 1].active
+                }
+                indicators[0].active = ind9Status
+            }))
+            buttons.push(new GameButton(550, 250, 40, function () {
+                for (let i = 1; i < 5; i++) {
+                    let tmp = indicators[i].active
+                    indicators[i].active = indicators[9 - i].active
+                    indicators[9 - i].active = tmp
+                }
+            }))
+            break;
+        case 9:
+            addLightsRow(indicators, 300, 75, 6)
+            addLightsRow(indicators, 300, 125, 6)
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            addLightsRow(indicators, 300, 325, 6)
+            buttons.push(new GameButton(75, 225, 40, function () {
+                for (let i = 0; i < 6; i++) {
+                    let first = indicators[i * 6].active;
+                    for (let j = 0; j < 5; j++) {
+                        indicators[i * 6 + j].active = indicators[i * 6 + j + 1].active
+                    }
+                    indicators[i * 6 + 5].active = first;
+                }
+
+            }))
+            buttons.push(new GameButton(75, 175, 40, function () {
+                let nextStatus = []
+                for (let i = 0; i < 6; i++) {
+                    nextStatus.push([])
+                    for (let j = 0; j < 6; j++) {
+                        if (j <= i && i < 5 - j) {
+                            nextStatus[i].push(indicators[j * 6 + i + 1].active)
+                        } else if (j < i) {
+                            nextStatus[i].push(indicators[j * 6 + i + 6].active)
+                        } else if (5 - i >= j) {
+                            nextStatus[i].push(indicators[j * 6 + i - 6].active)
+                        } else {
+                            nextStatus[i].push(indicators[j * 6 + i - 1].active)
+                        }
+                    }
+                }
+
+                for (let i = 0; i < 6; i++) {
+                    for (let j = 0; j < 6; j++) {
+                        indicators[j * 6 + i].active = nextStatus[i][j]
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 125, 30))
+            indicators.push(new GameIndicator(575, 125, 30))
+            buttons.push(new GameButton(475, 125, 40, function () {
+                if (!indicators[36].active) {
+                    indicators[36].active = true;
+                } else if (!indicators[37].active) {
+                    indicators[37].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        indicators[i * 6 + j].Toggle();
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 175, 30))
+            indicators.push(new GameIndicator(575, 175, 30))
+            indicators.push(new GameIndicator(550, 200, 30))
+            buttons.push(new GameButton(475, 175, 40, function () {
+                if (!indicators[38].active) {
+                    indicators[38].active = true;
+                } else if (!indicators[39].active) {
+                    indicators[39].active = true;
+                } else if (!indicators[40].active) {
+                    indicators[40].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                for (let i = 0; i < 2; i++) {
+                    for (let j = 0; j < 2; j++) {
+                        indicators[i * 6 + j].Toggle();
+                    }
+                }
+            }))
+            indicators.push(new GameIndicator(525, 250, 30))
+            indicators.push(new GameIndicator(575, 250, 30))
+            indicators.push(new GameIndicator(550, 275, 30))
+            indicators.push(new GameIndicator(525, 300, 30))
+            indicators.push(new GameIndicator(575, 300, 30))
+            indicators.push(new GameIndicator(550, 325, 30))
+            buttons.push(new GameButton(475, 250, 40, function () {
+                if (!indicators[41].active) {
+                    indicators[41].active = true;
+                } else if (!indicators[42].active) {
+                    indicators[42].active = true;
+                } else if (!indicators[43].active) {
+                    indicators[43].active = true;
+                } else if (!indicators[44].active) {
+                    indicators[44].active = true;
+                } else if (!indicators[45].active) {
+                    indicators[45].active = true;
+                } else if (!indicators[46].active) {
+                    indicators[46].active = true;
+                } else {
+                    turnOff(indicators);
+                    return;
+                }
+                indicators[0].Toggle();
+            }))
+            break;
+        case 10:
+            //permutation solver
+            const perm1 = [1, 2, 3, 4, 5, 0]
+            const perm2 = [3, 2, 5, 0, 4, 1]
+
+            addLightsRow(indicators, 300, 175, 6)
+            addLightsRow(indicators, 300, 225, 6)
+            addLightsRow(indicators, 300, 275, 6)
+            for (let i = 0; i < 6; i++) {
+                const idx = i;
+                buttons.push(new GameButton(300 - 25 * 5 + 50 * i, 125, 40, function () {
+                    indicators[idx].Toggle()
+                }))
+            }
+            indicators.push(new GameIndicator(520, 200, 30))//18
+            indicators.push(new GameIndicator(565, 200, 30))//19
+            indicators.push(new GameIndicator(520, 250, 30))
+            indicators.push(new GameIndicator(80, 200, 30))
+            indicators.push(new GameIndicator(80, 250, 30))
+            buttons.push(new GameButton(475, 200, 40, function () {
+                if (indicators[18].active && indicators[19].active) {
+                    turnOff(indicators)
+                    return;
+                }
+                if (indicators[18].active) {
+                    indicators[19].active = true;
+                }
+                indicators[18].active = true;
+
+                for (let i = 0; i < 6; i++) {
+                    if (indicators[i].active) {
+                        indicators[perm1[i] + 6].Toggle();
+                    }
+                }
+
+            }))
+            buttons.push(new GameButton(475, 250, 40, function () {
+                if (indicators[20].active) {
+                    turnOff(indicators)
+                    return;
+                }
+                indicators[20].active = true;
+                for (let i = 0; i < 6; i++) {
+                    if (indicators[i + 6].active) {
+                        indicators[perm2[i] + 12].Toggle();
+                    }
+                }
+            }))
+            buttons.push(new GameButton(125, 200, 40, function () {
+                if (indicators[21].active) {
+                    turnOff(indicators)
+                    return;
+                }
+                indicators[21].active = true;
+                indicators[7].Toggle();
+                indicators[11].Toggle();
+            }))
+            buttons.push(new GameButton(125, 250, 40, function () {
+                if (indicators[22].active) {
+                    turnOff(indicators)
+                    return;
+                }
+                indicators[22].active = true;
+                indicators[12].Toggle();
+                indicators[16].Toggle();
+                indicators[15].Toggle();
+            }))
+
+            break;
+        case 11:
+            const vals = [2, 2, 2, 2, 2, 2, 2, 2,
+                3, 3, 3, 3, 5, 5, 7, 11, 13, 17]
+            let xVal = 200;
+            let yVal = 80;
+            for (let i = 0; i < vals.length; i++) {
+                const val = vals[i]
+                if (i > 0 && vals[i - 1] != val) {
+                    if (val != 2) {
+                        buttons.push(new GameButton(150, yVal + 40, 40, function () {
+                            let num = get_displayed_num();
+                            display_num(num * val);
+                        }))
+                    }
+                    xVal = 200;
+                    yVal += 40
+                }
+                indicators.push(new GameIndicator(xVal, yVal, 30))
+                xVal += 50
+            }
+            function get_displayed_num() {
+                let val = 1;
+                for (let i = 0; i < vals.length; i++) {
+                    if (indicators[i].active) {
+                        val *= vals[i]
+                    }
+                }
+                return val;
+            }
+            function display_num(num) {
+                let cval = num;
+                for (let i = 0; i < vals.length; i++) {
+                    if (cval % vals[i] == 0) {
+                        indicators[i].active = true;
+                        cval /= vals[i]
+                    } else {
+                        indicators[i].active = false;
+                    }
+                }
+            }
+            buttons.push(new GameButton(60, 200, 40, function () {
+                let num = get_displayed_num();
+                display_num(num + 1);
+            }))
+            break;
+    }
+    return { indicators: indicators, buttons: buttons }
+}
+
+
+function addLightsRow(indicators, x, y, count, gap = 50) {
+    for (let i = 0; i < count; i++) {
+        let tgtIndicator = new GameIndicator(x + gap / 2 - gap / 2 * count + gap * i, y, 30)
+        indicators.push(tgtIndicator)
+    }
+}
+
+function turnOff(indicators) {
+    for (let i = 0; i < indicators.length; i++) {
+        indicators[i].active = false;
+    }
+}

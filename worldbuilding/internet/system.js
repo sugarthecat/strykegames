@@ -69,12 +69,12 @@ function initializeSystem() {
         webpage.innerHTML += `<p>${prompt}</p>`
     } else {
         webpage.innerHTML = "<p>Digital footprints,<br/>the dead wandering through wires,<br/>signals of gravestones.</p><br/><br/>"
-        webpage.innerHTML += "<p>From contents of pages,<br/>to source and index.</p>"
-        webpage.innerHTML += "<p>From thoughts of your favorites,<br/>to ghosts of what's next.</p>"
+        webpage.innerHTML += "<p>Loading contents of pages,<br/>for source and index.</p>"
+        webpage.innerHTML += "<p>From ghosts of your favorites,<br/>to thoughts of what's next.</p>"
         webpage.innerHTML += "<p>Leaving memories of you,</p>"
         webpage.innerHTML += "<p>and stories of death,</p>"
         webpage.innerHTML += "<p>for what's left behind,</p>"
-        webpage.innerHTML += "<p>is shards on a web.</p>"
+        webpage.innerHTML += "<p>are shards on a web.</p>"
         webpage.innerHTML += "<br/><p>By TJ Nickerson.</p>"
     }
     const inputbox = document.createElement("input")

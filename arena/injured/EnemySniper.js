@@ -1,16 +1,18 @@
 class EnemySniper {
-    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500) {
+    constructor(x, y, timeBetweenFire = 1, turnSpeed = 2, turnRange = 100, maxRange = 500, enemyType = floor(random(3)), willEverFire = true) {
         this.x = x;
         this.y = y;
+        this.willEverFire = willEverFire;
         this.alive = true;
         this.angle = random(0, 2 * PI);
-        this.reloadTime = random(0,timeBetweenFire);
+        this.reloadTime = random(0, timeBetweenFire);
         this.timeBetweenFire = timeBetweenFire;
         this.radius = 20;
         this.turnRange = turnRange;
         this.turnSpeed = turnSpeed;
         this.maxRange = maxRange;
         this.wantsToFire = false;
+        this.enemyType = enemyType;
     }
     isAlive() {
         return this.alive;
@@ -23,7 +25,7 @@ class EnemySniper {
         rotate(this.angle)
         circle(0, 0, 40)
         scale(1.5, 1.5)
-        image(Assets.enemy, -50, -50, 100, 100)
+        image(Assets.enemies[this.enemyType], -50, -50, 100, 100)
         pop()
     }
     Update(player, background, bullets) {
@@ -57,7 +59,7 @@ class EnemySniper {
 
     }
     attemptShoot() {
-        if (this.reloadTime < this.timeBetweenFire || !this.wantsToFire) {
+        if (!this.willEverFire || this.reloadTime < this.timeBetweenFire || !this.wantsToFire) {
             return;
         }
         const angle = this.angle;
@@ -66,8 +68,9 @@ class EnemySniper {
         const muzzleRad = 48;
         const muzzleOff = -5;
         const angleOffset = random(-0.1, 0.1)
-        return new Bullet(this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff,
-            this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff,
+        return new Bullet(
+            this.x + cos(angle) * muzzleRad + sin(angle) * muzzleOff + random(-2, 2),
+            this.y + sin(angle) * muzzleRad - cos(angle) * muzzleOff + random(-2, 2),
             cos(angle + angleOffset) * speed, sin(angle + angleOffset) * speed);
     }
 }

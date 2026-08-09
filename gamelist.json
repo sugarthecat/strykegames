@@ -1,6 +1,21 @@
 {
 	"games": [
 		{
+			"title": "Shell Shock",
+			"link": "arena/injured",
+			"shortline": "A top-down shooter where you acrue injuries.",
+			"tags": [
+				"game",
+				"shooter",
+				"narrative"
+			],
+			"textColor": "#e4dc3e",
+			"bgColor": "#822424",
+			"year": 2026,
+			"recommendationLevel": 2,
+			"date": "July 12, 2026"
+		},
+		{
 			"title": "Shards on a Web",
 			"link": "worldbuilding/internet",
 			"shortline": "A detective story about the internet.",
