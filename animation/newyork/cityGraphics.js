@@ -53,24 +53,22 @@ function drawBuilding(x, width, height, color = getBuildingColor(x), progress = 
     for (let i = 0; i < floorCount; i++) {
         for (let j = 0; j < windowCount; j++) {
             push()
-            translate(x + windowWidth * j, 275 - floorHeight * (1 + i))
-            const windowTopY = 275 - floorHeight * (1 + i) + floorHeight * 0.18
-            
-            const extraSpace =  windowTopY - buildingTopY
+            translate(x + windowWidth * j, 0)
+            const windowTopY = 275 - floorHeight * (1 + i) + floorHeight * (0.18)
+            const extraSpace =   windowBottomY - buildingTopY 
             fill(50)
-            rect(windowWidth * 0.08, floorHeight * 0.18, windowWidth * 0.84, min(floorHeight * 0.64, extraSpace))
+            rect(windowWidth * 0.08, max(windowTopY,buildingTopY), windowWidth * 0.84, (floorHeight * 0.64))
 
             fill(8, 109, 156)
             rect(windowWidth * 0.12, floorHeight * 0.22, windowWidth * 0.76 * leg2Progress, floorHeight * 0.56)
 
             fill(50)
-            if (275 - floorHeight * (1 + i) > buildingTopY) {
+            if (progress > 0.5) {
                 rect(windowWidth * 0.08, floorHeight * 0.48, windowWidth * 0.84, floorHeight * 0.04)
                 rect(windowWidth * 0.06, floorHeight * 0.78, windowWidth * 0.88, floorHeight * 0.05)
             }
             pop()
         }
-
     }
     pop()
     pop()

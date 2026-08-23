@@ -15401,7 +15401,6 @@ dozes
 dozier
 dozing
 dozy
-dr
 drab
 drabness
 drachm
@@ -17467,16 +17466,6 @@ erasing
 erasure
 erasures
 erbium
-ere
-erect
-erected
-erecter
-erectile
-erecting
-erection
-erections
-erectly
-erects
 erg
 ergo
 ergodic
@@ -25186,11 +25175,6 @@ imams
 imbalance
 imbalanced
 imbalances
-imbecile
-imbeciles
-imbecilic
-imbecilities
-imbecility
 imbedded
 imbeds
 imbibe
@@ -27672,7 +27656,6 @@ janitor
 janitors
 january
 janus
-jap
 japan
 jape
 japes
@@ -32659,9 +32642,6 @@ mornings
 morns
 moroccan
 morocco
-moron
-moronic
-morons
 morose
 morosely
 moroseness
@@ -33433,10 +33413,6 @@ necktie
 necromancer
 necromancers
 necromancy
-necromantic
-necrophilia
-necrophiliac
-necrophiliacs
 necropolis
 necropsy
 necrosis
@@ -33694,11 +33670,6 @@ niftily
 nifty
 niger
 nigeria
-niggardly
-niggle
-niggled
-niggles
-niggling
 nigh
 night
 nightcap
@@ -35578,9 +35549,6 @@ paediatric
 paediatrician
 paediatricians
 paediatrics
-paedophile
-paedophiles
-paedophilia
 paella
 paeony
 pagan
@@ -35773,8 +35741,6 @@ panorama
 panoramas
 panoramic
 pans
-pansies
-pansy
 pant
 pantaloons
 pantechnicon
@@ -37041,7 +37007,6 @@ philatelic
 philatelists
 philately
 philharmonic
-philistine
 philological
 philologist
 philologists
@@ -38942,10 +38907,6 @@ priestesses
 priesthood
 priestly
 priests
-prig
-priggish
-priggishly
-priggishness
 prim
 primacy
 primaeval
@@ -52745,9 +52706,6 @@ transposition
 transpositions
 transverse
 transversely
-transvestism
-transvestite
-transvestites
 trap
 trapdoor
 trapdoors
@@ -57141,7 +57099,6 @@ whooping
 whoops
 whoosh
 whop
-whoring
 whorled
 whorls
 whose

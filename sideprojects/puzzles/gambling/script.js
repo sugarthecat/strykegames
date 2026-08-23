@@ -11,8 +11,9 @@ async function loadData() {
     words = lines
 }
 
-let SECRET_WORD = "intelligent"
+let SECRET_WORD = "table"
 let siteSetup = false;
+let animationHappening = false;
 
 async function setupSite() {
     await loadData()
@@ -20,232 +21,74 @@ async function setupSite() {
     siteSetup = true;
 }
 
-window.onload = function () {
-    setupSite()
+window.onload = async function () {
+    await setupSite();
+    for (let i = 0; i < badges.length; i++) {
+        badges[i].appearances = 0;
+    }
+    for (let i = 0; i < badges.length; i++) {
+        for (let j = 0; j < words.length; j++) {
+            if (badges[i].criteria(words[j])) {
+                badges[i].appearances++;
+            }
+        }
+    }
+    for (let i = 0; i < badges.length; i++) {
+        console.log(`${badges[i].title}:  ${(badges[i].appearances / words.length * 100).toFixed(2)}%`)
+    }
 }
 
-function rerollWord() {
+function getRandomWord() {
     let word = words[Math.floor(Math.random() * words.length)]
     if (word == SECRET_WORD) {
-        rerollWord()
-        return
+        return getRandomWord()
     }
-    document.getElementById("word").innerText = word;
-    getBadges(word)
+    return word
 }
 
-const VOWELS = "aeiou"
-const CONSONANTS = "bcdfghjklmnpqrstvwxyz"
-
-function letterCountInList(word, letters) {
-    let count = 0;
-    for (let i = 0; i < word.length; i++) {
-        if (letters.includes(word.charAt(i))) {
-            count++;
-        }
-    }
-    return count
+function displayWord(word) {
+    document.getElementById("word").innerText = word
 }
 
-function sameMultiset(word1, word2, list) {
-    let word1str = ""
-    let word2str = ""
-    for (let char of word1) {
-        if (list.includes(char)) {
-            word1str += char
-        }
+async function rerollWord() {
+    if (animationHappening) {
+        return;
     }
-    for (let char of word2) {
-        if (list.includes(char)) {
-            word2str += char
-        }
+    document.getElementById("badges").innerHTML = ""
+    animationHappening = true;
+    document.getElementById('rerollButton').disabled = true;
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    for(let i = 10; i < 500; i*= 1.3){
+        displayWord(getRandomWord())
+        await wait(i)
     }
-    return word1str.split('').sort().join('') == word2str.split('').sort().join('')
+    let word = getRandomWord()
+    displayWord(word)
+    const wordBadges = getBadges(word)
+    for(let i = 0; i<wordBadges.length; i++){
+        await wait (500)
+        appendBadge(wordBadges[i])
+    }
+    await wait(500)
+    document.getElementById('rerollButton').disabled = false;
+    animationHappening = false;
 }
 
-function sameSequence(word1, word2, list) {
-    let word1str = ""
-    let word2str = ""
-    for (let char of word1) {
-        if (list.includes(char)) {
-            word1str += char
-        }
-    }
-    for (let char of word2) {
-        if (list.includes(char)) {
-            word2str += char
-        }
-    }
-    return word1str == word2str
+function appendBadge(badge) {
+    const badgesDiv = document.getElementById('badges')
+    let badgeDiv = document.createElement("div")
+    badgeDiv.className = "badge"
+    badgeDiv.innerHTML = `<h3>${badge.title}</h3> <p>${badge.content}</p>`
+    badgesDiv.appendChild(badgeDiv)
 }
-
-
-const badges = [
-    {
-        criteria: function (word) {
-            return word.length == SECRET_WORD.length
-        },
-        title: "Measured",
-        content: "Has the same length as the secret word."
-    },
-    {
-        criteria: function (word) {
-            return word.charAt(0) == SECRET_WORD.charAt(0)
-        },
-        title: "Engine",
-        content: "Has the same first letter as the target word."
-    },
-    {
-        criteria: function (word) {
-            return (word.charAt(0) == SECRET_WORD.charAt(0)
-                && word.charAt(1) == SECRET_WORD.charAt(1))
-        },
-        title: "Super Engine",
-        content: "Has the same first two letters as the target word."
-    },
-    {
-        criteria: function (word) {
-            return (word.charAt(0) == SECRET_WORD.charAt(0)
-                && word.charAt(1) == SECRET_WORD.charAt(1)
-                && word.charAt(2) == SECRET_WORD.charAt(2))
-        },
-        title: "Ultre Engine",
-        content: "Has the same first three letters as the target word."
-    },
-
-    {
-        criteria: function (word) {
-            return word.charAt(word.length - 1) == SECRET_WORD.charAt(SECRET_WORD.length - 1)
-        },
-        title: "Caboose",
-        content: "Has the same last letter as the target word."
-    },
-    {
-        criteria: function (word) {
-            return (word.charAt(word.length - 1) == SECRET_WORD.charAt(SECRET_WORD.length - 1)
-                && word.charAt(word.length - 2) == SECRET_WORD.charAt(SECRET_WORD.length - 2))
-        },
-        title: "Super Caboose",
-        content: "Has the same last 2 letters as the target word."
-    },
-    {
-        criteria: function (word) {
-            return (word.charAt(word.length - 1) == SECRET_WORD.charAt(SECRET_WORD.length - 1)
-                && word.charAt(word.length - 2) == SECRET_WORD.charAt(SECRET_WORD.length - 2)
-                && word.charAt(word.length - 3) == SECRET_WORD.charAt(SECRET_WORD.length - 3))
-        },
-        title: "Ultra Caboose",
-        content: "Has the same last 3 letters as the target word."
-    },
-
-    {
-        criteria: function (word) {
-            return letterCountInList(word, VOWELS) == letterCountInList(SECRET_WORD, VOWELS)
-        },
-        title: "Melodic",
-        content: "Has the same number of vowels (excluding Y) as the target word."
-    },
-    {
-        criteria: function (word) {
-            return letterCountInList(word, CONSONANTS) == letterCountInList(SECRET_WORD, CONSONANTS)
-        },
-        title: "Rythmic",
-        content: "Has the same number of consonants (including Y) as the target word."
-    },
-
-    {
-        criteria: function (word) {
-            return sameMultiset(word,SECRET_WORD,VOWELS)
-        },
-        title: "Supermelodic",
-        content: "Has the same vowels, in some order."
-    },
-    {
-        criteria: function (word) {
-            return sameMultiset(word,SECRET_WORD,CONSONANTS)
-        },
-        title: "Superrythmic",
-        content: "Has the same consonants, in some order."
-    },
-    {
-        criteria: function (word) {
-            return sameSequence(word,SECRET_WORD,VOWELS)
-        },
-        title: "Ultramelodic",
-        content: "Has the same vowels, in the same order."
-    },
-    {
-        criteria: function (word) {
-            return sameSequence(word,SECRET_WORD,CONSONANTS)
-        },
-        title: "Ultrarythmic",
-        content: "Has the same consonants, in the same order."
-    },
-
-    {
-        criteria: function (word) {
-            for (let i = 0; i < Math.min(word.length,SECRET_WORD.length); i++) {
-                if (SECRET_WORD.charAt(i) == word.charAt(i)) {
-                    return false
-                }
-            }
-            return true
-        },
-        title: "Distant",
-        content: "Shares no letters in the same place as the target word."
-    },
-    {
-        criteria: function (word) {
-            for (let i = 0; i < word.length; i++) {
-                if (SECRET_WORD.includes(word.charAt(i))) {
-                    return false
-                }
-            }
-            return true
-        },
-        title: "Super Distant",
-        content: "Shares no letters, in any place, with the target word."
-    },
-
-    {
-        criteria: function (word) {
-            let sharedOver = 0
-            let ltrCount = {}
-            for (let i = 0; i < SECRET_WORD.length; i++) {
-                const char = SECRET_WORD.charAt(i)
-                if (!(char in ltrCount)) {
-                    ltrCount[char] = 0
-                }
-                ltrCount[char] += 1
-            }
-            for (let i = 0; i < word.length; i++) {
-                const char = word.charAt(i)
-                if ((char in ltrCount) && (ltrCount[char] > 0)) {
-                    sharedOver++
-                    ltrCount[char]--;
-                }
-            }
-            return sharedOver == word.length && sharedOver == SECRET_WORD.length
-        },
-        title: "Jumbled",
-        content: "Has the exact same letters as the secret word, in some order."
-    }
-]
-
 
 function getBadges(word) {
-    const badgesDiv = document.getElementById('badges')
-    badgesDiv.innerHTML = "";
-    let badgesCount = 0;
+    const badgesOut = []
     for (let i = 0; i < badges.length; i++) {
         const badge = badges[i]
         if (badge.criteria(word)) {
-            let badgeDiv = document.createElement("div")
-            badgeDiv.className = "badge"
-            badgeDiv.innerHTML = `<h3>${badge.title}</h3> <p>${badge.content}</p>`
-            badgesDiv.appendChild(badgeDiv)
-            badgesCount++;
+            badgesOut.push(badge)
         }
     }
-
+    return badgesOut
 }
