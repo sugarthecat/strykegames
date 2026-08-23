@@ -1,27 +1,44 @@
 
 
 const SCREEN_DIMENSIONS = { x: 600, y: 400 }
+
+const VIEWPORT_DIMENSIONS = {}
 let screenOn = "title"
 let scaleFactor = 1;
 let volume = 1;
 let screens;
-function preload() {
-    screens = { "title": new TitleScreen() }
-    Assets.loadAssets()
+const STD_COLORS = {SKY: null, PAVEMENT: null, CITY: null, CITY_UNCLICKED: null, RAILROAD: null, COASTLINE: null,
+    SCAFFOLDING_COLOR: null
 }
-function setup() {
+async function setup() {
     createCanvas(windowWidth, windowHeight);
+    await Assets.loadAssets()
+    screens = {
+        "title": new TitleScreen(),
+        "interact": new InteractableScreen(1),
+        "animation": new AnimationScreen(1),
+    }
+    STD_COLORS.SKY = color(90, 180, 240)
+    STD_COLORS.PAVEMENT = color(80)
+    STD_COLORS.CITY =color (255)
+    STD_COLORS.CITY_UNCLICKED =  color (0,150,255)
+    STD_COLORS.RAILROAD = color(150)
+    STD_COLORS.COASTLINE = color(0, 200, 0)
+    STD_COLORS.SCAFFOLDING_COLOR = color(166, 128, 100)
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);
 
     if (windowWidth / SCREEN_DIMENSIONS.x < windowHeight / SCREEN_DIMENSIONS.y) {
-        scaleFactor = windowWidth / SCREEN_DIMENSIONS.x
+        scaleFactor = windowWidth / SCREEN_DIMENSIONS.x;
     } else {
         scaleFactor = windowHeight / SCREEN_DIMENSIONS.y;
     }
     let xTranslation = (windowWidth - scaleFactor * SCREEN_DIMENSIONS.x) / 2
     let yTranslation = (windowHeight - scaleFactor * SCREEN_DIMENSIONS.y) / 2
+    VIEWPORT_DIMENSIONS.x = SCREEN_DIMENSIONS.x + xTranslation / scaleFactor * 2;
+    VIEWPORT_DIMENSIONS.y = SCREEN_DIMENSIONS.y + yTranslation / scaleFactor * 2;
+
     push()
     translate(xTranslation, yTranslation)
 
@@ -32,14 +49,6 @@ function draw() {
     pop()
     fill(0)
     noStroke()
-    if (xTranslation != 0) {
-        rect(0, 0, xTranslation, windowHeight);
-        rect(windowWidth - xTranslation, 0, xTranslation, windowHeight);
-    }
-    if (yTranslation != 0) {
-        rect(0, 0, windowWidth, yTranslation);
-        rect(0, windowHeight - yTranslation, windowWidth, yTranslation);
-    }
 }
 function mouseClicked() {
     let mousePosition = getMousePosition()
