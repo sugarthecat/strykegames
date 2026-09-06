@@ -77,7 +77,7 @@ async function loadData() {
     for (let i = 0; i < cities.length; i++) {
         const city = cities[i]
         if (!(city.iso2 in forenames)) {
-            //console.log(`Missing forenames for ${city.country} (${city.iso2})`)
+            console.log(`Missing forenames for ${city.country} (${city.iso2})`)
             forenames[city.iso2] = []
         }
         if (!(city.iso2 in surnames)) {

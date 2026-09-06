@@ -19,6 +19,16 @@ const badges = [
         }
     },
     {
+        //0.2%
+        name: "North Korean",
+        rarity: "legendary",
+        description: "Lives in North Korea.",
+        eval: function (person) {
+            const iso2 = person.city.iso2;
+            return iso2 == "KP"
+        }
+    },
+    {
         //0.15%
         name: "New Yorker",
         rarity: "legendary",
