@@ -2,7 +2,7 @@ function addReligionBadges() {
     badges.push({
         //30%
         name: "Christian",
-        description: "Beleives Jesus is the son of god.",
+        description: "Believes Jesus is the son of God.",
         rarity: "common",
         emoji: "✝️",
         eval: function (person) {
