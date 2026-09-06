@@ -8,6 +8,9 @@ function getRandomSurname(countryCode) {
     return item.name;
 }
 function getRandomReligion(countryCode) {
+    if(!(countryCode in religions)){
+        console.log(countryCode)
+    }
     let religion = weightedProb(religions[countryCode], (item) => { return item.count }).name
     if (religion == "Other Religions") {
         if (countryCode == "IN") {

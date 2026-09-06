@@ -112,13 +112,23 @@ const badges = [
         }
     },
     {
-        // #48%
+        // #23%
+        name: "Urbanist",
+        description: "Lives in a city with a population from 1-5 million.",
+        rarity: "common",
+        emoji: '🏢',
+        eval: function (person) {
+            return person.city.population >= 1000000 && person.city.population < 5000000
+        }
+    },
+    {
+        // #25%
         name: "City Slicker",
-        description: "Lives in a city with a population at least 1 million.",
+        description: "Lives in a city with a population at least 5 million.",
         rarity: "common",
         emoji: '🏙️',
         eval: function (person) {
-            return person.city.population >= 1000000
+            return person.city.population >= 5000000
         }
     },
     {

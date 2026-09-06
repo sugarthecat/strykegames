@@ -150,6 +150,9 @@ async function copyToClipboard(text) {
 
 async function displayTime() {
     let time = await getTimeTillExpiry() / 1000
+    if(isNaN(time)){
+        return
+    }
     time = Math.ceil(time)
     if (time < 0) {
         window.location.reload()
