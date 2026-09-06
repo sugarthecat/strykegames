@@ -1,88 +1,70 @@
-function getRandomCity() {
-    let nPerson = Math.floor(Math.random() * totalPeople);
-    let cityIdx = 0;
-    while (nPerson > cities[cityIdx].population) {
-        nPerson -= cities[cityIdx].population;
-        cityIdx++;
-    }
-    return cities[cityIdx]
-}
 
-function getForename(countryCode) {
 
-    if (!(countryCode in forenames) || forenames[countryCode].length == 0) {
-        if (Math.random() < 0.5) {
-            return { name: "Mr.", gender: "M" }
-        } else {
-            return { name: "Ms.", gender: "F" }
-        }
+function getPrintName(person) {
+    if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)) {
+        return `${person.name.surname} ${person.name.forename}`
     }
-    const names = forenames[countryCode];
-    const name = names[Math.floor(Math.random() * names.length)]
-    return name
-
-}
-
-function getSurname(countryCode) {
-    if (!(countryCode in surnames)) {
-        return "Lastname"
-    }
-    let total = 0;
-    for (let i = 0; i < surnames[countryCode].length; i++) {
-        total += parseInt(surnames[countryCode][i].count);
-    }
-    let myN = total * Math.random();
-    for (let i = 0; i < surnames[countryCode].length; i++) {
-        if (surnames[countryCode][i].count > myN) {
-            return surnames[countryCode][i].name
-        }
-        myN -= surnames[countryCode][i].count
-    }
-}
-function getName(city) {
-    const surname = getSurname(city.iso2)
-    const forename = getForename(city.iso2)
-    let gender = forename.gender;
-    if (Math.random() < 0.01) {
-        gender = "NB"
-    }
-    return { surname: surname, forename: forename.name, gender: gender }
-}
-
-function getRandomPerson() {
-    const city = getRandomCity();
-    const name = getName(city)
-    return {
-        city: city,
-        name: name
-    }
+    return `${person.name.forename} ${person.name.surname}`
 }
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+let person;
+
 async function dailyRoll() {
     document.getElementById("reroll").hidden = true;
-    let person = getRandomPerson();
+    person = getRandomPerson();
     for (let i = 10; i < 500; i *= 1.4) {
         await sleep(i)
         displayPerson(getRandomPerson())
     }
     displayPerson(person)
     await sleep(1000)
-    let badges = getBadges(person)
+    person.badges = getBadges(person)
+    const badges = person.badges
+    //sort badges
+    badges.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
     for (let i = 0; i < badges.length; i++) {
         await sleep(500);
         addBadge(badges[i]);
     }
+    await sleep(1000);
+    document.getElementById("copy").hidden = false;
 }
+
+function copyStats() {
+    let genderDict = {
+        "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍"
+    }
+    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}`;
+    outStr += `\n${getPrintName(person)}`
+    outStr += `\n of ${getLocation(person)}`
+    for (let i = 0; i < Math.min(5, person.badges.length); i++) {
+        const badge = person.badges[person.badges.length - 1 - i]
+        if (badge.emoji) {
+            outStr += `\n${badge.emoji} ${badge.name}`
+        } else {
+            outStr += `\n${badge.name}`
+        }
+    }
+    if(person.badges.length > 5){
+        outStr += "\n..."
+    }
+    copyToClipboard(outStr)
+}
+
 function addBadge(badge) {
     let badgeDiv = document.createElement("div")
     badgeDiv.className = "badge " + badge.rarity
     badgeDiv.innerHTML = `<h3>${badge.name}</h3><p>${badge.description}</p>`
-    document.getElementById("badges").appendChild(badgeDiv)
+    document.getElementById("badges").prepend(badgeDiv)
 }
+
 function displayPerson(person) {
-    document.getElementById("person").innerHTML = `<h2>${person.name.forename} ${person.name.surname}</h2>`
-    document.getElementById("person").innerHTML += `<p>From ${person.city.city}, ${person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""}${formalCountryName(person.city.country)}</h2>`
+    document.getElementById("person").innerHTML = `<h2>${getPrintName(person)}</h2>`
+    document.getElementById("person").innerHTML += `<p>From ${getLocation(person)}</h2>`
+}
+function getLocation(person) {
+    return `${person.city.city}, ${person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""}${formalCountryName(person.city.country)}`
 }
 
 function getCookie(cname) {
@@ -112,19 +94,14 @@ function checkCookie() {
         }
     }
 }
+async function copyToClipboard(text) {
+    try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById("copystatus").innerText = "copied!"
+        await sleep(5000)
+        document.getElementById("copystatus").innerText = ""
 
-function formalCountryName(country) {
-    if (country == "Congo (Kinshasa)") {
-        return "Republic of the Congo";
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
     }
-    if (country == "Korea, South") {
-        return "South Korea";
-    }
-    if (country == "Korea, North") {
-        return "North Korea";
-    }
-    if (country == "Congo (Brazzaville)") {
-        return "Democratic Republic of the Congo"
-    }
-    return country
 }

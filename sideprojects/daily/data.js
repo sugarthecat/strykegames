@@ -3,7 +3,7 @@
 let totalPeople = 0;
 
 const INVALID_ISO2 = [
-    "RE","CW","GS","PN","MQ","YT","GF","GP","CX","BQ"
+    "RE", "CW", "GS", "PN", "MQ", "YT", "GF", "GP", "CX", "BQ"
 ]
 
 const cities = []
@@ -76,16 +76,21 @@ async function loadData() {
     let missingPopulation = 0
     for (let i = 0; i < cities.length; i++) {
         const city = cities[i]
-        if (!(city.iso2 in forenames)) {
-            console.log(`Missing forenames for ${city.country} (${city.iso2})`)
+        if (!(city.iso2 in forenames) || forenames[city.iso2].length == 0) {
+            if (!(city.iso2 in forenames)) {
+                console.error(`Missing forenames for ${city.country} (${city.iso2})`)
+            }
             forenames[city.iso2] = []
+            missingPopulation += city.population
         }
-        if (!(city.iso2 in surnames)) {
-            console.log(`${city.country} (${city.iso2})`)
+        if (!(city.iso2 in surnames) || surnames[city.iso2].length == 0) {
+            if (!(city.iso2 in surnames)) {
+                console.log(`Missing surnames for ${city.country} (${city.iso2})`)
+            }
             surnames[city.iso2] = []
-            //missingPopulation += city.population
         }
     }
+    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population's names` )
 }
 
 async function setup() {

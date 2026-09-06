@@ -2,10 +2,11 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Random Person</title>
     <script src="script.js"></script>
     <script src="data.js"></script>
+    <script src="generate.js"></script>
     <script src="badges.js"></script>
 </head>
 
@@ -17,8 +18,13 @@
     <p id="reroll">
         <button onclick="dailyRoll()">Roll</button>
     </p>
+
     <div id="person"></div>
     <div id="badges"></div>
+    <div id="copy" hidden>
+        <button onclick="copyStats()">Copy</button>
+        <p id="copystatus"></p>
+    </div>
     <footer>
         <h3>Data sources</h3>
         <p>Cities data is from <a href="https://simplemaps.com/data/world-cities">simplemaps</a></p>

@@ -1,16 +1,47 @@
 const rarity = {
-    common: { color: "#888", rank: 1 }, // >15%
-    uncommon: { color: "#0f0", rank: 2 }, //8-15%
-    rare: { color: "#00f", rank: 3 }, // 3-8%
-    epic: { color: "#c0c", rank: 4 }, // 1-3%
-    legendary: { color: "#ff0", rank: 5 }, // 0.3-1%
-    ultra: { color: "#000", rank: 5 } // <0.3%
+    common: { color: "#888", rank: 1, emoji: "⬛" }, // >15%
+    uncommon: { color: "#0f0", rank: 2, emoji: "🍀" }, //8-15%
+    rare: { color: "#00f", rank: 3, emoji: "🔭" }, // 3-8%
+    epic: { color: "#c0c", rank: 4, emoji: "💎" }, // 1-3%
+    legendary: { color: "#ff0", rank: 5, emoji: "✨" }, // 0.3-1%
+    ultra: { color: "#000", rank: 5, emoji: "🚀" } // <0.3%
 }
 const badges = [
+    {
+        //49.5%
+        name: "Man",
+        emoji: "🧍‍♂️",
+        rarity: "common",
+        description: "Of the male gender.",
+        eval: function (person) {
+            return person.name.gender == "M"
+        }
+    },
+    {
+        //49.5%
+        name: "Woman",
+        emoji: "🧍‍♀️",
+        rarity: "common",
+        description: "Of the female gender.",
+        eval: function (person) {
+            return person.name.gender == "F"
+        }
+    },
+    {
+        //1%
+        name: "Non-Binary",
+        rarity: "rare",
+        emoji: "🏳️‍🌈",
+        description: "Neither male nor female.",
+        eval: function (person) {
+            return person.name.gender == "NB"
+        }
+    },
     {
         //8%
         name: "EU Citizenship",
         rarity: "uncommon",
+        emoji: "🇪🇺",
         description: "Lives in the European Union.",
         eval: function (person) {
             const iso2 = person.city.iso2;
@@ -19,9 +50,45 @@ const badges = [
         }
     },
     {
+        //7.5%
+        name: "Land Of The Free",
+        emoji: "🦅",
+        rarity: "uncommon",
+        description: "Lives in the USA.",
+        eval: function (person) {
+            const iso2 = person.city.iso2;
+            return iso2 == "US";
+        }
+    },
+    {
+        //2%
+        name: "Under the Crown",
+        rarity: "rare",
+        emoji: "👑",
+        description: "Has the British monarch as their head of state.",
+        eval: function (person) {
+            const iso2 = person.city.iso2;
+            const states = ["AG", "AU", "BS", "BZ", "CA", "GD", "JM", "NZ", "PG", "KN", "LC", "VC", "SB", "TV", "GB"]
+            return states.includes(iso2)
+        }
+    },
+    {
+        //8%
+        name: "ASEAN",
+        rarity: "uncommon",
+        emoji: "🌏",
+        description: "Lives in an ASEAN member state.",
+        eval: function (person) {
+            const iso2 = person.city.iso2;
+            const asean = ["BN", "KH", "ID", "LA", "MY", "MM", "PH", "SG", "TH", "VN"]
+            return asean.includes(iso2)
+        }
+    },
+    {
         //0.2%
         name: "North Korean",
         rarity: "legendary",
+        emoji: "🇰🇵",
         description: "Lives in North Korea.",
         eval: function (person) {
             const iso2 = person.city.iso2;
@@ -32,9 +99,10 @@ const badges = [
         //0.15%
         name: "New Yorker",
         rarity: "legendary",
+        emoji: "🗽",
         description: "Lives in New York City.",
         eval: function (person) {
-            return ( ["Manhattan","Brooklyn","Queens","The Bronx", "Staten Island"].includes(person.city.city)) && person.city.admin_name == "New York"
+            return (["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"].includes(person.city.city)) && person.city.admin_name == "New York"
         }
     },
     {
@@ -42,18 +110,20 @@ const badges = [
         name: "Pacific Islander",
         rarity: "ultra",
         description: "Lives in a Pacific Island nation.",
+        emoji: "🏝️",
         eval: function (person) {
             const iso2 = person.city.iso2;
             const pacificIslands = ['FJ', 'SB', 'VU', 'NC', 'PF', 'WS', 'AS', 'TO', 'KI',
-                        'TV', 'NR', 'PW', 'FM', 'MH', 'CK', 'NU', 'WF',
-                        'GU', 'MP', 'NF', 'PN','PG'];
+                'TV', 'NR', 'PW', 'FM', 'MH', 'CK', 'NU', 'WF',
+                'GU', 'MP', 'NF', 'PN', 'PG'];
             return pacificIslands.includes(iso2)
         }
     },
     {
         //10%
-        name: "Politician",
+        name: "Governatorial",
         description: "Lives in a national capital.",
+        emoji: "🏛️",
         rarity: "uncommon",
         eval: function (person) {
             return person.city.capital == "primary"
@@ -64,6 +134,7 @@ const badges = [
         name: "City Slicker",
         description: "Lives in a city with a population at least 1 million.",
         rarity: "common",
+        emoji: '🏙️',
         eval: function (person) {
             return person.city.population >= 1000000
         }
@@ -72,6 +143,7 @@ const badges = [
         // 8%
         name: "Townsfolk",
         description: "Lives in a town with a population between 2500 and 25000",
+        emoji: "🏘️",
         rarity: "uncommon",
         eval: function (person) {
             return person.city.population >= 2500 && person.city.population <= 25000
@@ -82,6 +154,7 @@ const badges = [
         name: "Villager",
         description: "Lives in a village with a population less than 2500.",
         rarity: "legendary",
+        emoji: "🛖",
         eval: function (person) {
             return person.city.population < 2500
         }
