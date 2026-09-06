@@ -1,11 +1,10 @@
-
-
 function getPrintName(person) {
     if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)) {
         return `${person.name.surname} ${person.name.forename}`
     }
     return `${person.name.forename} ${person.name.surname}`
 }
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let person;
@@ -17,18 +16,11 @@ async function dailyRoll() {
         await sleep(i)
         displayPerson(getRandomPerson())
     }
-    displayPerson(person)
-    await sleep(1000)
     person.badges = getBadges(person)
-    const badges = person.badges
+    person.badges.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
     //sort badges
-    badges.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
-    for (let i = 0; i < badges.length; i++) {
-        await sleep(500);
-        addBadge(badges[i]);
-    }
-    await sleep(1000);
-    document.getElementById("copy").hidden = false;
+    displayPersonFull(person)
+    setJsonCookie("person",person,1)
 }
 
 function copyStats() {
@@ -66,34 +58,61 @@ function displayPerson(person) {
 function getLocation(person) {
     return `${person.city.city}, ${person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""}${formalCountryName(person.city.country)}`
 }
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
+function setJsonCookie(name, jsonObject, daysToExpire) {
+    const jsonString = JSON.stringify(jsonObject);
+    const encodedValue = encodeURIComponent(jsonString);
+    
+    let expires = "";
+    if (daysToExpire) {
+        const date = new Date();
+        date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
     }
-    return "";
+    
+    // Secure and SameSite are recommended for modern security standards
+    document.cookie = `${name}=${encodedValue}${expires}; path=/; SameSite=Lax; Secure`;
 }
 
-function checkCookie() {
-    let username = getCookie("username");
-    if (username != "") {
-        alert("Welcome again " + username);
-    } else {
-        username = prompt("Please enter your name:", "");
-        if (username != "" && username != null) {
-            setCookie("username", username, 365);
+function getJsonCookie(name) {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        const [key, value] = cookies[i].split('=');
+        if (key === name) {
+            try {
+                const decodedValue = decodeURIComponent(value);
+                return JSON.parse(decodedValue);
+            } catch (error) {
+                console.error("Failed to parse cookie JSON", error);
+                return null;
+            }
         }
     }
+    return null;
 }
+
+async function displayPersonFull(person){
+
+    displayPerson(person)
+    await sleep(1000)
+    const badges = person.badges
+    for (let i = 0; i < badges.length; i++) {
+        await sleep(500);
+        addBadge(badges[i]);
+    }
+    await sleep(1000);
+    document.getElementById("copy").hidden = false;
+}
+
+function checkCookie(){
+    let cookie = getJsonCookie("person");
+    if(cookie == null){
+        document.getElementById("reroll").hidden = false;
+    }else{
+        person = cookie;
+        displayPersonFull(person)
+    }
+}
+
 async function copyToClipboard(text) {
     try {
         await navigator.clipboard.writeText(text);

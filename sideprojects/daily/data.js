@@ -95,5 +95,6 @@ async function loadData() {
 
 async function setup() {
     await loadData();
+    checkCookie();
 }
 window.onload = setup;
