@@ -1,6 +1,6 @@
 function getPrintName(person) {
     if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)
-    && !(['Mr.','Ms.'].includes(person.name.forename))) {
+        && !(['Mr.', 'Ms.'].includes(person.name.forename))) {
         return `${person.name.surname} ${person.name.forename}`
     }
     return `${person.name.forename} ${person.name.surname}`
@@ -21,7 +21,7 @@ async function dailyRoll() {
     person.badges.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
     //sort badges
     displayPersonFull(person)
-    setJsonCookie("person",person,1)
+    setJsonCookie("person", person, 1)
 }
 
 function copyStats() {
@@ -39,7 +39,7 @@ function copyStats() {
             outStr += `\n${badge.name}`
         }
     }
-    if(person.badges.length > 5){
+    if (person.badges.length > 5) {
         outStr += "\n..."
     }
     copyToClipboard(outStr)
@@ -48,7 +48,7 @@ function copyStats() {
 function addBadge(badge) {
     let badgeDiv = document.createElement("div")
     badgeDiv.className = "badge " + badge.rarity
-    badgeDiv.innerHTML = `<h3>${badge.name}</h3><p>${badge.description}</p>`
+    badgeDiv.innerHTML = `<h3>${badge.emoji}${badge.name}${badge.emoji}</h3><p class=\"rarity\">${badge.rarity.toUpperCase()}</p><p>${badge.description}</p>`
     document.getElementById("badges").prepend(badgeDiv)
 }
 
@@ -62,14 +62,14 @@ function getLocation(person) {
 function setJsonCookie(name, jsonObject, daysToExpire) {
     const jsonString = JSON.stringify(jsonObject);
     const encodedValue = encodeURIComponent(jsonString);
-    
+
     let expires = "";
     if (daysToExpire) {
         const date = new Date();
         date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    
+
     // Secure and SameSite are recommended for modern security standards
     document.cookie = `${name}=${encodedValue}${expires}; path=/; SameSite=Lax; Secure`;
 }
@@ -91,26 +91,26 @@ function getJsonCookie(name) {
     return null;
 }
 
-async function displayPersonFull(person){
-    document.getElementById("badges").innerHTML= ""
+async function displayPersonFull(person, waitMult = 1) {
+    document.getElementById("badges").innerHTML = ""
     displayPerson(person)
-    await sleep(1000)
+    await sleep(1000 * waitMult)
     const badges = person.badges
     for (let i = 0; i < badges.length; i++) {
-        await sleep(500);
+        await sleep(500 * waitMult);
         addBadge(badges[i]);
     }
-    await sleep(1000);
+    await sleep(1000 * waitMult);
     document.getElementById("copy").hidden = false;
 }
 
-function checkCookie(){
+function checkCookie() {
     let cookie = getJsonCookie("person");
-    if(cookie == null){
+    if (cookie == null) {
         document.getElementById("reroll").hidden = false;
-    }else{
+    } else {
         person = cookie;
-        displayPersonFull(person)
+        displayPersonFull(person, 0)
     }
 }
 

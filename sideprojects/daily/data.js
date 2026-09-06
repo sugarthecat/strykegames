@@ -9,6 +9,7 @@ const INVALID_ISO2 = [
 const cities = []
 const surnames = {}
 const forenames = {}
+const countryToIso2 = {}
 
 async function loadData() {
     const cityTxt = await (await fetch("data/worldcities.csv")).text();
@@ -36,6 +37,7 @@ async function loadData() {
 
             totalPeople += city.population;
             cities.push(city)
+            countryToIso2[formalCountryName(city.country.toLowerCase())] = city.iso2
         }
     }
     const forenameData = (await (fetch("data/forenames.csv").then(x => x.text()))).replaceAll("\r", "").split("\n");
@@ -90,11 +92,25 @@ async function loadData() {
             surnames[city.iso2] = []
         }
     }
-    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population's names` )
+    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population's names`)
 }
 
 async function setup() {
     await loadData();
+    addCountryBadges();
     checkCookie();
+
 }
+
+function addCountryBadges() {
+    let populations = {}
+    for (let i = 0; i < cities.length; i++) {
+        let iso2 = cities[i].iso2
+        if (!(iso2 in populations)) {
+            populations[iso2] = 0
+        }
+        populations[iso2] += cities[i].population
+    }
+}
+
 window.onload = setup;
