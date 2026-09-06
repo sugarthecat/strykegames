@@ -1,0 +1,35 @@
+.common {
+    background-color: #888;
+}
+
+.uncommon {
+    background-color: #0e0;
+}
+
+.rare {
+    background-color: #00f;
+}
+
+.epic {
+    background-color: #b0b;
+}
+
+.legendary {
+    background-color: #dd0;
+}
+.ultra {
+    background-color: #000;
+    color: #fff;
+}
+
+.badge {
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+.badge h3 {
+    margin-top:0px;
+}
+.badge p {
+    margin-bottom:0px;
+}

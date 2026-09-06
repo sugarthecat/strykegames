@@ -18,13 +18,13 @@ async function setup() {
         "interact": new InteractableScreen(1),
         "animation": new AnimationScreen(1),
     }
-    STD_COLORS.SKY = color(90, 180, 240)
+    STD_COLORS.SKY = color(30, 60, 80)
     STD_COLORS.PAVEMENT = color(80)
     STD_COLORS.CITY =color (255)
     STD_COLORS.CITY_UNCLICKED =  color (0,150,255)
     STD_COLORS.RAILROAD = color(150)
     STD_COLORS.COASTLINE = color(0, 200, 0)
-    STD_COLORS.SCAFFOLDING_COLOR = color(166, 128, 100)
+    STD_COLORS.SCAFFOLDING_COLOR = color(80, 60, 50)
 }
 function draw() {
     resizeCanvas(windowWidth, windowHeight);

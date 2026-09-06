@@ -5,21 +5,32 @@ class BuildableBuilding {
         this.height = height;
         this.clicked = false;
         this.timeSinceClicked = 0;
+        this.timeSinceExisted = 0;
         //ground level = 275
         this.color = getBuildingColor(x)
         this.y = 275 - height;
     }
 
     isHovering(x, y) {
-        return x > this.x && x < this.x + this.width && y > this.y && y < this.y + this.height && !this.clicked;
+        let midpoint = this.x + this.width / 2;
+
+        return dist(midpoint, 250, x, y) < 25 && !this.clicked
     }
     Draw(x, y) {
+        this.timeSinceExisted += deltaTime / 1000
         if (this.clicked) {
             this.timeSinceClicked += deltaTime / 1000
-        } else {
-            //do something
         }
         fill(255)
+        fill(STD_COLORS.SCAFFOLDING_COLOR)
+        const mid = this.x + this.width / 2;
+
+        const signprog1 = min(1, this.timeSinceExisted)
+        rect(mid - 5, 275 - 50 * signprog1, 10, 50 * signprog1)
+        const signprog2 = constrain(this.timeSinceExisted - 1, 0, 1)
+        rect(mid - 25 * signprog2, 225, 50 * signprog2, 30)
+
+
         if (this.timeSinceClicked > 0) {
             drawBuilding(this.x, this.width, this.height, this.color, min(this.timeSinceClicked / 5, 1))
         }
@@ -54,13 +65,20 @@ function drawBuilding(x, width, height, color = getBuildingColor(x), progress = 
         for (let j = 0; j < windowCount; j++) {
             push()
             translate(x + windowWidth * j, 0)
+            const windowBottomY = 275 - floorHeight * (1 + i) + floorHeight * (0.18 + 0.64)
             const windowTopY = 275 - floorHeight * (1 + i) + floorHeight * (0.18)
-            const extraSpace =   windowBottomY - buildingTopY 
+            const extraSpace = windowBottomY - buildingTopY
             fill(50)
-            rect(windowWidth * 0.08, max(windowTopY,buildingTopY), windowWidth * 0.84, (floorHeight * 0.64))
+            if (extraSpace > 0) {
 
+                rect(windowWidth * 0.08, max(windowBottomY - extraSpace, windowTopY), windowWidth * 0.84, min(extraSpace, floorHeight * 0.64))
+            }
+
+            translate(0, windowTopY - floorHeight * 0.18)
             fill(8, 109, 156)
-            rect(windowWidth * 0.12, floorHeight * 0.22, windowWidth * 0.76 * leg2Progress, floorHeight * 0.56)
+            if (leg2Progress > 0) {
+                rect(windowWidth * 0.12, floorHeight * 0.22, windowWidth * 0.76 * leg2Progress, floorHeight * 0.56)
+            }
 
             fill(50)
             if (progress > 0.5) {

@@ -161,5 +161,15 @@ function drawScreenBase(level) {
             currMaxX += buildingWidth
         }
     }
+    if (level >= 6) {
+
+        let minX = -(VIEWPORT_DIMENSIONS.x - 600) / 2
+        fill(120)
+        rect(minX, 300, VIEWPORT_DIMENSIONS.x, 100)
+        fill(60)
+        rect(minX, 310, VIEWPORT_DIMENSIONS.x, 100)
+        fill(20)
+        rect(minX, 325, VIEWPORT_DIMENSIONS.x, 100)
+    }
     pop()
 }

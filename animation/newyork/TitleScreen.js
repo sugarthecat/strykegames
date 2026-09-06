@@ -16,6 +16,6 @@ class TitleScreen extends GUI {
     }
     HandleClick(x,y){
         screenOn = "animation"
-        screens.animation = new AnimationScreen(2)
+        screens.animation = new AnimationScreen(0)
     }
 }
