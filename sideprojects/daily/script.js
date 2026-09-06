@@ -28,7 +28,11 @@ function copyStats() {
     let genderDict = {
         "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍"
     }
-    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}`;
+    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}\n`;
+    for (let i = 0; i < person.badges.length; i++) {
+        const badge = person.badges[person.badges.length - 1 - i]
+        outStr += rarity[badge.rarity].emoji
+    }
     outStr += `\n${getPrintName(person)}`
     outStr += `\n of ${getLocation(person)}`
     for (let i = 0; i < Math.min(5, person.badges.length); i++) {

@@ -1,10 +1,10 @@
 const rarity = {
-    common: { color: "#888", rank: 1, emoji: "⬛" }, // >15%
-    uncommon: { color: "#0f0", rank: 2, emoji: "🍀" }, //8-15%
-    rare: { color: "#00f", rank: 3, emoji: "🔭" }, // 3-8%
-    epic: { color: "#c0c", rank: 4, emoji: "💎" }, // 1-3%
-    legendary: { color: "#ff0", rank: 5, emoji: "✨" }, // 0.3-1%
-    ultra: { color: "#000", rank: 5, emoji: "🚀" } // <0.3%
+    common: { color: "#888", rank: 1, emoji: "⬜" }, // >15%
+    uncommon: { color: "#0f0", rank: 2, emoji: "🟩" }, //8-15%
+    rare: { color: "#00f", rank: 3, emoji: "🟦" }, // 3-8%
+    epic: { color: "#c0c", rank: 4, emoji: "🟪" }, // 1-3%
+    legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.3-1%
+    ultra: { color: "#000", rank: 5, emoji: "⬛" } // <0.3%
 }
 const badges = [
     {
@@ -91,7 +91,7 @@ const badges = [
     },
     {
         //10%
-        name: "Governatorial",
+        name: "Governmental",
         description: "Lives in a national capital.",
         emoji: "🏛️",
         rarity: "uncommon",
