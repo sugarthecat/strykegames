@@ -55,6 +55,18 @@ const badges = [
         }
     },
     {
+        //1.2%
+        name: "Fertile Crescent",
+        rarity: "epic",
+        emoji: "🌍",
+        description: "Lives in the \"Cradle of Civilization\".",
+        eval: function (person) {
+            const iso2 = person.city.iso2;
+            const asean = ["IL","IQ",'SY','JO',"KW","XW","XG",'LB']
+            return asean.includes(iso2)
+        }
+    },
+    {
         //0.2%
         name: "North Korean",
         rarity: "legendary",

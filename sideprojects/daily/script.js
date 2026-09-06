@@ -58,7 +58,7 @@ function addBadge(badge) {
 
 function displayPerson(person) {
     document.getElementById("person").innerHTML = `<h2>${getPrintName(person)}</h2>`
-    document.getElementById("person").innerHTML += `<p>From ${getLocation(person)}</h2>`
+    document.getElementById("person").innerHTML += `<p>Of ${getLocation(person)}</h2>`
 }
 function getLocation(person) {
     return `${person.city.city}, ${person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""}${formalCountryName(person.city.country)}`
@@ -116,6 +116,21 @@ function checkCookie() {
         person = cookie;
         displayPersonFull(person, 0)
     }
+}
+
+async function getTimeTillExpiry() {
+    const cookies = await cookieStore.getAll();
+    let myCookie = null;
+    for (let i = 0; i < cookies.length; i++) {
+        if (cookies[i].name == 'person') {
+            myCookie = cookies[i];
+        }
+    }
+    if (myCookie == null) {
+        return 0;
+    }
+    let currTime = myCookie.expires - Date.now()
+    return currTime
 }
 
 async function copyToClipboard(text) {
