@@ -68,7 +68,7 @@ const badges = [
     },
     {
         //0.2%
-        name: "North Korean",
+        name: "Hermit Kingdom",
         rarity: "legendary",
         emoji: "🇰🇵",
         description: "Lives in North Korea.",
@@ -79,7 +79,7 @@ const badges = [
     },
     {
         //0.15%
-        name: "New Yorker",
+        name: "Big Apple",
         rarity: "legendary",
         emoji: "🗽",
         description: "Lives in New York City.",

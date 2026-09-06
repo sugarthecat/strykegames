@@ -10,6 +10,8 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let person;
 
+let nextGameInterval;
+
 async function dailyRoll() {
     document.getElementById("reroll").hidden = true;
     person = getRandomPerson();
@@ -106,6 +108,7 @@ async function displayPersonFull(person, waitMult = 1) {
     }
     await sleep(1000 * waitMult);
     document.getElementById("copy").hidden = false;
+    nextGameInterval = setInterval(displayTime, 1000)
 }
 
 function checkCookie() {
@@ -143,4 +146,18 @@ async function copyToClipboard(text) {
     } catch (err) {
         console.error('Failed to copy text: ', err);
     }
+}
+
+async function displayTime() {
+    let time = await getTimeTillExpiry() / 1000
+    time = Math.ceil(time)
+    if (time < 0) {
+        window.location.reload()
+    }
+    let seconds = Math.floor(time) % 60
+    let minutes = Math.floor(time / 60) % 60
+    let hours = Math.floor(time / 60 / 60)
+    let waitStr = (`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`)
+    document.getElementById("waiter").hidden = false;
+    document.getElementById('waittime').innerText = `${waitStr}`
 }
