@@ -1,5 +1,6 @@
 function getPrintName(person) {
-    if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)) {
+    if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)
+    && !(['Mr.','Ms.'].includes(person.name.forename))) {
         return `${person.name.surname} ${person.name.forename}`
     }
     return `${person.name.forename} ${person.name.surname}`
@@ -91,7 +92,7 @@ function getJsonCookie(name) {
 }
 
 async function displayPersonFull(person){
-
+    document.getElementById("badges").innerHTML= ""
     displayPerson(person)
     await sleep(1000)
     const badges = person.badges
