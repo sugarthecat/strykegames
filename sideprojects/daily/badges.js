@@ -8,36 +8,6 @@ const rarity = {
 }
 const badges = [
     {
-        //49.5%
-        name: "Man",
-        emoji: "🧍‍♂️",
-        rarity: "common",
-        description: "Of the male gender.",
-        eval: function (person) {
-            return person.name.gender == "M"
-        }
-    },
-    {
-        //49.5%
-        name: "Woman",
-        emoji: "🧍‍♀️",
-        rarity: "common",
-        description: "Of the female gender.",
-        eval: function (person) {
-            return person.name.gender == "F"
-        }
-    },
-    {
-        //1%
-        name: "Non-Binary",
-        rarity: "rare",
-        emoji: "🏳️‍🌈",
-        description: "Neither male nor female.",
-        eval: function (person) {
-            return person.name.gender == "NB"
-        }
-    },
-    {
         //8%
         name: "EU Citizenship",
         rarity: "uncommon",
@@ -158,8 +128,13 @@ const badges = [
         eval: function (person) {
             return person.city.population < 2500
         }
-    }
+    },
 ]
+
+function setupBadges(){
+    addGenderBadges();
+    addReligionBadges();
+}
 
 function getBadges(person) {
     let applied = []
@@ -171,7 +146,7 @@ function getBadges(person) {
     return applied
 }
 
-const SAMPLE_SIZE = 1000000
+const SAMPLE_SIZE = 20000
 function testBadge(badgeName) {
     let badge = null;
     for (let i = 0; i < badges.length; i++) {
@@ -179,6 +154,10 @@ function testBadge(badgeName) {
             badge = badges[i];
             break
         }
+    }
+    if(badge == null){
+        console.log("no badge found")
+        return
     }
     let hits = 0;
     for (let i = 0; i < SAMPLE_SIZE; i++) {

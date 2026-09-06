@@ -9,7 +9,15 @@ const INVALID_ISO2 = [
 const cities = []
 const surnames = {}
 const forenames = {}
-const countryToIso2 = {}
+const countryToIso2 = {
+    'czech republic': 'CZ', 'burma (myanmar)': 'MM', 'ivory coast': 'CI', 'bosnia-herzegovina': 'BA',
+    'bahamas': 'BS', 'cape verde': 'CV', 'channel islands': 'JE', 'faeroe islands': 'FO', 'falkland islands (malvinas)': 'FK',
+    'french guiana': 'GF', 'gambia': 'GM', 'guadeloupe': 'GP', 'republic of macedonia': 'MK', 'martinique': 'MQ',
+    'mayotte': 'YT', 'federated states of micronesia': 'FM', 'palestinian territories': 'PS', 'reunion': 'RE',
+    'saint helena': 'SH', 'swaziland': 'SZ', 'tokelau': 'TK', 'u.s. virgin islands': 'VI', 'western sahara': 'EH',
+    'curacao': 'CW', 'caribbean netherlands': 'BQ',
+}
+const religions = {}
 
 async function loadData() {
     const cityTxt = await (await fetch("data/worldcities.csv")).text();
@@ -37,7 +45,7 @@ async function loadData() {
 
             totalPeople += city.population;
             cities.push(city)
-            countryToIso2[formalCountryName(city.country.toLowerCase())] = city.iso2
+            countryToIso2[formalCountryName(city.country).toLowerCase()] = city.iso2
         }
     }
     const forenameData = (await (fetch("data/forenames.csv").then(x => x.text()))).replaceAll("\r", "").split("\n");
@@ -75,31 +83,43 @@ async function loadData() {
         surnames[surname.country].push(surname)
     }
 
-    let missingPopulation = 0
-    for (let i = 0; i < cities.length; i++) {
-        const city = cities[i]
-        if (!(city.iso2 in forenames) || forenames[city.iso2].length == 0) {
-            if (!(city.iso2 in forenames)) {
-                console.error(`Missing forenames for ${city.country} (${city.iso2})`)
-            }
-            forenames[city.iso2] = []
-            missingPopulation += city.population
+
+    const religionData = (await (fetch("data/religion.csv").then(x => x.text()))).replaceAll("\r", "").split("\n");
+    const religionLabels = religionData[0].split(",")
+    religionData.shift()
+    for (let i = 0; i < religionData.length; i++) {
+        const parts = religionData[i].split(",")
+        let country = parts[0]
+        country = country.toLowerCase().replace("st.", "saint")
+        if (!(country in countryToIso2)) {
+            continue
         }
-        if (!(city.iso2 in surnames) || surnames[city.iso2].length == 0) {
-            if (!(city.iso2 in surnames)) {
-                console.log(`Missing surnames for ${city.country} (${city.iso2})`)
+        const iso2 = countryToIso2[country]
+        const religion = []
+        const minorReligionSupport = ['IN','CN','TW']
+        for (let j = 1; j < religionLabels.length; j++) {
+            if (!minorReligionSupport.includes(iso2) && religionLabels[j] == 'Other Religions') {
+                continue
             }
-            surnames[city.iso2] = []
+            religion.push({
+                name: religionLabels[j], count: parseInt(parts[j])
+            })
         }
+        religions[iso2] = religion
     }
-    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population's names`)
+    religions['XG'] = religions['PS']
+    religions['XW'] = religions['PS']
+    religions['GG'] = religions['GB']
+    religions['BL'] = religions['FR']
+    religions['MF'] = religions['FR']
+    religions['NF'] = religions['AU']
 }
 
 async function setup() {
     await loadData();
     addCountryBadges();
     checkCookie();
-
+    setupBadges();
 }
 
 function addCountryBadges() {
@@ -111,6 +131,22 @@ function addCountryBadges() {
         }
         populations[iso2] += cities[i].population
     }
+}
+
+function checkCoverage(dict) {
+
+    let missingPopulation = 0
+    for (let i = 0; i < cities.length; i++) {
+        const city = cities[i]
+        if (!(city.iso2 in dict) || dict[city.iso2].length == 0) {
+            if (!(city.iso2 in dict)) {
+                console.log(`Missing data for ${city.country} (${city.iso2})`)
+            }
+            dict[city.iso2] = []
+            missingPopulation += city.population
+        }
+    }
+    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population`)
 }
 
 window.onload = setup;

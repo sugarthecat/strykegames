@@ -4,17 +4,25 @@ function getRandomSurname(countryCode) {
     if (!(countryCode in surnames)) {
         return "Lastname"
     }
-    let total = 0;
-    for (let i = 0; i < surnames[countryCode].length; i++) {
-        total += parseInt(surnames[countryCode][i].count);
-    }
-    let myN = total * Math.random();
-    for (let i = 0; i < surnames[countryCode].length; i++) {
-        if (surnames[countryCode][i].count > myN) {
-            return surnames[countryCode][i].name
+    const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
+    return item.name;
+}
+function getRandomReligion(countryCode) {
+    let religion = weightedProb(religions[countryCode], (item) => { return item.count }).name
+    if (religion == "Other Religions") {
+        if (countryCode == "IN") {
+            if (Math.random() < 0.85) {
+                religion = "Sikh";
+            }
+            else {
+                religion = "Jain";
+            }
         }
-        myN -= surnames[countryCode][i].count
+        if (countryCode == "CN" || countryCode=="TW") {
+            religion = "Taoism"
+        }
     }
+    return religion
 }
 function formalCountryName(country) {
     if (country == "Congo (Kinshasa)") {
@@ -29,6 +37,9 @@ function formalCountryName(country) {
     if (country == "Congo (Brazzaville)") {
         return "Democratic Republic of the Congo"
     }
+    if (country.toLowerCase() == "virgin islands, british") {
+        return "British Virgin Islands"
+    }
     return country
 }
 function getRandomName(city) {
@@ -41,13 +52,10 @@ function getRandomName(city) {
     return { surname: surname, forename: forename.name, gender: gender }
 }
 function getRandomCity() {
-    let nPerson = Math.floor(Math.random() * totalPeople);
-    let cityIdx = 0;
-    while (nPerson > cities[cityIdx].population) {
-        nPerson -= cities[cityIdx].population;
-        cityIdx++;
-    }
-    return cities[cityIdx]
+    return weightedProb(cities, (city) => { return city.population })
+}
+function getRandomCity() {
+    return weightedProb(cities, (city) => { return city.population })
 }
 
 function getRandomForename(countryCode) {
@@ -69,8 +77,27 @@ function getRandomForename(countryCode) {
 function getRandomPerson() {
     const city = getRandomCity();
     const name = getRandomName(city)
+    const religion = getRandomReligion(city.iso2);
     return {
         city: city,
-        name: name
+        name: name,
+        religion: religion
+    }
+}
+
+function weightedProb(list, getWeighting) {
+    let total = 0;
+    for (let i = 0; i < list.length; i++) {
+        if (isNaN(getWeighting(list[i]))) {
+            console.log(list[i], getWeighting(list[i]))
+        }
+        total += getWeighting(list[i]);
+    }
+    let myN = total * Math.random();
+    for (let i = 0; i < list.length; i++) {
+        if (getWeighting(list[i]) > myN) {
+            return list[i]
+        }
+        myN -= getWeighting(list[i])
     }
 }
