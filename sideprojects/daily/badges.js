@@ -124,7 +124,7 @@ const badges = [
     {
         // #25%
         name: "City Slicker",
-        description: "Lives in a city with a population at least 5 million.",
+        description: "Lives in a city with a population of at least 5 million.",
         rarity: "common",
         emoji: '🏙️',
         eval: function (person) {
@@ -134,7 +134,7 @@ const badges = [
     {
         // 8%
         name: "Townsfolk",
-        description: "Lives in a town with a population between 2500 and 25000",
+        description: "Lives in a town with a population between 2500 and 25000.",
         emoji: "🏘️",
         rarity: "uncommon",
         eval: function (person) {
