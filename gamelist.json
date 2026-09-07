@@ -1,6 +1,20 @@
 {
 	"games": [
 		{
+			"title": "Random Person",
+			"link": "sideprojects/daily",
+			"shortline": "A daily game where you get assigned a random person",
+			"tags": [
+				"game",
+				"daily"
+			],
+			"textColor": "#59fc51",
+			"bgColor": "#03398f",
+			"year": 2026,
+			"recommendationLevel": 1,
+			"date": "Sep 7, 2026"
+		},
+		{
 			"title": "Shell Shock",
 			"link": "arena/injured",
 			"shortline": "A top-down shooter where you acrue injuries.",
