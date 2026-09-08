@@ -120,13 +120,33 @@ function addReligionBadges() {
         }
     })
     badges.push({
-        // ~0.01%
+        // 0.01%
         name: "Baha'i",
         description: "Follows the Baha'i Faith.",
         rarity: "ultra",
         emoji: "🇮🇷",
         eval: function (person) {
             return person.religion == "Bahai"
+        }
+    })
+    badges.push({
+        // 0.025%
+        name: "Juche",
+        description: "Follows Juche, the North Korean state religion.",
+        rarity: "ultra",
+        emoji: "🇰🇵",
+        eval: function (person) {
+            return person.religion == "Juche"
+        }
+    })
+    badges.push({
+        // 0.01%
+        name: "Wicca",
+        description: "Follows Wicca, pre-christian English practice of witchcraft.",
+        rarity: "ultra",
+        emoji: "🇰🇵",
+        eval: function (person) {
+            return person.religion == "Wicca"
         }
     })
 }

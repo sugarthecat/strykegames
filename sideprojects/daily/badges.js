@@ -77,9 +77,27 @@ const badges = [
             return person.city.population < 2500
         }
     },
+    {
+        //0.6%
+        name: "Scunthorpe City",
+        description: "Lives in a city which may have its name automatically censored.",
+        rarity: "legendary",
+        emoji: "🤬",
+        eval: function (person) {
+
+            const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch', 'cock',]
+            let locName = getLocation(person)
+            for (let i = 0; i < badWords.length; i++) {
+                if (locName.includes(badWords[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    },
 ]
 
-function setupBadges(){
+function setupBadges() {
     addGenderBadges();
     addReligionBadges();
     addNameBadges();
@@ -105,7 +123,7 @@ function testBadge(badgeName) {
             break
         }
     }
-    if(badge == null){
+    if (badge == null) {
         console.log("no badge found")
         return
     }

@@ -67,6 +67,12 @@ async function loadData() {
         }
         forenames[forename.country].push(forename)
     }
+    //fill in
+    forenames['KP'] = forenames['SK'] //  north korea = south korea
+    forenames['SY'] = forenames['JO'] // syria = jordan
+    forenames['XG'] = forenames['PS'] // gaza = palestine
+    forenames['XW'] = forenames['PS'] // west bank = palestine
+    forenames['VA'] = forenames['IT'] // vatican city = italy
     for (let i = 0; i < surnameData.length; i++) {
         const parts = surnameData[i].split(',')
         if (i == 0) {

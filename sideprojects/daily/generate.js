@@ -7,7 +7,7 @@ function getRandomSurname(countryCode) {
     const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
     return item.name;
 }
-const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM','IR','VN','KE']
+const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM','IR','VN','KE','KP','CA','GB']
 function getRandomReligion(countryCode) {
     if (!(countryCode in religions)) {
         console.log(countryCode)
@@ -22,6 +22,9 @@ function getRandomReligion(countryCode) {
                 religion = "Jain";
             }
         }
+        if(countryCode == 'CA'){
+            religion = "Sikh"
+        }
         if (countryCode == "CN" || countryCode == "TW") {
             religion = "Taoism"
         }
@@ -30,6 +33,12 @@ function getRandomReligion(countryCode) {
         }
         if (countryCode == "JM") {
             religion = "Rastafari"
+        }
+        if (countryCode == "KP") {
+            religion = "Juche"
+        }
+        if (countryCode == "GB") {
+            religion = "Wicca"
         }
         if (countryCode == "IR" || countryCode == 'VN' || countryCode == 'KE') {
             religion = "Bahai"

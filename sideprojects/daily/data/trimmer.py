@@ -24,7 +24,7 @@ for line in file.readlines():
         continue
     parts = parts[5:]
     if len(parts[-2]) < 10:
-        if int(parts[-2]) > 100000 and parts[0] not in handled:
+        if int(parts[-2]) > 250000 and parts[0] not in handled:
             print(parts)
             biggest = int(parts[-2])
         elif parts[0] not in handled:
