@@ -40,7 +40,7 @@ function copyStats() {
     for (let i = 0; i < Math.min(5, person.badges.length); i++) {
         const badge = person.badges[person.badges.length - 1 - i]
         if (badge.emoji) {
-            outStr += `\n${badge.emoji} ${badge.name}`
+            outStr += `\n${rarity[badge.rarity].emoji} ${badge.emoji} ${badge.name}`
         } else {
             outStr += `\n${badge.name}`
         }

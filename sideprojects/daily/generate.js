@@ -28,6 +28,9 @@ function getRandomReligion(countryCode) {
         if (countryCode == "JP") {
             religion = "Shinto"
         }
+        if (countryCode == "JM") {
+            religion = "Rastafari"
+        }
     }
     return religion
 }
