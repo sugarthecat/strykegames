@@ -19,6 +19,17 @@ function addNameBadges() {
         })
     badges.push(
         {
+            //0.5%
+            name: "John",
+            description: "Has the first name \"John\".",
+            rarity: "legendary",
+            emoji: "👨",
+            eval: function (person) {
+                return person.name.forename == "John"
+            }
+        })
+    badges.push(
+        {
             //10%
             name: "Long Name",
             description: "Has a name of at least 15 characters.",

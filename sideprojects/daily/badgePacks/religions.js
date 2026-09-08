@@ -109,4 +109,14 @@ function addReligionBadges() {
             return person.religion == "Shinto"
         }
     })
+    badges.push({
+        //0.29%
+        name: "Rasta",
+        description: "Follows Rastafari.",
+        rarity: "ultra",
+        emoji: "🇯🇲",
+        eval: function (person) {
+            return person.religion == "Rastafari"
+        }
+    })
 }

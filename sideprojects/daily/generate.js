@@ -7,7 +7,7 @@ function getRandomSurname(countryCode) {
     const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
     return item.name;
 }
-const minorReligionSupport = ['IN', 'CN', 'TW', 'JP']
+const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM']
 function getRandomReligion(countryCode) {
     if (!(countryCode in religions)) {
         console.log(countryCode)
