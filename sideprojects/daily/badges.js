@@ -112,9 +112,9 @@ const badges = [
         }
     },
     {
-        //13%
-        name: "Really Local",
-        description: "Lives in a city which shares a name with its' region.",
+        //10%
+        name: "Locale",
+        description: "Lives in a city which shares a name with its region.",
         emoji: "🏛️",
         rarity: "uncommon",
         eval: function (person) {
