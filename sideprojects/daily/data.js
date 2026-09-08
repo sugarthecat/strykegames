@@ -96,7 +96,6 @@ async function loadData() {
         }
         const iso2 = countryToIso2[country]
         const religion = []
-        const minorReligionSupport = ['IN','CN','TW']
         for (let j = 1; j < religionLabels.length; j++) {
             if (!minorReligionSupport.includes(iso2) && religionLabels[j] == 'Other Religions') {
                 continue

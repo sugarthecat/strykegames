@@ -3,8 +3,8 @@ const rarity = {
     uncommon: { color: "#0f0", rank: 2, emoji: "🟩" }, //8-15%
     rare: { color: "#00f", rank: 3, emoji: "🟦" }, // 3-8%
     epic: { color: "#c0c", rank: 4, emoji: "🟪" }, // 1-3%
-    legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.3-1%
-    ultra: { color: "#000", rank: 5, emoji: "⬛" } // <0.3%
+    legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.1-1%
+    ultra: { color: "#000", rank: 5, emoji: "⬛" } // <0.1%
 }
 const badges = [
     {
@@ -112,6 +112,16 @@ const badges = [
         }
     },
     {
+        //13%
+        name: "Really Local",
+        description: "Lives in a city which shares a name with its' region.",
+        emoji: "🏛️",
+        rarity: "uncommon",
+        eval: function (person) {
+            return person.city.admin_name == person.city.city
+        }
+    },
+    {
         // #23%
         name: "Urbanist",
         description: "Lives in a city with a population from 1-5 million.",
@@ -156,6 +166,7 @@ const badges = [
 function setupBadges(){
     addGenderBadges();
     addReligionBadges();
+    addNameBadges();
 }
 
 function getBadges(person) {
@@ -168,7 +179,7 @@ function getBadges(person) {
     return applied
 }
 
-const SAMPLE_SIZE = 20000
+const SAMPLE_SIZE = 10000
 function testBadge(badgeName) {
     let badge = null;
     for (let i = 0; i < badges.length; i++) {

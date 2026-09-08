@@ -99,4 +99,14 @@ function addReligionBadges() {
             return person.religion == "Taoism"
         }
     })
+    badges.push({
+        //0.29%
+        name: "Shintoist",
+        description: "Follows Shinto.",
+        rarity: "legendary",
+        emoji: "☯️",
+        eval: function (person) {
+            return person.religion == "Shinto"
+        }
+    })
 }
