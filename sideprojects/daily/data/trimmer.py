@@ -29,5 +29,7 @@ for line in file.readlines():
             biggest = int(parts[-2])
         elif parts[0] not in handled:
             parts[-2] = '0'
+    if( parts[3] != 'Unaffiliated'):
+        parts[3] = str(int(parts[3])+1)
     outFile.write(",".join(parts))
     outFile.write("\n")

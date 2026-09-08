@@ -7,7 +7,7 @@ function getRandomSurname(countryCode) {
     const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
     return item.name;
 }
-const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM']
+const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM','IR','VN','KE']
 function getRandomReligion(countryCode) {
     if (!(countryCode in religions)) {
         console.log(countryCode)
@@ -30,6 +30,9 @@ function getRandomReligion(countryCode) {
         }
         if (countryCode == "JM") {
             religion = "Rastafari"
+        }
+        if (countryCode == "IR" || countryCode == 'VN' || countryCode == 'KE') {
+            religion = "Bahai"
         }
     }
     return religion
@@ -61,11 +64,40 @@ function getRandomName(city) {
     }
     return { surname: surname, forename: forename.name, gender: gender }
 }
-function getRandomCity() {
-    return weightedProb(cities, (city) => { return city.population })
+// PopBefore[i] holds the combined population of every city before index i, so
+// a draw from [0, popBeforeTotal) can be resolved with a binary search instead
+// of a linear scan over every city.
+const PopBefore = []
+let popBeforeTotal = 0;
+
+function buildPopBefore() {
+    PopBefore.length = 0;
+    let total = 0;
+    for (let i = 0; i < cities.length; i++) {
+        PopBefore.push(total);
+        total += cities[i].population;
+    }
+    popBeforeTotal = total;
 }
+
 function getRandomCity() {
-    return weightedProb(cities, (city) => { return city.population })
+    if (PopBefore.length != cities.length) {
+        buildPopBefore();
+    }
+    const myN = popBeforeTotal * Math.random();
+    // The last city whose preceding population does not exceed myN, which is
+    // the city the old linear scan would have stopped on.
+    let low = 0;
+    let high = cities.length - 1;
+    while (low < high) {
+        const mid = Math.floor((low + high +1)/2);
+        if (PopBefore[mid] <= myN) {
+            low = mid;
+        } else {
+            high = mid-1;
+        }
+    }
+    return cities[low]
 }
 
 function getRandomForename(countryCode) {
@@ -101,6 +133,9 @@ function weightedProb(list, getWeighting) {
             console.log(list[i], getWeighting(list[i]))
         }
         total += getWeighting(list[i]);
+    }
+    if(total == 0){
+        return list[0]
     }
     let myN = total * Math.random();
     for (let i = 0; i < list.length; i++) {

@@ -13,6 +13,7 @@ let person;
 let nextGameInterval;
 
 async function dailyRoll() {
+    document.getElementById("badges").innerHTML = ""
     document.getElementById("reroll").hidden = true;
     person = getRandomPerson();
     for (let i = 10; i < 500; i *= 1.4) {

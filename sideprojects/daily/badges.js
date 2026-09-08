@@ -96,7 +96,7 @@ function getBadges(person) {
     return applied
 }
 
-const SAMPLE_SIZE = 10000
+const SAMPLE_SIZE = 100000
 function testBadge(badgeName) {
     let badge = null;
     for (let i = 0; i < badges.length; i++) {

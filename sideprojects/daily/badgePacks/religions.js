@@ -110,13 +110,23 @@ function addReligionBadges() {
         }
     })
     badges.push({
-        //0.29%
+        // <0.01%
         name: "Rasta",
         description: "Follows Rastafari.",
         rarity: "ultra",
         emoji: "🇯🇲",
         eval: function (person) {
             return person.religion == "Rastafari"
+        }
+    })
+    badges.push({
+        // ~0.01%
+        name: "Baha'i",
+        description: "Follows the Baha'i Faith.",
+        rarity: "ultra",
+        emoji: "🇮🇷",
+        eval: function (person) {
+            return person.religion == "Bahai"
         }
     })
 }
