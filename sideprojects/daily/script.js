@@ -30,7 +30,7 @@ function copyStats() {
     let genderDict = {
         "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍"
     }
-    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}\n`;
+    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}[][]\n`;
     for (let i = 0; i < person.badges.length; i++) {
         const badge = person.badges[person.badges.length - 1 - i]
         outStr += rarity[badge.rarity].emoji
@@ -137,9 +137,17 @@ async function getTimeTillExpiry() {
 }
 
 async function copyToClipboard(text) {
+    const html = text.replace("Random Person", "<a href=\"agar.io\">Random Person</a>")
     try {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.write([
+            new ClipboardItem({
+                "text/html": new Blob([html.replace("[][]","")], { type: "text/html" }),
+                "text/plain": new Blob([text.replace("[][]","\n https://strykegames.net/sideprojects/daily/")], { type: "text/plain" }),
+            }),
+        ]);
         document.getElementById("copystatus").innerText = "copied!"
+        const items = await navigator.clipboard.read();
+        console.log(items[0].types);
         await sleep(5000)
         document.getElementById("copystatus").innerText = ""
 
@@ -150,7 +158,7 @@ async function copyToClipboard(text) {
 
 async function displayTime() {
     let time = await getTimeTillExpiry() / 1000
-    if(isNaN(time)){
+    if (isNaN(time)) {
         return
     }
     time = Math.ceil(time)
