@@ -1,4 +1,20 @@
-
+function getRandomPerson() {
+    const city = getRandomCity();
+    const name = getRandomName(city)
+    const religion = getRandomReligion(city.iso2);
+    const likesSame = Math.random() < 0.10;
+    const likesOpp = Math.random() < (likesSame ? 0.5 : 0.98);
+    const sexuality = {
+        same: likesSame,
+        opp: likesOpp,
+    }
+    return {
+        city: city,
+        name: name,
+        religion: religion,
+        sexuality:sexuality
+    }
+}
 
 function getRandomSurname(countryCode) {
     if (!(countryCode in surnames)) {
@@ -7,7 +23,7 @@ function getRandomSurname(countryCode) {
     const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
     return item.name;
 }
-const minorReligionSupport = ['IN', 'CN', 'TW', 'JP','JM','IR','VN','KE','KP','CA','GB']
+const minorReligionSupport = ['IN', 'CN', 'TW', 'JP', 'JM', 'IR', 'VN', 'KE', 'KP', 'CA', 'GB']
 function getRandomReligion(countryCode) {
     if (!(countryCode in religions)) {
         console.log(countryCode)
@@ -22,7 +38,7 @@ function getRandomReligion(countryCode) {
                 religion = "Jain";
             }
         }
-        if(countryCode == 'CA'){
+        if (countryCode == 'CA') {
             religion = "Sikh"
         }
         if (countryCode == "CN" || countryCode == "TW") {
@@ -99,11 +115,11 @@ function getRandomCity() {
     let low = 0;
     let high = cities.length - 1;
     while (low < high) {
-        const mid = Math.floor((low + high +1)/2);
+        const mid = Math.floor((low + high + 1) / 2);
         if (PopBefore[mid] <= myN) {
             low = mid;
         } else {
-            high = mid-1;
+            high = mid - 1;
         }
     }
     return cities[low]
@@ -123,18 +139,6 @@ function getRandomForename(countryCode) {
 
 }
 
-
-function getRandomPerson() {
-    const city = getRandomCity();
-    const name = getRandomName(city)
-    const religion = getRandomReligion(city.iso2);
-    return {
-        city: city,
-        name: name,
-        religion: religion
-    }
-}
-
 function weightedProb(list, getWeighting) {
     let total = 0;
     for (let i = 0; i < list.length; i++) {
@@ -143,7 +147,7 @@ function weightedProb(list, getWeighting) {
         }
         total += getWeighting(list[i]);
     }
-    if(total == 0){
+    if (total == 0) {
         return list[0]
     }
     let myN = total * Math.random();

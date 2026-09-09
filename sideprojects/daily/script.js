@@ -21,7 +21,6 @@ async function dailyRoll() {
         displayPerson(getRandomPerson())
     }
     person.badges = getBadges(person)
-    person.badges.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
     //sort badges
     displayPersonFull(person)
     setJsonCookie("person", person, 1)

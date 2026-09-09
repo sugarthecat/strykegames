@@ -4,7 +4,7 @@ const rarity = {
     rare: { color: "#00f", rank: 3, emoji: "🟦" }, // 3-8%
     epic: { color: "#c0c", rank: 4, emoji: "🟪" }, // 1-3%
     legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.1-1%
-    ultra: { color: "#000", rank: 5, emoji: "⬛" } // <0.1%
+    ultra: { color: "#000", rank: 6, emoji: "⬛" } // <0.1%
 }
 const badges = [
     {
@@ -111,6 +111,7 @@ function getBadges(person) {
             applied.push(badges[i])
         }
     }
+    applied.sort((a, b) => rarity[a.rarity].rank - rarity[b.rarity].rank);
     return applied
 }
 
@@ -135,4 +136,27 @@ function testBadge(badgeName) {
         }
     }
     console.log(`${badgeName} has a ${hits / SAMPLE_SIZE * 100}% hit rate`)
+}
+function testBadgeProfiles(topN=1) {
+    const rates = {}
+    for (let i = 0; i < SAMPLE_SIZE; i++) {
+        const person = getRandomPerson();
+        let badges = getBadges(person);
+        let profile = ""
+        for (let i = 0; i < Math.min(topN,badges.length); i++) {
+            profile += rarity[badges[badges.length-1-i].rarity].emoji;
+        }
+        if (!(profile in rates)) {
+            rates[profile] = 0
+        }
+        rates[profile]++;
+    }
+    const states = []
+    for(const key in rates){
+        states.push({state: key, pct:rates[key]/SAMPLE_SIZE * 100})
+    }
+    states.sort( (a,b) => {return (a.pct - b.pct)})
+    for(const state of states){
+        console.log(state)
+    }
 }

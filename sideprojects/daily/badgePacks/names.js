@@ -81,10 +81,10 @@ function addNameBadges() {
         })
     badges.push(
         {
-            //0.04%
+            //0.12%
             name: "Quad Word",
             description: "Has a name composed of four words.",
-            rarity: "utlra",
+            rarity: "legendary",
             emoji: "4️⃣",
             eval: function (person) {
                 if (person.forename == "Mr." || person.forename == "Ms.") {
