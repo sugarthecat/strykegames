@@ -39,7 +39,7 @@ function addGenderBadges() {
             //2.5%
             name: "Gay",
             rarity: "epic",
-            emoji: "🏳️‍🌈",
+            emoji: "👨‍❤️‍👨",
             description: "A man attracted exclusively to other men.",
             eval: function (person) {
                 return person.name.gender == "M" && person.sexuality.same && !person.sexuality.opp;
@@ -50,7 +50,7 @@ function addGenderBadges() {
             //2.5%
             name: "Lesbian",
             rarity: "epic",
-            emoji: "🏳️‍🌈",
+            emoji: "👩‍❤️‍👩",
             description: "A woman attracted excluslive to other women.",
             eval: function (person) {
                 return person.name.gender == "F" && person.sexuality.same && !person.sexuality.opp;
@@ -72,7 +72,7 @@ function addGenderBadges() {
             //5%
             name: "Straight",
             rarity: "common",
-            emoji: "🏳️‍🌈",
+            emoji: "👩‍❤️‍👨",
             description: "Attracted to exclusively the opposite gender.",
             eval: function (person) {
                 return (!person.sexuality.same) && person.sexuality.opp && person.name.gender != "NB";
