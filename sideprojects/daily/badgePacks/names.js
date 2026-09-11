@@ -5,16 +5,17 @@ function addNameBadges() {
             name: "Short Name",
             description: "Has a name of at most 7 characters.",
             rarity: "uncommon",
+            category: "names",
             emoji: "⏪",
             eval: function (person) {
-                if (person.forename == "Mr." || person.forename == "Ms.") {
+                if (person.name.forename == "Mr." || person.name.forename == "Ms.") {
                     return false;
                 }
                 let nameNoSpaces = getPrintName(person)
                 while (nameNoSpaces != nameNoSpaces.replaceAll(" ", "")) {
                     nameNoSpaces = nameNoSpaces.replaceAll(" ", "")
                 }
-                return nameNoSpaces.length <= 7
+                return nameNoSpaces.length <= 8
             }
         })
     badges.push(
@@ -23,6 +24,7 @@ function addNameBadges() {
             name: "John",
             description: "Has the first name \"John\".",
             rarity: "legendary",
+            category: "names",
             emoji: "👨",
             eval: function (person) {
                 return person.name.forename == "John"
@@ -34,6 +36,7 @@ function addNameBadges() {
             name: "Long Name",
             description: "Has a name of at least 15 characters.",
             rarity: "uncommon",
+            category: "names",
             emoji: "⏩",
             eval: function (person) {
                 if (person.forename == "Mr." || person.forename == "Ms.") {
@@ -52,9 +55,10 @@ function addNameBadges() {
             name: "Ultra Long Name",
             description: "Has a name of at least 20 characters.",
             rarity: "legendary",
+            category: "names",
             emoji: "🗒",
             eval: function (person) {
-                if (person.forename == "Mr." || person.forename == "Ms.") {
+                if (person.name.forename == "Mr." || person.name.forename == "Ms.") {
                     return false;
                 }
                 let nameNoSpaces = getPrintName(person)
@@ -72,7 +76,7 @@ function addNameBadges() {
             rarity: "rare",
             emoji: "3️⃣",
             eval: function (person) {
-                if (person.forename == "Mr." || person.forename == "Ms.") {
+                if (person.name.forename == "Mr." || person.name.forename == "Ms.") {
                     return false;
                 }
                 let personName = getPrintName(person)
@@ -85,9 +89,10 @@ function addNameBadges() {
             name: "Quad Word",
             description: "Has a name composed of four words.",
             rarity: "legendary",
+            category: "names",
             emoji: "4️⃣",
             eval: function (person) {
-                if (person.forename == "Mr." || person.forename == "Ms.") {
+                if (person.name.forename == "Mr." || person.name.forename == "Ms.") {
                     return false;
                 }
                 let personName = getPrintName(person)
@@ -100,6 +105,7 @@ function addNameBadges() {
             name: "Double Name",
             description: "Has the same first and last name",
             rarity: "legendary",
+            category: "names",
             emoji: "🪞",
             eval: function (person) {
                 return person.name.surname == person.name.forename
@@ -111,6 +117,7 @@ function addNameBadges() {
             name: "Scunthorpe Name",
             description: "Has a name which may get blockde by automatic censors.",
             rarity: "legendary",
+            category: "names",
             emoji: "🤬",
             eval: function (person) {
                 const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch','cock',]

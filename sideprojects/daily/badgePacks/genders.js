@@ -5,6 +5,7 @@ function addGenderBadges() {
             name: "Man",
             emoji: "🧍‍♂️",
             rarity: "common",
+            category: "gender",
             description: "Of the male gender.",
             eval: function (person) {
                 return person.name.gender == "M"
@@ -15,6 +16,7 @@ function addGenderBadges() {
             //49.5%
             name: "Woman",
             emoji: "🧍‍♀️",
+            category: "gender",
             rarity: "common",
             description: "Of the female gender.",
             eval: function (person) {
@@ -25,6 +27,7 @@ function addGenderBadges() {
         {
             //1%
             name: "Non-Binary",
+            category: "gender",
             rarity: "epic",
             emoji: "🏳️‍🌈",
             description: "Neither male nor female.",
@@ -38,6 +41,7 @@ function addGenderBadges() {
         {
             //2.5%
             name: "Gay",
+            category: "gender",
             rarity: "epic",
             emoji: "👨‍❤️‍👨",
             description: "A man attracted exclusively to other men.",
@@ -49,6 +53,7 @@ function addGenderBadges() {
         {
             //2.5%
             name: "Lesbian",
+            category: "gender",
             rarity: "epic",
             emoji: "👩‍❤️‍👩",
             description: "A woman attracted excluslive to other women.",
@@ -60,6 +65,7 @@ function addGenderBadges() {
         {
             //5%
             name: "Bisexual",
+            category: "gender",
             rarity: "rare",
             emoji: "🏳️‍🌈",
             description: "Attracted to all genders.",
@@ -71,6 +77,7 @@ function addGenderBadges() {
         {
             //5%
             name: "Straight",
+            category: "gender",
             rarity: "common",
             emoji: "👩‍❤️‍👨",
             description: "Attracted to exclusively the opposite gender.",
@@ -82,6 +89,7 @@ function addGenderBadges() {
         {
             //1%
             name: "Asexual",
+            category: "gender",
             rarity: "epic",
             emoji: "🏳️‍🌈",
             description: "Not attracted to anyone.",

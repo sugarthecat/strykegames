@@ -4,6 +4,7 @@ function addReligionBadges() {
         name: "Christian",
         description: "Believes Jesus is the son of God.",
         rarity: "common",
+        category: "religion",
         emoji: "✝️",
         eval: function (person) {
             return person.religion == "Christians"
@@ -14,6 +15,7 @@ function addReligionBadges() {
         name: "Muslim",
         description: "Follows the prophet Muhammad.",
         rarity: "common",
+        category: "religion",
         emoji: "☪️",
         eval: function (person) {
             return person.religion == "Muslims"
@@ -24,6 +26,7 @@ function addReligionBadges() {
         name: "Jewish",
         description: "Follows the religion of Judaism.",
         rarity: "legendary",
+        category: "religion",
         emoji: "✡️",
         eval: function (person) {
             return person.religion == "Jews"
@@ -34,6 +37,7 @@ function addReligionBadges() {
         name: "Atheist",
         description: "Follows no religion.",
         rarity: "common",
+        category: "religion",
         emoji: "⚛️",
         eval: function (person) {
             return person.religion == "Unaffiliated"
@@ -44,6 +48,7 @@ function addReligionBadges() {
         name: "Hindu",
         description: "Follows the Hindu religion.",
         rarity: "common",
+        category: "religion",
         emoji: "🕉️",
         eval: function (person) {
             return person.religion == "Hindus"
@@ -54,6 +59,7 @@ function addReligionBadges() {
         name: "Buddhist",
         description: "Follows the Buddhist religion.",
         rarity: "uncommon",
+        category: "religion",
         emoji: "☸️",
         eval: function (person) {
             return person.religion == "Buddhists"
@@ -64,6 +70,7 @@ function addReligionBadges() {
         name: "Folk Spiritual",
         description: "Follows a decentralized folk religion.",
         rarity: "rare",
+        category: "religion",
         emoji: "🛐",
         eval: function (person) {
             return person.religion == "Folk Religions"
@@ -74,6 +81,7 @@ function addReligionBadges() {
         name: "Sikh",
         description: "Follows Sikhism.",
         rarity: "legendary",
+        category: "religion",
         emoji: "🪯",
         eval: function (person) {
             return person.religion == "Sikh"
@@ -84,6 +92,7 @@ function addReligionBadges() {
         name: "Jain",
         description: "Follows Jainism.",
         rarity: "ultra",
+        category: "religion",
         emoji: "🛐",
         eval: function (person) {
             return person.religion == "Jain"
@@ -94,6 +103,7 @@ function addReligionBadges() {
         name: "Taoist",
         description: "Follows Taoism.",
         rarity: "legendary",
+        category: "religion",
         emoji: "☯️",
         eval: function (person) {
             return person.religion == "Taoism"
@@ -104,16 +114,18 @@ function addReligionBadges() {
         name: "Shintoist",
         description: "Follows Shinto.",
         rarity: "legendary",
+        category: "religion",
         emoji: "☯️",
         eval: function (person) {
             return person.religion == "Shinto"
         }
     })
     badges.push({
-        // <0.01%
+        // 0.002%
         name: "Rasta",
         description: "Follows Rastafari.",
         rarity: "ultra",
+        category: "religion",
         emoji: "🇯🇲",
         eval: function (person) {
             return person.religion == "Rastafari"
@@ -124,6 +136,7 @@ function addReligionBadges() {
         name: "Baha'i",
         description: "Follows the Baha'i Faith.",
         rarity: "ultra",
+        category: "religion",
         emoji: "🇮🇷",
         eval: function (person) {
             return person.religion == "Bahai"
@@ -134,6 +147,7 @@ function addReligionBadges() {
         name: "Juche",
         description: "Follows Juche, the North Korean state religion.",
         rarity: "ultra",
+        category: "religion",
         emoji: "🇰🇵",
         eval: function (person) {
             return person.religion == "Juche"
@@ -144,7 +158,8 @@ function addReligionBadges() {
         name: "Wicca",
         description: "Follows Wicca, pre-christian English practice of witchcraft.",
         rarity: "ultra",
-        emoji: "🇰🇵",
+        category: "religion",
+        emoji: "🕯️",
         eval: function (person) {
             return person.religion == "Wicca"
         }

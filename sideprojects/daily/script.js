@@ -24,6 +24,8 @@ async function dailyRoll() {
     //sort badges
     displayPersonFull(person)
     setJsonCookie("person", person, 1)
+    storeBadges(person)
+    displayBadgeHistory();
 }
 
 function copyStats() {
@@ -118,6 +120,7 @@ function checkCookie() {
     } else {
         person = cookie;
         displayPersonFull(person, 0)
+        storeBadges(person);
     }
 }
 
@@ -141,8 +144,8 @@ async function copyToClipboard(text) {
     try {
         await navigator.clipboard.write([
             new ClipboardItem({
-                "text/html": new Blob([html.replace("[][]","")], { type: "text/html" }),
-                "text/plain": new Blob([text.replace("[][]","\n https://strykegames.net/sideprojects/daily/")], { type: "text/plain" }),
+                "text/html": new Blob([html.replace("[][]", "")], { type: "text/html" }),
+                "text/plain": new Blob([text.replace("[][]", "\n https://strykegames.net/sideprojects/daily/")], { type: "text/plain" }),
             }),
         ]);
         document.getElementById("copystatus").innerText = "copied!"
@@ -155,6 +158,7 @@ async function copyToClipboard(text) {
         console.error('Failed to copy text: ', err);
     }
 }
+
 
 async function displayTime() {
     let time = await getTimeTillExpiry() / 1000

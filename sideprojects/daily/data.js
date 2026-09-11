@@ -125,6 +125,7 @@ async function setup() {
     addCountryBadges();
     checkCookie();
     setupBadges();
+    displayBadgeHistory();
 }
 
 function addCountryBadges() {

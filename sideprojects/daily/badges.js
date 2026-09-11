@@ -8,20 +8,11 @@ const rarity = {
 }
 const badges = [
     {
-        //0.15%
-        name: "Big Apple",
-        rarity: "legendary",
-        emoji: "🗽",
-        description: "Lives in New York City.",
-        eval: function (person) {
-            return (["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"].includes(person.city.city)) && person.city.admin_name == "New York"
-        }
-    },
-    {
         //10%
         name: "Governmental",
         description: "Lives in a national capital.",
         emoji: "🏛️",
+        category: "misc",
         rarity: "uncommon",
         eval: function (person) {
             return person.city.capital == "primary"
@@ -32,6 +23,7 @@ const badges = [
         name: "Locale",
         description: "Lives in a city which shares a name with its region.",
         emoji: "🏛️",
+        category: "misc",
         rarity: "uncommon",
         eval: function (person) {
             return person.city.admin_name == person.city.city
@@ -42,6 +34,7 @@ const badges = [
         name: "Urbanist",
         description: "Lives in a city with a population from 1-5 million.",
         rarity: "common",
+        category: "misc",
         emoji: '🏢',
         eval: function (person) {
             return person.city.population >= 1000000 && person.city.population < 5000000
@@ -52,6 +45,7 @@ const badges = [
         name: "City Slicker",
         description: "Lives in a city with a population of at least 5 million.",
         rarity: "common",
+        category: "misc",
         emoji: '🏙️',
         eval: function (person) {
             return person.city.population >= 5000000
@@ -62,6 +56,7 @@ const badges = [
         name: "Townsfolk",
         description: "Lives in a town with a population between 2500 and 25000.",
         emoji: "🏘️",
+        category: "misc",
         rarity: "uncommon",
         eval: function (person) {
             return person.city.population >= 2500 && person.city.population <= 25000
@@ -72,6 +67,7 @@ const badges = [
         name: "Villager",
         description: "Lives in a village with a population less than 2500.",
         rarity: "legendary",
+        category: "misc",
         emoji: "🛖",
         eval: function (person) {
             return person.city.population < 2500
@@ -82,6 +78,7 @@ const badges = [
         name: "Scunthorpe City",
         description: "Lives in a city which may have its name automatically censored.",
         rarity: "legendary",
+        category: "misc",
         emoji: "🤬",
         eval: function (person) {
 
@@ -116,7 +113,7 @@ function getBadges(person) {
 }
 
 const SAMPLE_SIZE = 100000
-function testBadge(badgeName) {
+function getBadgeWithName(badgeName){
     let badge = null;
     for (let i = 0; i < badges.length; i++) {
         if (badges[i].name.toLowerCase() == badgeName) {
@@ -124,6 +121,10 @@ function testBadge(badgeName) {
             break
         }
     }
+    return badge
+}
+function testBadge(badgeName) {
+    const badge = getBadgeWithName(badgeName);
     if (badge == null) {
         console.log("no badge found")
         return
@@ -137,14 +138,14 @@ function testBadge(badgeName) {
     }
     console.log(`${badgeName} has a ${hits / SAMPLE_SIZE * 100}% hit rate`)
 }
-function testBadgeProfiles(topN=1) {
+function testBadgeProfiles(topN = 1) {
     const rates = {}
     for (let i = 0; i < SAMPLE_SIZE; i++) {
         const person = getRandomPerson();
         let badges = getBadges(person);
         let profile = ""
-        for (let i = 0; i < Math.min(topN,badges.length); i++) {
-            profile += rarity[badges[badges.length-1-i].rarity].emoji;
+        for (let i = 0; i < Math.min(topN, badges.length); i++) {
+            profile += rarity[badges[badges.length - 1 - i].rarity].emoji;
         }
         if (!(profile in rates)) {
             rates[profile] = 0
@@ -152,11 +153,11 @@ function testBadgeProfiles(topN=1) {
         rates[profile]++;
     }
     const states = []
-    for(const key in rates){
-        states.push({state: key, pct:rates[key]/SAMPLE_SIZE * 100})
+    for (const key in rates) {
+        states.push({ state: key, pct: rates[key] / SAMPLE_SIZE * 100 })
     }
-    states.sort( (a,b) => {return (a.pct - b.pct)})
-    for(const state of states){
+    states.sort((a, b) => { return (a.pct - b.pct) })
+    for (const state of states) {
         console.log(state)
     }
 }
