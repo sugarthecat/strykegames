@@ -25,13 +25,13 @@ const categories = ["geographic", "gender", 'religion', 'names', 'misc']
 const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellanious"]
 function displayBadgeHistory() {
     const myBadgeNames = getStoredBadges();
-    document.getElementById('badge-history').innerHTML = "";
+    document.getElementById('past-badges').innerHTML = "";
     
     badges.sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank );
     for (let j = 0; j < categories.length; j++) {
         const category = categories[j];
         const categoryElt = document.createElement('h3')
-        document.getElementById('badge-history').appendChild(categoryElt)
+        document.getElementById('past-badges').appendChild(categoryElt)
         let count = 0;
         let countHas = 0;
         for (let i = 0; i < badges.length; i++) {
@@ -47,7 +47,7 @@ function displayBadgeHistory() {
             countHas++;
             const elt = document.createElement("p")
             elt.innerText = `${rarity[badge.rarity].emoji}${badge.emoji}${badge.name}`
-            document.getElementById('badge-history').appendChild(elt);
+            document.getElementById('past-badges').appendChild(elt);
         }
         categoryElt.innerText = `${categoryNames[j]}: ${countHas}/${count}`;
     }

@@ -20,6 +20,27 @@ function addNameBadges() {
         })
     badges.push(
         {
+            //0.1%
+            name: "Religious",
+            description: "Their name includes their religion.",
+            rarity: "legendary",
+            category: "names",
+            emoji: "🙏",
+            eval: function (person) {
+                if ('Christian' == person.name.surname && person.religion == "Christians") {
+                    return true
+                }
+                if ('Christian' == person.name.forename && person.religion == "Christians") {
+                    return true
+                }
+                if ('Islam' == person.name.surname && person.religion == "Muslims") {
+                    return true
+                }
+                return false;
+            }
+        })
+    badges.push(
+        {
             //0.5%
             name: "John",
             description: "Has the first name \"John\".",
@@ -120,7 +141,7 @@ function addNameBadges() {
             category: "names",
             emoji: "🤬",
             eval: function (person) {
-                const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch','cock',]
+                const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch', 'cock',]
                 let personName = getPrintName(person)
                 for (let i = 0; i < badWords.length; i++) {
                     if (personName.includes(badWords[i])) {
