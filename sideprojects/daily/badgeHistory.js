@@ -21,21 +21,34 @@ function getStoredBadges() {
     }
     return stored.split("/");
 }
-const categories = ["gender","geography",'religion','names']
+const categories = ["geographic", "gender", 'religion', 'names', 'misc']
+const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellanious"]
 function displayBadgeHistory() {
     const myBadgeNames = getStoredBadges();
     document.getElementById('badge-history').innerHTML = "";
-    const myBadges = []
-    for (let i = 0; i < badges.length; i++) {
-        const badgeName = badges[i].name.toLowerCase();
-        if (myBadgeNames.includes(badgeName)) {
-            myBadges.push(badges[i]);
+    
+    badges.sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank );
+    for (let j = 0; j < categories.length; j++) {
+        const category = categories[j];
+        const categoryElt = document.createElement('h3')
+        document.getElementById('badge-history').appendChild(categoryElt)
+        let count = 0;
+        let countHas = 0;
+        for (let i = 0; i < badges.length; i++) {
+            const badge = badges[i]
+            const badgeName = badge.name.toLowerCase();
+            if (category != badge.category) {
+                continue
+            }
+            count++;
+            if (!myBadgeNames.includes(badgeName)) {
+                continue
+            }
+            countHas++;
+            const elt = document.createElement("p")
+            elt.innerText = `${rarity[badge.rarity].emoji}${badge.emoji}${badge.name}`
+            document.getElementById('badge-history').appendChild(elt);
         }
-    }
-    for (let i = 0; i < myBadges.length; i++) {
-        const badge= myBadges[i]
-        const elt = document.createElement("p")
-        elt.innerText = badge.name
-        //document.getElementById('badge-history').appendChild(elt);
+        categoryElt.innerText = `${categoryNames[j]}: ${countHas}/${count}`;
     }
 }
