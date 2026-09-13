@@ -25,7 +25,6 @@ async function dailyRoll() {
     displayPersonFull(person)
     setJsonCookie("person", person, 1)
     storeBadges(person)
-    displayBadgeHistory();
 }
 
 function copyStats() {
@@ -111,6 +110,8 @@ async function displayPersonFull(person, waitMult = 1) {
     await sleep(1000 * waitMult);
     document.getElementById("copy").hidden = false;
     nextGameInterval = setInterval(displayTime, 1000)
+    
+    displayBadgeHistory();
 }
 
 function checkCookie() {
