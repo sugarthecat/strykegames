@@ -22,7 +22,7 @@ function getStoredBadges() {
     return stored.split("/");
 }
 const categories = ["geographic", "gender", 'religion', 'names', 'misc']
-const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellanious"]
+const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellaneous"]
 function displayBadgeHistory() {
     const myBadgeNames = getStoredBadges();
     document.getElementById('past-badges').innerHTML = "";
