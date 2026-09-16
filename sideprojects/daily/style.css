@@ -2,11 +2,11 @@
     --badge-color: #888;
 }
 .uncommon{
-    --badge-color: #f00;
+    --badge-color: #c0c;
 }
 
 .rare{
-    --badge-color: #cc0;
+    --badge-color: #00f;
 }
 
 .epic{
@@ -14,11 +14,11 @@
 }
 
 .legendary{
-    --badge-color: #00f;
+    --badge-color: #cc0;
 }
 
 .ultra{
-    --badge-color: #c0c;
+    --badge-color: #f00;
 }
 
 .badge {
