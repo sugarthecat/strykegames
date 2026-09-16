@@ -136,7 +136,7 @@ function addNameBadges() {
         {
             //0.5%
             name: "Scunthorpe Name",
-            description: "Has a name which may get blockde by automatic censors.",
+            description: "Has a name which may get blocked by automatic censors.",
             rarity: "legendary",
             category: "names",
             emoji: "🤬",
