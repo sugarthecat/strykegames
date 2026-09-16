@@ -48,8 +48,8 @@ function addNameBadges() {
             category: "names",
             emoji: "👨",
             eval: function (person) {
-                return ["john",'johnathan', "ivan", "joao", "juan", "jan", 'jean','johann', 'juana','juanita',
-                    'johan','joan','hans','jaan','sean','jovan','giovanni','janis','shane','jane','joão'].includes(person.name.forename.toLowerCase())
+                return ["john", 'johnathan', "ivan", "joao", "juan", "jan", 'jean', 'johann', 'juana', 'juanita',
+                    'johan', 'joan', 'hans', 'jaan', 'sean', 'jovan', 'giovanni', 'janis', 'shane', 'jane', 'joão'].includes(person.name.forename.toLowerCase())
             }
         })
     badges.push(
