@@ -115,6 +115,7 @@ function addGeoBadges() {
             //0.15%
             name: "Big Apple",
             rarity: "legendary",
+            category: "geographic",
             emoji: "🗽",
             description: "Lives in New York City.",
             eval: function (person) {
@@ -126,6 +127,7 @@ function addGeoBadges() {
             //0.0003%
             name: "Hokie",
             rarity: "ultra",
+            category: "geographic",
             emoji: "🦃",
             description: "Lives in Blacksburg or Christiansburg, Virginia.",
             eval: function (person) {
@@ -137,6 +139,7 @@ function addGeoBadges() {
             //0.2%
             name: "Southern Slav",
             rarity: "legendary",
+            category: "geographic",
             emoji: "🇪🇺",
             description: "Lives in a post-Yugoslav state.",
             eval: function (person) {

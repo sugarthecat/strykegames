@@ -16,12 +16,33 @@ function getRandomPerson() {
     }
 }
 
-function getRandomSurname(countryCode) {
+// Gendered surname suffixes as [male, female] pairs, most specific first (Ivanov / Ivanova).
+const SLAVIC = [['ov', 'ova'], ['ev', 'eva'], ['ow', 'owa'], ['in', 'ina'], ['sky', 'skaya'], ['dzki', 'dzka'], ['cki', 'cka'], ['ski', 'ska']]
+const CZECH = [['ek', 'ková'], ['ka', 'ková'], ['ý', 'á'], ['a', 'ová'], ['o', 'ová'], ['', 'ová']]
+const LATVIAN = [['ons', 'one'], ['is', 'e'], ['s', 'a']]
+const LITHUANIAN = [['ov', 'ova'], ['ius', 'ienė'], ['as', 'ienė'], ['us', 'ienė'], ['is', 'ienė'], ['ys', 'ienė']]
+
+function genderSurname(surname, gender, iso2) {
+    let rules = null
+    if (['RU', 'BY', 'UA', 'BG', 'MK', 'KZ', 'KG', 'UZ', 'TJ', 'TM', 'AZ', 'PL'].includes(iso2)) rules = SLAVIC
+    if (['CZ', 'SK'].includes(iso2)) rules = CZECH
+    if (iso2 == 'LV') rules = LATVIAN
+    if (iso2 == 'LT') rules = LITHUANIAN
+    const isFemale = rules && rules.some(([m, f]) => surname.endsWith(f))
+    if (!rules || !['M', 'F'].includes(gender) || (gender == 'F') == isFemale) return surname
+    // Swap the first matching suffix. Female -> male is ambiguous in Czech (-ová can be
+    // Novák, Svoboda or Procházka), so prefer a result that exists in the data.
+    const [from, to] = gender == 'F' ? [0, 1] : [1, 0]
+    const candidates = rules.filter(r => surname.endsWith(r[from])).map(r => surname.slice(0, surname.length - r[from].length) + r[to])
+    return candidates.find(c => surnames[iso2].some(s => s.name == c)) ?? candidates.at(gender == 'F' ? 0 : -1) ?? surname
+}
+
+function getRandomSurname(countryCode, gender) {
     if (!(countryCode in surnames)) {
         return "Lastname"
     }
-    const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) })
-    return item.name;
+    const item = weightedProb(surnames[countryCode], (item) => { return parseInt(item.count) }).name
+    return genderSurname(item, gender, countryCode);
 }
 const minorReligionSupport = ['IN', 'CN', 'TW', 'JP', 'JM', 'IR', 'VN', 'KE', 'KP', 'CA', 'GB']
 function getRandomReligion(countryCode) {
@@ -81,8 +102,8 @@ function formalCountryName(country) {
     return country
 }
 function getRandomName(city) {
-    const surname = getRandomSurname(city.iso2)
     const forename = getRandomForename(city.iso2)
+    const surname = getRandomSurname(city.iso2, forename.gender)
     let gender = forename.gender;
     if (Math.random() < 0.01) {
         gender = "NB"
