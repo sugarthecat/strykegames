@@ -121,4 +121,26 @@ function addGeoBadges() {
                 return (["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"].includes(person.city.city)) && person.city.admin_name == "New York"
             }
         })
+    badges.push(
+        {
+            //0.0003%
+            name: "Hokie",
+            rarity: "ultra",
+            emoji: "🦃",
+            description: "Lives in Blacksburg or Christiansburg, Virginia.",
+            eval: function (person) {
+                return (["Blacksburg", "Christiansburg"].includes(person.city.city)) && person.city.admin_name == "Virginia"
+            }
+        })
+    badges.push(
+        {
+            //0.2%
+            name: "Southern Slav",
+            rarity: "legendary",
+            emoji: "🇪🇺",
+            description: "Lives in a post-Yugoslav state.",
+            eval: function (person) {
+                return (["BA", "HR",'XK','SI',"RS","MK","ME"].includes(person.city.iso2)) 
+            }
+        })
 }

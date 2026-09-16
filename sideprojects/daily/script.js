@@ -72,9 +72,10 @@ function setJsonCookie(name, jsonObject, daysToExpire) {
 
     let expires = "";
     if (daysToExpire) {
-        const date = new Date();
-        date.setTime(date.getTime() + (daysToExpire * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
+        const tomorrowMidnight = new Date();
+        tomorrowMidnight.setDate(tomorrowMidnight.getDate() + 1); // Move to tomorrow
+        tomorrowMidnight.setHours(0, 0, 0, 0);
+        expires = "; expires=" + tomorrowMidnight.toUTCString();
     }
 
     // Secure and SameSite are recommended for modern security standards
@@ -110,7 +111,7 @@ async function displayPersonFull(person, waitMult = 1) {
     await sleep(1000 * waitMult);
     document.getElementById("copy").hidden = false;
     nextGameInterval = setInterval(displayTime, 1000)
-    
+
     displayBadgeHistory();
 }
 

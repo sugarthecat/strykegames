@@ -141,7 +141,7 @@ function addNameBadges() {
             category: "names",
             emoji: "🤬",
             eval: function (person) {
-                const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch', 'cock',]
+                const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch', 'cock']
                 let personName = getPrintName(person)
                 for (let i = 0; i < badWords.length; i++) {
                     if (personName.includes(badWords[i])) {
