@@ -146,4 +146,16 @@ function addGeoBadges() {
                 return (["BA", "HR",'XK','SI',"RS","MK","ME"].includes(person.city.iso2)) 
             }
         })
+    badges.push(
+        {
+            //1.7%
+            name: "West Coast",
+            rarity: "epic",
+            category: "geographic",
+            emoji: "🏖️",
+            description: "Lives on the North American west coast.",
+            eval: function (person) {
+                return (["California", "Oregon", "Washington", "Alaska","British Columbia", "Baja California", "Baja California Sur"].includes(person.city.admin_name)) 
+            }
+        })
 }
