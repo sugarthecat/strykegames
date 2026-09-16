@@ -143,7 +143,7 @@ function addGeoBadges() {
             emoji: "🇪🇺",
             description: "Lives in a post-Yugoslav state.",
             eval: function (person) {
-                return (["BA", "HR",'XK','SI',"RS","MK","ME"].includes(person.city.iso2)) 
+                return (["BA", "HR", 'XK', 'SI', "RS", "MK", "ME"].includes(person.city.iso2))
             }
         })
     badges.push(
@@ -155,7 +155,45 @@ function addGeoBadges() {
             emoji: "🏖️",
             description: "Lives on the North American west coast.",
             eval: function (person) {
-                return (["California", "Oregon", "Washington", "Alaska","British Columbia", "Baja California", "Baja California Sur"].includes(person.city.admin_name)) 
+                return (["California", "Oregon", "Washington", "Alaska", "British Columbia", "Baja California", "Baja California Sur"].includes(person.city.admin_name))
+            }
+        })
+    badges.push(
+        {
+            //0.7%
+            name: "Wonderful",
+            rarity: "legendary",
+            category: "geographic",
+            emoji: "🏖️",
+            description: "Lives nearby to one of the New 7 Wonders of the World.",
+            eval: function (person) {
+                //iso2, city
+                const triplets = [
+                    ["IN", "Agra"], //taj mahal
+                    ["IT", "Rome"], // collesseum
+                    ["JO", "Wadi Musa"], //petra (will never trigger)
+                    ["PE", "Machupicchu"], // machu pichu (will never trigger)
+                    ["BR", "Rio de Janeiro"], // christ the redeemer
+                    ["MX", "Tinum"] //chichen itza (never triggers)
+                    ["CN", "Beijing"], //great wall of china
+                    ["CN", "Qinhuangdao"], //great wall of china
+                    ["CN", "Jiayuguan"], //great wall of china
+                    ["CN", "Tianjin"] //great wall of china
+                ]
+
+                for (const triplet of triplets) {
+                    if(triplet === undefined || triplet.length == 0){
+                        continue
+                    }
+                    if (triplet[0] != person.city.iso2) {
+                        continue
+                    }
+                    if (triplet[1] != person.city.city_ascii) {
+                        continue
+                    }
+                    return true
+                }
+                return false;
             }
         })
 }
