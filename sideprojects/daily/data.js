@@ -139,20 +139,4 @@ function addCountryBadges() {
     }
 }
 
-function checkCoverage(dict) {
-
-    let missingPopulation = 0
-    for (let i = 0; i < cities.length; i++) {
-        const city = cities[i]
-        if (!(city.iso2 in dict) || dict[city.iso2].length == 0) {
-            if (!(city.iso2 in dict)) {
-                console.log(`Missing data for ${city.country} (${city.iso2})`)
-            }
-            dict[city.iso2] = []
-            missingPopulation += city.population
-        }
-    }
-    console.log(`Missing ${missingPopulation / totalPeople * 100}% of population`)
-}
-
 window.onload = setup;
