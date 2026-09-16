@@ -143,14 +143,25 @@ function addReligionBadges() {
         }
     })
     badges.push({
-        // 0.025%
-        name: "Juche",
-        description: "Follows Juche, the North Korean state religion.",
+        // 0.012%
+        name: "Chondoism",
+        description: "Follows Chondoism, the Korean pantheistic religion.",
         rarity: "ultra",
         category: "religion",
         emoji: "🇰🇵",
         eval: function (person) {
-            return person.religion == "Juche"
+            return person.religion == "Chondoism"
+        }
+    })
+    badges.push({
+        // 0.012%
+        name: "Musok",
+        description: "Follows Musok, the set of Korean shamanistic beleifs.",
+        rarity: "ultra",
+        category: "religion",
+        emoji: "🇰🇵",
+        eval: function (person) {
+            return person.religion == "Musok"
         }
     })
     badges.push({

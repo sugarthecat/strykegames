@@ -41,14 +41,15 @@ function addNameBadges() {
         })
     badges.push(
         {
-            //0.5%
+            //0.8%
             name: "John",
-            description: "Has the first name \"John\".",
+            description: "Has a first name which shares an etymological root with \"John\".",
             rarity: "legendary",
             category: "names",
             emoji: "👨",
             eval: function (person) {
-                return person.name.forename == "John"
+                return ["john",'johnathan', "ivan", "joao", "juan", "jan", 'jean','johann', 'juana','juanita',
+                    'johan','joan','hans','jaan','sean','jovan','giovanni','janis','shane','jane','joão'].includes(person.name.forename.toLowerCase())
             }
         })
     badges.push(

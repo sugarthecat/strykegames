@@ -72,7 +72,10 @@ function getRandomReligion(countryCode) {
             religion = "Rastafari"
         }
         if (countryCode == "KP") {
-            religion = "Juche"
+            religion = "Musok"
+            if(Math.random() < 0.5){
+                religion = "Chondoism"
+            }
         }
         if (countryCode == "GB") {
             religion = "Wicca"
