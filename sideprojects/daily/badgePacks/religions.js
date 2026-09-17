@@ -1,5 +1,16 @@
 function addReligionBadges() {
     badges.push({
+        //0.16%
+        name: "Mormon",
+        description: "Follows the beleifs of The Church of Jesus Christ of Latter-Day Saints.",
+        rarity: "legendary",
+        category: "religion",
+        emoji: "✝️",
+        eval: function (person) {
+            return person.religion == "Mormon"
+        }
+    })
+    badges.push({
         //30%
         name: "Christian",
         description: "Believes Jesus is the son of God.",

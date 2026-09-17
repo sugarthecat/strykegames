@@ -69,7 +69,6 @@ async function loadData() {
     }
     //fill in
     forenames['KP'] = forenames['SK'] //  north korea = south korea
-    forenames['SY'] = forenames['JO'] // syria = jordan
     forenames['XG'] = forenames['PS'] // gaza = palestine
     forenames['XW'] = forenames['PS'] // west bank = palestine
     forenames['VA'] = forenames['IT'] // vatican city = italy

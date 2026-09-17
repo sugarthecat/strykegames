@@ -1,7 +1,7 @@
 function getRandomPerson() {
     const city = getRandomCity();
     const name = getRandomName(city)
-    const religion = getRandomReligion(city.iso2);
+    const religion = getRandomReligion(city);
     const likesSame = Math.random() < 0.10;
     const likesOpp = Math.random() < (likesSame ? 0.5 : 0.98);
     const sexuality = {
@@ -45,7 +45,8 @@ function getRandomSurname(countryCode, gender) {
     return genderSurname(item, gender, countryCode);
 }
 const minorReligionSupport = ['IN', 'CN', 'TW', 'JP', 'JM', 'IR', 'VN', 'KE', 'KP', 'CA', 'GB']
-function getRandomReligion(countryCode) {
+function getRandomReligion(city) {
+    const countryCode = city.iso2
     if (!(countryCode in religions)) {
         console.log(countryCode)
     }
@@ -82,6 +83,11 @@ function getRandomReligion(countryCode) {
         }
         if (countryCode == "IR" || countryCode == 'VN' || countryCode == 'KE') {
             religion = "Bahai"
+        }
+    }
+    if(religion == "Christians"){
+        if(countryCode == "US"  && ((city.admin_name == "Utah" && Math.random() < 0.8) || Math.random() < 0.02) ){
+            religion = "Mormon"
         }
     }
     return religion

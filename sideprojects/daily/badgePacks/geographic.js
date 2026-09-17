@@ -106,8 +106,8 @@ function addGeoBadges() {
                 const iso2 = person.city.iso2;
                 const pacificIslands = ['FJ', 'SB', 'VU', 'NC', 'PF', 'WS', 'AS', 'TO', 'KI',
                     'TV', 'NR', 'PW', 'FM', 'MH', 'CK', 'NU', 'WF',
-                    'GU', 'MP', 'NF', 'PN', 'PG'];
-                return pacificIslands.includes(iso2)
+                    'GU', 'MP', 'NF', 'PN'];
+                return pacificIslands.includes(iso2) || person.city.admin_name == "Hawaii"
             }
         })
     badges.push(
