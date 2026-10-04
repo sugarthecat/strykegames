@@ -9,7 +9,7 @@ import traceback
 
 from claimer import Claimer
 
-TIME_LIMIT = 30  # seconds of computing time per bot per game
+TIME_LIMIT = 10  # seconds of computing time per bot per game
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 

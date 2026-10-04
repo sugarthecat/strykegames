@@ -1,6 +1,6 @@
 {
 	"title": "wordlinks",
-	"description": "contains a connected component of the english language, where vertices are words, connected if and only if one word is a single letter deletion from the other.",
+	"description": "A connected component of the english language (taken from the Oxford 8000), where vertices are words, connected if and only if one word is a single letter deletion from the other.",
 	"p1start": ["ear"],
 	"p2start": ["cat"],
 	"graph":{
