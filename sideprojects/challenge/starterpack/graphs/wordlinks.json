@@ -1,8 +1,8 @@
 {
 	"title": "wordlinks",
 	"description": "contains a connected component of the english language, where vertices are words, connected if and only if one word is a single letter deletion from the other.",
-	"p1start": ["cheat"],
-	"p2start": ["learn"],
+	"p1start": ["ear"],
+	"p2start": ["cat"],
 	"graph":{
 		"part": ["apart","party","art"],
 		"next": ["net"],

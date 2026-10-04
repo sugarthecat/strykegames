@@ -1,0 +1,19 @@
+{
+	"title": "northeast",
+	"description": "The US states from Maryland and Pennsylvania northeast (11 states), adjacent if and only if they share a land border.",
+	"p1start": ["ME"],
+	"p2start": ["MD"],
+	"graph":{
+		"CT": ["MA","NY","RI"],
+		"DE": ["MD","NJ","PA"],
+		"MA": ["CT","NH","NY","RI","VT"],
+		"MD": ["DE","PA"],
+		"ME": ["NH"],
+		"NH": ["MA","ME","VT"],
+		"NJ": ["DE","NY","PA"],
+		"NY": ["CT","MA","NJ","PA","VT"],
+		"PA": ["DE","MD","NJ","NY"],
+		"RI": ["CT","MA"],
+		"VT": ["MA","NH","NY"]
+	}
+}

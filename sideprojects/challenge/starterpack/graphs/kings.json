@@ -1,8 +1,8 @@
 {
-	"title": "Kings",
+	"title": "kings",
 	"description": "An 8x8 chessboard, where adjacency between cells is determined by being a king's move away.",
-	"p1start": ["A1"],
-	"p2start": ["H8"],
+	"p1start": ["E1"],
+	"p2start": ["E8"],
 	"graph":{
 		"A1": ["A2","B1","B2"],
 		"A2": ["A1","A3","B1","B2","B3"],
