@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Claims</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <main>
+        <p class="eyebrow">You're invited to compete in</p>
+        <h1>Claims</h1>
+        <p class="lede">A game theory tournament.</p>
+
+        <div class="board">
+            <svg id="demo" viewBox="0 0 600 360" role="img"
+                aria-label="Animated example game between two claimers on a random graph"></svg>
+            <div class="scoreline">
+                <span><span class="blue">●</span> Encroach bot <b id="blueScore">1</b></span>
+                <span id="status">Turn 1</span>
+                <span>Random bot <b id="redScore">1</b> <span class="red">●</span></span>
+            </div>
+        </div>
+        <p class="caption"><span class="blue">Encroach</span> claims a vertex as close as possible to its opponent. <span class="red">Random</span> claims a random vertex.</p>
+
+        <h2>Game Rules</h2>
+        <ol>
+            <li>The game begins with a connected graph, and each participant having at least one vertex marked as theirs
+                in the connected graph. As part of the initial conditions, one player is chosen to go first.</li>
+            <li>For each turn, the player sees the graph, and may select an unclaimed vertex adjacent to one of their
+                claimed vertices, and claim it. If an invalid move is made, or no moves are possible, the player skips their turn.</li>
+            <li>The game ends when both participants skip their turn.</li>
+        </ol>
+
+        <h2>Scoring</h2>
+        <ol>
+            <li>There is a set of initial conditions that will be used to evaluate your bot. </li>
+            <li>Every bot submitted will compete against every other bot submitted, plus a few reference bots.</li>
+            <li>For each pair of bots, and graph, the bot's score for the round is its number of claimed vertices. </li>
+            <li>The initial conditions may be asymmetric. To make this fair, any asymmetric board will be evaluated for
+                each orientation.</li>
+            <li>Bots, in the end, will be ranked based on their total score across rounds.</li>
+            <li>The collection of graphs for scoring will be curated, both for graphs representing interesting real-world phenomena, but also for graphs which test important claimer properties.</li>
+        </ol>
+        <h2>Submission Guidelines</h2>
+        <ol>
+            <li>There will be no more than 1,000 vertices in each graph. </li>
+            <li>If a bot's total computing time for a single game exceeds 30 seconds, or crashes, any future moves by the bot in the game will be made by the Random bot.</li>
+            <li>Only one submission is allowed per person.</li>
+            <li>Standard Python libraries are allowed.</li>
+            <li>Bots will be re-initialized for each game.</li>
+            <li>Bots will be run in python3.</li>
+        </ol>
+
+        <h2>Submission Format</h2>
+        <p>A Python class named <code>GraphClaimer</code>. It gets the graph and both sides' starting
+            vertices once, is told each vertex the enemy claims, and returns the vertex it wants to claim next.</p>
+       
+        <p><a href="example.py" download>Download the starter pack</a></p>
+
+            <h2>Enter</h2>
+            <p>Email your bot to <a href="mailto:tjpnick@gmail.com">tjpnick@gmail.com</a> with your
+                name and a name for your bot.
+                Questions about the rules are welcome too.</p>
+        <footer>Organized by T.J. Nickerson</footer>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
