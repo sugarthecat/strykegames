@@ -38,6 +38,14 @@
             bots, and run a similar tournament to Axelrod,
             and then see what bots win!
         </p>
+
+        <h2>Game Rules</h2>
+        <ol>
+            <li>The game begins with a connected graph, and each participant having at least one vertex marked as theirs
+                in the connected graph. As part of the initial conditions, one player is chosen to go first.</li>
+            <li>For each turn, the player sees the graph, and may select an unclaimed vertex adjacent to one of their
+                claimed vertices, and claim it. If an invalid move is made, or no moves are possible, the player skips their turn.</li>
+            <li>The game ends when both participants skip their turn.</li>
         </ol>
 
         <h2>Scoring</h2>
@@ -46,7 +54,7 @@
             <li>Every bot submitted will compete against every other bot submitted, plus a few reference bots.</li>
             <li>For each pair of bots, and graph, the bot's score for the round is its number of claimed vertices. </li>
             <li>The initial conditions may be asymmetric. To make this fair, any asymmetric board will be evaluated for
-                each orientation.</li>
+                both orientations.</li>
             <li>Bots, in the end, will be ranked based on their total score across rounds.</li>
             <li>The collection of graphs for scoring will be curated, both for graphs representing interesting
                 real-world phenomena, but also for graphs which test important claimer properties.</li>
