@@ -54,6 +54,18 @@ function addNameBadges() {
         })
     badges.push(
         {
+            //1.2%
+            name: "Mohammed",
+            description: "Has the most common name, globally.",
+            rarity: "epic",
+            category: "names",
+            emoji: "👨",
+            eval: function (person) {
+                return ["mohammed", "muhammad","mohamed", "muhammed", 'mohamad', "mohamed"].includes(person.name.forename.toLowerCase())
+            }
+        })
+    badges.push(
+        {
             //10%
             name: "Long Name",
             description: "Has a name of at least 15 characters.",

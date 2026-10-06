@@ -22,6 +22,13 @@ async function dailyRoll() {
     }
     person.badges = getBadges(person)
     //sort badges
+    const prevBadges = getStoredBadges();
+    for(let i = 0; i<person.badges.length; i++){
+        if(prevBadges.includes(person.badges[i].name.toLowerCase())){
+            continue
+        }
+        person.badges[i].new = true;
+    }
     displayPersonFull(person)
     setJsonCookie("person", person, 1)
     storeBadges(person)
@@ -55,7 +62,7 @@ function copyStats() {
 function addBadge(badge) {
     let badgeDiv = document.createElement("div")
     badgeDiv.className = "badge " + badge.rarity
-    badgeDiv.innerHTML = `<h3>${badge.emoji}${badge.name}${badge.emoji}</h3><p class=\"rarity\">${badge.rarity.toUpperCase()}</p><p>${badge.description}</p>`
+    badgeDiv.innerHTML = `<h3>${badge.emoji}${badge.name}${badge.emoji}</h3>${badge.new ? "<p class=\"newbadge\">NEW</p>" : ""}<p class=\"rarity\">${badge.rarity.toUpperCase()}</p><p>${badge.description}</p>`
     document.getElementById("badges").prepend(badgeDiv)
 }
 
