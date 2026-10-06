@@ -1,20 +1,20 @@
 .common{
-    --badge-color: #888;
-}
-.uncommon{
     --badge-color: #c0c;
 }
-
-.rare{
+.uncommon{
     --badge-color: #00f;
 }
 
-.epic{
+.rare{
     --badge-color: #0c0;
 }
 
-.legendary{
+.epic{
     --badge-color: #cc0;
+}
+
+.legendary{
+    --badge-color: #f80;
 }
 
 .ultra{
