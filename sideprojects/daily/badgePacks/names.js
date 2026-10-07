@@ -108,6 +108,7 @@ function addNameBadges() {
             name: "Triple Word",
             description: "Has a name composed of three words.",
             rarity: "rare",
+            category: "names",
             emoji: "3️⃣",
             eval: function (person) {
                 if (person.name.forename == "Mr." || person.name.forename == "Ms.") {
