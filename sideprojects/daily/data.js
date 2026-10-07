@@ -18,6 +18,7 @@ const countryToIso2 = {
     'curacao': 'CW', 'caribbean netherlands': 'BQ',
 }
 const religions = {}
+const languages = {}
 
 async function loadData() {
     const cityTxt = await (await fetch("data/worldcities.csv")).text();
@@ -117,6 +118,22 @@ async function loadData() {
     religions['BL'] = religions['FR']
     religions['MF'] = religions['FR']
     religions['NF'] = religions['AU']
+    const languageData = (await (fetch("data/languages.csv").then(x => x.text()))).replaceAll("\r", "").split("\n");
+    for (let i = 0; i < languageData.length; i++) {
+        if (languageData[i].length < 4) {
+            continue
+        }
+        const parts = languageData[i].split(",")
+
+        let iso2 = parts[0]
+        if (!(iso2 in languages)) {
+            languages[iso2] = []
+        }
+        languages[iso2].push({ language: parts[1], speakers: parseInt(parts[2]), percent: parseInt(parts[3]) })
+    }
+    languages['XG'] = languages['PS']
+    languages['XW'] = languages['PS']
+
 }
 
 async function setup() {

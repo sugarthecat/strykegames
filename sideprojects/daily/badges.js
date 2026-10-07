@@ -6,99 +6,15 @@ const rarity = {
     legendary: { color: "#f80", rank: 5, emoji: "🟧" }, // 0.1-1%
     ultra: { color: "#f00", rank: 6, emoji: "🟥" } // <0.1%
 }
-const badges = [
-    {
-        //10%
-        name: "Governmental",
-        description: "Lives in a national capital.",
-        emoji: "🏛️",
-        category: "misc",
-        rarity: "uncommon",
-        eval: function (person) {
-            return person.city.capital == "primary"
-        }
-    },
-    {
-        //10%
-        name: "Locale",
-        description: "Lives in a city which shares a name with its region.",
-        emoji: "🏛️",
-        category: "misc",
-        rarity: "uncommon",
-        eval: function (person) {
-            return person.city.admin_name == person.city.city
-        }
-    },
-    {
-        // #23%
-        name: "Urbanist",
-        description: "Lives in a city with a population from 1-5 million.",
-        rarity: "common",
-        category: "misc",
-        emoji: '🏢',
-        eval: function (person) {
-            return person.city.population >= 1000000 && person.city.population < 5000000
-        }
-    },
-    {
-        // #25%
-        name: "City Slicker",
-        description: "Lives in a city with a population of at least 5 million.",
-        rarity: "common",
-        category: "misc",
-        emoji: '🏙️',
-        eval: function (person) {
-            return person.city.population >= 5000000
-        }
-    },
-    {
-        // 8%
-        name: "Townsfolk",
-        description: "Lives in a town with a population between 2500 and 25000.",
-        emoji: "🏘️",
-        category: "misc",
-        rarity: "uncommon",
-        eval: function (person) {
-            return person.city.population >= 2500 && person.city.population <= 25000
-        }
-    },
-    {
-        //0.1%
-        name: "Villager",
-        description: "Lives in a village with a population less than 2500.",
-        rarity: "legendary",
-        category: "misc",
-        emoji: "🛖",
-        eval: function (person) {
-            return person.city.population < 2500
-        }
-    },
-    {
-        //0.6%
-        name: "Scunthorpe City",
-        description: "Lives in a city which may have its name automatically censored.",
-        rarity: "legendary",
-        category: "misc",
-        emoji: "🤬",
-        eval: function (person) {
-
-            const badWords = ['cunt', 'fuck', 'shit', 'damn', 'dick', 'ass', 'bitch', 'cock',]
-            let locName = getLocation(person)
-            for (let i = 0; i < badWords.length; i++) {
-                if (locName.includes(badWords[i])) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    },
-]
+const badges = []
 
 function setupBadges() {
     addGenderBadges();
     addReligionBadges();
     addNameBadges();
     addGeoBadges();
+    addMiscBadges();
+    addLanguageBadges();
 }
 
 function getBadges(person) {

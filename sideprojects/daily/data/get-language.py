@@ -20,6 +20,8 @@ soup = soup.tbody
 def cleanLanguageName(name):
     if '(' in name:
         name = name[:name.index('(')-1]
+    if '[' in name:
+        name = name[:name.index('[')-1]
     return name
 
 rows = [child for child in soup.contents if len(child) > 5]
@@ -36,9 +38,10 @@ for row in rows:
     #print(desc)
     desc[0] = cleanLanguageName(desc[0])
     desc[3] = int(desc[3].replace(",","").replace(".",""))
-    countryLanguages[currCountry].append((desc[0],desc[3]))
+    print(desc)
+    countryLanguages[currCountry].append((desc[0],desc[3],desc[4][:-1]))
 
 file = open("languages.csv",'w',encoding='utf8')
 for code in countryLanguages:
     for pair in countryLanguages[code]:
-        file.write(f"{code},{pair[0]},{pair[1]}\n")
+        file.write(f"{code},{pair[0]},{pair[1]},{pair[2]}\n")

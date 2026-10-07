@@ -8,11 +8,13 @@ function getRandomPerson() {
         same: likesSame,
         opp: likesOpp,
     }
+    const languages = getRandomLanguages(city.iso2);
     return {
         city: city,
         name: name,
         religion: religion,
-        sexuality:sexuality
+        sexuality: sexuality,
+        languages: languages
     }
 }
 
@@ -74,7 +76,7 @@ function getRandomReligion(city) {
         }
         if (countryCode == "KP") {
             religion = "Musok"
-            if(Math.random() < 0.5){
+            if (Math.random() < 0.5) {
                 religion = "Chondoism"
             }
         }
@@ -85,8 +87,8 @@ function getRandomReligion(city) {
             religion = "Bahai"
         }
     }
-    if(religion == "Christians"){
-        if(countryCode == "US"  && ((city.admin_name == "Utah" && Math.random() < 0.8) || Math.random() < 0.02) ){
+    if (religion == "Christians") {
+        if (countryCode == "US" && ((city.admin_name == "Utah" && Math.random() < 0.8) || Math.random() < 0.02)) {
             religion = "Mormon"
         }
     }
@@ -167,6 +169,59 @@ function getRandomForename(countryCode) {
     const name = names[Math.floor(Math.random() * names.length)]
     return name
 
+}
+
+function getRandomLanguages(countryCode) {
+    let totalPercent = 0
+    const myLangs = languages[countryCode];
+    for (let i = 0; i < myLangs.length; i++) {
+        totalPercent += myLangs[i].percent
+    }
+    const myFrac = Math.random();
+    const selectedLangs = []
+    totalPercent /= 100
+    if (totalPercent < 1) {
+        totalPercent = 1;
+    }
+    for (let i = 0; i < Math.floor(totalPercent); i++) {
+        while (true) {
+            const newLang = (weightedProb(myLangs, (lang) => lang.speakers))
+            let inList = false;
+            for (let i = 0; i < selectedLangs.length; i++) {
+                if (newLang.language == selectedLangs[i].language) {
+                    inList = true;
+                }
+            }
+            if (!inList) {
+                selectedLangs.push(newLang)
+                break;
+            }
+        }
+    }
+
+    while (myFrac < totalPercent % 1) {
+        const newLang = (weightedProb(myLangs, (lang) => lang.speakers))
+        let inList = false;
+        for (let i = 0; i < selectedLangs.length; i++) {
+            if (newLang.language == selectedLangs[i].language) {
+                inList = true;
+            }
+        }
+        if (!inList) {
+            selectedLangs.push(newLang)
+            break;
+        }
+    }
+    //remove dupes
+    const outLangs = []
+    for (let i = 0; i < selectedLangs.length; i++) {
+        if (outLangs.includes(selectedLangs[i].language)) {
+            continue
+        }
+        outLangs.push(selectedLangs[i].language)
+    }
+
+    return outLangs
 }
 
 function weightedProb(list, getWeighting) {

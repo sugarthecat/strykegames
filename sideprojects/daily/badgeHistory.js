@@ -21,8 +21,8 @@ function getStoredBadges() {
     }
     return stored.split("/");
 }
-const categories = ["geographic", "gender", 'religion', 'names', 'misc']
-const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellaneous"]
+const categories = ["geographic", "gender", 'religion', 'names', 'misc', "languages"]
+const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellaneous", "Languages"]
 function displayBadgeHistory() {
     const myBadgeNames = getStoredBadges();
     document.getElementById('past-badges').innerHTML = "";
