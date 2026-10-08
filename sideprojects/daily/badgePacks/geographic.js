@@ -98,7 +98,7 @@ function addGeoBadges() {
         {
             //0.05%
             name: "Pacific Islander",
-            rarity: "ultra",
+            rarity: "mythical",
             category: "geographic",
             description: "Lives in a Pacific Island nation.",
             emoji: "🏝️",
@@ -126,7 +126,7 @@ function addGeoBadges() {
         {
             //0.0003%
             name: "Hokie",
-            rarity: "ultra",
+            rarity: "mythical",
             category: "geographic",
             emoji: "🦃",
             description: "Lives in Blacksburg or Christiansburg, Virginia.",

@@ -102,7 +102,7 @@ function addReligionBadges() {
         //0.03%
         name: "Jain",
         description: "Follows Jainism.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🛐",
         eval: function (person) {
@@ -135,7 +135,7 @@ function addReligionBadges() {
         // 0.002%
         name: "Rasta",
         description: "Follows Rastafari.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🇯🇲",
         eval: function (person) {
@@ -146,7 +146,7 @@ function addReligionBadges() {
         // 0.01%
         name: "Baha'i",
         description: "Follows the Baha'i Faith.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🇮🇷",
         eval: function (person) {
@@ -157,7 +157,7 @@ function addReligionBadges() {
         // 0.012%
         name: "Chondoism",
         description: "Follows Chondoism, the Korean pantheistic religion.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🇰🇵",
         eval: function (person) {
@@ -168,7 +168,7 @@ function addReligionBadges() {
         // 0.012%
         name: "Musok",
         description: "Follows Musok, the set of Korean shamanistic beleifs.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🇰🇵",
         eval: function (person) {
@@ -179,7 +179,7 @@ function addReligionBadges() {
         // 0.01%
         name: "Wicca",
         description: "Follows Wicca, pre-christian English practice of witchcraft.",
-        rarity: "ultra",
+        rarity: "mythical",
         category: "religion",
         emoji: "🕯️",
         eval: function (person) {

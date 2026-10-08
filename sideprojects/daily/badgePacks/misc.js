@@ -50,7 +50,7 @@ function addMiscBadges() {
             description: "Speaks at least 4 languages",
             emoji: "🌐",
             category: "misc",
-            rarity: "ultra",
+            rarity: "mythical",
             eval: function (person) {
                 return person.languages.length >= 4
             }

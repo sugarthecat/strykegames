@@ -4,7 +4,7 @@ const rarity = {
     rare: { color: "#00f", rank: 3, emoji: "🟦" }, // 3-7%
     epic: { color: "#c0c", rank: 4, emoji: "🟪" }, // 1-3%
     legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.1-1%
-    ultra: { color: "#000", rank: 6, emoji: "⬛" } // <0.1%
+    mythical: { color: "#f00", rank: 6, emoji: "🟥" } // <0.1%
 }
 const badges = []
 

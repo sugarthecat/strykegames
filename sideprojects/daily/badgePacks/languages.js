@@ -56,7 +56,7 @@ function addLanguageBadges() {
         }
         if(languageTotal[language] < 150000){
             //less than 150k
-            badge.rarity = "ultra"
+            badge.rarity = "mythical"
         }
         badge.eval = evalFunc
         badges.push(badge)
