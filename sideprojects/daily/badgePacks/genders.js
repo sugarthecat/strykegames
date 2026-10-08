@@ -56,7 +56,7 @@ function addGenderBadges() {
             category: "gender",
             rarity: "epic",
             emoji: "👩‍❤️‍👩",
-            description: "A woman attracted excluslive to other women.",
+            description: "A woman attracted exclusively to other women.",
             eval: function (person) {
                 return person.name.gender == "F" && person.sexuality.same && !person.sexuality.opp;
             }
