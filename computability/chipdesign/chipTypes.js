@@ -4,7 +4,7 @@ const chipTypes = [
         description: "The hub for processing information on a computer. Applies a slowdown of 1/efficiency.",
         xDim: 3,
         yDim: 3,
-        allowedComponents: ["ALU"],
+        allowedComponents: ["ALU","FPU"],
         arDescription: "Applies a slowdown of 1/efficiency.",
         cdDescription: "Efficiency is the minimum of the sum of compute, and the minimum of speed. Maximize efficiency.",
         color: [220, 120, 60],
