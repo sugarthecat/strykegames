@@ -13,6 +13,6 @@ const research = [
         fail: true,
         minIncome: 10,
         cost: 100,
-        unlocks: [""]
+        unlocks: []
     }
 ]

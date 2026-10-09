@@ -1,8 +1,11 @@
 class ChipDesignScreen extends LevelBrowser {
   constructor() {
-    super("Chip Design", chipTypes, "Play", (chipType) => { })
+    super("Chip Design", chipTypes, "Play", (chipType) => {
+      screens.chiplevel.Load(chipType)
+      screenOn = "chiplevel"
+    })
   }
   getDetails(chipType) {
-    return [chipType.description, chipType.cdDescription, `Grid: ${chipType.xDim}x${chipType.yDim}`, `Cost: ${chipType.cost}`]
+    return [chipType.cdDescription]
   }
 }

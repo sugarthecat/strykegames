@@ -10,9 +10,12 @@ function preload() {
     screens = {
         "menu": new MenuScreen(),
         "applications": new ApplicationsScreen(),
+        "applicationlevel": new ApplicationLevelScreen(),
         "chipdesign": new ChipDesignScreen(),
+        "chiplevel": new ChipLevelScreen(),
         "research": new ResearchScreen(),
         "architecture": new ArchitectureScreen(),
+        "architecturelevel": new ArchitectureLevelScreen(),
         "core": new CoreScreen()
     }
 }
@@ -36,7 +39,9 @@ function draw() {
     background(0);
     cursor(ARROW);
     let mousePosition = getMousePosition()
+    UpdateResearch()
     screens[screenOn].Draw(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
+    DrawResearchNotice()
     pop()
     fill(0)
     noStroke()
@@ -52,6 +57,23 @@ function draw() {
 function mouseClicked() {
     let mousePosition = getMousePosition()
     screens[screenOn].HandleClick(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
+}
+function mousePressed() {
+    if (mouseButton === LEFT) {
+        let mousePosition = getMousePosition()
+        screens[screenOn].HandleMousePress(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
+    }
+}
+function mouseReleased() {
+    let mousePosition = getMousePosition()
+    if (mouseButton === RIGHT) {
+        screens[screenOn].HandleRightClick(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
+        return false;
+    }
+    screens[screenOn].HandleMouseRelease(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
+}
+document.oncontextmenu = function () {
+    return false;
 }
 function getMousePosition() {
     let mousePosition = { x: mouseX, y: mouseY }

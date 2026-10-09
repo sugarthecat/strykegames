@@ -59,7 +59,8 @@ class CoreScreen extends SatelliteScreen {
 // Each task has an "economic value", which is the profit you gain from solving the problem. 
 // However, each component has two drawbacks: 'slowdown', which is a multiple applied to economic value, 
 // and 'cost', which is subtracted from economic value after the end
-// Overall, the formula for the value of an application is the product of the economic value and the slowdowns, minus the cost.
+// Overall, the formula for the value of an application is the economic value times the product of (1 - slowdown) for each component,
+// minus the sum of the costs. A slowdown of 0.01 (1%) keeps 0.99 of the value.
 // The costs are constant, and the slowdowns are a function of the architecture of the componentsib
 // 
 // Research - Tech Tree

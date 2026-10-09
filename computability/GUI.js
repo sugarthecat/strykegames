@@ -12,4 +12,10 @@ class GUI{
             this.elements[i].HandleClick(x,y)
         }
     }
+    HandleRightClick(x,y){
+    }
+    HandleMousePress(x,y){
+    }
+    HandleMouseRelease(x,y){
+    }
 }

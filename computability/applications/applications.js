@@ -13,7 +13,7 @@ const applications = [
     {
         name: "Consistency Checker",
         description: "When given an input, return true if and only if every input is true.",
-        value: 250,
+        value: 500,
         inputs: [{ name: "Input A", type: "bool" }, { name: "Input B", type: "bool" }],
         outputs: [{ name: "Output", type: "bool" }],
         testCases: [
