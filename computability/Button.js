@@ -12,6 +12,11 @@ class Button {
     contains(x, y) {
         return x >= this.x && x <= this.x + this.w && y >= this.y && y <= this.y + this.h;
     }
+    UpdateCursor(x, y) {
+        if (this.contains(x, y) && this.active && !this.hidden) {
+            cursor(HAND);
+        }
+    }
     HandleClick(x, y) {
         if (this.contains(x, y) && this.active && !this.hidden) {
             this.action();
@@ -22,6 +27,7 @@ class Button {
         if(this.hidden){
             return;
         }
+        this.UpdateCursor(x, y)
         push()
         let size = this.h * 0.8;
         textSize(size);

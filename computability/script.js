@@ -1,13 +1,20 @@
 
 
 const SCREEN_DIMENSIONS = { x: 600, y: 400 }
-let screenOn = "title"
+let screenOn = "menu"
 let scaleFactor = 1;
 let volume = 1;
 let screens;
 function preload() {
-    screens = { "title": new TitleScreen() }
     Assets.loadAssets()
+    screens = {
+        "menu": new MenuScreen(),
+        "applications": new ApplicationsScreen(),
+        "chipdesign": new ChipDesignScreen(),
+        "research": new ResearchScreen(),
+        "architecture": new ArchitectureScreen(),
+        "core": new CoreScreen()
+    }
 }
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -27,8 +34,9 @@ function draw() {
 
     scale(scaleFactor, scaleFactor)
     background(0);
+    cursor(ARROW);
     let mousePosition = getMousePosition()
-    screens[screenOn].Draw(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 600));
+    screens[screenOn].Draw(constrain(mousePosition.x, 0, 600), constrain(mousePosition.y, 0, 400));
     pop()
     fill(0)
     noStroke()
