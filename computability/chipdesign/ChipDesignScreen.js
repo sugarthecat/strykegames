@@ -1,9 +1,8 @@
-class ChipDesignScreen extends SatelliteScreen {
+class ChipDesignScreen extends LevelBrowser {
   constructor() {
-    super()
-    this.elements.push(new GUIText(20, 20, 560, 60, "Chip Design"))
+    super("Chip Design", chipTypes, "Play", (chipType) => { })
   }
-  Draw(x, y) {
-    super.Draw(x, y);
+  getDetails(chipType) {
+    return [chipType.description, chipType.cdDescription, `Grid: ${chipType.xDim}x${chipType.yDim}`, `Cost: ${chipType.cost}`]
   }
 }

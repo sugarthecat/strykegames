@@ -1,9 +1,13 @@
-class ResearchScreen extends SatelliteScreen {
+class ResearchScreen extends LevelBrowser {
   constructor() {
-    super()
-    this.elements.push(new GUIText(20, 20, 560, 60, "Research"))
+    super("Research", research, "Start", (item) => { }, false)
   }
-  Draw(x, y) {
-    super.Draw(x, y);
+  getDetails(item) {
+    return [
+      item.description,
+      `Minimum income: ${item.minIncome}/s`,
+      `Cost: ${item.cost}`,
+      `Unlocks: ${item.unlocks.join(", ")}`
+    ]
   }
 }

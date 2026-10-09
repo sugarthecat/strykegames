@@ -1,9 +1,8 @@
-class ArchitectureScreen extends SatelliteScreen {
+class ArchitectureScreen extends LevelBrowser {
   constructor() {
-    super()
-    this.elements.push(new GUIText(20, 20, 560, 60, "Architecture"))
+    super("Architecture", architectures, "Play", (architecture) => { })
   }
-  Draw(x, y) {
-    super.Draw(x, y);
+  getDetails(architecture) {
+    return [architecture.description, architecture.engDescription]
   }
 }

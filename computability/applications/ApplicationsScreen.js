@@ -1,9 +1,14 @@
-class ApplicationsScreen extends SatelliteScreen {
+class ApplicationsScreen extends LevelBrowser {
   constructor() {
-    super()
-    this.elements.push(new GUIText(20, 20, 560, 60, "Applications"))
+    super("Applications", applications, "Play", (application) => { })
   }
-  Draw(x, y) {
-    super.Draw(x, y);
+  getDetails(application) {
+    const formatPorts = (ports) => ports.map((port) => `${port.name} (${port.type})`).join(", ")
+    return [
+      application.description,
+      `Value: ${application.value}`,
+      `Inputs: ${formatPorts(application.inputs)}`,
+      `Outputs: ${formatPorts(application.outputs)}`
+    ]
   }
 }
