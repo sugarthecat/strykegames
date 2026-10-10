@@ -151,7 +151,7 @@ export default function loadPresetPack(presetPack, endDoc) {
             break;
         case 'Organizations':
             flagPairs.push(['rz001489z0z0z1z1xstzffdd00z0.5z0.82z0.06z5xstzffdd00z0.73z0.5z0.06z5xstzffdd00z0.27z0.5z0.06z5xstzffdd00z0.5z0.18z0.06z5xstzffdd00z0.68z0.37z0.06z5xstzffdd00z0.60z0.25z0.06z5xstzffdd00z0.68z0.63z0.06z5xstzffdd00z0.60z0.75z0.06z5xstzffdd00z0.32z0.37z0.06z5xstzffdd00z0.4z0.25z0.06z5xstzffdd00z0.32z0.63z0.06z5xstzffdd00z0.4z0.75z0.06z5', 'European Union'])
-            flagPairs.push(['rz012169z0z0z1z1xlzffffffz0.05z0z0.5z0.3z0.5xlzffffffz0.05z1z0.5z0.7z0.5xlzffffffz0.05z0.5z0z0.5z0.25xlzffffffz0.05z0.5z1z0.5z0.75xczffffffz0.5z0.5z0.15xcz012169z0.5z0.5z0.12xstzffffffz0.5z0.5z0.15z4', 'NATO'])
+            flagPairs.push(['rz004990z0z0z1z1xlzffffffz0.01z0.5z0.1z0.5z0.9xcz004990z0.5z0.5z0.2xczffffffz0.5z0.5z0.14xcz004990z0.5z0.5z0.13xtz004990z0.28z0.5z0.5z0.412z0.5z0.588xtzffffffz0.315z0.5z0.501z0.426z0.501z0.574xtz004990z0.72z0.5z0.5z0.412z0.5z0.588xtzffffffz0.685z0.5z0.499z0.426z0.499z0.574xtz004990z0.295z0.5z0.5z0.5z0.465z0.455xtz004791z0.705z0.5z0.5z0.5z0.535z0.545xtz004990z0.5z0.21z0.47z0.33z0.53z0.33xtz004990z0.5z0.79z0.47z0.67z0.53z0.67xtzffffffz0.5z0.25z0.458z0.45z0.542z0.45xtzffffffz0.5z0.75z0.458z0.55z0.542z0.55xtz004990z0.5z0.5z0.532z0.455z0.5z0.24xtz004990z0.5z0.5z0.468z0.545z0.5z0.76xlzffffffz0.01z0.075z0.5z0.28z0.5xlzffffffz0.01z0.925z0.5z0.72z0.5', 'NATO'])
             break;
         case 'Pride':
             flagPairs.push(["rz732982z0z0z1z1xrzff8c00z0z0.16z1z0.17xrzffed00z0z0.33z1z0.17xrz008026z0z0.50z1z0.17xrz24408ez0z0.65z1z0.17xrze40303z0z0z1z0.16", 'LGBT+ Pride'])
