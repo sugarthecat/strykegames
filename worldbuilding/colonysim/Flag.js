@@ -43,6 +43,7 @@ export default class Flag {
         if (this.customImage) {
             ctx.drawImage(this.customImageCanvas, 0, 0, canvas.width, canvas.height)
         } else {
+            console.log(this.flagElements)
             //ctx.fillStyle = "#000000"
             //ctx.fillRect(0,0,10,10)
             for (let i = 0; i < this.flagElements.length; i++) {
@@ -103,7 +104,7 @@ export default class Flag {
                     ctx.fill();
                 } else if (this.flagElements[i].split('z')[0] == 'st') {
                     //star
-                    //t, [color], [x], [y], [radius], [corners],
+                    //st, [color], [x], [y], [radius], [corners],
                     let midx = parseFloat(this.flagElements[i].split('z')[2] * canvas.width)
                     let midy = parseFloat(this.flagElements[i].split('z')[3] * canvas.height)
                     let radius = parseFloat(this.flagElements[i].split('z')[4] * canvas.height)
@@ -120,6 +121,29 @@ export default class Flag {
 
                     }
                     ctx.fillStyle = '#' + this.flagElements[i].split('z')[1]
+                    ctx.fill();
+                } else if (this.flagElements[i].split('z')[0] == 'e') {
+                    //ellipse
+                    let x1 = parseFloat(this.flagElements[i].split('z')[2]) * canvas.width;
+                    let y1 = parseFloat(this.flagElements[i].split('z')[3]) * canvas.height;
+                    let x2 = parseFloat(this.flagElements[i].split('z')[4]) * canvas.width;
+                    let y2 = parseFloat(this.flagElements[i].split('z')[5]) * canvas.height;
+                    let r = parseFloat(this.flagElements[i].split('z')[6]) * canvas.width;
+
+                    let midx = (x1 + x2) / 2;
+                    let midy = (y1 + y2) / 2;
+                    let mDist = Math.sqrt((midx - x1) * (midx - x1) + (midy - y1) * (midy - y1));
+                    let theta = Math.asin((midy - y1) / mDist);
+                    if(isNaN(theta)){
+                        theta = 0;
+                    }
+                    //foci sit mDist from the center along the major axis, so b^2 = a^2 - c^2
+                    //r is the sum of the distances from any point on the ellipse to both foci
+                    let radiusX = r / 2;
+                    let radiusY = Math.sqrt(Math.max(0, radiusX * radiusX - mDist * mDist));
+                    ctx.beginPath();
+                    ctx.fillStyle = '#' + this.flagElements[i].split('z')[1]
+                    ctx.ellipse(midx, midy, radiusX, radiusY, theta, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
@@ -162,14 +186,13 @@ export default class Flag {
                     let color = RGBToHex(r, g, b);
                     if (color != lastColor) {
                         if (lastColor != "") {
-                            exportShapes.push("rz" + lastColor + "z" + x / xdefinition + "z" + start / ydefinition + "z" + 1 / xdefinition + "z" + (y-start) / ydefinition)
+                            exportShapes.push("rz" + lastColor + "z" + x / xdefinition + "z" + start / ydefinition + "z" + 1 / xdefinition + "z" + (y - start) / ydefinition)
                             start = y;
                         }
                         lastColor = color;
-                    } 
+                    }
                 }
             }
-            console.log(exportShapes)
             return exportShapes.join('x')
         } else {
             return this.flagElements.join('x')

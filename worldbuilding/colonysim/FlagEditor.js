@@ -80,6 +80,13 @@ export default class FlagEditor {
             ref.currentFlag = new Flag(g)
             ref.displayflag(ref.currentFlag)
         }
+        let addEllipsebtn = document.createElement('button')
+        addEllipsebtn.onclick = function () {
+            let g = ref.currentFlag.getExportCode().split('x')
+            g.push('ezff00ffz0.5z0.5z0.5z0.5z0.3')
+            ref.currentFlag = new Flag(g)
+            ref.displayflag(ref.currentFlag)
+        }
 
         let shapesdiv = document.createElement('div');
         let gensdiv = document.createElement('div');
@@ -114,14 +121,14 @@ export default class FlagEditor {
                         console.log(canvasRef)
                         let ctx = canvasRef.getContext('2d')
 
-                        ctx.drawImage(image, 0, 0,canvasRef.width,canvasRef.height);
+                        ctx.drawImage(image, 0, 0, canvasRef.width, canvasRef.height);
                         flagEditorRef.imageUploaded();
-    
+
                     };
                 }
             }
             reader.addEventListener("load", () => {
-    
+
             })
             reader.readAsDataURL(this.files[0]);
         })
@@ -136,6 +143,8 @@ export default class FlagEditor {
         shapesdiv.append(addtribtn)
         addstarbtn.innerHTML = "Add Star"
         shapesdiv.append(addstarbtn)
+        addEllipsebtn.innerHTML = "Add Ellipse"
+        shapesdiv.append(addEllipsebtn)
         addsymbtn.innerHTML = "Add Symbol"
         shapesdiv.append(addsymbtn)
         this.shapesdiv = shapesdiv;
@@ -312,6 +321,22 @@ export default class FlagEditor {
                     this.appendSpanElement(outdiv, 'Point Count: ')
                     this.addNumberInput(outdiv, parts[i][5], '1')
                     break;
+                case 'e':
+                    span1.innerHTML = 'Ellipse'
+                    outdiv.appendChild(span1)
+                    this.appendSpanElement(outdiv, 'Color ')
+                    this.addColorInput(outdiv, '#' + parts[i][1])
+                    this.appendSpanElement(outdiv, 'X1: ')
+                    this.addNumberInput(outdiv, parts[i][2])
+                    this.appendSpanElement(outdiv, 'Y1: ')
+                    this.addNumberInput(outdiv, parts[i][3])
+                    this.appendSpanElement(outdiv, 'X2: ')
+                    this.addNumberInput(outdiv, parts[i][4])
+                    this.appendSpanElement(outdiv, 'Y2: ')
+                    this.addNumberInput(outdiv, parts[i][5])
+                    this.appendSpanElement(outdiv, 'Distance Sum: ')
+                    this.addNumberInput(outdiv, parts[i][6])
+                    break;
             }
             let deletebtn = document.createElement('button')
             deletebtn.innerHTML = 'Delete'
@@ -372,6 +397,8 @@ export default class FlagEditor {
                 flagparts.push('tz' + parts[2].value.replace('#', '') + 'z' + parts[4].value + 'z' + parts[6].value + 'z' + parts[8].value + 'z' + parts[10].value + 'z' + parts[12].value + 'z' + parts[14].value)
             } else if (parts[0].innerHTML == 'Star') {
                 flagparts.push('stz' + parts[2].value.replace('#', '') + 'z' + parts[4].value + 'z' + parts[6].value + 'z' + parts[8].value + 'z' + parts[10].value)
+            } else if (parts[0].innerHTML == 'Ellipse') {
+                flagparts.push('ez' + parts[2].value.replace('#', '') + 'z' + parts[4].value + 'z' + parts[6].value + 'z' + parts[8].value + 'z' + parts[10].value + 'z' + parts[12].value)
             }
         }
         this.currentFlag = new Flag(flagparts)
@@ -386,7 +413,7 @@ export default class FlagEditor {
         this.currentFlag = new Flag(g)
         this.displayflag(this.currentFlag)
     }
-    imageUploaded(){
+    imageUploaded() {
         this.currentFlag = new Flag(this.canvas)
         this.flagPart.innerHTML = ""
         this.shapesdiv.style.display = "none";
