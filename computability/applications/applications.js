@@ -2,7 +2,7 @@ const applications = [
     {
         name: "Disagreer",
         description: "When given an input, return the opposite of that input.",
-        value: 100,
+        value: 50,
         inputs: [{ name: "Input", type: "bool" }],
         outputs: [{ name: "Output", type: "bool" }],
         testCases: [
@@ -13,7 +13,7 @@ const applications = [
     {
         name: "Consistency Checker",
         description: "When given an input, output true if and only if every input is true.",
-        value: 500,
+        value: 200,
         inputs: [{ name: "Input A", type: "bool" }, { name: "Input B", type: "bool" }],
         outputs: [{ name: "Output", type: "bool" }],
         testCases: [
@@ -26,7 +26,7 @@ const applications = [
     {
         name: "Multiple Choice Validator",
         description: "When given an input, output true if and only exactly one input is true.",
-        value: 500,
+        value: 300,
         inputs: [{ name: "Choice A", type: "bool" }, { name: "Choice B", type: "bool" }, { name: "Choice C", type: "bool" }],
         outputs: [{ name: "Output", type: "bool" }],
         testCases: [
