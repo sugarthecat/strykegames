@@ -113,7 +113,7 @@ export default function loadPresetPack(presetPack, endDoc) {
             flagPairs.push(['rzef3340z0z0z1z1xrzffffffz0z0.16z1z0.67xrz00247dz0z0.33z1z0.33', 'Thailand'])
             flagPairs.push(['rz0036a3z0z0z1z1xrzce1126z0z0.5z1z0.5xtzffffffz0z0z0z1z0.5z0.5xstzfcd116z0.2z0.5z0.17z8xczfcd116z0.2z0.5z0.07xstzfcd116z0.4z0.5z0.05z5xstzfcd116z0.05z0.15z0.05z5xstzfcd116z0.05z0.85z0.05z5', 'Philippines'])
             flagPairs.push(['rzf7e110z0z0z1z1xlzffffffz0.32z-0.1z0.3z2z1xlz000000z0.16z-0.03z0.45z1.62z1', 'Brunei'])
-            
+            flagPairs.push(['rzcc0001z0z0z1z1xrzffffffz0z0.0714z1z1xrzcc0001z0z0.142z1z1xrzffffffz0z0.214z1z1xrzcc0001z0z0.285z1z1xrzffffffz0z0.357z1z1xrzcc0001z0z0.428z1z1xrzffffffz0z0.5z1z1xrzcc0001z0z0.571z1z1xrzffffffz0z0.642z1z1xrzcc0001z0z0.714z1z1xrzffffffz0z0.785z1z1xrzcc0001z0z0.857z1z1xrzffffffz0z0.928z1z1xrz010066z0z0z0.5z0.5xczffcc00z0.20z0.25z0.12xcz010066z0.23z0.25z0.105xstzffcc00z0.32z0.25z0.15z14', "Malaysia"])
             break;
         case 'SouthAmerica':
             flagPairs.push(["rzffffffz0z0z1z1xrzd91023z0z0z0.33z1xrzd91023z0.67z0z0.33z1", 'Peru'])
