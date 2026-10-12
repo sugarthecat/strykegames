@@ -181,7 +181,7 @@ class HoustonBullet {
         this.y += this.dy * deltaTime / 1000
     }
     collides(player) {
-        return dist(this.x, this.y, player.x, player.y) < this.size + player.radius
+        return dist(this.x, this.y, player.x, player.y) < this.size / 3 + player.radius
     }
     toBeRemoved() {
         return dist(0, 0, this.x, this.y) > 2000;

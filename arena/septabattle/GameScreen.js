@@ -22,6 +22,10 @@ class GameScreen {
         this.runner.draw(300,250)
         this.attacker.draw()
         this.runner.drawHealthBar()
+        if(this.runner.health == 0){
+            screenOn = "roundend"
+            screens.roundEnd.setWinner(1)
+        }
     }
 
     DrawErrorScreen() {

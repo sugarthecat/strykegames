@@ -6,7 +6,7 @@ let scaleFactor = 1;
 let volume = 1;
 let screens;
 function preload() {
-    screens = { title: new TitleScreen(), game: new GameScreen(), select: new CharacterSelectScreen() }
+    screens = { title: new TitleScreen(), game: new GameScreen(), select: new CharacterSelectScreen() , end: new EndScreen()}
     Assets.loadAssets()
 }
 function setup() {
