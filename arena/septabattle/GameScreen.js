@@ -1,8 +1,20 @@
 class GameScreen {
     constructor() {
-        this.runner = new Runner()
-        this.attacker = new HoustonAttacker();
-        this.attacker.savePlayer(this.runner)
+
+        this.player1 = {
+            name: "Houston",
+            attacker: new HoustonAttacker(),
+            runner: new HoustonRunner()
+        }
+        this.player2 = {
+            name: "Houston",
+            attacker: new HoustonAttacker(),
+            runner: new HoustonRunner()
+        }
+        this.p1attacking = true;
+
+        this.player1.attacker.savePlayer(this.player2.runner)
+        this.player2.attacker.savePlayer(this.player1.runner)
     }
     Draw() {
         const gamepads = navigator.getGamepads();
@@ -14,18 +26,38 @@ class GameScreen {
             return
         }
         background(0)
-        this.runner.updateGamepad(gamepads[0])
-        this.attacker.updateGamepad(gamepads[1])
+
+        let runner = this.player2.runner;
+        let attacker = this.player1.attacker;
+        if (this.p1attacking) {
+            runner = this.player1.runner;
+            attacker = this.player2.attacker;
+            runner.updateGamepad(gamepads[1])
+            attacker.updateGamepad(gamepads[0])
+        } else {
+            runner.updateGamepad(gamepads[0])
+            attacker.updateGamepad(gamepads[1])
+        }
+
 
         fill(100)
-        rect(300-250/2, 250-180/2, 250, 180)
-        this.runner.draw(300,250)
-        this.attacker.draw()
-        this.runner.drawHealthBar()
-        if(this.runner.health == 0){
-            screenOn = "roundend"
-            screens.roundEnd.setWinner(1)
-        }
+        rect(300 - 250 / 2, 250 - 180 / 2, 250, 180)
+        runner.draw(300, 250)
+        attacker.draw()
+        runner.drawHealthBar()
+        if (runner.health == 0) {
+            screenOn = "end"
+            if (this.p1attacking) {
+                screens.end.setWinner(this.player1)
+            } else {
+                screens.end.setWinner(this.player2)
+            }
+        } else
+            if (runner.canSwitch()) {
+                this.p1attacking = !this.p1attacking;
+                runner.reset();
+                attacker.reset();
+            }
     }
 
     DrawErrorScreen() {

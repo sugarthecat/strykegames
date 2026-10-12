@@ -1,0 +1,66 @@
+class HoustonRunner extends Runner {
+    constructor() {
+        super();
+        this.reset()
+    }
+
+    reset() {
+
+        let goals = [
+            { x: -100, y: -60 },
+            { x: 100, y: -60 },
+            { x: -100, y: 60 },
+            { x: 100, y: 60 },
+        ]
+        this.goals = []
+        while (this.goals.length < 4) {
+            let idx = Math.floor(Math.random() * goals.length);
+            let goal = goals[idx];
+            goal.active = false;
+            goals.splice(idx, 1);
+            this.goals.push(goal)
+        }
+        super.reset()
+    }
+
+
+    canSwitch() {
+        for (let i = 0; i < this.goals.length; i++) {
+            if (!this.goals[i].active) {
+                return false
+            }
+        }
+        return true;
+    }
+    updateGoals() {
+        let allGoalsDone = true;
+        for (let i = 0; i < this.goals.length; i++) {
+            if (dist(this.x, this.y, this.goals[i].x, this.goals[i].y) < 10) {
+                if (allGoalsDone) {
+                    this.goals[i].active = true;
+                } else {
+                    for (let j = 0; j < this.goals.length; j++) {
+                        this.goals[j].active = false;
+                    }
+                }
+            }
+            allGoalsDone = allGoalsDone && this.goals[i].active;
+        }
+    }
+    draw(centerX, centerY) {
+        push()
+        translate(centerX, centerY)
+        for (let i = 0; i < this.goals.length; i++) {
+            if (this.goals[i].active) {
+                fill(0, 255, 0)
+            } else {
+                fill(255, 0, 0)
+            }
+            circle(this.goals[i].x, this.goals[i].y, 20)
+        }
+        fill(255, 0, 0)
+        imageMode(CENTER)
+        image(Assets.houston.mini, this.x, this.y, 2 * this.radius, 2 * this.radius)
+        pop()
+    }
+}

@@ -5,6 +5,12 @@ class Attacker {
         this.projectiles = [];
     }
 
+    
+    reset() {
+        this.cooldown = 2;
+        this.projectiles = [];
+    }
+
     drawProjectiles() {
         for (let i = 0; i < this.projectiles.length; i++) {
             this.projectiles[i].draw();

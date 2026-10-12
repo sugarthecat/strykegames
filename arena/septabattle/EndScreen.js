@@ -2,6 +2,9 @@ class EndScreen {
     constructor() {
 
     }
+    setWinner(winner){
+        this.winner = winner;
+    }
     Draw(){
         background(0)
     }

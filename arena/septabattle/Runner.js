@@ -2,15 +2,18 @@ class Runner {
     constructor() {
         this.x = 0
         this.y = 0
-        this.health = 10;
-        this.maxhealth = 10;
+        this.health = 3;
+        this.maxhealth = 3;
         this.invTimer = 0;
         this.progress = 0;
         this.maxProgress = 10;
 
-        this.radius = 5;
+        this.radius = 7;
     }
-
+    reset() {
+        this.x = 0
+        this.y = 0
+    }
     updateGamepad(gamepad) {
         this.invTimer -= deltaTime / 1000;
         const xdir = Math.round(gamepad.axes[0])
@@ -21,11 +24,15 @@ class Runner {
 
         this.x = constrain(this.x, -125 + this.radius, 125 - this.radius);
         this.y = constrain(this.y, -90 + this.radius, 90 - this.radius);
+        this.updateGoals()
     }
 
+    updateGoals(){
+
+    }
     draw(centerX, centerY) {
         fill(255, 0, 0)
-        circle(this.x + centerX, this.y + centerY, 10)
+        circle(this.x + centerX, this.y + centerY, 2*this.radius)
     }
 
     drawHealthBar() {
@@ -38,6 +45,10 @@ class Runner {
     drawProgressBar() {
         fill(200)
         rect(200, 360, 200 * this.progress / this.maxProgress, 20)
+    }
+
+    canSwitch(){
+        return false;
     }
 
     getHit() {
