@@ -1,11 +1,10 @@
 class GameScreen {
     constructor() {
-        this.runner = {
-            x: 0, y: 0
-        }
+        this.runner = new Runner()
+        this.attacker = new HoustonAttacker();
+        this.attacker.savePlayer(this.runner)
     }
     Draw() {
-
         const gamepads = navigator.getGamepads();
         while (gamepads.length > 0 && gamepads[gamepads.length - 1] === null) {
             gamepads.pop();
@@ -15,25 +14,14 @@ class GameScreen {
             return
         }
         background(0)
-        this.updateRunner(gamepads[0])
-        fill (100)
-        rect (150,150,300,200)
-        fill(255, 0, 0)
-        circle(this.runner.x + 300, this.runner.y + 250, 10)
+        this.runner.updateGamepad(gamepads[0])
+        this.attacker.updateGamepad(gamepads[1])
 
-    }
-
-    updateRunner(gamepad) {
-
-        const xdir = Math.round(gamepad.axes[0])
-        const ydir = Math.round(gamepad.axes[1])
-        const speed = 120;
-        this.runner.x += deltaTime * xdir * speed / 1000
-        this.runner.y += deltaTime * ydir * speed / 1000
-
-        this.runner.x = constrain(this.runner.x,-150,150);
-        this.runner.y = constrain(this.runner.y,-100,100);
-        
+        fill(100)
+        rect(300-250/2, 250-180/2, 250, 180)
+        this.runner.draw(300,250)
+        this.attacker.draw()
+        this.runner.drawHealthBar()
     }
 
     DrawErrorScreen() {
