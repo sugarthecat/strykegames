@@ -29,9 +29,11 @@ class HoustonAttacker extends Attacker {
                     this.cooldown = 1.2
                 }
                 if (action == 3) {
-                    this.projectiles.push(new HoustonBullet(theta + 0.25, this.currX, gunY, 10, 80))
+                    console.log('action3', this.projectiles.length)
+                    this.projectiles.push(new HoustonBullet(theta + 0.2, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, 80))
-                    this.projectiles.push(new HoustonBullet(theta - 0.25, this.currX, gunY, 10, 80))
+                    this.projectiles.push(new HoustonBullet(theta - 0.2, this.currX, gunY, 10, 80))
+                    console.log('done', this.projectiles.length)
                     this.cooldown = 2
                 }
                 if (action == 4) {
@@ -70,6 +72,13 @@ class HoustonAttacker extends Attacker {
             } else {
                 this.currX = 125 - 20;
             }
+        } else if (action == 0) {
+            for (let i = 0; i <= 4; i++) {
+                if (i != this.xpos) {
+                    this.projectiles.push(new HoustonRocket(1, i))
+                }
+            }
+            this.cooldown = 4
         } else {
             console.log("No attack for ", action)
         }
@@ -86,6 +95,9 @@ class HoustonAttacker extends Attacker {
 
         for (let i = 0; i < this.projectiles.length; i++) {
             this.projectiles[i].draw();
+            if (this.projectiles[i].collides(this.runner)) {
+                this.runner.getHit();
+            }
         }
         if (this.actionTime < 0) {
             image(Assets.houston.main, 175 + this.xpos * 50 - 10, 100 - 25, 70, 70)
@@ -126,17 +138,29 @@ class HoustonRocket {
         const speed = 100
         push()
         translate(this.xpos + 25, this.ypos + 50);
-        angleMode(DEGREES)
-        rotate(90)
+        rotate(PI / 2)
         if (this.dir == -1) {
-            rotate(180)
+            rotate(PI)
         }
         image(Assets.houston.rocket, -50, -25, 100, 50)
         pop()
         this.ypos += this.dir * deltaTime / 1000 * speed;
     }
     collides(player) {
-        return false;
+        // rocket rect in runner coords (centered on 300, 250)
+        const tipGap = 30; // ignore the narrow nose of the rocket
+        const sideGap = 5;
+        let left = this.xpos - 300 + sideGap;
+        let right = this.xpos + 50 - 300 - sideGap;
+        let top = this.ypos - 250;
+        let bottom = this.ypos + 100 - 250;
+        if (this.dir == 1) {
+            bottom -= tipGap;
+        } else {
+            top += tipGap;
+        }
+        return player.x + player.radius > left && player.x - player.radius < right &&
+            player.y + player.radius > top && player.y - player.radius < bottom;
     }
 }
 class HoustonBullet {
@@ -158,5 +182,8 @@ class HoustonBullet {
         pop()
         this.x += this.dx * deltaTime / 1000
         this.y += this.dy * deltaTime / 1000
+    }
+    collides(player) {
+        return dist(this.x, this.y, player.x, player.y) < this.size + player.radius
     }
 }
