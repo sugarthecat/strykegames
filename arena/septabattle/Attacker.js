@@ -2,6 +2,20 @@ class Attacker {
     constructor() {
         this.cooldown = 2;
         this.lastGamepad = null;
+        this.projectiles = [];
+    }
+
+    drawProjectiles() {
+        for (let i = 0; i < this.projectiles.length; i++) {
+            this.projectiles[i].draw();
+            if (this.projectiles[i].collides(this.runner)) {
+                this.runner.getHit();
+            }
+            if(this.projectiles[i].toBeRemoved()){
+                this.projectiles.splice(i,1);
+                i--;
+            }
+        }
     }
 
     savePlayer(runner) {

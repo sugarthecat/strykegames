@@ -4,7 +4,6 @@ class HoustonAttacker extends Attacker {
         this.xpos = 0;
         this.actionTime = 0;
         this.currAction = "none";
-        this.projectiles = []
         this.currX = 0;
         this.currY = 0;
     }
@@ -93,12 +92,7 @@ class HoustonAttacker extends Attacker {
         //top spot: 250 - 90 = 160
         //say a step is 50
 
-        for (let i = 0; i < this.projectiles.length; i++) {
-            this.projectiles[i].draw();
-            if (this.projectiles[i].collides(this.runner)) {
-                this.runner.getHit();
-            }
-        }
+        this.drawProjectiles();
         if (this.actionTime < 0) {
             image(Assets.houston.main, 175 + this.xpos * 50 - 10, 100 - 25, 70, 70)
         } else if (this.currAction == "gunslinger") {
@@ -162,6 +156,9 @@ class HoustonRocket {
         return player.x + player.radius > left && player.x - player.radius < right &&
             player.y + player.radius > top && player.y - player.radius < bottom;
     }
+    toBeRemoved() {
+        return this.ypos < -1000 || this.ypos > 1000
+    }
 }
 class HoustonBullet {
     constructor(dir, xpos, ypos, size, speed) {
@@ -185,5 +182,8 @@ class HoustonBullet {
     }
     collides(player) {
         return dist(this.x, this.y, player.x, player.y) < this.size + player.radius
+    }
+    toBeRemoved() {
+        return dist(0, 0, this.x, this.y) > 2000;
     }
 }
