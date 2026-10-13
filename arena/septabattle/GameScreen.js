@@ -3,13 +3,33 @@ class GameScreen {
 
         this.player1 = {
             name: "Houston",
+            player: 1,
             attacker: new HoustonAttacker(),
             runner: new HoustonRunner()
         }
         this.player2 = {
             name: "Houston",
+            player: 2,
             attacker: new HoustonAttacker(),
             runner: new HoustonRunner()
+        }
+        this.p1attacking = true;
+
+        this.player1.attacker.savePlayer(this.player2.runner)
+        this.player2.attacker.savePlayer(this.player1.runner)
+    }
+    loadPlayers(player1, player2) {
+        this.player1 = {
+            name: player1.name,
+            player: 1,
+            attacker: new player1.attacker(),
+            runner: new player1.runner()
+        }
+        this.player2 = {
+            name: player2.name,
+            player: 2,
+            attacker: new player2.attacker(),
+            runner: new player2.runner()
         }
         this.p1attacking = true;
 
@@ -44,7 +64,7 @@ class GameScreen {
         rect(300 - 250 / 2, 250 - 180 / 2, 250, 180)
         runner.draw(300, 250)
         attacker.draw()
-        runner.drawHealthBar()
+        runner.drawGui()
         if (runner.health == 0) {
             screenOn = "end"
             if (this.p1attacking) {

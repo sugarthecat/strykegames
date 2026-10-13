@@ -5,7 +5,6 @@ class HoustonRunner extends Runner {
     }
 
     reset() {
-
         let goals = [
             { x: -100, y: -60 },
             { x: 100, y: -60 },
@@ -14,7 +13,7 @@ class HoustonRunner extends Runner {
             { x: 0, y: 0 },
         ]
         this.goals = []
-        while (this.goals.length < 4) {
+        while (this.goals.length < 5) {
             let idx = Math.floor(Math.random() * goals.length);
             let goal = goals[idx];
             goal.active = false;
@@ -62,6 +61,24 @@ class HoustonRunner extends Runner {
         fill(255, 0, 0)
         imageMode(CENTER)
         image(Assets.houston.mini, this.x, this.y, 2 * this.radius, 2 * this.radius)
+        pop()
+    }
+    drawGui() {
+        super.drawGui();
+        push()
+        textFont('monospace')
+        fill(255)
+        textSize(12)
+        textAlign(LEFT, CENTER)
+        text("Launch Sequence: ", 205, 375)
+        for (let i = 0; i < this.goals.length; i++) {
+            if (this.goals[i].active) {
+                fill(0, 255, 0)
+            } else {
+                fill(255, 0, 0)
+            }
+            circle(320 + i * 15, 375, 12)
+        }
         pop()
     }
 }

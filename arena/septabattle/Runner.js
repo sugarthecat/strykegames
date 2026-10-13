@@ -2,7 +2,7 @@ class Runner {
     constructor() {
         this.x = 0
         this.y = 0
-        this.health = 3;
+        this.health = 0;
         this.maxhealth = 3;
         this.invTimer = 0;
 
@@ -34,11 +34,14 @@ class Runner {
         circle(this.x + centerX, this.y + centerY, 2*this.radius)
     }
 
+    drawGui(){
+        this.drawHealthBar();
+    }
     drawHealthBar() {
         fill(100)
-        rect(200, 360, 200, 20)
+        rect(200, 345, 200, 20)
         fill(200, 0, 0)
-        rect(202, 362, 196 * this.health / this.maxhealth, 16)
+        rect(202, 347, 196 * this.health / this.maxhealth, 16)
     }
 
     canSwitch(){

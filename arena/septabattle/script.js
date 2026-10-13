@@ -1,7 +1,7 @@
 
 
 const SCREEN_DIMENSIONS = { x: 600, y: 400 }
-let screenOn = "game"
+let screenOn = "select"
 let scaleFactor = 1;
 let volume = 1;
 let screens;
