@@ -5,14 +5,13 @@ class Runner {
         this.health = 3;
         this.maxhealth = 3;
         this.invTimer = 0;
-        this.progress = 0;
-        this.maxProgress = 10;
 
         this.radius = 7;
     }
     reset() {
         this.x = 0
         this.y = 0
+        this.invTimer = 0;
     }
     updateGamepad(gamepad) {
         this.invTimer -= deltaTime / 1000;
@@ -40,11 +39,6 @@ class Runner {
         rect(200, 360, 200, 20)
         fill(200, 0, 0)
         rect(202, 362, 196 * this.health / this.maxhealth, 16)
-    }
-
-    drawProgressBar() {
-        fill(200)
-        rect(200, 360, 200 * this.progress / this.maxProgress, 20)
     }
 
     canSwitch(){

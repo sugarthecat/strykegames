@@ -1,15 +1,21 @@
 class HoustonAttacker extends Attacker {
     constructor() {
         super();
-        this.xpos = 0;
+        this.xpos = 2;
         this.actionTime = 0;
         this.currAction = "none";
         this.currX = 0;
         this.currY = 0;
     }
+    reset(){
+        this.actionTime = 0;
+        this.xpos = 2;
+        this.currAction = "none";
+        super.reset()
+    }
     triggerAction(action) {
         if (this.actionTime < 0 && this.currAction != "none") {
-            this.cooldown = 3;
+            this.cooldown = 4;
             this.currAction = "none"
         }
         if (this.actionTime > 0) {
@@ -28,11 +34,9 @@ class HoustonAttacker extends Attacker {
                     this.cooldown = 1.2
                 }
                 if (action == 3) {
-                    console.log('action3', this.projectiles.length)
                     this.projectiles.push(new HoustonBullet(theta + 0.2, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta - 0.2, this.currX, gunY, 10, 80))
-                    console.log('done', this.projectiles.length)
                     this.cooldown = 2
                 }
                 if (action == 4) {
@@ -64,7 +68,7 @@ class HoustonAttacker extends Attacker {
             this.cooldown = 1.5
         } else if (action == 3) {
             this.currAction = "gunslinger"
-            this.actionTime = 10;
+            this.actionTime = 15;
             this.currY = 0;
             if (this.runner.x > 0) {
                 this.currX = -125 + 20;
@@ -126,7 +130,6 @@ class HoustonRocket {
         } else {
             this.ypos = 400;
         }
-        this.alive = true;
     }
     draw() {
         const speed = 100

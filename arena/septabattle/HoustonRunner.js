@@ -11,6 +11,7 @@ class HoustonRunner extends Runner {
             { x: 100, y: -60 },
             { x: -100, y: 60 },
             { x: 100, y: 60 },
+            { x: 0, y: 0 },
         ]
         this.goals = []
         while (this.goals.length < 4) {
@@ -35,7 +36,7 @@ class HoustonRunner extends Runner {
     updateGoals() {
         let allGoalsDone = true;
         for (let i = 0; i < this.goals.length; i++) {
-            if (dist(this.x, this.y, this.goals[i].x, this.goals[i].y) < 10) {
+            if (dist(this.x, this.y, this.goals[i].x, this.goals[i].y) < this.radius + 10) {
                 if (allGoalsDone) {
                     this.goals[i].active = true;
                 } else {
