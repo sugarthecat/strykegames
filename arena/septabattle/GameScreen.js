@@ -1,22 +1,17 @@
 class GameScreen {
     constructor() {
-
-        this.player1 = {
-            name: "Houston",
-            player: 1,
-            attacker: new HoustonAttacker(),
-            runner: new HoustonRunner()
-        }
-        this.player2 = {
-            name: "Houston",
-            player: 2,
-            attacker: new HoustonAttacker(),
-            runner: new HoustonRunner()
-        }
-        this.p1attacking = true;
-
-        this.player1.attacker.savePlayer(this.player2.runner)
-        this.player2.attacker.savePlayer(this.player1.runner)
+        this.loadPlayers(
+            {
+                name: "Houston",
+                attacker: HoustonAttacker,
+                runner:  HoustonRunner
+            },
+            {
+                name: "Houston",
+                attacker: HoustonAttacker,
+                runner:  HoustonRunner
+            }
+        )
     }
     loadPlayers(player1, player2) {
         this.player1 = {
@@ -50,11 +45,11 @@ class GameScreen {
         let runner = this.player2.runner;
         let attacker = this.player1.attacker;
         if (this.p1attacking) {
-            runner = this.player1.runner;
-            attacker = this.player2.attacker;
             runner.updateGamepad(gamepads[1])
             attacker.updateGamepad(gamepads[0])
         } else {
+            runner = this.player1.runner;
+            attacker = this.player2.attacker;
             runner.updateGamepad(gamepads[0])
             attacker.updateGamepad(gamepads[1])
         }

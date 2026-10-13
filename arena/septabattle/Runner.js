@@ -2,7 +2,7 @@ class Runner {
     constructor() {
         this.x = 0
         this.y = 0
-        this.health = 0;
+        this.health = 3;
         this.maxhealth = 3;
         this.invTimer = 0;
 

@@ -17,6 +17,9 @@ class Assets {
             mini: loadImage("assets/magusmini.png")
         }
     }
+    static getCharacter(name) {
+        return this[name.toLowerCase()];
+    }
     static setVolume(volume) {
     }
 }

@@ -5,21 +5,13 @@ class HoustonRunner extends Runner {
     }
 
     reset() {
-        let goals = [
-            { x: -100, y: -60 },
-            { x: 100, y: -60 },
-            { x: -100, y: 60 },
-            { x: 100, y: 60 },
-            { x: 0, y: 0 },
-        ]
-        this.goals = []
-        while (this.goals.length < 5) {
-            let idx = Math.floor(Math.random() * goals.length);
-            let goal = goals[idx];
-            goal.active = false;
-            goals.splice(idx, 1);
-            this.goals.push(goal)
-        }
+        this.goals = shuffle([
+            { x: -100, y: -60, active: false },
+            { x: 100, y: -60, active: false },
+            { x: -100, y: 60, active: false },
+            { x: 100, y: 60, active: false },
+            { x: 0, y: 0, active: false },
+        ])
         super.reset()
     }
 

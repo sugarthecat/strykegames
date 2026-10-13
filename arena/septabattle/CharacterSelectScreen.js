@@ -72,8 +72,7 @@ class CharacterSelectScreen {
 
         background(0)
         for (let i = 0; i < this.characters.length; i++) {
-            image(Assets[
-                this.characters[i].name.toLowerCase()].main, 50 + i * 100, 50, 100, 100)
+            image(Assets.getCharacter(this.characters[i].name).main, 50 + i * 100, 50, 100, 100)
         }
         push()
         noFill()
@@ -86,7 +85,7 @@ class CharacterSelectScreen {
         for (let i = 0; i < 2; i++) {
             push()
             textFont('monospace')
-            image(Assets[this.characters[this.selected[i]].name.toLowerCase()].main,
+            image(Assets.getCharacter(this.characters[this.selected[i]].name).main,
                 50 + i * 400, 250, 100, 100)
             textSize(25)
             textAlign(CENTER, CENTER)

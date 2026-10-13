@@ -27,7 +27,7 @@ class EndScreen {
         text(`${this.winner.name}`, 300, 90)
         textSize(15)
         text(`Player ${this.winner.player} wins`, 300, 120)
-        image(Assets[this.winner.name.toLowerCase()].main, 200, 150, 200, 200)
+        image(Assets.getCharacter(this.winner.name).main, 200, 150, 200, 200)
         textSize(15)
         text(`Press start to return to character select`, 300, 380)
         pop()

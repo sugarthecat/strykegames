@@ -41,5 +41,3 @@ function draw() {
         rect(0, windowHeight - yTranslation, windowWidth, yTranslation);
     }
 }
-function mouseClicked() {
-}
