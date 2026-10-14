@@ -6,6 +6,7 @@ class HoustonAttacker extends Attacker {
         this.currAction = "none";
         this.currX = 0;
         this.currY = 0;
+        this.color = color(200,0,0)
     }
     reset(){
         this.actionTime = 0;
@@ -15,7 +16,7 @@ class HoustonAttacker extends Attacker {
     }
     triggerAction(action) {
         if (this.actionTime < 0 && this.currAction != "none") {
-            this.cooldown = 4;
+            this.setCooldown(4)
             this.currAction = "none"
         }
         if (this.actionTime > 0) {
@@ -27,11 +28,11 @@ class HoustonAttacker extends Attacker {
             if (this.currAction == "gunslinger") {
                 if (action == 2) {
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, 115))
-                    this.cooldown = 1
+                    this.setCooldown(1)
                 }
                 if (action == 1) {
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 25, 60))
-                    this.cooldown = 1.2
+                    this.setCooldown(1.2)
                 }
                 if (action == 3) {
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, 80))
@@ -39,14 +40,14 @@ class HoustonAttacker extends Attacker {
                     this.projectiles.push(new HoustonBullet(theta - 0.2, this.currX, gunY, 10, 80))
                     //this.projectiles.push(new HoustonBullet(theta + 0.4, this.currX, gunY, 10, 80))
                     //this.projectiles.push(new HoustonBullet(theta - 0.4, this.currX, gunY, 10, 80))
-                    this.cooldown = 2
+                    this.setCooldown(2)
                 }
                 if (action == 0) {
                     this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta + PI / 2, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta + PI, this.currX, gunY, 10, 80))
                     this.projectiles.push(new HoustonBullet(theta + PI * 3 / 2, this.currX, gunY, 10, 80))
-                    this.cooldown = 3
+                    this.setCooldown(4)
                 }
             }
             return
@@ -64,10 +65,10 @@ class HoustonAttacker extends Attacker {
         }
         if (action == 1) {
             this.projectiles.push(new HoustonRocket(-1, this.xpos))
-            this.cooldown = 2
+            this.setCooldown(2)
         } else if (action == 2) {
             this.projectiles.push(new HoustonRocket(1, this.xpos))
-            this.cooldown = 1.5
+            this.setCooldown(1.5)
         } else if (action == 3) {
             this.currAction = "gunslinger"
             this.actionTime = 15;
@@ -83,7 +84,7 @@ class HoustonAttacker extends Attacker {
                     this.projectiles.push(new HoustonRocket(1, i))
                 }
             }
-            this.cooldown = 4
+            this.setCooldown(4)
         } else {
             console.log("No attack for ", action)
         }
@@ -121,6 +122,7 @@ class HoustonAttacker extends Attacker {
             pop()
         }
         this.drawProjectiles();
+        this.drawCooldown();
     }
 }
 class HoustonRocket {

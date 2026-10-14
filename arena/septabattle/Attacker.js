@@ -1,14 +1,28 @@
 class Attacker {
     constructor() {
-        this.cooldown = 2;
+        this.setCooldown(2);
         this.lastGamepad = null;
         this.projectiles = [];
+        this.color = color(255)
     }
 
-    
+
     reset() {
-        this.cooldown = 2;
+        this.setCooldown(2);
         this.projectiles = [];
+    }
+    setCooldown(cooldown) {
+        this.cooldown = cooldown;
+        this.cooldownMax = cooldown;
+    }
+    drawCooldown() {
+        push()
+        noStroke()
+        fill(this.color);
+        if (this.cooldown > 0) {
+            arc(50, 50, 80, 80, 0, PI * 2 * max(0, this.cooldown) / this.cooldownMax);
+        }
+        pop()
     }
 
     // projectiles draw with (0, 0) at the center of the arena
@@ -20,8 +34,8 @@ class Attacker {
             if (this.projectiles[i].collides(this.runner)) {
                 this.runner.getHit();
             }
-            if(this.projectiles[i].toBeRemoved()){
-                this.projectiles.splice(i,1);
+            if (this.projectiles[i].toBeRemoved()) {
+                this.projectiles.splice(i, 1);
                 i--;
             }
         }
@@ -40,17 +54,17 @@ class Attacker {
         }
         const lastGamepad = this.lastGamepad;
         this.lastGamepad = gamepad;
-        if(lastGamepad === null){
+        if (lastGamepad === null) {
             return
         }
-        for(let i = 0; i<lastGamepad.buttons.length; i++){
-            if(!lastGamepad.buttons[i].pressed && gamepad.buttons[i].pressed){
+        for (let i = 0; i < lastGamepad.buttons.length; i++) {
+            if (!lastGamepad.buttons[i].pressed && gamepad.buttons[i].pressed) {
                 this.triggerAction(i);
             }
         }
     }
 
-    triggerAction(action){
+    triggerAction(action) {
         console.log(action)
     }
 

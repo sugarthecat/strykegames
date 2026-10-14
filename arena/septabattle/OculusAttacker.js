@@ -6,6 +6,7 @@ class OculusAttacker extends Attacker {
         this.currAction = "none";
         this.currX = 0;
         this.currY = 0;
+        this.color = color(17,68,150)
     }
     reset() {
         this.actionTime = 0;
@@ -19,12 +20,12 @@ class OculusAttacker extends Attacker {
             }
             if (action == 2) {
                 this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX), 90, 40))
-                this.cooldown = 1.5
+                this.setCooldown(1.5)
             }
             if (action == 1) {
                 this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX) - 0.3, 90, 40))
                 this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX) + 0.3, 90, 40))
-                this.cooldown = 2
+                this.setCooldown(2)
             }
             if (action == 0) {
                 for (let i = 0; i < 18; i++) {
@@ -32,10 +33,10 @@ class OculusAttacker extends Attacker {
                     if (abs(this.currY - yPos) < 40) {
                         continue
                     }
-                    this.projectiles.push(new OculusLaser(-175, yPos, 0, 70, 50))
-                    this.projectiles.push(new OculusLaser(175, yPos, PI, 70, 50))
+                    this.projectiles.push(new OculusLaser(-180, yPos, 0, 70, 50))
+                    this.projectiles.push(new OculusLaser(180, yPos, PI, 70, 50))
                 }
-                this.cooldown = 5
+                this.setCooldown(5)
             }
             if (action == 3) {
                 for (let i = 0; i < 25; i++) {
@@ -43,10 +44,10 @@ class OculusAttacker extends Attacker {
                     if (abs(this.currX - xPos) < 30) {
                         continue
                     }
-                    this.projectiles.push(new OculusLaser(xPos, -90, PI / 2, 60, 50))
-                    this.projectiles.push(new OculusLaser(xPos, 90, -PI / 2, 60, 50))
+                    this.projectiles.push(new OculusLaser(xPos, -140, PI / 2, 60, 50))
+                    this.projectiles.push(new OculusLaser(xPos, 140, -PI / 2, 60, 50))
                 }
-                this.cooldown = 5
+                this.setCooldown(5)
             }
 
             // field actions go here
@@ -65,13 +66,13 @@ class OculusAttacker extends Attacker {
             let x = this.xPos * 50 - 100;
 
             this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x), 80, 50))
-            this.cooldown = 1.25
+            this.setCooldown(1.25)
         }
         if (action == 1) {
             let x = this.xPos * 50 - 100;
             this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) - 0.3, 80, 50))
             this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) + 0.3, 80, 50))
-            this.cooldown = 1.75
+            this.setCooldown(1.75)
         }
         if (action == 0) {
             let x = this.xPos * 50 - 100;
@@ -82,7 +83,7 @@ class OculusAttacker extends Attacker {
                     this.runner.x - cos(theta) * playerDist,
                     this.runner.y - sin(theta) * playerDist, theta, 60, 75))
             }
-            this.cooldown = 5
+            this.setCooldown(5)
         }
         if (action == 3) {
             this.currAction = "field"
@@ -101,7 +102,7 @@ class OculusAttacker extends Attacker {
         this.actionTime -= deltaTime / 1000
         if (this.actionTime < 0 && this.currAction == "field") {
             this.currAction = "none"
-            this.cooldown = 4
+            this.setCooldown(6)
         }
         if (this.currAction == "field") {
             const speed = 25;
@@ -117,6 +118,7 @@ class OculusAttacker extends Attacker {
         } else {
             image(Assets.oculus.main, 175 + this.xPos * 50 - 10, 100 - 25, 70, 70)
         }
+        this.drawCooldown();
     }
 }
 class OculusLaser {
