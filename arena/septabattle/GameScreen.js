@@ -2,14 +2,14 @@ class GameScreen {
     constructor() {
         this.loadPlayers(
             {
-                name: "Houston",
-                attacker: HoustonAttacker,
-                runner:  HoustonRunner
+                name: "Oculus",
+                attacker: OculusAttacker,
+                runner:  OculusRunner
             },
             {
-                name: "Houston",
-                attacker: HoustonAttacker,
-                runner:  HoustonRunner
+                name: "Oculus",
+                attacker: OculusAttacker,
+                runner:  OculusRunner
             }
         )
     }

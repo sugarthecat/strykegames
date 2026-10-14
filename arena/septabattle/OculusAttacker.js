@@ -1,0 +1,101 @@
+class OculusAttacker extends Attacker {
+    constructor() {
+        super();
+        this.xPos = 0;
+        this.actionTime = 0;
+    }
+    reset() {
+        super.reset()
+    }
+    triggerAction(action) {
+
+        if (action == 4) {
+            this.xPos--;
+        } else if (action == 5) {
+            this.xPos++;
+        }
+        if (this.cooldown > 0) {
+            return;
+        }
+        if (action == 2) {
+            let x = this.xPos * 50 - 100;
+
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x), 80, 50))
+            this.cooldown = 1.5
+        }
+        if (action == 1) {
+            let x = this.xPos * 50 - 100;
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) - 0.3, 80, 50))
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) + 0.3, 80, 50))
+            this.cooldown = 1.5
+        }
+        if (action == 0) {
+            let x = this.xPos * 50 - 100;
+            for (let i = 0; i < 8; i++) {
+                const theta = i * PI / 4
+                const playerDist = 200
+                this.projectiles.push(new OculusLaser(
+                    this.runner.x - cos(theta) * playerDist,
+                    this.runner.y - sin(theta) * playerDist, theta, 60, 75))
+            }
+            this.cooldown = 5
+        }
+    }
+
+    draw() {
+        super.drawProjectiles()
+        this.actionTime -= deltaTime / 1000
+        if (this.actionTime < 0) {
+            image(Assets.oculus.main, 175 + this.xPos * 50 - 10, 100 - 25, 70, 70)
+        }
+    }
+}
+class OculusLaser {
+    constructor(startx, starty, dir, speed, length = 100) {
+        this.x = startx;
+        this.y = starty;
+        this.startx = this.x;
+        this.starty = this.y;
+        this.dx = cos(dir) * speed
+        this.dy = sin(dir) * speed
+        this.length = length
+    }
+    draw() {
+        push()
+        strokeWeight(8)
+        stroke(17, 68, 105)
+        line(this.x, this.y, this.startx, this.starty)
+        strokeWeight(4)
+        stroke(0, 188, 255)
+        line(this.x, this.y, this.startx, this.starty)
+
+        this.x += this.dx * deltaTime / 1000;
+        this.y += this.dy * deltaTime / 1000;
+        if (dist(this.x, this.y, this.startx, this.starty) > this.length) {
+            const frac = this.length / dist(this.x, this.y, this.startx, this.starty)
+            this.startx = frac * this.startx + (1 - frac) * this.x
+            this.starty = frac * this.starty + (1 - frac) * this.y
+        }
+        pop()
+    }
+    collides(player) {
+        // unit vector along the laser
+        const speed = mag(this.dx, this.dy)
+        const ux = this.dx / speed
+        const uy = this.dy / speed
+        // unit vector orthogonal to the laser
+        const ox = -uy
+        const oy = ux
+        // vector from the laser's tail to the player
+        const px = player.x - this.startx
+        const py = player.y - this.starty
+        // projections onto the laser and its orthogonal
+        const along = px * ux + py * uy
+        const across = abs(px * ox + py * oy)
+        const length = dist(this.x, this.y, this.startx, this.starty)
+        return along >= 0 && along <= length && across < player.radius + 4
+    }
+    toBeRemoved() {
+        return this.y < -1000 || this.y > 1000 || this.x < -1000 || this.x > 1000
+    }
+}

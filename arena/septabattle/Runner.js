@@ -52,7 +52,7 @@ class Runner {
         if (this.invTimer > 0) {
             return;
         }
-        this.invTimer = 3;
+        this.invTimer = 2;
         this.health--;
     }
 }

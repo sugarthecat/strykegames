@@ -6,15 +6,16 @@ class CharacterSelectScreen {
                 attacker: HoustonAttacker,
                 runner: HoustonRunner,
             },
+            /*
             {
                 name: "Magus",
                 attacker: HoustonAttacker,
                 runner: HoustonRunner,
-            },
+            },*/
             {
                 name: "Oculus",
-                attacker: HoustonAttacker,
-                runner: HoustonRunner,
+                attacker: OculusAttacker,
+                runner: OculusRunner,
             }
         ]
         this.selected = [0, 0];

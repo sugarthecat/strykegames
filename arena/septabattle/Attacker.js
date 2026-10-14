@@ -11,7 +11,10 @@ class Attacker {
         this.projectiles = [];
     }
 
+    // projectiles draw with (0, 0) at the center of the arena
     drawProjectiles() {
+        push()
+        translate(300, 250)
         for (let i = 0; i < this.projectiles.length; i++) {
             this.projectiles[i].draw();
             if (this.projectiles[i].collides(this.runner)) {
@@ -22,6 +25,7 @@ class Attacker {
                 i--;
             }
         }
+        pop()
     }
 
     savePlayer(runner) {
