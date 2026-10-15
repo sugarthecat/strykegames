@@ -30,7 +30,6 @@ class OculusRunner extends Runner {
         return true;
     }
     updateGoals() {
-        let allGoalsDone = true;
         for (let i = 0; i < this.boxes.length; i++) {
             const box = this.boxes[i];
             if (abs(this.boxes[i].x + 5 - this.x) < 7 + this.radius
@@ -39,9 +38,8 @@ class OculusRunner extends Runner {
             }
         }
     }
-    draw(centerX, centerY) {
+    draw() {
         push()
-        translate(centerX, centerY)
         for (let i = 0; i < this.boxes.length; i++) {
             if (this.boxes[i].active) {
                 fill(17,68,150)
@@ -58,7 +56,6 @@ class OculusRunner extends Runner {
     drawGui() {
         super.drawGui();
         push()
-        textFont('monospace')
         fill(255)
         textSize(12)
         textAlign(LEFT, CENTER)

@@ -12,10 +12,12 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     noSmooth()
+    textFont('monospace')
+}
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
-    resizeCanvas(windowWidth, windowHeight);
-
     if (windowWidth / SCREEN_DIMENSIONS.x < windowHeight / SCREEN_DIMENSIONS.y) {
         scaleFactor = windowWidth / SCREEN_DIMENSIONS.x
     } else {
@@ -28,7 +30,12 @@ function draw() {
 
     scale(scaleFactor, scaleFactor)
     background(0);
-    screens[screenOn].Draw();
+    const gamepads = getGamepads();
+    if (gamepads.length != 2) {
+        drawErrorScreen();
+    } else {
+        screens[screenOn].Draw(gamepads);
+    }
     pop()
     fill(0)
     noStroke()
@@ -40,4 +47,22 @@ function draw() {
         rect(0, 0, windowWidth, yTranslation);
         rect(0, windowHeight - yTranslation, windowWidth, yTranslation);
     }
+}
+
+// connected gamepads, with trailing empty slots removed
+function getGamepads() {
+    const gamepads = navigator.getGamepads();
+    while (gamepads.length > 0 && gamepads[gamepads.length - 1] === null) {
+        gamepads.pop();
+    }
+    return gamepads;
+}
+function drawErrorScreen() {
+    push()
+    background(0)
+    fill(255)
+    textAlign(CENTER)
+    textSize(40)
+    text("Please connect controllers", 300, 200)
+    pop()
 }

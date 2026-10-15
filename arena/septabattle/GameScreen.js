@@ -31,15 +31,7 @@ class GameScreen {
         this.player1.attacker.savePlayer(this.player2.runner)
         this.player2.attacker.savePlayer(this.player1.runner)
     }
-    Draw() {
-        const gamepads = navigator.getGamepads();
-        while (gamepads.length > 0 && gamepads[gamepads.length - 1] === null) {
-            gamepads.pop();
-        }
-        if (gamepads.length != 2) {
-            this.DrawErrorScreen();
-            return
-        }
+    Draw(gamepads) {
         background(0)
 
         let runner = this.player2.runner;
@@ -57,7 +49,10 @@ class GameScreen {
 
         fill(100)
         rect(300 - 250 / 2, 250 - 180 / 2, 250, 180)
-        runner.draw(300, 250)
+        push()
+        translate(300, 250)
+        runner.draw()
+        pop()
         attacker.draw()
         runner.drawGui()
         if (runner.health == 0) {
@@ -73,15 +68,5 @@ class GameScreen {
                 runner.reset();
                 attacker.reset();
             }
-    }
-
-    DrawErrorScreen() {
-        push()
-        background(0)
-        fill(255)
-        textAlign(CENTER)
-        textSize(40)
-        text("Please connect controllers", 300, 200)
-        pop()
     }
 }

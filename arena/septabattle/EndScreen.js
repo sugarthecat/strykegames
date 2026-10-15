@@ -7,17 +7,8 @@ class EndScreen {
         this.player1cont = false;
         this.player2cont = false;
     }
-    Draw() {
-        const gamepads = navigator.getGamepads();
-        while (gamepads.length > 0 && gamepads[gamepads.length - 1] === null) {
-            gamepads.pop();
-        }
-        if (gamepads.length != 2) {
-            this.DrawErrorScreen();
-            return
-        }
+    Draw(gamepads) {
         push()
-        textFont('monospace')
         background(0)
         textAlign(CENTER)
         fill(255)
@@ -55,14 +46,5 @@ class EndScreen {
         }
         pop()
 
-    }
-    DrawErrorScreen() {
-        push()
-        background(0)
-        fill(255)
-        textAlign(CENTER)
-        textSize(40)
-        text("Please connect controllers", 300, 200)
-        pop()
     }
 }

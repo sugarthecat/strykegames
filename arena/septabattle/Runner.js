@@ -29,9 +29,10 @@ class Runner {
     updateGoals(){
 
     }
-    draw(centerX, centerY) {
+    // draws with (0, 0) at the center of the arena
+    draw() {
         fill(255, 0, 0)
-        circle(this.x + centerX, this.y + centerY, 2*this.radius)
+        circle(this.x, this.y, 2*this.radius)
     }
 
     drawGui(){

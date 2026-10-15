@@ -58,15 +58,7 @@ class CharacterSelectScreen {
         this.locked = [false, false];
         this.lastGamepads = [null, null];
     }
-    Draw() {
-        const gamepads = navigator.getGamepads();
-        while (gamepads.length > 0 && gamepads[gamepads.length - 1] === null) {
-            gamepads.pop();
-        }
-        if (gamepads.length != 2) {
-            this.DrawErrorScreen();
-            return
-        }
+    Draw(gamepads) {
 
         this.updateGamepad(0, gamepads[0])
         this.updateGamepad(1, gamepads[1])
@@ -85,7 +77,6 @@ class CharacterSelectScreen {
         pop()
         for (let i = 0; i < 2; i++) {
             push()
-            textFont('monospace')
             image(Assets.getCharacter(this.characters[this.selected[i]].name).main,
                 50 + i * 400, 250, 100, 100)
             textSize(25)
@@ -99,14 +90,5 @@ class CharacterSelectScreen {
             }
             pop()
         }
-    }
-    DrawErrorScreen() {
-        push()
-        background(0)
-        fill(255)
-        textAlign(CENTER)
-        textSize(40)
-        text("Please connect controllers", 300, 200)
-        pop()
     }
 }

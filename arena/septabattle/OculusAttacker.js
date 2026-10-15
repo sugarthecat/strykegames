@@ -59,6 +59,7 @@ class OculusAttacker extends Attacker {
         } else if (action == 5) {
             this.xPos++;
         }
+        this.xpos = constrain(this.xpos, 0, 4)
         if (this.cooldown > 0) {
             return;
         }

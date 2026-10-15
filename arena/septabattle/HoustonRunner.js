@@ -39,9 +39,8 @@ class HoustonRunner extends Runner {
             allGoalsDone = allGoalsDone && this.goals[i].active;
         }
     }
-    draw(centerX, centerY) {
+    draw() {
         push()
-        translate(centerX, centerY)
         for (let i = 0; i < this.goals.length; i++) {
             if (this.goals[i].active) {
                 fill(0, 255, 0)
@@ -58,7 +57,6 @@ class HoustonRunner extends Runner {
     drawGui() {
         super.drawGui();
         push()
-        textFont('monospace')
         fill(255)
         textSize(12)
         textAlign(LEFT, CENTER)
