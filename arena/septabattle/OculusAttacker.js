@@ -49,8 +49,6 @@ class OculusAttacker extends Attacker {
                 }
                 this.setCooldown(5)
             }
-
-            // field actions go here
             return
         }
 

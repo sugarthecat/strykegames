@@ -94,11 +94,6 @@ class HoustonAttacker extends Attacker {
     draw() {
         this.actionTime -= deltaTime / 1000;
 
-        //left corner: 175
-        //right corner: 425
-        //top spot: 250 - 90 = 160
-        //say a step is 50
-
         if (this.actionTime < 0) {
             image(Assets.houston.main, 175 + this.xpos * 50 - 10, 100 - 25, 70, 70)
         } else if (this.currAction == "gunslinger") {
