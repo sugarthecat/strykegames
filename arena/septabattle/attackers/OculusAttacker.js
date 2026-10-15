@@ -137,7 +137,7 @@ class OculusLaser {
     }
     draw() {
         push()
-        translate (random(-0.7,0.7),random(-0.7,0.7))
+        translate (random(-0.4,0.4),random(-0.4,0.4))
         strokeWeight(8)
         stroke(17, 68, 105)
         line(this.x, this.y, this.startx, this.starty)

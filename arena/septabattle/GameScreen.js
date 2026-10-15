@@ -4,12 +4,12 @@ class GameScreen {
             {
                 name: "Oculus",
                 attacker: OculusAttacker,
-                runner:  MagusRunner
+                runner: MagusRunner
             },
             {
                 name: "Oculus",
                 attacker: OculusAttacker,
-                runner:  MagusRunner
+                runner: MagusRunner
             }
         )
     }
@@ -62,11 +62,12 @@ class GameScreen {
             } else {
                 screens.end.setWinner(this.player2)
             }
-        } else
-            if (runner.canSwitch()) {
-                this.p1attacking = !this.p1attacking;
-                runner.reset();
-                attacker.reset();
-            }
+        } else if (runner.canSwitch()) {
+            this.p1attacking = !this.p1attacking;
+            runner.reset();
+            this.player1.attacker.reset()
+            this.player2.attacker.reset()
+
+        }
     }
 }
