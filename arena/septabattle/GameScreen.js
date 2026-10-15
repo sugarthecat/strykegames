@@ -4,12 +4,12 @@ class GameScreen {
             {
                 name: "Oculus",
                 attacker: OculusAttacker,
-                runner:  OculusRunner
+                runner:  MagusRunner
             },
             {
                 name: "Oculus",
                 attacker: OculusAttacker,
-                runner:  OculusRunner
+                runner:  MagusRunner
             }
         )
     }

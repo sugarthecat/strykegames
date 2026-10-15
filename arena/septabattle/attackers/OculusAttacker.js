@@ -6,7 +6,7 @@ class OculusAttacker extends Attacker {
         this.currAction = "none";
         this.currX = 0;
         this.currY = 0;
-        this.color = color(17,68,150)
+        this.color = color(17, 68, 150)
     }
     reset() {
         this.actionTime = 0;
@@ -19,12 +19,18 @@ class OculusAttacker extends Attacker {
                 return;
             }
             if (action == 2) {
-                this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX), 90, 40))
+                this.projectiles.push(new OculusLaser(this.currX, this.currY,
+                    atan2(this.runner.y - this.currY, this.runner.x - this.currX),
+                    this.expFade(90, 125), this.expFade(30, 55)))
                 this.setCooldown(1.5)
             }
             if (action == 1) {
-                this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX) - 0.3, 90, 40))
-                this.projectiles.push(new OculusLaser(this.currX, this.currY, atan2(this.runner.y - this.currY, this.runner.x - this.currX) + 0.3, 90, 40))
+                this.projectiles.push(new OculusLaser(this.currX, this.currY,
+                    atan2(this.runner.y - this.currY, this.runner.x - this.currX) - 0.3,
+                    this.expFade(80, 120), this.expFade(30, 50)))
+                this.projectiles.push(new OculusLaser(this.currX, this.currY,
+                    atan2(this.runner.y - this.currY, this.runner.x - this.currX) + 0.3,
+                    this.expFade(80, 120), this.expFade(30, 50)))
                 this.setCooldown(2)
             }
             if (action == 0) {
@@ -33,10 +39,10 @@ class OculusAttacker extends Attacker {
                     if (abs(this.currY - yPos) < 40) {
                         continue
                     }
-                    this.projectiles.push(new OculusLaser(-180, yPos, 0, 70, 50))
-                    this.projectiles.push(new OculusLaser(180, yPos, PI, 70, 50))
+                    this.projectiles.push(new OculusLaser(-180, yPos, 0, this.expFade(40,80), 50))
+                    this.projectiles.push(new OculusLaser(180, yPos, PI, this.expFade(40,80), 50))
                 }
-                this.setCooldown(5)
+                this.setCooldown(this.expFade(7,5))
             }
             if (action == 3) {
                 for (let i = 0; i < 25; i++) {
@@ -44,10 +50,10 @@ class OculusAttacker extends Attacker {
                     if (abs(this.currX - xPos) < 30) {
                         continue
                     }
-                    this.projectiles.push(new OculusLaser(xPos, -140, PI / 2, 60, 50))
-                    this.projectiles.push(new OculusLaser(xPos, 140, -PI / 2, 60, 50))
+                    this.projectiles.push(new OculusLaser(xPos, -140, PI / 2, this.expFade(40,80), 50))
+                    this.projectiles.push(new OculusLaser(xPos, 140, -PI / 2, this.expFade(40,80), 50))
                 }
-                this.setCooldown(5)
+                this.setCooldown(this.expFade(7,5))
             }
             return
         }
@@ -57,22 +63,22 @@ class OculusAttacker extends Attacker {
         } else if (action == 5) {
             this.xPos++;
         }
-        this.xpos = constrain(this.xpos, 0, 4)
+        this.xPos = constrain(this.xPos, 0, 4)
         if (this.cooldown > 0) {
             return;
         }
         if (action == 2) {
             let x = this.xPos * 50 - 100;
 
-            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x), 80, 50))
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x), this.expFade(40,90), this.expFade(20,60)))
             this.setCooldown(1.25)
         }
         if (action == 1) {
             let x = this.xPos * 50 - 100;
-            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) - 0.3, 80, 50))
-            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) + 0.3, 80, 50))
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) - 0.3, this.expFade(40,90), this.expFade(20,60)))
+            this.projectiles.push(new OculusLaser(x, -100, atan2(this.runner.y + 100, this.runner.x - x) + 0.3, this.expFade(40,90), this.expFade(20,60)))
             this.setCooldown(1.75)
-        }
+        } 
         if (action == 0) {
             let x = this.xPos * 50 - 100;
             for (let i = 0; i < 8; i++) {
@@ -80,13 +86,13 @@ class OculusAttacker extends Attacker {
                 const playerDist = 200
                 this.projectiles.push(new OculusLaser(
                     this.runner.x - cos(theta) * playerDist,
-                    this.runner.y - sin(theta) * playerDist, theta, 60, 75))
+                    this.runner.y - sin(theta) * playerDist, theta, this.expFade(40,80), this.expFade(20,80)))
             }
             this.setCooldown(5)
         }
         if (action == 3) {
             this.currAction = "field"
-            this.actionTime = 15;
+            this.actionTime = this.expFade(10,25);
             this.currX = 0;
             if (this.runner.y > 0) {
                 this.currY = -90 + 20;
@@ -104,7 +110,7 @@ class OculusAttacker extends Attacker {
             this.setCooldown(6)
         }
         if (this.currAction == "field") {
-            const speed = 25;
+            const speed = this.expFade(15,30);
             this.currX += deltaTime / 1000 * speed * this.lastGamepad.axes[0];
             this.currY += deltaTime / 1000 * speed * this.lastGamepad.axes[1];
             this.currX = constrain(this.currX, -125 + 20, 125 - 20);
@@ -132,6 +138,7 @@ class OculusLaser {
     }
     draw() {
         push()
+        translate (random(-0.7,0.7),random(-0.7,0.7))
         strokeWeight(8)
         stroke(17, 68, 105)
         line(this.x, this.y, this.startx, this.starty)

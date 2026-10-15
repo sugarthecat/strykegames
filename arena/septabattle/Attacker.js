@@ -3,13 +3,19 @@ class Attacker {
         this.setCooldown(2);
         this.lastGamepad = null;
         this.projectiles = [];
+        this.level = 0;
         this.color = color(255)
     }
 
 
     reset() {
+        this.level++;
         this.setCooldown(2);
         this.projectiles = [];
+    }
+    expFade(easy, hard, scalingFactor=2/3){
+        const factor = Math.pow(scalingFactor,this.level)
+        return hard * (1-factor) + easy * factor;
     }
     setCooldown(cooldown) {
         this.cooldown = cooldown;
