@@ -55,7 +55,7 @@ class GameScreen {
         pop()
         attacker.draw()
         runner.drawGui()
-        if (runner.health == 0) {
+        if (runner.health <= 0) {
             screenOn = "end"
             if (this.p1attacking) {
                 screens.end.setWinner(this.player1)

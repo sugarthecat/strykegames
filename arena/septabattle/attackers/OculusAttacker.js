@@ -80,7 +80,6 @@ class OculusAttacker extends Attacker {
             this.setCooldown(1.75)
         } 
         if (action == 0) {
-            let x = this.xPos * 50 - 100;
             for (let i = 0; i < 8; i++) {
                 const theta = i * PI / 4
                 const playerDist = 200

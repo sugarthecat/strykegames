@@ -15,10 +15,6 @@ class HoustonAttacker extends Attacker {
         super.reset()
     }
     triggerAction(action) {
-        if (this.actionTime < 0 && this.currAction != "none") {
-            this.setCooldown(4)
-            this.currAction = "none"
-        }
         if (this.actionTime > 0) {
             if (this.cooldown > 0) {
                 return;
@@ -106,6 +102,10 @@ class HoustonAttacker extends Attacker {
 
     draw() {
         this.actionTime -= deltaTime / 1000;
+        if (this.actionTime < 0 && this.currAction == "gunslinger") {
+            this.currAction = "none"
+            this.setCooldown(4)
+        }
 
         if (this.actionTime < 0) {
             image(Assets.houston.main, 175 + this.xpos * 50 - 10, 100 - 25, 70, 70)

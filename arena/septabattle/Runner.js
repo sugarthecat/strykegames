@@ -42,7 +42,7 @@ class Runner {
         fill(100)
         rect(200, 345, 200, 20)
         fill(200, 0, 0)
-        rect(202, 347, 196 * this.health / this.maxhealth, 16)
+        rect(202, 347, 196 * max(0, this.health) / this.maxhealth, 16)
     }
 
     canSwitch(){
