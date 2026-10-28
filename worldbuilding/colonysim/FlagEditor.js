@@ -164,6 +164,7 @@ export default class FlagEditor {
         this.packSelector.innerHTML += "<option value=\"Caribbean\">Caribbean</option>"
         this.packSelector.innerHTML += "<option value=\"EastAsia\">East Asia</option>"
         this.packSelector.innerHTML += "<option value=\"SouthAmerica\">South America</option>"
+        this.packSelector.innerHTML += "<option value=\"Oceania\">Oceania</option>"
         this.packSelector.innerHTML += "<option value=\"Africa\">Africa</option>"
         this.packSelector.innerHTML += "<option value=\"NorthAfrica\">North Africa</option>"
         this.packSelector.innerHTML += "<option value=\"CentralAsia\">Central Asia</option>"
