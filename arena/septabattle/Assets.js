@@ -14,7 +14,8 @@ class Assets {
         }
         this.magus = {
             main: loadImage("assets/magusboss.png"),
-            mini: loadImage("assets/magusmini.png")
+            mini: loadImage("assets/magusmini.png"),
+            scope: loadImage("assets/magusscope.png")
         }
     }
     static getCharacter(name) {

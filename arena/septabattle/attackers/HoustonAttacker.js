@@ -31,20 +31,20 @@ class HoustonAttacker extends Attacker {
                     this.setCooldown(this.expFade(2, 1))
                 }
                 if (action == 3) {
-                    this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, this.expFade(60,80)))
+                    this.projectiles.push(new HoustonBullet(theta, this.currX, gunY, 10, this.expFade(30,70)))
                     if (this.level > 0) {
-                        this.projectiles.push(new HoustonBullet(theta + 0.2, this.currX, gunY, 10, this.expFade(60,80)))
-                        this.projectiles.push(new HoustonBullet(theta - 0.2, this.currX, gunY, 10, this.expFade(60,80)))
+                        this.projectiles.push(new HoustonBullet(theta + 0.2, this.currX, gunY, 10, this.expFade(30,70)))
+                        this.projectiles.push(new HoustonBullet(theta - 0.2, this.currX, gunY, 10, this.expFade(30,70)))
                     }
-                    if (this.level > 1) {
-                        this.projectiles.push(new HoustonBullet(theta + 0.4, this.currX, gunY, 10, this.expFade(60,80)))
-                        this.projectiles.push(new HoustonBullet(theta - 0.4, this.currX, gunY, 10, this.expFade(60,80)))
+                    if (this.level > 3) {
+                        this.projectiles.push(new HoustonBullet(theta + 0.4, this.currX, gunY, 10, this.expFade(30,70)))
+                        this.projectiles.push(new HoustonBullet(theta - 0.4, this.currX, gunY, 10, this.expFade(30,70)))
                     }
-                    if (this.level > 2) {
-                        this.projectiles.push(new HoustonBullet(theta + 0.6, this.currX, gunY, 10, this.expFade(60,80)))
-                        this.projectiles.push(new HoustonBullet(theta - 0.6, this.currX, gunY, 10, this.expFade(60,80)))
+                    if (this.level > 5) {
+                        this.projectiles.push(new HoustonBullet(theta + 0.6, this.currX, gunY, 10, this.expFade(30,70)))
+                        this.projectiles.push(new HoustonBullet(theta - 0.6, this.currX, gunY, 10, this.expFade(30,70)))
                     }
-                    this.setCooldown(2.5)
+                    this.setCooldown(3)
                 }
                 if (action == 0) {
                     for (let i = 0; i < 8; i++) {
@@ -110,7 +110,7 @@ class HoustonAttacker extends Attacker {
         if (this.actionTime < 0) {
             image(Assets.houston.main, 175 + this.xpos * 50 - 10, 100 - 25, 70, 70)
         } else if (this.currAction == "gunslinger") {
-            const speed = 25;
+            const speed = this.expFade(15,22);
             this.currX += deltaTime / 1000 * speed * this.lastGamepad.axes[0];
             this.currY += deltaTime / 1000 * speed * this.lastGamepad.axes[1];
             this.currX = constrain(this.currX, -125 + 20, 125 - 20);

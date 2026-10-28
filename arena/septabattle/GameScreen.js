@@ -3,12 +3,12 @@ class GameScreen {
         this.loadPlayers(
             {
                 name: "Oculus",
-                attacker: OculusAttacker,
+                attacker: MagusAttacker,
                 runner: MagusRunner
             },
             {
                 name: "Oculus",
-                attacker: OculusAttacker,
+                attacker: MagusAttacker,
                 runner: MagusRunner
             }
         )
@@ -67,7 +67,6 @@ class GameScreen {
             runner.reset();
             this.player1.attacker.reset()
             this.player2.attacker.reset()
-
         }
     }
 }

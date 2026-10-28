@@ -13,7 +13,7 @@ class Attacker {
         this.setCooldown(2);
         this.projectiles = [];
     }
-    expFade(easy, hard, scalingFactor=2/3){
+    expFade(easy, hard, scalingFactor=3/4){
         const factor = Math.pow(scalingFactor,this.level)
         return hard * (1-factor) + easy * factor;
     }
