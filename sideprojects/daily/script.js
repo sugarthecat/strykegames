@@ -52,6 +52,9 @@ function copyStats() {
         } else {
             outStr += `\n${badge.name}`
         }
+        if (badge.new) {
+            outStr += ` (NEW)`
+        }
     }
     if (person.badges.length > 5) {
         outStr += "\n..."
@@ -149,11 +152,9 @@ async function getTimeTillExpiry() {
 }
 
 async function copyToClipboard(text) {
-    const html = text.replace("Random Person", "<a href=\"agar.io\">Random Person</a>")
     try {
         await navigator.clipboard.write([
             new ClipboardItem({
-                "text/html": new Blob([html.replace("[][]", "")], { type: "text/html" }),
                 "text/plain": new Blob([text.replace("[][]", "\n https://strykegames.net/sideprojects/daily/")], { type: "text/plain" }),
             }),
         ]);
