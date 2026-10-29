@@ -41,6 +41,20 @@ function addNameBadges() {
         })
     badges.push(
         {
+            //0.3%
+            name: "Royal",
+            description: "Their name includes a title of royalty.",
+            rarity: "legendary",
+            category: "names",
+            emoji: "👑",
+            eval: function (person) {
+                const titles = ["king", "queen", "shah", "prince",]
+                return titles.includes(person.name.forename.toLowerCase())
+                    || titles.includes(person.name.surname.toLowerCase())
+            }
+        })
+    badges.push(
+        {
             //0.8%
             name: "John",
             description: "Has a first name which shares an etymological root with \"John\".",
@@ -61,7 +75,7 @@ function addNameBadges() {
             category: "names",
             emoji: "👨",
             eval: function (person) {
-                return ["mohammed", "muhammad","mohamed", "muhammed", 'mohamad', "mohamed"].includes(person.name.forename.toLowerCase())
+                return ["mohammed", "muhammad", "mohamed", "muhammed", 'mohamad', "mohamed"].includes(person.name.forename.toLowerCase())
             }
         })
     badges.push(
