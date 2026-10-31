@@ -15,7 +15,7 @@ function addNameBadges() {
                 while (nameNoSpaces != nameNoSpaces.replaceAll(" ", "")) {
                     nameNoSpaces = nameNoSpaces.replaceAll(" ", "")
                 }
-                return nameNoSpaces.length <= 8
+                return nameNoSpaces.length <= 7
             }
         })
     badges.push(
