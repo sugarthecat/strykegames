@@ -1,10 +1,10 @@
 const rarity = {
-    common: { color: "#999", rank: 1, emoji: "⬜" }, // >15%
-    uncommon: { color: "#0c0", rank: 2, emoji: "🟩" }, //7-15%
-    rare: { color: "#00f", rank: 3, emoji: "🟦" }, // 3-7%
-    epic: { color: "#c0c", rank: 4, emoji: "🟪" }, // 1-3%
-    legendary: { color: "#ff0", rank: 5, emoji: "🟨" }, // 0.1-1%
-    mythical: { color: "#f00", rank: 6, emoji: "🟥" } // <0.1%
+    common: { rank: 1, emoji: "⬜" }, // >15%
+    uncommon: { rank: 2, emoji: "🟩" }, //7-15%
+    rare: { rank: 3, emoji: "🟦" }, // 3-7%
+    epic: { rank: 4, emoji: "🟪" }, // 1-3%
+    legendary: { rank: 5, emoji: "🟨" }, // 0.1-1%
+    mythical: { rank: 6, emoji: "🟥" } // <0.1%
 }
 const badges = []
 

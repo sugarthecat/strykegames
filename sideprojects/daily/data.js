@@ -138,21 +138,9 @@ async function loadData() {
 
 async function setup() {
     await loadData();
-    addCountryBadges();
-    checkCookie();
     setupBadges();
     displayBadgeHistory();
-}
-
-function addCountryBadges() {
-    let populations = {}
-    for (let i = 0; i < cities.length; i++) {
-        let iso2 = cities[i].iso2
-        if (!(iso2 in populations)) {
-            populations[iso2] = 0
-        }
-        populations[iso2] += cities[i].population
-    }
+    checkCookie();
 }
 
 window.onload = setup;

@@ -1,16 +1,21 @@
-function getPrintName(person) {
-    if (['CN', 'TW', 'KR', 'KP', 'VN'].includes(person.city.iso2)
-        && !(['Mr.', 'Ms.'].includes(person.name.forename))) {
-        return `${person.name.surname} ${person.name.forename}`
-    }
-    return `${person.name.forename} ${person.name.surname}`
-}
+const SHARE_URL = "https://strykegames.net/sideprojects/daily/"
+const GENDER_EMOJI = { "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍" }
+const SURNAME_FIRST_ISO2 = ['CN', 'TW', 'KR', 'KP', 'VN']
+
+const CATEGORIES = [
+    { id: "geographic", name: "Geographic" },
+    { id: "gender", name: "Gender/Sexuality" },
+    { id: "religion", name: "Religion" },
+    { id: "names", name: "Names" },
+    { id: "misc", name: "Miscellaneous" },
+    { id: "languages", name: "Languages" },
+]
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let person;
 
-let nextGameInterval;
+// ---- Rolling ----
 
 async function dailyRoll() {
     document.getElementById("badges").innerHTML = ""
@@ -20,113 +25,17 @@ async function dailyRoll() {
         await sleep(i)
         displayPerson(getRandomPerson())
     }
-    person.badges = getBadges(person)
-    //sort badges
     const prevBadges = getStoredBadges();
-    for(let i = 0; i<person.badges.length; i++){
-        if(prevBadges.includes(person.badges[i].name.toLowerCase())){
-            continue
-        }
-        person.badges[i].new = true;
-    }
+    person.badges = getBadges(person).map((badge) =>
+        prevBadges.includes(badge.name.toLowerCase()) ? badge : { ...badge, new: true }
+    )
     displayPersonFull(person)
-    setJsonCookie("person", person, 1)
+    setJsonCookie("person", person, getNextMidnight())
     storeBadges(person)
 }
 
-function copyStats() {
-    let genderDict = {
-        "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍"
-    }
-    let outStr = `${genderDict[person.name.gender]} Random Person ${genderDict[person.name.gender]}[][]\n`;
-    for (let i = 0; i < person.badges.length; i++) {
-        const badge = person.badges[person.badges.length - 1 - i]
-        outStr += rarity[badge.rarity].emoji
-    }
-    outStr += `\n${getPrintName(person)}`
-    outStr += `\n of ${getLocation(person)}`
-    for (let i = 0; i < Math.min(5, person.badges.length); i++) {
-        const badge = person.badges[person.badges.length - 1 - i]
-        if (badge.emoji) {
-            outStr += `\n${rarity[badge.rarity].emoji} ${badge.emoji} ${badge.name}`
-        } else {
-            outStr += `\n${badge.name}`
-        }
-        if (badge.new) {
-            outStr += ` (NEW)`
-        }
-    }
-    if (person.badges.length > 5) {
-        outStr += "\n..."
-    }
-    copyToClipboard(outStr)
-}
-
-function addBadge(badge) {
-    let badgeDiv = document.createElement("div")
-    badgeDiv.className = "badge " + badge.rarity
-    badgeDiv.innerHTML = `<h3>${badge.emoji}${badge.name}${badge.emoji}</h3>${badge.new ? "<p class=\"newbadge\">NEW</p>" : ""}<p class=\"rarity\">${badge.rarity.toUpperCase()}</p><p>${badge.description}</p>`
-    document.getElementById("badges").prepend(badgeDiv)
-}
-
-function displayPerson(person) {
-    document.getElementById("person").innerHTML = `<h2>${getPrintName(person)}</h2>`
-    document.getElementById("person").innerHTML += `<p>Of ${getLocation(person)}</h2>`
-}
-function getLocation(person) {
-    return `${person.city.city}, ${person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""}${formalCountryName(person.city.country)}`
-}
-function setJsonCookie(name, jsonObject, daysToExpire) {
-    const jsonString = JSON.stringify(jsonObject);
-    const encodedValue = encodeURIComponent(jsonString);
-
-    let expires = "";
-    if (daysToExpire) {
-        const tomorrowMidnight = new Date();
-        tomorrowMidnight.setDate(tomorrowMidnight.getDate() + 1); // Move to tomorrow
-        tomorrowMidnight.setHours(0, 0, 0, 0);
-        expires = "; expires=" + tomorrowMidnight.toUTCString();
-    }
-
-    // Secure and SameSite are recommended for modern security standards
-    document.cookie = `${name}=${encodedValue}${expires}; path=/; SameSite=Lax; Secure`;
-}
-
-function getJsonCookie(name) {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-        const [key, value] = cookies[i].split('=');
-        if (key === name) {
-            try {
-                const decodedValue = decodeURIComponent(value);
-                return JSON.parse(decodedValue);
-            } catch (error) {
-                console.error("Failed to parse cookie JSON", error);
-                return null;
-            }
-        }
-    }
-    return null;
-}
-
-async function displayPersonFull(person, waitMult = 1) {
-    document.getElementById("badges").innerHTML = ""
-    displayPerson(person)
-    await sleep(1000 * waitMult)
-    const badges = person.badges
-    for (let i = 0; i < badges.length; i++) {
-        await sleep(500 * waitMult);
-        addBadge(badges[i]);
-    }
-    await sleep(1000 * waitMult);
-    document.getElementById("copy").hidden = false;
-    nextGameInterval = setInterval(displayTime, 1000)
-
-    displayBadgeHistory();
-}
-
 function checkCookie() {
-    let cookie = getJsonCookie("person");
+    const cookie = getJsonCookie("person");
     if (cookie == null) {
         document.getElementById("reroll").hidden = false;
     } else {
@@ -136,53 +45,171 @@ function checkCookie() {
     }
 }
 
-async function getTimeTillExpiry() {
-    const cookies = await cookieStore.getAll();
-    let myCookie = null;
-    for (let i = 0; i < cookies.length; i++) {
-        if (cookies[i].name == 'person') {
-            myCookie = cookies[i];
+// ---- Display ----
+
+function getPrintName(person) {
+    if (SURNAME_FIRST_ISO2.includes(person.city.iso2)
+        && !(['Mr.', 'Ms.'].includes(person.name.forename))) {
+        return `${person.name.surname} ${person.name.forename}`
+    }
+    return `${person.name.forename} ${person.name.surname}`
+}
+
+function getLocation(person) {
+    const region = person.city.admin_name.length >= 1 ? `${person.city.admin_name}, ` : ""
+    return `${person.city.city}, ${region}${formalCountryName(person.city.country)}`
+}
+
+function displayPerson(person) {
+    document.getElementById("person").innerHTML =
+        `<h2>${getPrintName(person)}</h2><p>Of ${getLocation(person)}</p>`
+}
+
+function addBadge(badge) {
+    const badgeDiv = document.createElement("div")
+    badgeDiv.className = "badge " + badge.rarity
+    badgeDiv.innerHTML = `
+        <h3>${badge.emoji}${badge.name}${badge.emoji}</h3>
+        ${badge.new ? `<p class="newbadge">NEW</p>` : ""}
+        <p class="rarity">${badge.rarity.toUpperCase()}</p>
+        <p>${badge.description}</p>`
+    document.getElementById("badges").prepend(badgeDiv)
+}
+
+async function displayPersonFull(person, waitMult = 1) {
+    document.getElementById("badges").innerHTML = ""
+    displayPerson(person)
+    await sleep(1000 * waitMult)
+    for (const badge of person.badges) {
+        await sleep(500 * waitMult);
+        addBadge(badge);
+    }
+    await sleep(1000 * waitMult);
+    document.getElementById("copy").hidden = false;
+    startCountdown(getNextMidnight())
+    displayBadgeHistory();
+}
+
+function displayBadgeHistory() {
+    const myBadgeNames = getStoredBadges();
+    const container = document.getElementById('past-badges')
+    container.innerHTML = "";
+
+    const sorted = [...badges].sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank);
+    for (const category of CATEGORIES) {
+        const inCategory = sorted.filter((badge) => badge.category == category.id)
+        const owned = inCategory.filter((badge) => myBadgeNames.includes(badge.name.toLowerCase()))
+
+        const header = document.createElement('h3')
+        header.innerText = `${category.name}: ${owned.length}/${inCategory.length}`
+        container.appendChild(header)
+        for (const badge of owned) {
+            const elt = document.createElement("p")
+            elt.innerText = `${rarity[badge.rarity].emoji}${badge.emoji}${badge.name}`
+            container.appendChild(elt);
         }
     }
-    if (myCookie == null) {
-        return 0;
+}
+
+// ---- Countdown ----
+
+function getNextMidnight() {
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+    return midnight
+}
+
+function startCountdown(resetTime) {
+    const tick = () => {
+        const time = Math.ceil((resetTime - Date.now()) / 1000)
+        if (time < 0) {
+            window.location.reload()
+            return
+        }
+        const seconds = time % 60
+        const minutes = Math.floor(time / 60) % 60
+        const hours = Math.floor(time / 60 / 60)
+        document.getElementById("waiter").hidden = false;
+        document.getElementById('waittime').innerText =
+            `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
     }
-    let currTime = myCookie.expires - Date.now()
-    return currTime
+    tick()
+    setInterval(tick, 1000)
+}
+
+// ---- Sharing ----
+
+function copyStats() {
+    const genderEmoji = GENDER_EMOJI[person.name.gender]
+    const topBadges = [...person.badges].reverse()
+
+    let outStr = `${genderEmoji} Random Person ${genderEmoji}\n ${SHARE_URL}\n`;
+    outStr += topBadges.map((badge) => rarity[badge.rarity].emoji).join("")
+    outStr += `\n${getPrintName(person)}`
+    outStr += `\n of ${getLocation(person)}`
+    for (const badge of topBadges.slice(0, 5)) {
+        outStr += badge.emoji
+            ? `\n${rarity[badge.rarity].emoji} ${badge.emoji} ${badge.name}`
+            : `\n${badge.name}`
+        if (badge.new) {
+            outStr += ` (NEW)`
+        }
+    }
+    if (topBadges.length > 5) {
+        outStr += "\n..."
+    }
+    copyToClipboard(outStr)
 }
 
 async function copyToClipboard(text) {
+    const status = document.getElementById("copystatus")
     try {
-        await navigator.clipboard.write([
-            new ClipboardItem({
-                "text/plain": new Blob([text.replace("[][]", "\n https://strykegames.net/sideprojects/daily/")], { type: "text/plain" }),
-            }),
-        ]);
-        document.getElementById("copystatus").innerText = "copied!"
-        const items = await navigator.clipboard.read();
-        console.log(items[0].types);
+        await navigator.clipboard.writeText(text);
+        status.innerText = "copied!"
         await sleep(5000)
-        document.getElementById("copystatus").innerText = ""
-
+        status.innerText = ""
     } catch (err) {
         console.error('Failed to copy text: ', err);
     }
 }
 
+// ---- Storage ----
 
-async function displayTime() {
-    let time = await getTimeTillExpiry() / 1000
-    if (isNaN(time)) {
-        return
+function setJsonCookie(name, jsonObject, expires) {
+    const encodedValue = encodeURIComponent(JSON.stringify(jsonObject));
+    document.cookie = `${name}=${encodedValue}; expires=${expires.toUTCString()}; path=/; SameSite=Lax; Secure`;
+}
+
+function getJsonCookie(name) {
+    for (const cookie of document.cookie.split('; ')) {
+        const [key, value] = cookie.split('=');
+        if (key === name) {
+            try {
+                return JSON.parse(decodeURIComponent(value));
+            } catch (error) {
+                console.error("Failed to parse cookie JSON", error);
+                return null;
+            }
+        }
     }
-    time = Math.ceil(time)
-    if (time < 0) {
-        window.location.reload()
+    return null;
+}
+
+function storeBadges(person) {
+    const stored = getStoredBadges();
+    for (const badge of person.badges) {
+        const name = badge.name.toLowerCase();
+        if (!stored.includes(name)) {
+            stored.push(name)
+        }
     }
-    let seconds = Math.floor(time) % 60
-    let minutes = Math.floor(time / 60) % 60
-    let hours = Math.floor(time / 60 / 60)
-    let waitStr = (`${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`)
-    document.getElementById("waiter").hidden = false;
-    document.getElementById('waittime').innerText = `${waitStr}`
+    localStorage.setItem('dailybadges', stored.join("/"))
+}
+
+function getStoredBadges() {
+    const stored = localStorage.getItem("dailybadges")
+    if (!stored) {
+        return []
+    }
+    return stored.split("/");
 }
