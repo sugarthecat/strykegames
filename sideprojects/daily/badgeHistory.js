@@ -1,54 +1,52 @@
+const CATEGORIES = [
+    { id: "geographic", name: "Geographic" },
+    { id: "gender", name: "Gender/Sexuality" },
+    { id: "religion", name: "Religion" },
+    { id: "names", name: "Names" },
+    { id: "misc", name: "Miscellaneous" },
+    { id: "languages", name: "Languages" },
+]
 
 function storeBadges(person) {
-    const badges = getStoredBadges();
-    for (let i = 0; i < person.badges.length; i++) {
-        const name = person.badges[i].name.toLowerCase();
-        if (!badges.includes(name)) {
-            badges.push(name)
+    const stored = getStoredBadges();
+    for (const badge of person.badges) {
+        const name = badge.name.toLowerCase();
+        if (!stored.includes(name)) {
+            stored.push(name)
         }
     }
-    localStorage.setItem('dailybadges', (badges.join("/")))
+    localStorage.setItem('dailybadges', stored.join("/"))
 }
 
 function getStoredBadges() {
     const stored = localStorage.getItem("dailybadges")
-    if (stored === null) {
-        localStorage.setItem('dailybadges', "")
-        return []
-    }
-    if (stored.length == 0) {
+    if (!stored) {
         return []
     }
     return stored.split("/");
 }
-const categories = ["geographic", "gender", 'religion', 'names', 'misc', "languages"]
-const categoryNames = ["Geographic", "Gender/Sexuality", "Religion", "Names", "Miscellaneous", "Languages"]
+
 function displayBadgeHistory() {
     const myBadgeNames = getStoredBadges();
-    document.getElementById('past-badges').innerHTML = "";
-    
-    badges.sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank );
-    for (let j = 0; j < categories.length; j++) {
-        const category = categories[j];
-        const categoryElt = document.createElement('h3')
-        document.getElementById('past-badges').appendChild(categoryElt)
-        let count = 0;
-        let countHas = 0;
-        for (let i = 0; i < badges.length; i++) {
-            const badge = badges[i]
-            const badgeName = badge.name.toLowerCase();
-            if (category != badge.category) {
-                continue
-            }
-            count++;
-            if (!myBadgeNames.includes(badgeName)) {
-                continue
-            }
-            countHas++;
-            const elt = document.createElement("p")
-            elt.innerText = `${rarity[badge.rarity].emoji}${badge.emoji}${badge.name}`
-            document.getElementById('past-badges').appendChild(elt);
+    const container = document.getElementById('past-badges')
+    container.innerHTML = "";
+
+    const sorted = [...badges].sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank);
+    for (const category of CATEGORIES) {
+        const inCategory = sorted.filter((badge) => badge.category == category.id)
+        const owned = inCategory.filter((badge) => myBadgeNames.includes(badge.name.toLowerCase()))
+
+        const header = document.createElement('h3')
+        header.innerText = `${category.name}: ${owned.length}/${inCategory.length}`
+        container.appendChild(header)
+        const list = document.createElement("div")
+        list.className = "badge-list"
+        for (const badge of owned) {
+            const elt = document.createElement("span")
+            elt.className = "chip " + badge.rarity
+            elt.innerText = `${badge.emoji} ${badge.name}`
+            list.appendChild(elt);
         }
-        categoryElt.innerText = `${categoryNames[j]}: ${countHas}/${count}`;
+        container.appendChild(list)
     }
 }

@@ -2,15 +2,6 @@ const SHARE_URL = "https://strykegames.net/sideprojects/daily/"
 const GENDER_EMOJI = { "F": "🧍‍♀️", "M": "🧍‍♂️", "NB": "🧍" }
 const SURNAME_FIRST_ISO2 = ['CN', 'TW', 'KR', 'KP', 'VN']
 
-const CATEGORIES = [
-    { id: "geographic", name: "Geographic" },
-    { id: "gender", name: "Gender/Sexuality" },
-    { id: "religion", name: "Religion" },
-    { id: "names", name: "Names" },
-    { id: "misc", name: "Miscellaneous" },
-    { id: "languages", name: "Languages" },
-]
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let person;
@@ -69,7 +60,7 @@ function addBadge(badge) {
     const badgeDiv = document.createElement("div")
     badgeDiv.className = "badge " + badge.rarity
     badgeDiv.innerHTML = `
-        <h3>${badge.emoji}${badge.name}${badge.emoji}</h3>
+        <h3>${badge.emoji} ${badge.name} ${badge.emoji}</h3>
         ${badge.new ? `<p class="newbadge">NEW</p>` : ""}
         <p class="rarity">${badge.rarity.toUpperCase()}</p>
         <p>${badge.description}</p>`
@@ -88,27 +79,6 @@ async function displayPersonFull(person, waitMult = 1) {
     document.getElementById("copy").hidden = false;
     startCountdown(getNextMidnight())
     displayBadgeHistory();
-}
-
-function displayBadgeHistory() {
-    const myBadgeNames = getStoredBadges();
-    const container = document.getElementById('past-badges')
-    container.innerHTML = "";
-
-    const sorted = [...badges].sort((a, b) => rarity[b.rarity].rank - rarity[a.rarity].rank);
-    for (const category of CATEGORIES) {
-        const inCategory = sorted.filter((badge) => badge.category == category.id)
-        const owned = inCategory.filter((badge) => myBadgeNames.includes(badge.name.toLowerCase()))
-
-        const header = document.createElement('h3')
-        header.innerText = `${category.name}: ${owned.length}/${inCategory.length}`
-        container.appendChild(header)
-        for (const badge of owned) {
-            const elt = document.createElement("p")
-            elt.innerText = `${rarity[badge.rarity].emoji}${badge.emoji}${badge.name}`
-            container.appendChild(elt);
-        }
-    }
 }
 
 // ---- Countdown ----
@@ -193,23 +163,4 @@ function getJsonCookie(name) {
         }
     }
     return null;
-}
-
-function storeBadges(person) {
-    const stored = getStoredBadges();
-    for (const badge of person.badges) {
-        const name = badge.name.toLowerCase();
-        if (!stored.includes(name)) {
-            stored.push(name)
-        }
-    }
-    localStorage.setItem('dailybadges', stored.join("/"))
-}
-
-function getStoredBadges() {
-    const stored = localStorage.getItem("dailybadges")
-    if (!stored) {
-        return []
-    }
-    return stored.split("/");
 }
