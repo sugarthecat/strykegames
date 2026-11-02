@@ -2,7 +2,8 @@ import os
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 file = open(os.path.join(DATA_DIR, 'religionSrc2.csv'),'r')
 outFile = open(os.path.join(DATA_DIR, 'religion.csv'),'w')
-handled = ['India', 'China', "Taiwan"]
+# Countries with Other Religions support (minorReligionSupport in generate.js)
+handled = ['India', 'China', "Taiwan", "Japan", "Jamaica", "Iran", "Vietnam", "Kenya", "North Korea", "Canada", "United Kingdom"]
 biggest = 0
 for line in file.readlines():
     parts = []
