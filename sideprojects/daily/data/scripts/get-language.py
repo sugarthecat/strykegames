@@ -4,6 +4,8 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
+import os
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
 OUT_FILE = 'language.csv'
 
@@ -41,7 +43,7 @@ for row in rows:
     print(desc)
     countryLanguages[currCountry].append((desc[0],desc[3],desc[4][:-1]))
 
-file = open("languages.csv",'w',encoding='utf8')
+file = open(os.path.join(DATA_DIR, "languages.csv"),'w',encoding='utf8')
 for code in countryLanguages:
     for pair in countryLanguages[code]:
         file.write(f"{code},{pair[0]},{pair[1]},{pair[2]}\n")

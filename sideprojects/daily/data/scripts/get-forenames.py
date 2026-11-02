@@ -4,6 +4,8 @@
 import sys
 import requests
 from bs4 import BeautifulSoup
+import os
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
 OUT_FILE = 'scraped-forenames.csv'
 
@@ -30,7 +32,7 @@ rows = table.find_all('tr')[1:]  # skip header row
 maleNames = []
 femaleNames = []
 
-outFile = open(OUT_FILE, 'w', encoding='utf-8')
+outFile = open(os.path.join(DATA_DIR, OUT_FILE), 'w', encoding='utf-8')
 for row in rows:
     cells = row.find_all('td')
     if(len(cells) < 3):

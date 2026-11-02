@@ -1,5 +1,7 @@
-file = open('religionSrc2.csv','r')
-outFile = open('religion.csv','w')
+import os
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+file = open(os.path.join(DATA_DIR, 'religionSrc2.csv'),'r')
+outFile = open(os.path.join(DATA_DIR, 'religion.csv'),'w')
 handled = ['India', 'China', "Taiwan"]
 biggest = 0
 for line in file.readlines():
