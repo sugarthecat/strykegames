@@ -1,6 +1,7 @@
 import os
-DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-file = open(os.path.join(DATA_DIR, 'religionSrc2.csv'),'r')
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(SCRIPTS_DIR, '..')
+file = open(os.path.join(SCRIPTS_DIR, 'religionSrc2.csv'),'r')
 outFile = open(os.path.join(DATA_DIR, 'religion.csv'),'w')
 # Countries with Other Religions support (minorReligionSupport in generate.js)
 handled = ['India', 'China', "Taiwan", "Japan", "Jamaica", "Iran", "Vietnam", "Kenya", "North Korea", "Canada", "United Kingdom"]

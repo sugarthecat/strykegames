@@ -53,7 +53,9 @@ function getLocation(person) {
 
 function displayPerson(person) {
     document.getElementById("person").innerHTML =
-        `<h2>${getPrintName(person)}</h2><p>Of ${getLocation(person)}</p>`
+        `<h2>${getPrintName(person)}</h2>
+        <p>Of ${getLocation(person)}</p>
+        <p>Speaks ${person.languages.join(", ")}</p>`
 }
 
 function addBadge(badge) {
